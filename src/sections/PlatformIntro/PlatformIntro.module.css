@@ -1,0 +1,46 @@
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heading {
+  font-size: 48px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin: 0 0 32px;
+  color: var(--color-ink, #24364e);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.text {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-ink, #24364e);
+  opacity: 0.9;
+}
+
+.cardsWrapper {
+  margin-top: 64px;
+}
+
+@media (max-width: 990px) {
+  .heading {
+    font-size: 36px;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+
+  .cardsWrapper {
+    margin-top: 48px;
+  }
+}
+

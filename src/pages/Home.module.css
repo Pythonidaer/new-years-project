@@ -1,0 +1,69 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(20, 35, 55, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--color-white);
+}
+
+.nav {
+  display: flex;
+  gap: 22px;
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+.hero {
+  /* Placeholder; replace with real background overlay + arcs */
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.08), rgba(0,0,0,0)) ,
+              linear-gradient(180deg, #152a44, #0f2036);
+  color: var(--color-white);
+  padding: 110px 0 140px;
+}
+
+.heroTitle {
+  margin: 0;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  font-weight: 700;
+  text-align: center;
+}
+
+.accent {
+  color: #f5b027; /* replace with extracted brand gold if needed */
+}
+
+.heroSub {
+  margin: 18px auto 0;
+  max-width: 760px;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.heroCta {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
+
+.heroNote {
+  margin-top: 70px;
+  text-align: center;
+  opacity: 0.7;
+  font-size: 14px;
+}

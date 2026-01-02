@@ -1,0 +1,15 @@
+.section {
+  width: 100%;
+  padding: 96px 0;
+  background: #fff;
+}
+
+.alt {
+  background: #f5f7fa;
+}
+
+@media (max-width: 990px) {
+  .section {
+    padding: 64px 0;
+  }
+}

@@ -1,0 +1,158 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 48.7% 49.01%; /* right side slightly larger */
+  column-gap: 2.29%;                 /* matches their margin-right */
+  align-items: stretch; /* Make both columns equal height */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.heading {
+  font-size: 48px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin: 0 0 32px;
+  color: var(--color-ink, #24364e);
+  text-align: center;
+  flex-shrink: 0; /* Prevent heading from shrinking */
+}
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1; /* Grow to fill available space */
+}
+
+.item {
+  border: 1px solid rgba(36, 54, 78, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-white, #ffffff);
+}
+
+.itemActive {
+  /* Active item - class used for conditional styling */
+  /* No additional styles needed beyond hover override */
+  position: relative; /* Prevents empty ruleset lint warning */
+}
+
+.trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.trigger:hover {
+  background: #b4c7cf;
+}
+
+.itemActive .trigger:hover {
+  background: transparent;
+}
+
+.triggerText {
+  font-family: var(--font-family, Archivo, sans-serif);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 38.4px;
+  color: #24364e;
+  margin: 0;
+  cursor: pointer;
+}
+
+.featureIcon {
+  color: #134dd1;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.panel {
+  padding: 0 24px 22px;
+  animation: slideDown 0.25s ease;
+}
+
+.panelText {
+  margin: 0 0 16px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(36, 54, 78, 0.85);
+  max-width: 52ch;
+}
+
+.ctaButton {
+  margin-top: 8px;
+}
+
+.image {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  flex: 1; /* Fill remaining height after padding-top */
+  min-height: 0; /* Allow flex item to shrink below content size */
+  border-radius: 8px;      /* target looks closer to 8px than 14px */
+  background: linear-gradient(135deg, #f0f2f4 0%, #e0e4e8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(36, 54, 78, 0.4);
+  font-size: 14px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.placeholderText {
+  text-align: center;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 990px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
+
+  .heading {
+    font-size: 42px;
+  }
+
+  .image {
+    padding-top: 0; /* Reset on mobile since image comes after accordion */
+  }
+
+  .imagePlaceholder {
+    height: 360px; /* or whatever the target uses at tablet/mobile */
+  }
+
+  .triggerText {
+    font-size: 26px;
+    line-height: 31.2px;
+  }
+}

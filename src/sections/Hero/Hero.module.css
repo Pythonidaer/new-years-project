@@ -1,0 +1,53 @@
+.hero {
+  --hero-breathing-room: 50px; /* tune this */
+  padding: calc(var(--top-offset, 110px) + var(--hero-breathing-room)) 0 140px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0)),
+    linear-gradient(180deg, #152a44, #0f2036);
+  color: var(--color-white, #ffffff);
+  position: relative;
+  overflow: hidden;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--fs-h1, 83px);
+  line-height: var(--lh-h1, 94.62px);
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.accent {
+  color: #f5b027;
+}
+
+.subtitle {
+  margin: 18px auto 0;
+  max-width: 760px;
+  text-align: center;
+  font-size: 20px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.cta {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 990px) {
+  .hero {
+    padding: 80px 0 100px;
+  }
+
+  .title {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+}
+

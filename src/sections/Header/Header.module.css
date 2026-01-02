@@ -1,0 +1,82 @@
+.header {
+  position: fixed;
+  top: var(--banner-height, 0px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 110px;
+  z-index: 12;
+  background-color: transparent;
+  box-shadow: none;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
+    height 0.2s ease-in-out, top 0.2s ease-in-out;
+}
+
+.scrolled {
+  height: 60px;
+  background-color: #ffffff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.inner {
+  width: 100%;
+  height: 100%;
+  max-width: 1512px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 20px;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  color: var(--color-white, #ffffff);
+  white-space: nowrap;
+}
+
+.nav {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+
+.navLink {
+  color: var(--color-white, #ffffff);
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+  opacity: 0.9;
+}
+
+.navLink:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.scrolled .brand,
+.scrolled .navLink {
+  color: #0b1f33;
+}
+
+.cta {
+  white-space: nowrap;
+}
+
+@media (max-width: 990px) {
+  .nav {
+    display: none;
+  }
+
+  .inner {
+    gap: 16px;
+    padding: 0 24px;
+  }
+}
+

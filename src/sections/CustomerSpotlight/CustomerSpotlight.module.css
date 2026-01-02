@@ -1,0 +1,143 @@
+.heading {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin: 0 0 48px;
+  text-align: center;
+  color: var(--color-ink, #24364e);
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.video {
+  position: relative;
+}
+
+.videoPlaceholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #1a2a3a 0%, #2a3a4a 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 14px;
+}
+
+.placeholderText {
+  text-align: center;
+}
+
+.quote {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.quoteContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.blockquote {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--color-ink, #24364e);
+  font-style: italic;
+}
+
+.quoteAuthor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.authorName {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-ink, #24364e);
+}
+
+.authorRole {
+  font-size: 16px;
+  color: var(--color-ink, #24364e);
+  opacity: 0.7;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.arrow {
+  background: transparent;
+  border: 1px solid rgba(36, 54, 78, 0.2);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-ink, #24364e);
+  transition: all 0.2s ease;
+}
+
+.arrow:hover {
+  background: var(--color-orange, #d34120);
+  border-color: var(--color-orange, #d34120);
+  color: var(--color-white, #ffffff);
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(36, 54, 78, 0.3);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.dot:hover {
+  background: rgba(36, 54, 78, 0.5);
+}
+
+.dotActive {
+  background: var(--color-orange, #d34120);
+  transform: scale(1.2);
+}
+
+@media (max-width: 990px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .heading {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+
+  .blockquote {
+    font-size: 20px;
+  }
+}
+

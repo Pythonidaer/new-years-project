@@ -1,0 +1,87 @@
+.heading {
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin: 0 0 48px;
+  text-align: center;
+  color: var(--color-ink, #24364e);
+}
+
+.carouselWrapper {
+  position: relative;
+}
+
+.viewport {
+  overflow: hidden;
+  cursor: grab;
+}
+
+.viewport:active {
+  cursor: grabbing;
+}
+
+.container {
+  display: flex;
+}
+
+.slide {
+  flex: 0 0 200px;
+  min-width: 0;
+  padding: 0 16px;
+}
+
+.logoPlaceholder {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background: linear-gradient(135deg, #f0f2f4 0%, #e0e4e8 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(36, 54, 78, 0.4);
+  font-size: 14px;
+  border: 1px solid rgba(36, 54, 78, 0.1);
+}
+
+.logoText {
+  text-align: center;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(36, 54, 78, 0.3);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.dot:hover {
+  background: rgba(36, 54, 78, 0.5);
+}
+
+.dotActive {
+  background: var(--color-orange, #d34120);
+  transform: scale(1.2);
+}
+
+@media (max-width: 990px) {
+  .heading {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+
+  .slide {
+    flex: 0 0 160px;
+  }
+}
+

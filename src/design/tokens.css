@@ -1,0 +1,21 @@
+:root {
+  --font-family: Archivo, sans-serif;
+
+  --fs-body: 18px;
+  --lh-body: 28.8px;
+
+  --fs-btn: 16px;
+
+  --fs-h1: 83px;
+  --lh-h1: 94.62px;
+
+  --color-ink: #24364e;
+  --color-white: #ffffff;
+  --color-orange: #d34120;
+  --color-orange-hover: #e07962;
+
+  --radius-button: 2px;
+
+  --container-max: 1210px;
+  --nav-breakpoint: 990px;
+}

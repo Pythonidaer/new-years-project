@@ -1,0 +1,11 @@
+:root {
+  --banner-height: 0px;
+  --header-height: 110px;
+  --top-offset: calc(var(--banner-height) + var(--header-height));
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
