@@ -1,0 +1,19 @@
+.main {
+  padding-top: var(--header-height, 110px);
+}
+
+.content {
+  max-width: 1210px;
+  margin: 0 auto;
+  padding: 100px 20px;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 700;
+  color: rgb(36, 54, 78);
+  margin: 0;
+  line-height: 1.2;
+}
+

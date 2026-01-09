@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "title": "HTTP/1.1 vs HTTP/2: Core Differences",
+    "date": "January 15, 2024",
+    "excerpt": "Understanding the fundamental differences between HTTP/1.1 and HTTP/2 protocols and their impact on web performance.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=19",
+    "link": "/blog/http1-vs-http2-differences"
+  },
+  {
+    "id": 2,
+    "title": "Multiplexing in HTTP/2",
+    "date": "January 10, 2024",
+    "excerpt": "How HTTP/2's multiplexing allows multiple requests and responses over a single TCP connection.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=20",
+    "link": "/blog/multiplexing-http2"
+  },
+  {
+    "id": 3,
+    "title": "Header Compression in HTTP/2",
+    "date": "January 5, 2024",
+    "excerpt": "Exploring how HTTP/2 compresses headers to reduce overhead and improve performance.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=21",
+    "link": "/blog/header-compression-http2"
+  },
+  {
+    "id": 4,
+    "title": "Head-of-Line Blocking in HTTP/1.1",
+    "date": "December 28, 2023",
+    "excerpt": "Understanding head-of-line blocking and how it affects performance in HTTP/1.1 applications.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=22",
+    "link": "/blog/head-of-line-blocking-http1"
+  },
+  {
+    "id": 5,
+    "title": "Performance Impact of HTTP/2",
+    "date": "December 20, 2023",
+    "excerpt": "How HTTP/2 significantly improves page and API performance by reducing latency and connection overhead.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=23",
+    "link": "/blog/performance-impact-http2"
+  },
+  {
+    "id": 6,
+    "title": "API Design with HTTP/2",
+    "date": "December 15, 2023",
+    "excerpt": "How HTTP/2 enables fine-grained API requests without the performance penalties of HTTP/1.1.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=24",
+    "link": "/blog/api-design-http2"
+  },
+  {
+    "id": 7,
+    "title": "Request Batching in HTTP/1.1",
+    "date": "December 10, 2023",
+    "excerpt": "Understanding why request batching and resource bundling were necessary in HTTP/1.1.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=25",
+    "link": "/blog/request-batching-http1"
+  },
+  {
+    "id": 8,
+    "title": "Granular Endpoints with HTTP/2",
+    "date": "December 5, 2023",
+    "excerpt": "How HTTP/2 rewards clean, granular endpoints and frequent client-server interaction.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=26",
+    "link": "/blog/granular-endpoints-http2"
+  },
+  {
+    "id": 9,
+    "title": "Migration from HTTP/1.1 to HTTP/2",
+    "date": "November 30, 2023",
+    "excerpt": "Best practices and considerations when migrating applications from HTTP/1.1 to HTTP/2.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=27",
+    "link": "/blog/migration-http1-to-http2"
+  }
+]

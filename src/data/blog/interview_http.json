@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "title": "HTTP Methods Explained: GET, POST, PUT, PATCH, DELETE",
+    "date": "January 15, 2024",
+    "excerpt": "Understanding HTTP methods and how they define client-server interactions in modern web applications.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=10",
+    "link": "/blog/http-methods-explained"
+  },
+  {
+    "id": 2,
+    "title": "HTTP Status Codes: A Comprehensive Guide",
+    "date": "January 10, 2024",
+    "excerpt": "A detailed guide to using HTTP status codes correctly for predictable and debuggable API behavior.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=11",
+    "link": "/blog/http-status-codes-guide"
+  },
+  {
+    "id": 3,
+    "title": "Building Stateless APIs with HTTP",
+    "date": "January 5, 2024",
+    "excerpt": "Explore how HTTP's stateless nature shapes API design and state management strategies.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=12",
+    "link": "/blog/building-stateless-apis"
+  },
+  {
+    "id": 4,
+    "title": "HTTP Headers and Metadata",
+    "date": "December 28, 2023",
+    "excerpt": "Understanding how HTTP headers enable rich communication between clients and servers.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=13",
+    "link": "/blog/http-headers-metadata"
+  },
+  {
+    "id": 5,
+    "title": "Caching Strategies with HTTP",
+    "date": "December 20, 2023",
+    "excerpt": "Learn how HTTP enables caching, conditional requests, and compression to improve performance.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=14",
+    "link": "/blog/caching-strategies-http"
+  },
+  {
+    "id": 6,
+    "title": "HTTPS and Security in HTTP",
+    "date": "December 15, 2023",
+    "excerpt": "Understanding how HTTPS, authentication headers, and CORS work together to enforce secure access.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=15",
+    "link": "/blog/https-security-http"
+  },
+  {
+    "id": 7,
+    "title": "API Design Best Practices",
+    "date": "December 10, 2023",
+    "excerpt": "How to design APIs that use HTTP methods and status codes correctly for predictable behavior.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=16",
+    "link": "/blog/api-design-best-practices"
+  },
+  {
+    "id": 8,
+    "title": "Content Negotiation in HTTP",
+    "date": "December 5, 2023",
+    "excerpt": "Exploring how content negotiation allows APIs to evolve without breaking clients.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=17",
+    "link": "/blog/content-negotiation-http"
+  },
+  {
+    "id": 9,
+    "title": "HTTP Request-Response Lifecycle",
+    "date": "November 30, 2023",
+    "excerpt": "Understanding the fundamental request-response lifecycle that defines how clients and servers communicate.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=18",
+    "link": "/blog/http-request-response-lifecycle"
+  }
+]

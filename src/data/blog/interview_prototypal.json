@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "title": "Understanding Prototypal Inheritance in JavaScript",
+    "date": "January 15, 2024",
+    "excerpt": "Exploring how JavaScript's prototypal inheritance works and how objects inherit properties through the prototype chain.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=28",
+    "link": "/blog/understanding-prototypal-inheritance"
+  },
+  {
+    "id": 2,
+    "title": "The [[Prototype]] Chain Explained",
+    "date": "January 10, 2024",
+    "excerpt": "How JavaScript looks up properties through the prototype chain until it finds the property or reaches null.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=29",
+    "link": "/blog/prototype-chain-explained"
+  },
+  {
+    "id": 3,
+    "title": "Creating Objects with Constructor Functions",
+    "date": "January 5, 2024",
+    "excerpt": "Understanding how constructor functions create objects with prototype linkage in JavaScript.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=30",
+    "link": "/blog/constructor-functions-prototypes"
+  },
+  {
+    "id": 4,
+    "title": "Class Syntax: Syntactic Sugar Over Prototypes",
+    "date": "December 28, 2023",
+    "excerpt": "How ES6 class syntax compiles down to prototypes and provides a more readable way to work with inheritance.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=31",
+    "link": "/blog/class-syntax-prototypes"
+  },
+  {
+    "id": 5,
+    "title": "Object.create() for Explicit Prototype Linkage",
+    "date": "December 20, 2023",
+    "excerpt": "Using Object.create() to create objects with explicit prototype linkage and share behavior across objects.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=32",
+    "link": "/blog/object-create-prototype-linkage"
+  },
+  {
+    "id": 6,
+    "title": "Sharing Behavior Without Duplication",
+    "date": "December 15, 2023",
+    "excerpt": "How prototypal inheritance allows you to share methods across many objects without duplicating code.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=33",
+    "link": "/blog/sharing-behavior-prototypes"
+  },
+  {
+    "id": 7,
+    "title": "Prototypal Inheritance in Modern Apps",
+    "date": "December 10, 2023",
+    "excerpt": "When and how to leverage prototypal inheritance for lightweight domain objects and performance-sensitive paths.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=34",
+    "link": "/blog/prototypal-inheritance-modern-apps"
+  },
+  {
+    "id": 8,
+    "title": "Prototypal vs Classical Inheritance",
+    "date": "December 5, 2023",
+    "excerpt": "Comparing prototypal inheritance with classical inheritance and understanding when to use each approach.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=35",
+    "link": "/blog/prototypal-vs-classical-inheritance"
+  },
+  {
+    "id": 9,
+    "title": "Composition Over Inheritance",
+    "date": "November 30, 2023",
+    "excerpt": "Understanding when not to use inheritance and how composition can provide more flexible solutions.",
+    "category": "Blog",
+    "image": "https://picsum.photos/367/197?random=36",
+    "link": "/blog/composition-over-inheritance"
+  }
+]

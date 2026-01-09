@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "title": "Understanding Modern Web Development",
+    "date": "January 15, 2024",
+    "excerpt": "Explore the latest trends and best practices in modern web development, including React, TypeScript, and modern CSS techniques.",
+    "category": "Frontend Frameworks",
+    "image": "https://picsum.photos/367/197?random=1",
+    "link": "/blog/understanding-modern-web-development"
+  },
+  {
+    "id": 2,
+    "title": "Best Practices for React Applications",
+    "date": "January 10, 2024",
+    "excerpt": "Learn about component architecture, state management, and performance optimization strategies for React applications.",
+    "category": "Frontend Frameworks",
+    "image": "https://picsum.photos/367/197?random=2",
+    "link": "/blog/best-practices-react-applications"
+  },
+  {
+    "id": 3,
+    "title": "CSS Modules and Styling Strategies",
+    "date": "January 5, 2024",
+    "excerpt": "Discover how CSS Modules can help you build maintainable and scalable styling solutions for your web projects.",
+    "category": "Styling & Design Systems",
+    "image": "https://picsum.photos/367/197?random=3",
+    "link": "/blog/css-modules-styling-strategies"
+  },
+  {
+    "id": 4,
+    "title": "TypeScript for Better Code Quality",
+    "date": "December 28, 2023",
+    "excerpt": "How TypeScript improves code quality, reduces bugs, and enhances developer experience in modern web development.",
+    "category": "JavaScript & TypeScript",
+    "image": "https://picsum.photos/367/197?random=4",
+    "link": "/blog/typescript-better-code-quality"
+  },
+  {
+    "id": 5,
+    "title": "Building Responsive Web Applications",
+    "date": "December 20, 2023",
+    "excerpt": "Strategies and techniques for creating responsive web applications that work seamlessly across all device sizes.",
+    "category": "UI Architecture & Component Design",
+    "image": "https://picsum.photos/367/197?random=5",
+    "link": "/blog/building-responsive-web-applications"
+  },
+  {
+    "id": 6,
+    "title": "Performance Optimization Techniques",
+    "date": "December 15, 2023",
+    "excerpt": "Learn about various performance optimization techniques including code splitting, lazy loading, and caching strategies.",
+    "category": "Performance & Optimization",
+    "image": "https://picsum.photos/367/197?random=6",
+    "link": "/blog/performance-optimization-techniques"
+  },
+  {
+    "id": 7,
+    "title": "Accessibility in Modern Web Development",
+    "date": "December 10, 2023",
+    "excerpt": "Understanding the importance of web accessibility and implementing best practices to create inclusive web experiences.",
+    "category": "Accessibility",
+    "image": "https://picsum.photos/367/197?random=7",
+    "link": "/blog/accessibility-modern-web-development"
+  },
+  {
+    "id": 8,
+    "title": "Testing Strategies for React Components",
+    "date": "December 5, 2023",
+    "excerpt": "Explore testing methodologies and tools for React components, including unit tests, integration tests, and E2E testing.",
+    "category": "Testing & Code Quality",
+    "image": "https://picsum.photos/367/197?random=8",
+    "link": "/blog/testing-strategies-react-components"
+  },
+  {
+    "id": 9,
+    "title": "State Management Patterns",
+    "date": "November 30, 2023",
+    "excerpt": "Comparing different state management approaches and patterns for managing application state in React applications.",
+    "category": "State Management & Data Flow",
+    "image": "https://picsum.photos/367/197?random=9",
+    "link": "/blog/state-management-patterns"
+  }
+]

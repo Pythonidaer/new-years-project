@@ -1,0 +1,140 @@
+.container {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.selectContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.selectWrapper {
+  position: relative;
+  display: inline-block;
+  width: 300px;
+}
+
+.selectWrapper::before {
+  content: "Filter by";
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  display: block;
+  font-size: 18px;
+  font-family: Archivo, sans-serif;
+  font-weight: 400;
+  line-height: 28.8px;
+  color: rgb(36, 54, 78);
+  text-rendering: geometricprecision;
+  white-space: nowrap;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.chevron {
+  position: absolute;
+  top: 50%;
+  right: 0px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 10;
+  flex-shrink: 0;
+  width: 16px;
+  height: 10px;
+}
+
+.select {
+  display: block;
+  width: 100%;
+  height: 50px;
+  padding: 8px 20px 8px 65px;
+  margin-bottom: 0;
+  border: none;
+  border-bottom: 1px solid #707070;
+  border-radius: 0;
+  font-size: 16px;
+  font-family: Archivo, sans-serif;
+  font-weight: 700;
+  line-height: 1.63;
+  color: rgb(36, 54, 78);
+  background-color: transparent;
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.select:focus {
+  outline: none;
+  border-bottom-color: rgb(36, 54, 78);
+}
+
+.searchContainer {
+  position: relative;
+  flex: 0 0 auto;
+  min-width: 250px;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #0b1f33;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 370px;
+  height: 50px;
+  padding: 8px 35px 8px 15px;
+  border: 1px solid rgb(112, 112, 112);
+  border-radius: 2px;
+  font-size: 14px;
+  font-family: Archivo, sans-serif;
+  font-weight: 400;
+  color: rgb(36, 54, 78);
+  background-color: rgb(255, 255, 255);
+  transition: border-color 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: rgb(36, 54, 78);
+}
+
+.searchInput::placeholder {
+  color: rgb(112, 112, 112);
+}
+
+@media (max-width: 767px) {
+  .container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .searchContainer {
+    min-width: 100%;
+    order: 2;
+  }
+
+  .selectContainer {
+    flex-direction: column;
+    align-items: stretch;
+    order: 1;
+  }
+
+  .select {
+    min-width: 100%;
+  }
+}
+

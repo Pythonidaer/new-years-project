@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 import { Button } from "../../components/Button";
 import styles from "./Header.module.css";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const isBlogPage = location.pathname.startsWith("/blog");
 
   useEffect(() => {
     let ticking = false;
@@ -33,26 +37,32 @@ export function Header() {
   }, [isScrolled]);
 
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}>
+    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""} ${isBlogPage ? styles.dark : ""}`}>
       <div className={styles.inner}>
         <div className={styles.brand}>Lorem Ipsum</div>
 
         <nav className={styles.nav}>
           <a href="#platform" className={styles.navLink}>
             Lorem Ipsum
+            <ChevronRight className={styles.chevron} />
           </a>
           <a href="#solutions" className={styles.navLink}>
             Dolor Sit
+            <ChevronRight className={styles.chevron} />
           </a>
-          <a href="#resources" className={styles.navLink}>
+          <Link to="/blog" className={styles.navLink}>
             Amet Consectetur
-          </a>
+            <ChevronRight className={styles.chevron} />
+          </Link>
           <a href="#company" className={styles.navLink}>
             Adipiscing Elit
+            <ChevronRight className={styles.chevron} />
           </a>
         </nav>
 
-        <Button className={styles.cta}>Sed Do Eiusmod</Button>
+        <Button className={styles.cta} showChevron>
+          Sed Do Eiusmod
+        </Button>
       </div>
     </header>
   );

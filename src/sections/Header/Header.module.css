@@ -12,11 +12,24 @@
     height 0.2s ease-in-out, top 0.2s ease-in-out;
 }
 
+/* Dark blue background for blog page */
+.header.dark {
+  background-color: rgb(36, 54, 78);
+}
+
+.header.dark.scrolled,
 .scrolled {
   height: 60px;
   background-color: #ffffff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  transition: height 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
+
+/* Keep dark blue when scrolled on blog page - must come after .scrolled to override */
+/* .header.dark.scrolled {
+  background-color: rgb(36, 54, 78);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+} */
 
 .inner {
   width: 100%;
@@ -53,15 +66,72 @@
   text-decoration: none;
   transition: opacity 0.2s ease;
   opacity: 0.9;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Orange underline on hover - using ::before */
+.navLink::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  right: 0;
+  width: 0;
+  height: 2px;
+  background-color: rgb(255, 172, 18);
+  border-radius: 2px;
+  opacity: 0;
+  pointer-events: none;
+  transition: width 0.4s ease-in-out 0.3s, opacity 0.2s ease-in-out 0s;
+}
+
+.navLink:hover::before {
+  width: 100%;
+  opacity: 1;
+  transition: width 0.4s ease-in-out 0.3s, opacity 0.2s ease-in-out 0s;
+}
+
+/* Chevron icon styling */
+.chevron {
+  color: rgb(255, 255, 255);
+  flex-shrink: 0;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+  width: 18px;
+  height: 18px;
+}
+
+/* Dark chevron when scrolled */
+.scrolled .chevron {
+  color: #0b1f33;
 }
 
 .navLink:hover {
   opacity: 1;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
+/* When scrolled, text should be dark */
 .scrolled .brand,
 .scrolled .navLink {
+  color: #0b1f33;
+}
+
+/* Keep white text when dark (blog page) - but NOT when scrolled */
+.header.dark .brand,
+.header.dark .navLink {
+  color: rgb(255, 255, 255);
+}
+
+/* Override: when dark header is scrolled, use dark text (must come after .header.dark) */
+.header.dark.scrolled .brand,
+.header.dark.scrolled .navLink {
+  color: #0b1f33;
+}
+
+/* Override: when dark header is scrolled, use dark chevron (must come after .header.dark) */
+.header.dark.scrolled .chevron {
   color: #0b1f33;
 }
 

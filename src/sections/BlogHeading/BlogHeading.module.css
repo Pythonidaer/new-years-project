@@ -1,0 +1,22 @@
+.container {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.heading {
+  font-size: 83px;
+  font-weight: 700;
+  color: rgb(36, 54, 78);
+  margin: 0;
+  line-height: 94.62px;
+  text-align: center;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .heading {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+}
+

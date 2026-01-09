@@ -144,3 +144,14 @@ To hide it in production, conditionally render it:
 4. **Documentation**: Add comments in `contentMap.ts` for complex content structures
 5. **Testing**: Test topic switching to ensure all content displays correctly
 
+## Future Tasks (Saturday, January 10th)
+
+- [ ] **Create blog template for each blog**: Similar to [Mark43's blog post template](https://mark43.com/resources/blog/lifting-up-lgbtq-voices-in-public-safety/) as an example
+- [ ] **Category tag pages**: Make clicking on each grid card link to a URL page view like `/tag/data-driven-decisions/`. For example, clicking on a card with category "Culture" should go to `/tag/culture/` that displays the heading "Culture" with all blog cards matching that filter
+- [ ] **Color system with root variables**: Lift up all styles and create a color picker so that colors can be dynamically changed for everything at once (e.g., banner color, header color, card color, etc.) and begin using CSS root variables
+- [ ] **Save/reset color settings**: Add a save icon so users can save their color settings. When they revisit the page, their saved colors should persist. Also add ability to reset to default colors (current colors)
+- [ ] **Mobile responsiveness**: Make website fully mobile responsive
+- [ ] **Add more interview questions**: Add more interview questions for blog content blocks
+- [ ] **Change favicon**: Update the favicon
+- [ ] **Code cleanup**: Clean up and refactor code
+
