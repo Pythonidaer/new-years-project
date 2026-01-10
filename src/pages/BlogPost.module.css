@@ -1,19 +1,603 @@
+/* Main container */
 .main {
-  padding-top: var(--header-height, 110px);
+  padding-top: 0;
 }
 
-.content {
-  max-width: 1210px;
+/* Hero Section - Dark blue background with blurred image overlay */
+.heroSection {
+  background-color: rgb(36, 54, 78);
+  color: rgb(255, 255, 255);
+  width: 100%;
+  min-height: 734px;
+  padding: 250px 0 100px;
+  margin: 0;
+  margin-top: var(--header-height, 110px);
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  overflow: hidden; /* Ensure blurred background doesn't overflow */
+}
+
+.heroSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: var(--hero-bg-image, url(''));
+  background-size: cover;
+  background-position: center;
+  opacity: 0.19;
+  pointer-events: none;
+  filter: blur(var(--hero-blur, 8px)); /* Themeable blur amount, default 8px */
+  z-index: 0;
+}
+
+.heroContainer {
+  max-width: 1512px;
   margin: 0 auto;
-  padding: 100px 20px;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1; /* Ensure content is above the blurred background */
+}
+
+.heroContent {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  font-family: var(--font-family, Archivo, sans-serif);
+  font-size: 18px;
+  line-height: 28.8px;
+  font-weight: 400;
+  position: relative;
+  z-index: 1; /* Ensure content is above the blurred background */
+}
+
+/* Entry Title (h1) */
+.entryTitle {
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 60px;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
   box-sizing: border-box;
 }
 
-.title {
-  font-size: 48px;
-  font-weight: 700;
-  color: rgb(36, 54, 78);
-  margin: 0;
-  line-height: 1.2;
+/* Post Meta (Author and Date) */
+.postMeta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  line-height: 25.6px;
+  font-weight: 400;
+  box-sizing: border-box;
 }
 
+.postAuthors {
+  display: block;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  line-height: 25.6px;
+  font-weight: 400;
+}
+
+/* Author link in hero section - clickable, smooth scrolls to #author */
+.postAuthors .heroAuthorLink {
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  line-height: 25.6px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgb(255, 255, 255);
+  text-decoration-style: solid;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out, text-decoration 0.2s ease-in-out;
+  display: inline;
+  box-sizing: border-box;
+}
+
+.postAuthors .heroAuthorLink:hover {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+.postDate {
+  display: block;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  line-height: 25.6px;
+  font-weight: 400;
+}
+
+/* Main Content Section - White background */
+.contentSection {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  padding: 100px 0;
+  margin: 0;
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+}
+
+.contentContainer {
+  max-width: 1512px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.contentWrapper {
+  width: 100%;
+  max-width: 1512px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  color: rgb(36, 54, 78);
+  font-family: var(--font-family, Archivo, sans-serif);
+  font-size: 22px;
+  line-height: 35.2px;
+  font-weight: 400;
+}
+
+/* Entry Content Wrapper - wraps thumbnail and content */
+.entryContentWrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Single Post Thumbnail - featured image container */
+.postThumbnail {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  margin: -300px 0 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Featured Image - the actual image */
+.featuredImage {
+  display: inline-block;
+  width: 800px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 772 / 403;
+  object-fit: cover;
+  object-position: 50% 50%;
+  border-radius: 7px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 0;
+  box-sizing: border-box;
+  color: rgb(36, 54, 78);
+  font-family: var(--font-family, Archivo, sans-serif);
+  font-size: 22px;
+  line-height: 35.2px;
+  font-weight: 400;
+  overflow: clip;
+  overflow-clip-margin: content-box;
+  vertical-align: baseline;
+  image-rendering: auto;
+}
+
+/* Post Content - Rich text content area */
+.postContent {
+  max-width: 800px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Content Typography - Paragraphs */
+.postContent p {
+  font-size: 22px;
+  line-height: 35.2px;
+  font-weight: 400;
+  color: rgb(36, 54, 78);
+  margin: 30px 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: block;
+}
+
+/* Content Typography - Headings */
+.postContent h2 {
+  font-size: 22px;
+  line-height: 35.2px;
+  font-weight: 700;
+  color: rgb(36, 54, 78);
+  margin: 30px 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: block;
+}
+
+.postContent h2 strong {
+  font-weight: 700;
+}
+
+.postContent h3 {
+  font-size: 22px;
+  line-height: 35.2px;
+  font-weight: 700;
+  color: rgb(36, 54, 78);
+  margin: 30px 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: block;
+}
+
+/* Strong tags in content */
+.postContent strong {
+  font-weight: 700;
+  color: rgb(36, 54, 78);
+  display: inline;
+}
+
+/* Links in content */
+.postContent a {
+  color: rgb(19, 77, 209);
+  font-style: italic;
+  font-weight: 700;
+  text-decoration: underline;
+  font-size: 22px;
+  line-height: 35.2px;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.postContent a:hover {
+  color: rgb(19, 77, 209);
+  opacity: 0.8;
+}
+
+/* Lists in content */
+.postContent ul {
+  list-style-type: none;
+  list-style-position: outside;
+  margin: 30px 0;
+  padding: 0;
+  padding-left: 0;
+  box-sizing: border-box;
+  display: block;
+  font-size: 22px;
+  line-height: 35.2px;
+  color: rgb(36, 54, 78);
+}
+
+.postContent ul li {
+  display: list-item;
+  list-style-type: none;
+  margin-top: 22px;
+  margin-bottom: 22px;
+  padding-left: 30.8px;
+  position: relative;
+  font-size: 22px;
+  line-height: 35.2px;
+  color: rgb(36, 54, 78);
+  box-sizing: border-box;
+}
+
+/* List bullet points */
+.postContent ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: rgb(36, 54, 78);
+}
+
+.postContent ol {
+  list-style-type: decimal;
+  margin: 30px 0;
+  padding: 0;
+  padding-left: 30.8px;
+  box-sizing: border-box;
+  display: block;
+  font-size: 22px;
+  line-height: 35.2px;
+  color: rgb(36, 54, 78);
+}
+
+.postContent ol li {
+  display: list-item;
+  margin-top: 22px;
+  margin-bottom: 22px;
+  font-size: 22px;
+  line-height: 35.2px;
+  color: rgb(36, 54, 78);
+  box-sizing: border-box;
+}
+
+/* Post Footer - Tags, Author, Back Button */
+.postFooter {
+  max-width: 800px;
+  margin: 30px auto 0;
+  padding: 0 20px;
+  box-sizing: border-box;
+  display: block;
+  font-size: 22px;
+  line-height: 35.2px;
+  color: rgb(36, 54, 78);
+}
+
+/* Post Terms / Tags */
+.postTerms {
+  display: block;
+  margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tagLink {
+  display: inline;
+  color: rgb(19, 77, 209);
+  font-size: 12px;
+  line-height: 19.2px;
+  font-weight: 400;
+  border: 1px solid rgb(19, 77, 209);
+  border-radius: 3px;
+  padding: 2px 5px 3px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+  margin-right: 8px;
+  box-sizing: border-box;
+}
+
+.tagLink:hover {
+  opacity: 0.8;
+}
+
+.tagLink:last-child {
+  margin-right: 0;
+}
+
+/* Author Box */
+.authorBox {
+  background: linear-gradient(rgba(242, 242, 242, 0.57) 0%, rgba(180, 199, 207, 0.57) 100%);
+  border-radius: 10px;
+  padding: 50px 40px;
+  margin-top: 60px;
+  max-width: 800px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  color: rgb(36, 54, 78);
+  font-family: var(--font-family, Archivo, sans-serif);
+  font-size: 14px;
+  line-height: 22.4px;
+  font-weight: 400;
+}
+
+.authorHeading {
+  font-size: 18px;
+  line-height: 28.8px;
+  font-weight: 800;
+  color: rgb(15, 15, 15);
+  margin: 0 0 30px;
+  padding: 0;
+  display: block;
+}
+
+.author {
+  display: flex;
+  flex-wrap: wrap;
+  width: 720px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.authorContent {
+  display: block;
+  width: 318.516px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.authorHeader {
+  display: flex;
+  margin-bottom: 15px;
+  width: 318.516px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.authorTitles {
+  display: block;
+  width: 318.516px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.authorName {
+  font-size: 32px;
+  line-height: 51.2px;
+  font-weight: 700;
+  color: rgb(15, 15, 15);
+  margin: 0;
+  padding: 0;
+  display: block;
+  width: 318.516px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.authorLink {
+  display: inline-flex;
+  align-items: center;
+  color: rgb(19, 77, 209);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease-in-out,
+    border-radius 0.2s ease-in-out,
+    background-color 0.2s ease-in-out,
+    opacity 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+}
+
+.authorLink:hover {
+  opacity: 0.8;
+}
+
+.authorChevron {
+  margin-left: 8px;
+  color: rgb(19, 77, 209);
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+}
+
+/* Back to Blog Button */
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-orange, #d34120);
+  border: 1px solid var(--color-orange, #d34120);
+  border-radius: var(--radius-button, 2px);
+  box-shadow: inset 0 0 0 1px var(--color-orange, #d34120);
+  font-family: var(--font-family, Archivo, sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  padding: 16px 15px 15px;
+  margin-top: 50px;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease-in-out,
+    border-radius 0.2s ease-in-out,
+    background-color 0.2s ease-in-out,
+    opacity 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+}
+
+.backButton:hover {
+  opacity: 0.9;
+}
+
+.backButtonInner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.backChevron {
+  transform: rotate(180deg);
+  color: var(--color-orange, #d34120);
+  flex-shrink: 0;
+}
+
+/* Related Content Section */
+.relatedSection {
+  background: linear-gradient(rgba(180, 199, 207, 0.4) 0%, rgba(255, 255, 255, 0.4) 115%);
+  width: 100%;
+  padding: 80px 0;
+  margin: 0;
+  box-sizing: border-box;
+  display: block;
+}
+
+.relatedContainer {
+  max-width: 1210px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.relatedHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.relatedHeaderLeft {
+  display: block;
+  box-sizing: border-box;
+}
+
+.relatedHeading {
+  font-size: 32px;
+  line-height: 38.4px;
+  font-weight: 600;
+  color: rgb(36, 54, 78);
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.relatedHeaderRight {
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .postThumbnail {
+    margin-top: -100px; /* Reduce overlap on smaller screens */
+  }
+  
+  .featuredImage {
+    width: 100%;
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 990px) {
+  .entryTitle {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .postContent p,
+  .postContent h2,
+  .postContent h3,
+  .postContent ul,
+  .postContent ol {
+    font-size: 18px;
+    line-height: 28.8px;
+  }
+
+  .relatedHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .postThumbnail {
+    margin-top: -50px; /* Further reduce overlap on mobile */
+  }
+}

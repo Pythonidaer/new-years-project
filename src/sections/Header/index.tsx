@@ -7,7 +7,8 @@ import styles from "./Header.module.css";
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const isBlogPage = location.pathname.startsWith("/blog");
+  const isBlogListingPage = location.pathname === "/blog";
+  const isBlogPostPage = location.pathname.match(/^\/blog\/[^/]+$/);
 
   useEffect(() => {
     let ticking = false;
@@ -37,7 +38,7 @@ export function Header() {
   }, [isScrolled]);
 
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""} ${isBlogPage ? styles.dark : ""}`}>
+    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""} ${isBlogListingPage ? styles.dark : ""} ${isBlogPostPage ? styles.light : ""}`}>
       <div className={styles.inner}>
         <div className={styles.brand}>Lorem Ipsum</div>
 

@@ -70,7 +70,7 @@
   font-size: 18px;
   font-weight: 700;
   margin: 0;
-  color: var(--color-white, #ffffff);
+  color: rgb(255, 172, 18);
 }
 
 .linkList {

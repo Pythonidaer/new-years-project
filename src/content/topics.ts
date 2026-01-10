@@ -27,6 +27,11 @@ export const topics: TopicMetadata[] = [
     label: "Prototypal inheritance in JavaScript",
     description: "Understanding JavaScript's prototypal inheritance model and how it works",
   },
+  {
+    id: "interview_reusable_vs_feature_specific_components_a_practical_decision_framework",
+    label: "Reusable vs Feature-Specific Components: A Practical Decision Framework",
+    description: "A practical framework for deciding when to make components reusable vs feature-specific",
+  },
 ];
 
 /**

@@ -5,7 +5,7 @@
   right: 0;
   width: 100%;
   height: 110px;
-  z-index: 12;
+  z-index: 13;
   background-color: transparent;
   box-shadow: none;
   transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
@@ -132,6 +132,35 @@
 
 /* Override: when dark header is scrolled, use dark chevron (must come after .header.dark) */
 .header.dark.scrolled .chevron {
+  color: #0b1f33;
+}
+
+/* Light variant for blog post pages - starts with white background and dark text */
+.header.light {
+  background-color: #ffffff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.header.light .brand,
+.header.light .navLink {
+  color: #0b1f33;
+}
+
+.header.light .chevron {
+  color: #0b1f33;
+}
+
+.header.light.scrolled {
+  background-color: #ffffff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.header.light.scrolled .brand,
+.header.light.scrolled .navLink {
+  color: #0b1f33;
+}
+
+.header.light.scrolled .chevron {
   color: #0b1f33;
 }
 

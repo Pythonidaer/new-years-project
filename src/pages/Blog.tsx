@@ -6,18 +6,16 @@ import { FeaturedBlogPost } from "../sections/FeaturedBlogPost";
 import { BlogFilters } from "../sections/BlogFilters";
 import { BlogGrid } from "../sections/BlogGrid";
 import { Footer } from "../sections/Footer";
-import { useContent } from "../content/ContentProvider";
-import { getBlogPostsForTopic } from "../data/blog";
+import { getAllBlogPosts, getBlogPostSlug } from "../data/blog";
 import type { BlogPost } from "../data/blog/types";
 import styles from "./Blog.module.css";
 
 export function Blog() {
-  const { topicId } = useContent();
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
 
   const blogPosts = useMemo(
-    () => getBlogPostsForTopic(topicId),
-    [topicId]
+    () => getAllBlogPosts(),
+    []
   );
 
   // Stable callback for filter changes
@@ -39,8 +37,9 @@ export function Blog() {
   // Get grid posts (filtered results, excluding the featured post)
   const gridPosts = useMemo(() => {
     if (!featuredPost) return filteredPosts;
-    // Exclude the featured post from grid results
-    return filteredPosts.filter((post) => post.id !== featuredPost.id);
+    // Exclude the featured post from grid results using slug (unique) instead of id
+    const featuredSlug = getBlogPostSlug(featuredPost);
+    return filteredPosts.filter((post) => getBlogPostSlug(post) !== featuredSlug);
   }, [filteredPosts, featuredPost]);
 
   return (

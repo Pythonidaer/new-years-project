@@ -11,6 +11,7 @@ interface BlogFiltersProps {
 // All available categories
 const ALL_CATEGORIES = [
   "Frontend Frameworks",
+  "Frontend Architecture",
   "JavaScript & TypeScript",
   "State Management & Data Flow",
   "UI Architecture & Component Design",

@@ -29,7 +29,7 @@ export function BlogGrid({ posts }: Props) {
     <>
       <div className={styles.grid}>
         {visiblePosts.map((post) => (
-          <article key={post.id} className={styles.card}>
+          <article key={getBlogPostSlug(post)} className={styles.card}>
             <div className={styles.imageContainer}>
               <div className={styles.imageWrapper}>
                 <Link to={`/blog/${getBlogPostSlug(post)}`} className={styles.imageLink}>
