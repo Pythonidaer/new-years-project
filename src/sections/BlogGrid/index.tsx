@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import type { BlogPost } from "../../data/blog/types";
 import { getBlogPostSlug } from "../../data/blog";
+import { slugify } from "../../utils/slug";
 import { Button } from "../../components/Button";
 import styles from "./BlogGrid.module.css";
 
@@ -32,7 +33,7 @@ export function BlogGrid({ posts }: Props) {
           <article key={getBlogPostSlug(post)} className={styles.card}>
             <div className={styles.imageContainer}>
               <div className={styles.imageWrapper}>
-                <Link to={`/blog/${getBlogPostSlug(post)}`} className={styles.imageLink}>
+                <Link to={`/resources/blog/${getBlogPostSlug(post)}`} className={styles.imageLink}>
                   <img
                     src={post.image}
                     alt={post.title}
@@ -43,14 +44,14 @@ export function BlogGrid({ posts }: Props) {
             </div>
             <div className={styles.content}>
               <h3 className={styles.title}>
-                <Link to={`/blog/${getBlogPostSlug(post)}`} className={styles.titleLink}>
+                <Link to={`/resources/blog/${getBlogPostSlug(post)}`} className={styles.titleLink}>
                   {post.title}
                 </Link>
               </h3>
               <div className={styles.bottomContent}>
-                <a href={`/blog/category/${post.category.toLowerCase()}`} className={styles.category}>
+                <Link to={`/resources/tag/${slugify(post.category)}`} className={styles.category}>
                   {post.category}
-                </a>
+                </Link>
                 <time className={styles.date}>{post.date}</time>
               </div>
             </div>

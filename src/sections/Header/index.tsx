@@ -7,8 +7,9 @@ import styles from "./Header.module.css";
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const isBlogListingPage = location.pathname === "/blog";
-  const isBlogPostPage = location.pathname.match(/^\/blog\/[^/]+$/);
+  const isBlogListingPage = location.pathname === "/resources/blog";
+  const isBlogPostPage = location.pathname.match(/^\/resources\/blog\/[^/]+$/);
+  const isTagPage = location.pathname.match(/^\/resources\/tag\/[^/]+$/);
 
   useEffect(() => {
     let ticking = false;
@@ -38,9 +39,9 @@ export function Header() {
   }, [isScrolled]);
 
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""} ${isBlogListingPage ? styles.dark : ""} ${isBlogPostPage ? styles.light : ""}`}>
+    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""} ${isBlogListingPage ? styles.dark : ""} ${isBlogPostPage || isTagPage ? styles.light : ""}`}>
       <div className={styles.inner}>
-        <div className={styles.brand}>Lorem Ipsum</div>
+        <Link to="/" className={styles.brand}>Johnny H.</Link>
 
         <nav className={styles.nav}>
           <a href="#platform" className={styles.navLink}>
@@ -51,8 +52,8 @@ export function Header() {
             Dolor Sit
             <ChevronRight className={styles.chevron} />
           </a>
-          <Link to="/blog" className={styles.navLink}>
-            Amet Consectetur
+          <Link to="/resources/blog" className={styles.navLink}>
+            Resources
             <ChevronRight className={styles.chevron} />
           </Link>
           <a href="#company" className={styles.navLink}>

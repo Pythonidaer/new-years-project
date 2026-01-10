@@ -6,6 +6,7 @@ import { Footer } from "../sections/Footer";
 import { getBlogPostBySlug, getRelatedPosts } from "../data/blog";
 import { Button } from "../components/Button";
 import { BlogGrid } from "../sections/BlogGrid";
+import { slugify } from "../utils/slug";
 import { ChevronRight } from "lucide-react";
 import styles from "./BlogPost.module.css";
 
@@ -97,7 +98,7 @@ export function BlogPost() {
                   {post.tags.map((tag, index) => (
                     <Link 
                       key={index}
-                      to={`/blog?category=${encodeURIComponent(tag)}`}
+                      to={`/resources/tag/${slugify(tag)}`}
                       className={styles.tagLink}
                     >
                       {tag}
@@ -116,19 +117,21 @@ export function BlogPost() {
                         <div className={styles.authorName}>{post.author || "Senior Engineer"}</div>
                       </div>
                     </div>
-                    <Link 
-                      to={`/blog?author=${encodeURIComponent(post.author || "Senior Engineer")}`}
+                    <a 
+                      href="https://www.linkedin.com/in/jonamichahammo"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={styles.authorLink}
                     >
                       More about this author
                       <ChevronRight className={styles.authorChevron} size={10} />
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
               
               {/* Back to Blog Button */}
-              <Link to="/blog" className={styles.backButton}>
+              <Link to="/resources/blog" className={styles.backButton}>
                 <span className={styles.backButtonInner}>
                   <ChevronRight className={styles.backChevron} size={10} />
                   <span>Back to Blog</span>
@@ -148,7 +151,7 @@ export function BlogPost() {
                 <h3 className={styles.relatedHeading}>Related Content</h3>
               </div>
               <div className={styles.relatedHeaderRight}>
-                <Link to="/blog">
+                <Link to="/resources/blog">
                   <Button variant="primary" showChevron>
                     View all
                   </Button>

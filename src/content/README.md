@@ -144,10 +144,38 @@ To hide it in production, conditionally render it:
 4. **Documentation**: Add comments in `contentMap.ts` for complex content structures
 5. **Testing**: Test topic switching to ensure all content displays correctly
 
-## Future Tasks (Saturday, January 10th)
+## Blog System Integration
 
-- [ ] **Create blog template for each blog**: Similar to [Mark43's blog post template](https://mark43.com/resources/blog/lifting-up-lgbtq-voices-in-public-safety/) as an example
-- [ ] **Category tag pages**: Make clicking on each grid card link to a URL page view like `/tag/data-driven-decisions/`. For example, clicking on a card with category "Culture" should go to `/tag/culture/` that displays the heading "Culture" with all blog cards matching that filter
+The blog system uses JSON-based blog posts stored in `src/data/blog/`. For detailed information on integrating new blog posts, see:
+
+- **`docs/BLOG_POST_INTEGRATION.md`** - Complete guide for integrating new blog post JSON files
+  - JSON structure requirements
+  - Step-by-step integration process
+  - Tag formatting rules (uppercase, spaces not dashes)
+  - Code block formatting guidelines
+  - Category registration steps
+
+### Blog Template
+
+✅ **Completed**: Individual blog post template page (`/blog/:slug`) has been created with:
+- Hero section with blurred background image
+- Featured image with overlap effect
+- Full article content rendering (HTML with `html-react-parser`)
+- Code blocks with proper formatting and mobile responsiveness
+- Tags section with links to category pages
+- "About the Author" section
+- "Back to Blog" button
+- Related content section (shows next 3 posts)
+
+The blog post template is located in `src/pages/BlogPost.tsx` and styled in `src/pages/BlogPost.module.css`.
+
+## Future Tasks
+
+- [x] **Create blog template for each blog**: ✅ Completed - Similar to [Mark43's blog post template](https://mark43.com/resources/blog/lifting-up-lgbtq-voices-in-public-safety/)
+- [ ] **Category tag pages**: Make clicking on each grid card category link and blog post tag links go to a URL page view like `/blog/category/frontend-architecture/`. For example, clicking on a category "Frontend Architecture" should go to `/blog/category/frontend-architecture/` that displays the heading "Frontend Architecture" with all blog cards matching that category filter. Currently:
+  - Category links in `src/sections/BlogGrid/index.tsx` (line 51-53) need updating
+  - Tag links in `src/pages/BlogPost.tsx` (line 94-107) need updating
+  - Need to create `/blog/category/:categoryName` route and page component
 - [ ] **Color system with root variables**: Lift up all styles and create a color picker so that colors can be dynamically changed for everything at once (e.g., banner color, header color, card color, etc.) and begin using CSS root variables
 - [ ] **Save/reset color settings**: Add a save icon so users can save their color settings. When they revisit the page, their saved colors should persist. Also add ability to reset to default colors (current colors)
 - [ ] **Mobile responsiveness**: Make website fully mobile responsive

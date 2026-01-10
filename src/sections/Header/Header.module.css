@@ -49,6 +49,13 @@
   letter-spacing: 0.5px;
   color: var(--color-white, #ffffff);
   white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.brand:hover {
+  opacity: 0.8;
 }
 
 .nav {
@@ -138,7 +145,6 @@
 /* Light variant for blog post pages - starts with white background and dark text */
 .header.light {
   background-color: #ffffff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 }
 
 .header.light .brand,

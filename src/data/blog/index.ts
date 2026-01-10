@@ -90,3 +90,25 @@ export function getRelatedPosts(currentPostId: number, limit: number = 3): BlogP
   return nextPosts;
 }
 
+/**
+ * Get all unique tags from all blog posts (across all topics)
+ * Includes both categories and tags arrays
+ */
+export function getAllUniqueTags(): string[] {
+  const allPosts = getAllBlogPosts();
+  const tagSet = new Set<string>();
+  
+  allPosts.forEach(post => {
+    // Add category as a tag
+    if (post.category) {
+      tagSet.add(post.category);
+    }
+    // Add all tags from tags array
+    if (post.tags && post.tags.length > 0) {
+      post.tags.forEach(tag => tagSet.add(tag));
+    }
+  });
+  
+  return Array.from(tagSet).sort();
+}
+

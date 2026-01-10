@@ -13,7 +13,7 @@ const mockBlogPosts = [
     excerpt: "This is a test excerpt for blog post 1",
     category: "Blog",
     image: "/test-image.jpg",
-    link: "/blog/test-1",
+    link: "/resources/blog/test-1",
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const mockBlogPosts = [
     excerpt: "This is a test excerpt for blog post 2",
     category: "Blog",
     image: "/test-image.jpg",
-    link: "/blog/test-2",
+    link: "/resources/blog/test-2",
   },
 ];
 
@@ -88,7 +88,7 @@ describe("BlogGrid Component", () => {
       excerpt: "Test excerpt",
       category: "Blog",
       image: "/test.jpg",
-      link: `/blog/post-${i + 1}`,
+      link: `/resources/blog/post-${i + 1}`,
     }));
 
     render(
@@ -114,7 +114,7 @@ describe("BlogGrid Component", () => {
       excerpt: "Test excerpt",
       category: "Blog",
       image: "/test.jpg",
-      link: `/blog/post-${i + 1}`,
+      link: `/resources/blog/post-${i + 1}`,
     }));
 
     render(

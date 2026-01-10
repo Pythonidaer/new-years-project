@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import type { BlogPost } from "../../data/blog/types";
+import { ALL_CATEGORIES } from "../../data/blog/categories";
+import { getAllUniqueTags } from "../../data/blog";
 import { Search } from "lucide-react";
 import styles from "./BlogFilters.module.css";
 
@@ -8,37 +10,30 @@ interface BlogFiltersProps {
   onFilterChange: (filteredPosts: BlogPost[]) => void;
 }
 
-// All available categories
-const ALL_CATEGORIES = [
-  "Frontend Frameworks",
-  "Frontend Architecture",
-  "JavaScript & TypeScript",
-  "State Management & Data Flow",
-  "UI Architecture & Component Design",
-  "Styling & Design Systems",
-  "Testing & Code Quality",
-  "Performance & Optimization",
-  "Accessibility",
-  // "APIs & Backend Integration", // Commented out - not yet applicable
-  // "Tooling, CI/CD & Deployment", // Commented out - not yet applicable
-  // "Security & Regulated Environments", // Commented out - not yet applicable
-  // "Product Thinking & Ownership", // Commented out - not yet applicable
-  // "Collaboration & Engineering Practices", // Commented out - not yet applicable
-  // "Observability, Reliability & Support", // Commented out - not yet applicable
-  // "Full-Stack Development", // Commented out - not yet applicable
-];
-
 export function BlogFilters({ posts, onFilterChange }: BlogFiltersProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  // Filter posts based on search and category
+  // Get all unique tags from posts and combine with ALL_CATEGORIES
+  // This ensures the dropdown shows both categories and tags that exist in posts
+  const allFilterOptions = useMemo(() => {
+    const uniqueTags = getAllUniqueTags();
+    // Combine categories and tags, removing duplicates
+    const combined = new Set([...ALL_CATEGORIES, ...uniqueTags]);
+    return Array.from(combined).sort();
+  }, []);
+
+  // Filter posts based on search and category/tag
   useEffect(() => {
     let filtered = [...posts]; // Create a copy to avoid mutating
 
-    // Filter by category
+    // Filter by category or tag
     if (selectedCategory !== "all") {
-      filtered = filtered.filter((post) => post.category === selectedCategory);
+      filtered = filtered.filter(
+        (post) => 
+          post.category === selectedCategory || 
+          (post.tags && post.tags.includes(selectedCategory))
+      );
     }
 
     // Filter by search query
@@ -48,7 +43,8 @@ export function BlogFilters({ posts, onFilterChange }: BlogFiltersProps) {
         (post) =>
           post.title.toLowerCase().includes(query) ||
           post.excerpt.toLowerCase().includes(query) ||
-          post.category.toLowerCase().includes(query)
+          post.category.toLowerCase().includes(query) ||
+          (post.tags && post.tags.some(tag => tag.toLowerCase().includes(query)))
       );
     }
 
@@ -66,9 +62,9 @@ export function BlogFilters({ posts, onFilterChange }: BlogFiltersProps) {
             className={`${styles.select} ${styles.selected}`}
           >
             <option value="all">Type</option>
-            {ALL_CATEGORIES.map((category) => (
-              <option key={category} value={category}>
-                {category}
+            {allFilterOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
               </option>
             ))}
           </select>

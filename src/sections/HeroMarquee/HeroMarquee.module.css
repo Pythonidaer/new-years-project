@@ -22,20 +22,13 @@
   width: 280px;
 }
 
-.imagePlaceholder {
+.image {
   width: 100%;
+  height: auto;
   aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg, #1a2a3a 0%, #2a3a4a 100%);
+  object-fit: cover;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 14px;
-}
-
-.placeholderText {
-  text-align: center;
+  display: block;
 }
 
 @keyframes scroll {
