@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
 import type { BlogPost } from "../../data/blog/types";
-import { ALL_CATEGORIES } from "../../data/blog/categories";
 import { getAllUniqueTags } from "../../data/blog";
 import { Search } from "lucide-react";
 import styles from "./BlogFilters.module.css";
@@ -14,13 +13,11 @@ export function BlogFilters({ posts, onFilterChange }: BlogFiltersProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  // Get all unique tags from posts and combine with ALL_CATEGORIES
-  // This ensures the dropdown shows both categories and tags that exist in posts
+  // Get all unique tags from posts (includes both categories and tags from post arrays)
+  // This ensures the dropdown only shows categories/tags that actually have posts
   const allFilterOptions = useMemo(() => {
     const uniqueTags = getAllUniqueTags();
-    // Combine categories and tags, removing duplicates
-    const combined = new Set([...ALL_CATEGORIES, ...uniqueTags]);
-    return Array.from(combined).sort();
+    return uniqueTags.sort();
   }, []);
 
   // Filter posts based on search and category/tag

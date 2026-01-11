@@ -1,0 +1,186 @@
+# Cursor Content Rules — Interview Blog Articles
+
+These rules enforce writing quality, structure, and consistency for interview-style blog articles rendered via `html-react-parser`.
+
+---
+
+## Purpose
+
+Ensure all generated or edited articles:
+- Are junior-friendly but senior-accurate
+- Are paragraph-driven (Mark43-style), not list-heavy
+- Encode semantic intent using HTML + CSS classes
+- End with a clear interview-ready takeaway
+
+These rules apply to **all blog article content files**.
+
+---
+
+## Required Structure Rules
+
+### 1. Introduction
+- The article **must explicitly state the interview question** in the introduction.
+- This must appear within the first 1–2 paragraphs.
+- Example phrasing:
+  > “This article answers the interview question: ‘…’”
+
+---
+
+### 2. Semantic HTML Classes (Mandatory)
+
+Articles must use the following semantic wrappers:
+
+- `<div class="explanation">`  
+  For conceptual explanations and reasoning.
+
+- `<div class="example">`  
+  For concrete scenarios, real-world illustrations, or case studies.
+
+- `<div class="takeaway">`  
+  For actionable guidance, heuristics, or interview-ready summaries.
+
+**Rules:**
+- Every article must contain **at least one** `.explanation` block.
+- Every article must contain **at least one** `.example` block.
+- Every article must end with a `.takeaway` block.
+
+---
+
+### 3. Code Examples
+- All code must be wrapped in:
+  ```html
+  <pre><code>...</code></pre>
+  ```
+- Do not embed code inline inside paragraphs.
+
+---
+
+## Writing Style Rules
+
+### 4. Paragraph-First Writing
+- Default to paragraphs, not lists.
+- Paragraphs should be **2–4 sentences**.
+- Lists are allowed **only** for:
+  - Step-by-step procedures
+  - Checklists
+  - Explicit enumerations after explanation
+
+**Anti-pattern:** Long explanatory bullet lists.
+
+---
+
+### 5. Bold Lead-Ins
+- Key ideas should begin with a **bold lead-in sentence fragment**, followed by explanation.
+- Example:
+  ```html
+  <p><strong>Stability matters more than reuse.</strong> A shared component that changes weekly...</p>
+  ```
+
+---
+
+### 6. Junior-Friendly Clarity
+When reviewing content:
+- If a term is introduced, ensure it is explained plainly.
+- If a decision is described, ensure the *reasoning* is stated.
+- If tradeoffs exist, they must be acknowledged.
+
+---
+
+## Required Closing Section
+
+### 7. Final Takeaway (Hard Requirement)
+The article **must end** with a `<div class="takeaway">` that includes:
+- A plain-language summary of the core idea
+- A concise, interview-ready answer (1–2 short paragraphs max)
+
+This section should answer:
+> “What would you actually say out loud in an interview?”
+
+---
+
+## Editing & Review Rules
+
+### 8. Editor Pass Expectations
+When editing or refactoring articles:
+- Convert list-heavy explanations into paragraphs
+- Preserve meaning; do not introduce new concepts
+- Improve clarity where ideas are implied but not stated
+- Ensure all structural requirements still pass
+
+---
+
+## Non-Goals
+These rules do NOT require:
+- Mentioning SEO, Google, or ranking considerations
+- Marketing language or calls-to-action
+- Overly verbose explanations
+
+Focus on clarity, correctness, and usefulness.
+
+---
+
+## Blog Post Integration
+
+### 9. Standard Blog Integration Command
+
+When the user says "Please add/integrate/incorporate the <filename>.json file" or similar, follow this process:
+
+**Reference**: Full details in `docs/BLOG_POST_INTEGRATION.md`
+
+**Quick Integration Steps**:
+
+1. **Update JSON file format** (if needed):
+   - Ensure `id` is a **number** (must be unique across ALL posts - check existing IDs)
+   - Convert `date` to human-readable format: "January 11, 2026" (not ISO format like "2026-01-11")
+   - Update `image` to: `https://picsum.photos/367/197?random=N` (find next available number)
+   - Add `slug` field if missing (generate from title if needed)
+   - Format `tags` as Title Case with spaces (e.g., "React", "Component Design", "State Management & Data Flow")
+   - Ensure `category` matches existing category from `src/data/blog/categories.ts`
+   - Verify `content` is HTML (not Markdown) - all code must be in `<pre><code>...</code></pre>` blocks
+   - Format code blocks with proper line breaks for readability
+
+2. **Find next unique ID**:
+   - Check all existing blog post IDs: `grep '"id":' src/data/blog/*.json`
+   - Assign next sequential number (e.g., if highest is 7, use 8)
+   - **Critical**: IDs must be unique across ALL posts (not just within topics) because `getRelatedPosts()` uses IDs
+
+3. **Find next available image random number**:
+   - Check existing random numbers: `grep -h "random=" src/data/blog/*.json | grep -o "random=[0-9]*" | sort -t= -k2 -n | tail -1`
+   - Use next number (e.g., if highest is 44, use 45)
+
+4. **Register in blog system**:
+   - **File**: `src/data/blog/index.ts`
+     - Add import statement at top: `import <camelCaseName>Posts from "./<filename>.json";`
+     - Add entry to `blogPostsByTopic` object: `<topic_id>: <camelCaseName>Posts as BlogPosts,`
+   - **File**: `src/content/topics.ts`
+     - Add topic entry to `topics` array with `id` (filename without .json), `label` (human-readable title), and `description`
+
+5. **Verify**:
+   - Run `npm test -- --run`
+   - Check for linting errors: `read_lints` on modified files
+   - Verify unique ID assignment
+   - Ensure all tests pass
+
+**Command Examples** (all trigger the same process):
+- "Please add the interview_example.json file"
+- "Please incorporate interview_example.json"
+- "Please integrate @interview_example.json"
+- "Please add @src/data/blog/interview_example.json"
+
+**Important Notes**:
+- Blog post IDs must be **unique across all posts** (not just within topics) because `getRelatedPosts()` uses `findIndex((p) => p.id === currentPostId)` to locate posts
+- Tags should match existing category names where possible (e.g., use "Frontend Architecture" if the post is about frontend architecture)
+- Category must exist in `ALL_CATEGORIES` array in `src/data/blog/categories.ts` (or you must add it there first)
+- Topic ID in `topics.ts` must match the filename (without `.json` extension)
+
+---
+
+## Summary Checklist
+
+Before merging or publishing:
+- [ ] Interview question stated in intro
+- [ ] `.explanation` present
+- [ ] `.example` present
+- [ ] Final `.takeaway` present and interview-ready
+- [ ] Paragraph-driven, list-light writing
+- [ ] Valid HTML compatible with `html-react-parser`
