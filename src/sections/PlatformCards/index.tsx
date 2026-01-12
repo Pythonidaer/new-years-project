@@ -5,22 +5,22 @@ import styles from "./PlatformCards.module.css";
 const cards = [
   {
     id: 1,
-    title: "Lorem Ipsum Dolor",
+    title: "Commonwealth Financial Network",
     description: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   },
   {
     id: 2,
-    title: "Consectetur Adipiscing",
+    title: "Boston Children's Hospital",
     description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
   },
   {
     id: 3,
-    title: "Elit Sed Do",
+    title: "WordPress Development",
     description: "Duis aute irure dolor in reprehenderit in voluptate velit esse.",
   },
   {
     id: 4,
-    title: "Eiusmod Tempor",
+    title: "Carrot",
     description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa.",
   },
 ];

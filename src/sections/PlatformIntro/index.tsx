@@ -6,40 +6,48 @@ import cardStyles from "../PlatformCards/PlatformCards.module.css";
 const cards = [
   {
     id: 1,
-    title: "Lorem Ipsum Dolor",
-    description: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    title: "Commonwealth Financial Network",
+    description: "Built React UIs from Figma designs, improved workflows with reusable components.",
+    image: "/Commonwealth-Financial-Network-Logo.jpeg",
+    alt: "Commonwealth Financial Network logo",
   },
   {
     id: 2,
-    title: "Consectetur Adipiscing",
-    description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+    title: "Boston Children's Hospital",
+    description: "Created accessible Drupal themes, deployed to multiple hospital sites via AWS infrastructure.",
+    image: "/Boston-Childrens-Hospital-Logo.png",
+    alt: "Boston Children's Hospital logo",
   },
   {
     id: 3,
-    title: "Elit Sed Do",
-    description: "Duis aute irure dolor in reprehenderit in voluptate velit esse.",
+    title: "WordPress Development",
+    description: "Integrated Stripe API for political donations on a City Councilor's website.",
+    image: "/WordPress-Freelancing-Logo.jpg",
+    alt: "WordPress logo",
   },
   {
     id: 4,
-    title: "Eiusmod Tempor",
-    description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa.",
+    title: "Carrot",
+    description: "Built full-stack features with React, TypeScript, and GraphQL, optimized API caching.",
+    image: "/Carrot-Logo.png",
+    alt: "Carrot logo",
   },
 ];
 
 export function PlatformIntro() {
   return (
-    <Section>
+    <Section id="experience">
       <Container>
         <div className={styles.wrapper}>
           <h2 className={styles.heading}>
-            Lorem Ipsum
+            My Experience
           </h2>
           <div className={styles.content}>
             <p className={styles.text}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+              I've had the opportunity to work across diverse industries—from financial services to healthcare—building user interfaces that solve real-world problems. Each role has shaped my approach to frontend development, emphasizing clean code, user-centric design, and scalable architecture.
             </p>
             <p className={styles.text}>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Through these experiences, I've developed expertise in React, TypeScript, and modern web technologies while collaborating with cross-functional teams to deliver high-quality applications that users rely on daily.
             </p>
           </div>
         </div>
@@ -48,7 +56,11 @@ export function PlatformIntro() {
             {cards.map((card) => (
               <div key={card.id} className={cardStyles.card}>
                 <div className={cardStyles.cardImage}>
-                  <span className={cardStyles.placeholderText}>Image</span>
+                  <img 
+                    src={card.image} 
+                    alt={card.alt}
+                    className={cardStyles.imageContent}
+                  />
                 </div>
                 <h3 className={cardStyles.cardTitle}>{card.title}</h3>
                 <p className={cardStyles.cardDescription}>{card.description}</p>

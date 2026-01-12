@@ -1,29 +1,50 @@
 import { Container } from "../../layout/Container";
 import { Section } from "../../layout/Section";
-import { Button } from "../../components/Button";
 import styles from "./CampaignBanner.module.css";
+import buttonStyles from "../../components/Button.module.css";
 
 export function CampaignBanner() {
   return (
-    <Section className={styles.banner}>
+    <Section className={styles.banner} id="contact">
       <Container>
         <div className={styles.wrapper}>
           <div className={styles.content}>
             <h2 className={styles.heading}>
-              Lorem{" "}
-              <span className={styles.accent}>Ipsum</span>
+              Let's{" "}
+              <span className={styles.accent}>Connect</span>
             </h2>
             <p className={styles.text}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Interested in working together? Reach out via{" "}
+              <a href="mailto:JHJonathanHammond@gmail.com" className={styles.link}>
+                email
+              </a>
+              {" "}or connect on{" "}
+              <a 
+                href="https://www.linkedin.com/in/jonamichahammo" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={styles.link}
+              >
+                LinkedIn
+              </a>
+              {" "}to discuss opportunities.
             </p>
             <div className={styles.cta}>
-              <Button>Lorem Ipsum</Button>
+              <a 
+                href="/JonathanHammondResume.pdf" 
+                download="Jonathan-Hammond-Resume.pdf"
+                className={buttonStyles.primary}
+              >
+                Download Resume
+              </a>
             </div>
           </div>
           <div className={styles.image}>
-            <div className={styles.imagePlaceholder}>
-              <span className={styles.placeholderText}>Lorem Ipsum</span>
-            </div>
+            <img 
+              src="/Jonathan_Hammond.PNG" 
+              alt="Jonathan Hammond"
+              className={styles.imageContent}
+            />
           </div>
         </div>
       </Container>

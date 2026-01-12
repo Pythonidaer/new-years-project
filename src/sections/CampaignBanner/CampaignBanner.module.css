@@ -38,6 +38,18 @@
   opacity: 0.95;
 }
 
+.link {
+  color: var(--color-accent-alt);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s ease;
+}
+
+.link:hover {
+  opacity: 0.8;
+}
+
 .cta {
   margin-top: 8px;
 }
@@ -46,21 +58,12 @@
   position: relative;
 }
 
-.imagePlaceholder {
+.imageContent {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  background: var(--color-footer-social-bg);
+  height: auto;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-footer-text-muted);
-  font-size: 14px;
-  border: 1px solid var(--color-footer-border);
-}
-
-.placeholderText {
-  text-align: center;
+  object-fit: cover;
+  display: block;
 }
 
 @media (max-width: 990px) {

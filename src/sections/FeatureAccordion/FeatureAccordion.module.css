@@ -123,6 +123,14 @@
   text-align: center;
 }
 
+.imageContent {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;

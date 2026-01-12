@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-import { Button } from "../../components/Button";
 import styles from "./Header.module.css";
+import buttonStyles from "../../components/Button.module.css";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -10,6 +10,24 @@ export function Header() {
   const isBlogListingPage = location.pathname === "/resources/blog";
   const isBlogPostPage = location.pathname.match(/^\/resources\/blog\/[^/]+$/);
   const isTagPage = location.pathname.match(/^\/resources\/tag\/[^/]+$/);
+
+  const handleHashClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // If we're already on the home page with the same hash, manually scroll
+    const hash = (e.currentTarget.getAttribute('href') || '').split('#')[1];
+    if (hash && location.pathname === "/" && location.hash === `#${hash}`) {
+      e.preventDefault();
+      const element = document.querySelector(`#${hash}`);
+      if (element) {
+        const headerOffset = 110;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     let ticking = false;
@@ -44,27 +62,33 @@ export function Header() {
         <Link to="/" className={styles.brand}>Johnny H.</Link>
 
         <nav className={styles.nav}>
-          <a href="#platform" className={styles.navLink}>
-            Lorem Ipsum
+          <Link to="/#experience" className={styles.navLink} onClick={handleHashClick}>
+            Experience
             <ChevronRight className={styles.chevron} />
-          </a>
-          <a href="#solutions" className={styles.navLink}>
-            Dolor Sit
+          </Link>
+          <Link to="/#projects" className={styles.navLink} onClick={handleHashClick}>
+            Projects
             <ChevronRight className={styles.chevron} />
-          </a>
+          </Link>
           <Link to="/resources/blog" className={styles.navLink}>
             Resources
             <ChevronRight className={styles.chevron} />
           </Link>
-          <a href="#company" className={styles.navLink}>
-            Adipiscing Elit
+          <Link to="/#contact" className={styles.navLink} onClick={handleHashClick}>
+            Contact
             <ChevronRight className={styles.chevron} />
-          </a>
+          </Link>
         </nav>
 
-        <Button className={styles.cta} showChevron>
-          Sed Do Eiusmod
-        </Button>
+        <a 
+          href="https://www.linkedin.com/in/jonamichahammo" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className={`${buttonStyles.primary} ${styles.cta}`}
+        >
+          Hire Me
+          <ChevronRight className={buttonStyles.chevron} size={10} />
+        </a>
       </div>
     </header>
   );

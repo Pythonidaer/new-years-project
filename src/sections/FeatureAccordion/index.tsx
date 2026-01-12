@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { Container } from "../../layout/Container";
 import { Section } from "../../layout/Section";
-import { Button } from "../../components/Button";
 import { Icon } from "../../components/Icon";
 import styles from "./FeatureAccordion.module.css";
+import buttonStyles from "../../components/Button.module.css";
 
 import {
+  FileText,
   Network,
-  Sparkles,
-  Cloud,
-  ShieldCheck,
-  Layers,
-  Headphones,
+  Code,
+  Film,
+  Quote,
+  Timer,
 } from "lucide-react";
 
 type FeatureItem = {
@@ -19,58 +19,72 @@ type FeatureItem = {
   title: string;
   content: string;
   ctaLabel: string;
-  icon: typeof Network;
+  url: string;
+  icon: typeof FileText;
   imageLabel: string;
+  image?: string;
 };
 
 const items: FeatureItem[] = [
   {
     id: 1,
-    title: "Lorem Ipsum",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    ctaLabel: "LOREM IPSUM",
-    icon: Network,
-    imageLabel: "Lorem Ipsum",
+    title: "Docs Summarizer",
+    content: "Chrome extension using OpenAI API to summarize any webpage with interactive features and export options.",
+    ctaLabel: "VIEW PROJECT",
+    url: "https://chromewebstore.google.com/detail/docs-summarizer/cbohkbdgjdpmoffedjbcdagmhpjdbiag?hl=en-US",
+    icon: FileText,
+    imageLabel: "Docs Summarizer",
+    image: "/Docs_Summarizer_3x4_600x800.png",
   },
   {
     id: 2,
-    title: "Dolor Sit",
-    content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    ctaLabel: "LOREM IPSUM",
-    icon: Sparkles,
-    imageLabel: "Dolor Sit",
+    title: "Mind Map Method",
+    content: "Interactive D3.js mind maps for learning topics from AI to WordPress, backed by cognitive science principles.",
+    ctaLabel: "VIEW PROJECT",
+    url: "https://mindmapmethod.netlify.app/about",
+    icon: Network,
+    imageLabel: "Mind Map Method",
+    image: "/Mind_Map_Method_3x4_600x800.png",
   },
   {
     id: 3,
-    title: "Amet Consectetur",
-    content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    ctaLabel: "LOREM IPSUM",
-    icon: Cloud,
-    imageLabel: "Amet Consectetur",
+    title: "Hammond Bytes",
+    content: "Personal blog built with Next.js, Strapi, and Railway, exploring new technologies and development.",
+    ctaLabel: "VIEW PROJECT",
+    url: "https://hammondbytes.netlify.app/",
+    icon: Code,
+    imageLabel: "Hammond Bytes",
+    image: "/Hammond_Bytes_3x4_600x800.png",
   },
   {
     id: 4,
-    title: "Adipiscing Elit",
-    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    ctaLabel: "LOREM IPSUM",
-    icon: ShieldCheck,
-    imageLabel: "Adipiscing Elit",
+    title: "Movie Watch List",
+    content: "Password-protected Next.js app for friends to share and organize movie watchlists by genre.",
+    ctaLabel: "VIEW PROJECT",
+    url: "https://movie-friend-watch-list.vercel.app/",
+    icon: Film,
+    imageLabel: "Movie Watch List",
+    image: "/Movie_Watch_List_3x4_600x800.png",
   },
   {
     id: 5,
-    title: "Sed Do Eiusmod",
-    content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-    ctaLabel: "LOREM IPSUM",
-    icon: Layers,
-    imageLabel: "Sed Do Eiusmod",
+    title: "Peak Scrivening",
+    content: "PWA featuring Gary Gulman's 365 comedy quotes with random generation, search, and slideshow modes.",
+    ctaLabel: "VIEW PROJECT",
+    url: "https://peak-scrivening.vercel.app/",
+    icon: Quote,
+    imageLabel: "Peak Scrivening",
+    image: "/Peak_Scrivening_3x4_600x800.png",
   },
   {
     id: 6,
-    title: "Tempor Incididunt",
-    content: "Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt.",
-    ctaLabel: "LOREM IPSUM",
-    icon: Headphones,
-    imageLabel: "Tempor Incididunt",
+    title: "PWA Timer",
+    content: "Picture-in-Picture timer being converted to Tauri desktop app, expanding beyond browser limitations.",
+    ctaLabel: "VIEW PROJECT",
+    url: "https://pythonidaer.github.io/vue-pwa-timer/site",
+    icon: Timer,
+    imageLabel: "PWA Timer",
+    image: "/PWA_Timer_3x4_600x800.png",
   },
 ];
 
@@ -85,9 +99,9 @@ export function FeatureAccordion() {
   const activeItem = items.find((i) => i.id === activeId) ?? items[0];
 
   return (
-    <Section>
+    <Section id="projects">
       <Container>
-      <h2 className={styles.heading}>Lorem Ipsum</h2>
+      <h2 className={styles.heading}>Recent Projects</h2>
 
         <div className={styles.wrapper}>
             
@@ -116,7 +130,14 @@ export function FeatureAccordion() {
                     {isActive && (
                       <div className={styles.panel}>
                         <p className={styles.panelText}>{item.content}</p>
-                        <Button className={styles.ctaButton}>{item.ctaLabel}</Button>
+                        <a 
+                          href={item.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className={`${buttonStyles.primary} ${styles.ctaButton}`}
+                        >
+                          {item.ctaLabel}
+                        </a>
                       </div>
                     )}
                   </div>
@@ -128,7 +149,15 @@ export function FeatureAccordion() {
           {/* RIGHT: Image (placeholder swaps based on active item) */}
           <div className={styles.image}>
             <div className={styles.imagePlaceholder}>
-              <span className={styles.placeholderText}>{activeItem.imageLabel}</span>
+              {activeItem.image ? (
+                <img
+                  src={activeItem.image}
+                  alt={activeItem.imageLabel}
+                  className={styles.imageContent}
+                />
+              ) : (
+                <span className={styles.placeholderText}>{activeItem.imageLabel}</span>
+              )}
             </div>
           </div>
         </div>

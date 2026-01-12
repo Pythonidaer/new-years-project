@@ -55,7 +55,7 @@ export function TopBanner() {
     >
       <div className={styles.container}>
         <p className={styles.text}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+        Johnny Hammond is currently open to employment opportunities as a frontend-focused software engineer.
         </p>
 
         <button
