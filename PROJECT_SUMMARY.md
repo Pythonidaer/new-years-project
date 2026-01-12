@@ -121,6 +121,37 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
    - Contains `ALL_CATEGORIES` array (line 12-29)
    - Categories must be added here for filtering to work
 
+### For Theming System:
+1. **`src/design/theming-goals.md`** - Original theming architecture documentation
+   - Explains semantic tokens, CSS variables, React ThemeProvider
+   - Theme override strategy for nested components
+   - User customization flow
+
+2. **`src/design/tokens.css`** - CSS variable definitions
+   - Themeable colors on `#root` (supports nested overrides)
+   - Non-themeable tokens (fonts, layout) on `:root`
+   - All semantic color tokens (core, primary, accent, gradients, footer, shadows, code)
+
+3. **`src/context/ThemeContext.tsx`** - Theme state management
+   - `Theme` type definition
+   - `ThemeProvider` component with `useTheme` hook
+   - Built-in preset themes (9 themes)
+   - Custom preset saving/loading
+   - Export/import theme JSON
+   - `localStorage` persistence
+
+4. **`src/components/ThemePicker/ThemePicker.tsx`** - Color picker UI
+   - Floating palette button (bottom-right)
+   - Color token organization by category
+   - Real-time contrast checking integration
+   - Preset management UI
+
+5. **`src/utils/contrast.ts`** - WCAG contrast checking
+   - `getContrastRatio()` - Calculate contrast ratio between two colors
+   - `checkContrastIssues()` - Identify problematic color pairs
+   - Handles semi-transparent colors (blends with backgrounds)
+   - Gradient contrast checking (checks both start and end)
+
 ### For Category Page Task:
 1. **`src/App.tsx`** - Route definitions (currently only has `/`, `/blog`, `/blog/:slug`)
 2. **`src/pages/Blog.tsx`** - Blog listing page structure (reference for category page)
@@ -243,7 +274,7 @@ Full process documented in `docs/BLOG_POST_INTEGRATION.md`.
 ### Stage 2: ✅ Completed
 - ThemePicker component with floating UI
 - Real-time contrast checking with WCAG warnings
-- 8 built-in preset themes (all meet WCAG AA requirements)
+- 9 built-in preset themes (all meet WCAG AA requirements)
 - Custom preset saving/loading
 - Theme persistence with no-flicker loading
 - Export/import theme JSON
