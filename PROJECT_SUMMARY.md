@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a **React + Vite + TypeScript** application that replicates Mark43's website design with a focus on a blog system. The project uses a centralized content system for topic-based content switching and a JSON-based blog system for managing blog posts.
+This is a **React + Vite + TypeScript** application that replicates Mark43's website design with a focus on a blog system. The project uses a JSON-based blog system for managing blog posts.
 
 ## Project Structure
 
@@ -16,8 +16,6 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
 
 ### Key Features
 
-1. **Centralized Content System** (`src/content/`)
-   - Topic-based content switching via `ContentProvider` and `useContent` hook
    - Allows switching all page copy globally by selecting a topic
    - Topics registered in `src/content/topics.ts`
    - Content stored in `src/content/contentMap.ts`
@@ -51,7 +49,7 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
    - `/` - Home page with Hero, Features, Platform Cards, etc.
    - `/blog` - Blog listing page with featured post, filters, and grid
    - `/blog/:slug` - Individual blog post template page
-   - `/blog/category/:category-name` - **TODO: Category page (see task below)**
+   - `/resources/tag/:categoryName` - Category/tag filtering page (unified handler for both categories and tags)
 
 ### Current State
 
@@ -81,17 +79,15 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
   - No-flicker theme loading (applied before React render)
   - Export/import theme JSON functionality
 
-❌ **TODO - Category Page Implementation:**
-- Category links currently broken/incomplete
-- Need to create `/blog/category/:category-name` route
-- Category links exist in two places:
-  1. `src/sections/BlogGrid/index.tsx` (line 51-53): Category link in blog cards
-  2. `src/pages/BlogPost.tsx` (line 94-107): Tags section (postTerms)
-- Category page should display:
-  - Page heading with category name (e.g., "Frontend Architecture")
-  - Filtered blog grid showing only posts matching that category
-  - Reuse existing `BlogGrid` component
-  - Similar structure to `/blog` but without featured post
+✅ **Category/Tag Page Implementation - COMPLETED:**
+- Unified `/resources/tag/:categoryName` route implemented via `Tag.tsx` component
+- Handles both categories and tags (filters by `post.category` OR `post.tags.includes()`)
+- Category links working in:
+  1. `src/sections/BlogGrid/index.tsx` (line 52): Uses `/resources/tag/${slugify(post.category)}`
+  2. `src/pages/BlogPost.tsx` (line 101): Tag links use `/resources/tag/${slugify(tag)}`
+- Displays page heading with category/tag name
+- Uses existing `BlogGrid` component for filtered posts
+- Case-insensitive matching with slug-based routing
 
 ## Important Files to Read
 
@@ -291,32 +287,6 @@ Full process documented in `docs/BLOG_POST_INTEGRATION.md`.
 - `src/components/ThemePicker/` - Color picker UI component
 - `src/utils/contrast.ts` - WCAG contrast checking utilities
 - `src/design/theming-goals.md` - Original theming architecture documentation
-
-## Current Task: Category Page Implementation
-
-**Goal**: Create `/blog/category/:category-name` route that displays filtered blog posts
-
-**Requirements:**
-1. Add route to `src/App.tsx`: `/blog/category/:categoryName`
-2. Create `src/pages/Category.tsx` component
-3. Filter posts by category (match category name from URL param)
-4. Display page heading with category name (e.g., "Frontend Architecture")
-5. Use existing `BlogGrid` component to display filtered posts
-6. Structure similar to `/blog` page but:
-   - No featured post
-   - No filters/search (or minimal filters)
-   - Just heading + filtered grid
-7. Update category links:
-   - `src/sections/BlogGrid/index.tsx` line 51: Change from `<a href={...}>` to `<Link to={...}>` pointing to `/blog/category/:category-slug`
-   - `src/pages/BlogPost.tsx` line 100: Change from `/blog?category=...` to `/blog/category/:category-slug`
-   - Generate category slug from category name (similar to `slugify` function)
-
-**Notes:**
-- Category names have spaces (e.g., "Frontend Architecture")
-- Need to create slug from category name for URL (e.g., "frontend-architecture")
-- Use existing `slugify` utility from `src/utils/slug.ts`
-- Category matching should be case-insensitive or exact match
-- See `src/data/blog/types.ts` for `category` field structure
 
 ## Next Steps
 

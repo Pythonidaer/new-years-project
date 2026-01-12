@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
+import { ThemeContext } from './ThemeContextInstance';
 
 export type Theme = {
   bg: string;
@@ -81,19 +82,7 @@ export type Preset = {
   theme: Theme;
 };
 
-type ThemeContextType = {
-  theme: Theme;
-  updateTheme: (updates: Partial<Theme>) => void;
-  resetTheme: () => void;
-  exportTheme: () => string;
-  importTheme: (themeJson: string) => void;
-  presets: Preset[];
-  savePreset: (name: string, themeToSave?: Theme) => void;
-  loadPreset: (presetId: string) => void;
-  deletePreset: (presetId: string) => void;
-};
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export type { ThemeContextType } from './ThemeContextInstance';
 
 const STORAGE_KEY = 'user-theme';
 const PRESETS_STORAGE_KEY = 'theme-presets';
@@ -615,11 +604,4 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within ThemeProvider');
-  }
-  return context;
-}
 

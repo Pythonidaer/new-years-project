@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
-import { ContentProvider } from './content/ContentProvider'
 import { ThemeProvider } from './context/ThemeContext'
 
 // Load theme from localStorage BEFORE React renders (prevents flicker)
@@ -31,11 +30,9 @@ if (savedTheme) {
 createRoot(rootElement).render(
   <StrictMode>
     <BrowserRouter>
-      <ContentProvider>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </ContentProvider>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </BrowserRouter>
   </StrictMode>,
 )

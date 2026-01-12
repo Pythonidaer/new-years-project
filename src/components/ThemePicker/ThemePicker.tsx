@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useTheme } from '../../context/ThemeContext';
+import { useTheme } from '../../context/useTheme';
 import { checkContrastIssues } from '../../utils/contrast';
 import { RotateCcw, Save, X, Palette, Bookmark, Trash2 } from 'lucide-react';
 import Color from 'color';
@@ -79,6 +79,7 @@ export function ThemePicker() {
   const [presetName, setPresetName] = useState('');
   const [showSavePreset, setShowSavePreset] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   // Check contrast issues whenever theme or local changes update (useMemo to avoid effect warning)
         const contrastIssues = useMemo(() => {
@@ -176,10 +177,17 @@ export function ThemePicker() {
     }
   };
 
-  // Close on outside click
+  // Close on outside click (but not when clicking the trigger button)
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      // Don't close if clicking the trigger button or inside the popup
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(target) &&
+        triggerRef.current &&
+        !triggerRef.current.contains(target)
+      ) {
         setIsOpen(false);
       }
     };
@@ -246,6 +254,7 @@ export function ThemePicker() {
   return (
     <>
       <button
+        ref={triggerRef}
         className={styles.trigger}
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Open theme picker"

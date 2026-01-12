@@ -21,10 +21,9 @@ import interviewWhatAGoodReactTestingLibraryTestLooksLikePosts from "./interview
 import interviewTestingAsyncBehaviorLoadingStatesAndErrorStatesInReactPosts from "./interview_testing_async_behavior_loading_states_and_error_states_in_react.json";
 import interviewPreventingBrittleFrontendTestsWhenTheUiChangesFrequentlyPosts from "./interview_preventing_brittle_frontend_tests_when_the_ui_changes_frequently.json";
 import interviewHowFrontendTestsFitIntoCicdQualityGatesPosts from "./interview_how_frontend_tests_fit_into_cicd_quality_gates.json";
-import type { TopicId } from "../../content/types";
 import { slugify } from "../../utils/slug";
 
-export const blogPostsByTopic: Record<TopicId, BlogPosts> = {
+export const blogPostsByTopic: Record<string, BlogPosts> = {
   default: defaultPosts as BlogPosts,
   interview_reusable_vs_feature_specific_components: interviewReusableVsFeatureSpecificComponentsPosts as BlogPosts,
   interview_structuring_a_complex_react_app_for_long_term_maintainability: interviewStructuringAComplexReactAppPosts as BlogPosts,
@@ -49,7 +48,7 @@ export const blogPostsByTopic: Record<TopicId, BlogPosts> = {
   interview_how_frontend_tests_fit_into_cicd_quality_gates: interviewHowFrontendTestsFitIntoCicdQualityGatesPosts as BlogPosts,
 };
 
-export function getBlogPostsForTopic(topicId: TopicId): BlogPosts {
+export function getBlogPostsForTopic(topicId: string): BlogPosts {
   return blogPostsByTopic[topicId] || blogPostsByTopic.default;
 }
 
@@ -84,7 +83,7 @@ export function getBlogPostBySlug(slug: string): BlogPost | null {
 /**
  * Get the topic ID for a given blog post
  */
-export function getBlogPostTopicId(post: BlogPost): TopicId | null {
+export function getBlogPostTopicId(post: BlogPost): string | null {
   for (const [topicId, posts] of Object.entries(blogPostsByTopic)) {
     if (posts.some((p) => p.id === post.id && p.title === post.title)) {
       return topicId;

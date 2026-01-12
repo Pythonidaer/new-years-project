@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import { ContentProvider } from "../content/ContentProvider";
 import { BlogGrid } from "../sections/BlogGrid";
 
 // Mock blog data
@@ -30,9 +29,7 @@ describe("BlogGrid Component", () => {
   it("renders blog posts from provided data", () => {
     render(
       <BrowserRouter>
-        <ContentProvider>
-          <BlogGrid posts={mockBlogPosts} />
-        </ContentProvider>
+        <BlogGrid posts={mockBlogPosts} />
       </BrowserRouter>
     );
 
@@ -43,9 +40,7 @@ describe("BlogGrid Component", () => {
   it("displays blog post dates", () => {
     render(
       <BrowserRouter>
-        <ContentProvider>
-          <BlogGrid posts={mockBlogPosts} />
-        </ContentProvider>
+        <BlogGrid posts={mockBlogPosts} />
       </BrowserRouter>
     );
 
@@ -70,9 +65,7 @@ describe("BlogGrid Component", () => {
   it("displays category tags", () => {
     render(
       <BrowserRouter>
-        <ContentProvider>
-          <BlogGrid posts={mockBlogPosts} />
-        </ContentProvider>
+        <BlogGrid posts={mockBlogPosts} />
       </BrowserRouter>
     );
 
@@ -93,9 +86,7 @@ describe("BlogGrid Component", () => {
 
     render(
       <BrowserRouter>
-        <ContentProvider>
-          <BlogGrid posts={manyPosts} />
-        </ContentProvider>
+        <BlogGrid posts={manyPosts} />
       </BrowserRouter>
     );
 
@@ -119,9 +110,7 @@ describe("BlogGrid Component", () => {
 
     render(
       <BrowserRouter>
-        <ContentProvider>
-          <BlogGrid posts={manyPosts} />
-        </ContentProvider>
+        <BlogGrid posts={manyPosts} />
       </BrowserRouter>
     );
 

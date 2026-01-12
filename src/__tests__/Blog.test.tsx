@@ -1,16 +1,13 @@
 import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import { ContentProvider } from "../content/ContentProvider";
 import { Blog } from "../pages/Blog";
 
 describe("Blog Page", () => {
   it("renders the blog page with header and blog grid", () => {
     render(
       <BrowserRouter>
-        <ContentProvider>
-          <Blog />
-        </ContentProvider>
+        <Blog />
       </BrowserRouter>
     );
 
@@ -30,9 +27,7 @@ describe("Blog Page", () => {
   it("renders Footer component", () => {
     render(
       <BrowserRouter>
-        <ContentProvider>
-          <Blog />
-        </ContentProvider>
+        <Blog />
       </BrowserRouter>
     );
 

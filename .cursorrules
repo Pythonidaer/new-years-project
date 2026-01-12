@@ -177,7 +177,7 @@ When the user says "Please add/integrate/incorporate the <filename>.json file" o
 
 ## Theming System
 
-### 10. Theming System Status
+### 10. Theming System Architecture
 
 **Current Stage: Stage 2 Complete**
 
@@ -187,11 +187,41 @@ The theming system has been fully implemented through Stage 2:
 - ✅ **Stage 2 Complete**: ThemePicker component with presets and contrast checking
 - 🔄 **Stage 3 Pending**: Advanced color picker integration
 
-**Key Components:**
+**Core Architecture:**
+
+The theming system follows a clear separation of concerns:
+
+1. **CSS Variables Layer** (`src/design/tokens.css`):
+   - **Themeable colors** are defined on `#root` (e.g., `--color-bg`, `--color-primary`)
+   - **Non-themeable tokens** (fonts, spacing, layout) are defined on `:root`
+   - All components use `var(--color-*)` tokens instead of hardcoded colors
+   - This allows React to dynamically update colors by modifying CSS variables on `#root`
+
+2. **React State Layer** (`src/context/ThemeContext.tsx`):
+   - Manages theme state as a JavaScript object (`Theme` type)
+   - Provides `ThemeProvider` that wraps the app
+   - `useTheme()` hook for accessing/updating theme
+   - Applies theme changes to DOM by updating CSS variables on `#root` element
+   - Persists theme to `localStorage` for no-flicker loading
+   - Handles preset management (built-in + custom presets)
+
+3. **UI Layer** (`src/components/ThemePicker/`):
+   - Floating color picker UI (fixed position, bottom-left corner)
+   - Allows users to customize colors in real-time
+   - Saves/loads presets, exports/imports themes
+   - Uses fixed colors for UI (theme-agnostic) so picker remains visible regardless of theme
+
+4. **Utility Layer** (`src/utils/contrast.ts`):
+   - WCAG contrast checking utilities
+   - Validates text readability on backgrounds and gradients
+   - Provides warnings for accessibility issues
+
+**Key Files:**
 - `src/design/tokens.css` - CSS variable definitions (themeable on `#root`, non-themeable on `:root`)
-- `src/context/ThemeContext.tsx` - Theme state management, presets, persistence
-- `src/components/ThemePicker/` - Floating color picker UI with preset management
+- `src/context/ThemeContext.tsx` - Theme state management, presets, persistence, DOM application
+- `src/components/ThemePicker/` - Floating color picker UI with preset management (positioned bottom-left)
 - `src/utils/contrast.ts` - WCAG contrast checking with detailed warnings
+- `src/design/theming-goals.md` - Original theming architecture documentation
 
 **Built-in Preset Themes (9 total):**
 1. **Default** - Original theme (orange/blue)
@@ -204,12 +234,19 @@ The theming system has been fully implemented through Stage 2:
 8. **Horror** - Dark theme with red accents
 9. **Pride** - Rainbow colors (indigo/pink/rainbow gradients)
 
-**Important Notes:**
+**Important Implementation Notes:**
+- **CSS variables are the styling layer**: All color styling happens via CSS variables (`var(--color-*)`)
+- **React manages the data**: ThemeContext holds theme state and applies it to DOM
+- **Semantic tokens**: Colors use semantic names (e.g., `--color-primary`, `--color-text`) not raw colors
+- **Themeable colors on `#root`**: Allows nested theme overrides in the future
+- **Non-themeable tokens on `:root`**: Fonts, spacing, and layout values are static
 - All preset themes meet WCAG AA contrast requirements (≥4.5:1)
 - ThemePicker UI uses fixed colors (theme-agnostic) so it doesn't change with theme
+- ThemePicker positioned bottom-left corner (matching Mark43 design)
 - Contrast checker validates text on gradients by checking both start and end colors
 - Semi-transparent colors are blended with backgrounds before contrast calculation
 - Custom presets are stored in separate `localStorage` key from active theme
+- Theme is applied to DOM before React render to prevent flicker on page load
 
 ---
 

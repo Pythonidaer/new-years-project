@@ -1,16 +1,13 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { ContentProvider } from "../content/ContentProvider";
 import { Tag } from "../pages/Tag";
 
 describe("Tag Component", () => {
   it("Tag component renders without crashing with valid category", () => {
     render(
       <MemoryRouter initialEntries={["/resources/tag/frontend-architecture"]}>
-        <ContentProvider>
-          <Tag />
-        </ContentProvider>
+        <Tag />
       </MemoryRouter>
     );
 
@@ -22,9 +19,7 @@ describe("Tag Component", () => {
   it("Tag component handles invalid category gracefully", () => {
     render(
       <MemoryRouter initialEntries={["/resources/tag/nonexistent-category"]}>
-        <ContentProvider>
-          <Tag />
-        </ContentProvider>
+        <Tag />
       </MemoryRouter>
     );
 
@@ -40,9 +35,7 @@ describe("Tag Component", () => {
   it("Tag component displays category name as heading when category exists", () => {
     render(
       <MemoryRouter initialEntries={["/resources/tag/frontend-architecture"]}>
-        <ContentProvider>
-          <Tag />
-        </ContentProvider>
+        <Tag />
       </MemoryRouter>
     );
 
@@ -62,9 +55,7 @@ describe("Tag Component", () => {
   it("Tag component renders BlogGrid when category exists and has posts", () => {
     render(
       <MemoryRouter initialEntries={["/resources/tag/frontend-frameworks"]}>
-        <ContentProvider>
-          <Tag />
-        </ContentProvider>
+        <Tag />
       </MemoryRouter>
     );
 

@@ -2,7 +2,7 @@
 .trigger {
   position: fixed;
   bottom: 24px;
-  right: 24px;
+  left: 24px;
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -31,7 +31,7 @@
 .popup {
   position: fixed;
   bottom: 88px;
-  right: 24px;
+  left: 24px;
   width: 800px;
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 120px);
@@ -559,7 +559,6 @@
 @media (max-width: 1024px) {
   .popup {
     width: calc(100vw - 48px);
-    right: 24px;
     left: 24px;
     max-width: 800px;
   }

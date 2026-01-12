@@ -1,9 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Container } from "../../layout/Container";
 import { Section } from "../../layout/Section";
 import { Button } from "../../components/Button";
 import { Icon } from "../../components/Icon";
-import { useContent } from "../../content/ContentProvider";
 import styles from "./FeatureAccordion.module.css";
 
 import {
@@ -24,60 +23,58 @@ type FeatureItem = {
   imageLabel: string;
 };
 
+const items: FeatureItem[] = [
+  {
+    id: 1,
+    title: "Lorem Ipsum",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    ctaLabel: "LOREM IPSUM",
+    icon: Network,
+    imageLabel: "Lorem Ipsum",
+  },
+  {
+    id: 2,
+    title: "Dolor Sit",
+    content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    ctaLabel: "LOREM IPSUM",
+    icon: Sparkles,
+    imageLabel: "Dolor Sit",
+  },
+  {
+    id: 3,
+    title: "Amet Consectetur",
+    content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    ctaLabel: "LOREM IPSUM",
+    icon: Cloud,
+    imageLabel: "Amet Consectetur",
+  },
+  {
+    id: 4,
+    title: "Adipiscing Elit",
+    content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    ctaLabel: "LOREM IPSUM",
+    icon: ShieldCheck,
+    imageLabel: "Adipiscing Elit",
+  },
+  {
+    id: 5,
+    title: "Sed Do Eiusmod",
+    content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+    ctaLabel: "LOREM IPSUM",
+    icon: Layers,
+    imageLabel: "Sed Do Eiusmod",
+  },
+  {
+    id: 6,
+    title: "Tempor Incididunt",
+    content: "Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt.",
+    ctaLabel: "LOREM IPSUM",
+    icon: Headphones,
+    imageLabel: "Tempor Incididunt",
+  },
+];
+
 export function FeatureAccordion() {
-  const { t } = useContent();
-  
-  // Build items from content system
-  const items: FeatureItem[] = useMemo(() => [
-    {
-      id: 1,
-      title: t("featureAccordion.item1.title"),
-      content: t("featureAccordion.item1.content"),
-      ctaLabel: t("featureAccordion.item1.ctaLabel"),
-      icon: Network,
-      imageLabel: t("featureAccordion.item1.title"),
-    },
-    {
-      id: 2,
-      title: t("featureAccordion.item2.title"),
-      content: t("featureAccordion.item2.content"),
-      ctaLabel: t("featureAccordion.item2.ctaLabel"),
-      icon: Sparkles,
-      imageLabel: t("featureAccordion.item2.title"),
-    },
-    {
-      id: 3,
-      title: t("featureAccordion.item3.title"),
-      content: t("featureAccordion.item3.content"),
-      ctaLabel: t("featureAccordion.item3.ctaLabel"),
-      icon: Cloud,
-      imageLabel: t("featureAccordion.item3.title"),
-    },
-    {
-      id: 4,
-      title: t("featureAccordion.item4.title"),
-      content: t("featureAccordion.item4.content"),
-      ctaLabel: t("featureAccordion.item4.ctaLabel"),
-      icon: ShieldCheck,
-      imageLabel: t("featureAccordion.item4.title"),
-    },
-    {
-      id: 5,
-      title: t("featureAccordion.item5.title"),
-      content: t("featureAccordion.item5.content"),
-      ctaLabel: t("featureAccordion.item5.ctaLabel"),
-      icon: Layers,
-      imageLabel: t("featureAccordion.item5.title"),
-    },
-    {
-      id: 6,
-      title: t("featureAccordion.item6.title"),
-      content: t("featureAccordion.item6.content"),
-      ctaLabel: t("featureAccordion.item6.ctaLabel"),
-      icon: Headphones,
-      imageLabel: t("featureAccordion.item6.title"),
-    },
-  ], [t]);
 
   // Accordion behavior: one item open at all times
   // Initialize with first item's ID, defaulting to 1 if items array is empty
@@ -90,7 +87,7 @@ export function FeatureAccordion() {
   return (
     <Section>
       <Container>
-      <h2 className={styles.heading}>{t("featureAccordion.heading")}</h2>
+      <h2 className={styles.heading}>Lorem Ipsum</h2>
 
         <div className={styles.wrapper}>
             

@@ -1,26 +1,23 @@
 import { Container } from "../../layout/Container";
 import { Section } from "../../layout/Section";
 import { Button } from "../../components/Button";
-import { useContent } from "../../content/ContentProvider";
 import styles from "./CampaignBanner.module.css";
 
 export function CampaignBanner() {
-  const { t } = useContent();
-  
   return (
     <Section className={styles.banner}>
       <Container>
         <div className={styles.wrapper}>
           <div className={styles.content}>
             <h2 className={styles.heading}>
-              {t("campaignBanner.heading")}{" "}
-              <span className={styles.accent}>{t("campaignBanner.headingAccent")}</span>
+              Lorem{" "}
+              <span className={styles.accent}>Ipsum</span>
             </h2>
             <p className={styles.text}>
-              {t("campaignBanner.text")}
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
             <div className={styles.cta}>
-              <Button>{t("campaignBanner.ctaLabel")}</Button>
+              <Button>Lorem Ipsum</Button>
             </div>
           </div>
           <div className={styles.image}>

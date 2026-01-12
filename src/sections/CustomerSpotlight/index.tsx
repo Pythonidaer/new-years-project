@@ -1,33 +1,31 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Container } from "../../layout/Container";
 import { Section } from "../../layout/Section";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useContent } from "../../content/ContentProvider";
 import styles from "./CustomerSpotlight.module.css";
 
+const testimonials = [
+  {
+    id: 1,
+    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    author: "Lorem Ipsum",
+    role: "Dolor Sit Amet, Consectetur Adipiscing",
+  },
+  {
+    id: 2,
+    quote: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    author: "Sed Do Eiusmod",
+    role: "Tempor Incididunt, Ut Labore",
+  },
+  {
+    id: 3,
+    quote: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    author: "Dolore Magna",
+    role: "Aliqua Ut Enim, Minim Veniam",
+  },
+];
+
 export function CustomerSpotlight() {
-  const { t } = useContent();
-  
-  const testimonials = useMemo(() => [
-    {
-      id: 1,
-      quote: t("customerSpotlight.testimonial1.quote"),
-      author: t("customerSpotlight.testimonial1.author"),
-      role: t("customerSpotlight.testimonial1.role"),
-    },
-    {
-      id: 2,
-      quote: t("customerSpotlight.testimonial2.quote"),
-      author: t("customerSpotlight.testimonial2.author"),
-      role: t("customerSpotlight.testimonial2.role"),
-    },
-    {
-      id: 3,
-      quote: t("customerSpotlight.testimonial3.quote"),
-      author: t("customerSpotlight.testimonial3.author"),
-      role: t("customerSpotlight.testimonial3.role"),
-    },
-  ], [t]);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -44,7 +42,7 @@ export function CustomerSpotlight() {
   return (
     <Section variant="alt">
       <Container>
-        <h2 className={styles.heading}>{t("customerSpotlight.heading")}</h2>
+        <h2 className={styles.heading}>Lorem Ipsum Dolor</h2>
         <div className={styles.wrapper}>
           <div className={styles.video}>
             <div className={styles.videoPlaceholder}>

@@ -1,35 +1,31 @@
-import { useMemo } from "react";
 import { Container } from "../../layout/Container";
 import { Section } from "../../layout/Section";
-import { useContent } from "../../content/ContentProvider";
 import styles from "./PlatformCards.module.css";
 
-export function PlatformCards() {
-  const { t } = useContent();
-  
-  const cards = useMemo(() => [
-    {
-      id: 1,
-      title: t("platformCards.card1.title"),
-      description: t("platformCards.card1.description"),
-    },
-    {
-      id: 2,
-      title: t("platformCards.card2.title"),
-      description: t("platformCards.card2.description"),
-    },
-    {
-      id: 3,
-      title: t("platformCards.card3.title"),
-      description: t("platformCards.card3.description"),
-    },
-    {
-      id: 4,
-      title: t("platformCards.card4.title"),
-      description: t("platformCards.card4.description"),
-    },
-  ], [t]);
+const cards = [
+  {
+    id: 1,
+    title: "Lorem Ipsum Dolor",
+    description: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  },
+  {
+    id: 2,
+    title: "Consectetur Adipiscing",
+    description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
+  },
+  {
+    id: 3,
+    title: "Elit Sed Do",
+    description: "Duis aute irure dolor in reprehenderit in voluptate velit esse.",
+  },
+  {
+    id: 4,
+    title: "Eiusmod Tempor",
+    description: "Excepteur sint occaecat cupidatat non proident, sunt in culpa.",
+  },
+];
 
+export function PlatformCards() {
   return (
     <Section>
       <Container>
