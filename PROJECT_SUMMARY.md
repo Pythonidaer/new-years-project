@@ -29,6 +29,24 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
    - Featured blog post card
    - Category filtering and search functionality
 
+3. **Theming System** (`src/design/`, `src/context/`, `src/components/ThemePicker/`)
+   - **Stage 1: ✅ Completed** - Centralized CSS token system
+     - All themeable colors migrated to semantic CSS variables in `src/design/tokens.css`
+     - CSS variables defined on `#root` for nested theme support
+     - All components use `var(--color-*)` instead of hardcoded colors
+     - Non-themeable tokens (fonts, layout) remain on `:root` for global availability
+   - **Stage 2: ✅ Completed** - ThemePicker component with presets
+     - Floating color picker UI (`src/components/ThemePicker/`)
+     - Real-time contrast checking with WCAG AA/AAA warnings
+     - 9 built-in preset themes: Default, Cedar Oak, Midnight Blue, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride
+     - Custom preset saving/loading (stored in `localStorage`)
+     - Theme persistence with no-flicker loading
+     - Export/import theme JSON functionality
+   - **Stage 3: 🔄 Future** - Advanced color picker integration
+     - Potential integration with `react-colorful` or similar library
+     - Color theory presets (triads, complementary, etc.)
+     - Further UI refinements
+
 3. **Routing Structure**
    - `/` - Home page with Hero, Features, Platform Cards, etc.
    - `/blog` - Blog listing page with featured post, filters, and grid
@@ -53,6 +71,15 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
 - Header with conditional styling (light/dark based on page)
 - All blog posts from all topics display on listing page
 - Tags formatted as uppercase with spaces (e.g., "React", "Component Design")
+- **Theming System (Stage 1 & 2 Complete)**:
+  - All colors migrated to semantic CSS variables (`src/design/tokens.css`)
+  - ThemeProvider with React Context (`src/context/ThemeContext.tsx`)
+  - ThemePicker component with floating UI (`src/components/ThemePicker/`)
+  - 8 built-in preset themes (Default, Cedar Oak, Midnight Blue, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride)
+  - Custom preset saving/loading with `localStorage`
+  - Real-time WCAG contrast checking (`src/utils/contrast.ts`)
+  - No-flicker theme loading (applied before React render)
+  - Export/import theme JSON functionality
 
 ❌ **TODO - Category Page Implementation:**
 - Category links currently broken/incomplete
@@ -166,12 +193,73 @@ Full process documented in `docs/BLOG_POST_INTEGRATION.md`.
   - `.dark` - Dark blue background (blog listing page)
   - `.light` - White background (blog post pages with hero section)
 
+### Theming Architecture
+
+- **Semantic CSS Tokens** (`src/design/tokens.css`):
+  - Themeable colors defined on `#root` (supports nested overrides)
+  - Non-themeable tokens (fonts, layout) on `:root` (global availability)
+  - All components use `var(--color-*)` instead of hardcoded colors
+  - Comprehensive token set: core colors, primary/accent, gradients, footer, shadows, code colors
+
+- **ThemeProvider** (`src/context/ThemeContext.tsx`):
+  - React Context for theme state management
+  - `localStorage` persistence with no-flicker loading
+  - Built-in preset themes (9 themes)
+  - Custom preset saving/loading
+  - Export/import theme JSON
+
+- **ThemePicker Component** (`src/components/ThemePicker/`):
+  - Floating palette button (bottom-right corner)
+  - Color picker UI with organized categories (Core, Primary, Accent, Gradients, Footer, Shadows)
+  - Real-time contrast warnings with WCAG AA/AAA compliance
+  - Preset selection and management
+  - Save custom themes as presets
+  - Individual color cancel/reset functionality
+
+- **Contrast Checking** (`src/utils/contrast.ts`):
+  - WCAG contrast ratio calculations using `color` library
+  - Checks all critical color combinations
+  - Handles semi-transparent colors (blends with backgrounds)
+  - Gradient contrast checking (checks both start and end colors)
+  - Detailed usage context for each warning
+
 ## Testing
 
 - **Vitest** for unit tests
 - Test files in `src/__tests__/`
 - TDD approach preferred
 - All tests currently passing (10 tests)
+
+## Theming System Status
+
+**Current Stage: Stage 2 Complete, Stage 3 Pending**
+
+### Stage 1: ✅ Completed
+- All themeable colors migrated to semantic CSS variables
+- CSS variables defined on `#root` for nested theme support
+- All components refactored to use `var(--color-*)` tokens
+- Visual regression testing completed (manual comparison)
+
+### Stage 2: ✅ Completed
+- ThemePicker component with floating UI
+- Real-time contrast checking with WCAG warnings
+- 8 built-in preset themes (all meet WCAG AA requirements)
+- Custom preset saving/loading
+- Theme persistence with no-flicker loading
+- Export/import theme JSON
+
+### Stage 3: 🔄 Future Enhancements
+- Advanced color picker library integration (e.g., `react-colorful`)
+- Color theory presets (triads, complementary colors, etc.)
+- Further UI/UX refinements based on user feedback
+- Legacy token cleanup (remove backward compatibility tokens)
+
+**Key Files:**
+- `src/design/tokens.css` - CSS variable definitions
+- `src/context/ThemeContext.tsx` - Theme state management
+- `src/components/ThemePicker/` - Color picker UI component
+- `src/utils/contrast.ts` - WCAG contrast checking utilities
+- `src/design/theming-goals.md` - Original theming architecture documentation
 
 ## Current Task: Category Page Implementation
 

@@ -4,7 +4,7 @@
   font-weight: 700;
   margin: 0 0 48px;
   text-align: center;
-  color: var(--color-ink, #24364e);
+  color: var(--color-text);
 }
 
 .wrapper {
@@ -21,12 +21,12 @@
 .videoPlaceholder {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg, #1a2a3a 0%, #2a3a4a 100%);
+  background: linear-gradient(135deg, var(--color-hero-start) 0%, var(--color-hero-end) 100%);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--color-footer-text-muted);
   font-size: 14px;
 }
 
@@ -51,7 +51,7 @@
   font-size: 24px;
   line-height: 1.6;
   font-weight: 400;
-  color: var(--color-ink, #24364e);
+  color: var(--color-text);
   font-style: italic;
 }
 
@@ -64,12 +64,12 @@
 .authorName {
   font-size: 18px;
   font-weight: 600;
-  color: var(--color-ink, #24364e);
+  color: var(--color-text);
 }
 
 .authorRole {
   font-size: 16px;
-  color: var(--color-ink, #24364e);
+  color: var(--color-text);
   opacity: 0.7;
 }
 
@@ -82,7 +82,7 @@
 
 .arrow {
   background: transparent;
-  border: 1px solid rgba(36, 54, 78, 0.2);
+  border: 1px solid var(--color-border);
   border-radius: 50%;
   width: 48px;
   height: 48px;
@@ -90,14 +90,14 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: var(--color-ink, #24364e);
+  color: var(--color-text);
   transition: all 0.2s ease;
 }
 
 .arrow:hover {
-  background: var(--color-orange, #d34120);
-  border-color: var(--color-orange, #d34120);
-  color: var(--color-white, #ffffff);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-contrast);
 }
 
 .dots {
@@ -110,18 +110,19 @@
   height: 10px;
   border-radius: 50%;
   border: 0;
-  background: rgba(36, 54, 78, 0.3);
+  background: var(--color-border);
   cursor: pointer;
   padding: 0;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .dot:hover {
-  background: rgba(36, 54, 78, 0.5);
+  background: var(--color-text);
+  opacity: 0.5;
 }
 
 .dotActive {
-  background: var(--color-orange, #d34120);
+  background: var(--color-primary);
   transform: scale(1.2);
 }
 

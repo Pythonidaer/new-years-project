@@ -3,8 +3,8 @@
   align-items: center;
   cursor: pointer;
 
-  background: var(--color-orange);
-  color: var(--color-white);
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
 
   border: 0;
   border-radius: var(--radius-button);
@@ -28,12 +28,12 @@
 /* Chevron icon after button text - removed, will use React component instead */
 
 .primary:hover {
-  background: var(--color-orange-hover);
+  background: var(--color-primary-hover);
 }
 
 .chevron {
   margin-left: 15px;
-  color: rgb(255, 255, 255);
+  color: var(--color-primary-contrast);
   flex-shrink: 0;
 }
 
@@ -43,9 +43,9 @@
   cursor: pointer;
 
   background: transparent;
-  color: var(--color-ink);
+  color: var(--color-text);
 
-  border: 1px solid rgba(36, 54, 78, 0.25);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-button);
 
   font-family: var(--font-family);
@@ -64,11 +64,11 @@
   cursor: pointer;
 
   background: transparent;
-  color: var(--color-orange, #d34120);
+  color: var(--color-primary);
 
-  border: 1px solid var(--color-orange, #d34120);
+  border: 1px solid var(--color-primary);
   border-radius: var(--radius-button);
-  box-shadow: inset 0 0 0 1px var(--color-orange, #d34120);
+  box-shadow: inset 0 0 0 1px var(--color-primary);
 
   font-family: var(--font-family);
   font-size: 11px;
@@ -92,7 +92,7 @@
 
 .chevronLeft {
   margin-right: 15px;
-  color: var(--color-orange, #d34120);
+  color: var(--color-primary);
   flex-shrink: 0;
   transform: rotate(180deg);
 }

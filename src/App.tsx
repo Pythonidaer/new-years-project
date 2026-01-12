@@ -6,6 +6,7 @@ import { Tag } from "./pages/Tag";
 import { ScrollToTop } from "./components/ScrollToTop";
 import "./design/globals.css";
 import { TopicSwitcher } from "./components/dev/TopicSwitcher/TopicSwitcher";
+import { ThemePicker } from "./components/ThemePicker/ThemePicker";
 
 function AppContent() {
   const location = useLocation();
@@ -21,6 +22,7 @@ function AppContent() {
         <Route path="/resources/tag/:categoryName" element={<Tag />} />
       </Routes>
       {isHomePage && <TopicSwitcher />}
+      <ThemePicker />
     </>
   );
 }

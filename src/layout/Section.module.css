@@ -1,11 +1,11 @@
 .section {
   width: 100%;
   padding: 96px 0;
-  background: #fff;
+  background: var(--color-bg);
 }
 
 .alt {
-  background: #f5f7fa;
+  background: var(--color-surface);
 }
 
 @media (max-width: 990px) {

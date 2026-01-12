@@ -6,7 +6,7 @@
 .heading {
   font-size: 83px;
   font-weight: 700;
-  color: rgb(36, 54, 78);
+  color: var(--color-text);
   margin: 0;
   line-height: 94.62px;
   text-align: center;

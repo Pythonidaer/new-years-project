@@ -4,7 +4,7 @@
   font-weight: 700;
   margin: 0 0 48px;
   text-align: center;
-  color: var(--color-ink, #24364e);
+  color: var(--color-text);
 }
 
 .carouselWrapper {
@@ -33,14 +33,14 @@
 .logoPlaceholder {
   width: 100%;
   aspect-ratio: 3 / 2;
-  background: linear-gradient(135deg, #f0f2f4 0%, #e0e4e8 100%);
+  background: var(--color-surface);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(36, 54, 78, 0.4);
+  color: var(--color-muted);
   font-size: 14px;
-  border: 1px solid rgba(36, 54, 78, 0.1);
+  border: 1px solid var(--color-border);
 }
 
 .logoText {
@@ -59,18 +59,19 @@
   height: 10px;
   border-radius: 50%;
   border: 0;
-  background: rgba(36, 54, 78, 0.3);
+  background: var(--color-border);
   cursor: pointer;
   padding: 0;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .dot:hover {
-  background: rgba(36, 54, 78, 0.5);
+  background: var(--color-text);
+  opacity: 0.5;
 }
 
 .dotActive {
-  background: var(--color-orange, #d34120);
+  background: var(--color-primary);
   transform: scale(1.2);
 }
 

@@ -3,13 +3,16 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import App from "../App";
 import { ContentProvider } from "../content/ContentProvider";
+import { ThemeProvider } from "../context/ThemeContext";
 
 describe("App", () => {
   it("renders the hero heading", () => {
     render(
       <BrowserRouter>
         <ContentProvider>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </ContentProvider>
       </BrowserRouter>
     );

@@ -29,7 +29,7 @@
   font-family: Archivo, sans-serif;
   font-weight: 400;
   line-height: 28.8px;
-  color: rgb(36, 54, 78);
+  color: var(--color-text);
   text-rendering: geometricprecision;
   white-space: nowrap;
   transform: translateY(-50%);
@@ -55,13 +55,13 @@
   padding: 8px 20px 8px 65px;
   margin-bottom: 0;
   border: none;
-  border-bottom: 1px solid #707070;
+  border-bottom: 1px solid var(--color-muted);
   border-radius: 0;
   font-size: 16px;
   font-family: Archivo, sans-serif;
   font-weight: 700;
   line-height: 1.63;
-  color: rgb(36, 54, 78);
+  color: var(--color-text);
   background-color: transparent;
   cursor: pointer;
   appearance: none;
@@ -73,7 +73,7 @@
 
 .select:focus {
   outline: none;
-  border-bottom-color: rgb(36, 54, 78);
+  border-bottom-color: var(--color-text);
 }
 
 .searchContainer {
@@ -87,7 +87,7 @@
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: #0b1f33;
+  color: var(--color-text-dark);
   pointer-events: none;
 }
 
@@ -95,24 +95,24 @@
   width: 370px;
   height: 50px;
   padding: 8px 35px 8px 15px;
-  border: 1px solid rgb(112, 112, 112);
+  border: 1px solid var(--color-muted);
   border-radius: 2px;
   font-size: 14px;
   font-family: Archivo, sans-serif;
   font-weight: 400;
-  color: rgb(36, 54, 78);
-  background-color: rgb(255, 255, 255);
+  color: var(--color-text);
+  background-color: var(--color-bg);
   transition: border-color 0.2s ease-in-out;
   box-sizing: border-box;
 }
 
 .searchInput:focus {
   outline: none;
-  border-color: rgb(36, 54, 78);
+  border-color: var(--color-text);
 }
 
 .searchInput::placeholder {
-  color: rgb(112, 112, 112);
+  color: var(--color-muted);
 }
 
 @media (max-width: 767px) {

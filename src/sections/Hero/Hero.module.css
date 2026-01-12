@@ -1,9 +1,9 @@
 .hero {
   --hero-breathing-room: 50px; /* tune this */
   padding: calc(var(--top-offset, 110px) + var(--hero-breathing-room)) 0 140px;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0)),
-    linear-gradient(180deg, #152a44, #0f2036);
-  color: var(--color-white, #ffffff);
+  background: radial-gradient(ellipse at center, var(--color-hero-radial), rgba(0, 0, 0, 0)),
+    linear-gradient(180deg, var(--color-hero-start), var(--color-hero-end));
+  color: var(--color-primary-contrast);
   position: relative;
   overflow: hidden;
 }
@@ -18,7 +18,7 @@
 }
 
 .accent {
-  color: #f5b027;
+  color: var(--color-accent);
 }
 
 .subtitle {

@@ -175,6 +175,44 @@ When the user says "Please add/integrate/incorporate the <filename>.json file" o
 
 ---
 
+## Theming System
+
+### 10. Theming System Status
+
+**Current Stage: Stage 2 Complete**
+
+The theming system has been fully implemented through Stage 2:
+
+- ✅ **Stage 1 Complete**: All colors migrated to semantic CSS variables
+- ✅ **Stage 2 Complete**: ThemePicker component with presets and contrast checking
+- 🔄 **Stage 3 Pending**: Advanced color picker integration
+
+**Key Components:**
+- `src/design/tokens.css` - CSS variable definitions (themeable on `#root`, non-themeable on `:root`)
+- `src/context/ThemeContext.tsx` - Theme state management, presets, persistence
+- `src/components/ThemePicker/` - Floating color picker UI with preset management
+- `src/utils/contrast.ts` - WCAG contrast checking with detailed warnings
+
+**Built-in Preset Themes (9 total):**
+1. **Default** - Original theme (orange/blue)
+2. **Cedar Oak** - Warm earth tones (browns/greens)
+3. **Midnight Blue** - Dark theme with blue accents
+4. **Sage Green** - Light theme with green tones
+5. **Crimson Flame** - Fire fighter inspired (red/orange)
+6. **Vapor Wave** - 80s aesthetic (magenta/cyan)
+7. **Gothic** - Dark theme with purple accents
+8. **Horror** - Dark theme with red accents
+9. **Pride** - Rainbow colors (indigo/pink/rainbow gradients)
+
+**Important Notes:**
+- All preset themes meet WCAG AA contrast requirements (≥4.5:1)
+- ThemePicker UI uses fixed colors (theme-agnostic) so it doesn't change with theme
+- Contrast checker validates text on gradients by checking both start and end colors
+- Semi-transparent colors are blended with backgrounds before contrast calculation
+- Custom presets are stored in separate `localStorage` key from active theme
+
+---
+
 ## Summary Checklist
 
 Before merging or publishing:

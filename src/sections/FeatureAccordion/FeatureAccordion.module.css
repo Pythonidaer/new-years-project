@@ -29,10 +29,10 @@
 }
 
 .item {
-  border: 1px solid rgba(36, 54, 78, 0.15);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   overflow: hidden;
-  background: var(--color-white, #ffffff);
+  background: var(--color-bg);
 }
 
 .itemActive {
@@ -55,7 +55,7 @@
 }
 
 .trigger:hover {
-  background: #b4c7cf;
+  background: var(--color-surface);
 }
 
 .itemActive .trigger:hover {
@@ -67,13 +67,13 @@
   font-size: 32px;
   font-weight: 600;
   line-height: 38.4px;
-  color: #24364e;
+  color: var(--color-text);
   margin: 0;
   cursor: pointer;
 }
 
 .featureIcon {
-  color: #134dd1;
+  color: var(--color-campaign-start);
   flex-shrink: 0;
   margin-left: 16px;
 }
@@ -87,7 +87,8 @@
   margin: 0 0 16px;
   font-size: 16px;
   line-height: 1.7;
-  color: rgba(36, 54, 78, 0.85);
+  color: var(--color-text);
+  opacity: 0.85;
   max-width: 52ch;
 }
 
@@ -108,11 +109,11 @@
   flex: 1; /* Fill remaining height after padding-top */
   min-height: 0; /* Allow flex item to shrink below content size */
   border-radius: 8px;      /* target looks closer to 8px than 14px */
-  background: linear-gradient(135deg, #f0f2f4 0%, #e0e4e8 100%);
+  background: var(--color-surface);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(36, 54, 78, 0.4);
+  color: var(--color-muted);
   font-size: 14px;
   text-align: center;
   box-sizing: border-box;

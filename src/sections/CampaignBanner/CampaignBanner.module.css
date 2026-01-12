@@ -1,7 +1,7 @@
 .banner {
   width: 100%;
-  background: linear-gradient(135deg, #134dd1 0%, #2962ff 100%);
-  color: var(--color-white, #ffffff);
+  background: linear-gradient(135deg, var(--color-campaign-start) 0%, var(--color-campaign-end) 100%);
+  color: var(--color-primary-contrast);
   padding: 80px 0;
 }
 
@@ -23,18 +23,18 @@
   line-height: 1.2;
   font-weight: 700;
   margin: 0;
-  color: var(--color-white, #ffffff);
+  color: var(--color-primary-contrast);
 }
 
 .accent {
-  color: #ffac12;
+  color: var(--color-accent-alt);
 }
 
 .text {
   margin: 0;
   font-size: 18px;
   line-height: 1.6;
-  color: var(--color-white, #ffffff);
+  color: var(--color-primary-contrast);
   opacity: 0.95;
 }
 
@@ -49,14 +49,14 @@
 .imagePlaceholder {
   width: 100%;
   aspect-ratio: 4 / 3;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--color-footer-social-bg);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--color-footer-text-muted);
   font-size: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--color-footer-border);
 }
 
 .placeholderText {

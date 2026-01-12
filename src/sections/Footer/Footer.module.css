@@ -1,6 +1,6 @@
 .footer {
-  background: #0a1a2a;
-  color: var(--color-white, #ffffff);
+  background: var(--color-footer-bg);
+  color: var(--color-primary-contrast);
   padding: 80px 0 32px;
 }
 
@@ -21,14 +21,14 @@
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  color: var(--color-white, #ffffff);
+  color: var(--color-primary-contrast);
 }
 
 .brandText {
   margin: 0;
   font-size: 16px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-footer-text-muted);
 }
 
 .social {
@@ -41,16 +41,16 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--color-footer-social-bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-white, #ffffff);
+  color: var(--color-primary-contrast);
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .socialLink:hover {
-  background: var(--color-orange, #d34120);
+  background: var(--color-primary);
   transform: translateY(-2px);
 }
 
@@ -70,7 +70,7 @@
   font-size: 18px;
   font-weight: 700;
   margin: 0;
-  color: rgb(255, 172, 18);
+  color: var(--color-accent-alt);
 }
 
 .linkList {
@@ -83,20 +83,20 @@
 }
 
 .link {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-footer-text-muted);
   font-size: 16px;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .link:hover {
-  color: var(--color-white, #ffffff);
+  color: var(--color-primary-contrast);
   text-decoration: underline;
 }
 
 .bottom {
   padding-top: 32px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--color-footer-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -107,7 +107,7 @@
 .copyright {
   margin: 0;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-footer-text-subtle);
 }
 
 .legal {
@@ -116,14 +116,14 @@
 }
 
 .legalLink {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--color-footer-text-subtle);
   font-size: 14px;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .legalLink:hover {
-  color: var(--color-white, #ffffff);
+  color: var(--color-primary-contrast);
   text-decoration: underline;
 }
 

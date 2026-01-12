@@ -11,6 +11,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "color": "^5.0.3",
     "embla-carousel-react": "^8.6.0",
     "html-react-parser": "^5.2.11",
     "lucide-react": "^0.562.0",

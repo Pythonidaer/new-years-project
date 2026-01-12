@@ -2,7 +2,8 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(20, 35, 55, 0.85);
+  background: var(--color-hero-start);
+  opacity: 0.85;
   backdrop-filter: blur(6px);
 }
 
@@ -18,21 +19,21 @@
 .brand {
   font-weight: 700;
   letter-spacing: 0.5px;
-  color: var(--color-white);
+  color: var(--color-primary-contrast);
 }
 
 .nav {
   display: flex;
   gap: 22px;
-  color: var(--color-white);
+  color: var(--color-primary-contrast);
   font-weight: 600;
 }
 
 .hero {
   /* Placeholder; replace with real background overlay + arcs */
-  background: radial-gradient(ellipse at center, rgba(255,255,255,0.08), rgba(0,0,0,0)) ,
-              linear-gradient(180deg, #152a44, #0f2036);
-  color: var(--color-white);
+  background: radial-gradient(ellipse at center, var(--color-hero-radial), rgba(0,0,0,0)) ,
+              linear-gradient(180deg, var(--color-hero-start), var(--color-hero-end));
+  color: var(--color-primary-contrast);
   padding: 110px 0 140px;
 }
 
@@ -45,7 +46,7 @@
 }
 
 .accent {
-  color: #f5b027; /* replace with extracted brand gold if needed */
+  color: var(--color-accent);
 }
 
 .heroSub {

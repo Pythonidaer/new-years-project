@@ -1,7 +1,7 @@
 .marquee {
   overflow: hidden;
   width: 100%;
-  background: #0a1a2a;
+  background: var(--color-marquee-bg);
   padding: 40px 0;
   position: relative;
 }

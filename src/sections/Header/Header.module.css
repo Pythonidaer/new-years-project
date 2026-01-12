@@ -14,14 +14,14 @@
 
 /* Dark blue background for blog page */
 .header.dark {
-  background-color: rgb(36, 54, 78);
+  background-color: var(--color-surface-dark);
 }
 
 .header.dark.scrolled,
 .scrolled {
   height: 60px;
-  background-color: #ffffff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  background-color: var(--color-bg);
+  box-shadow: 0 3px 6px var(--color-shadow);
   transition: height 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
@@ -47,7 +47,7 @@
   font-weight: 700;
   font-size: 20px;
   letter-spacing: 0.5px;
-  color: var(--color-white, #ffffff);
+  color: var(--color-primary-contrast);
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
@@ -67,7 +67,7 @@
 }
 
 .navLink {
-  color: var(--color-white, #ffffff);
+  color: var(--color-primary-contrast);
   font-weight: 600;
   font-size: 16px;
   text-decoration: none;
@@ -87,7 +87,7 @@
   right: 0;
   width: 0;
   height: 2px;
-  background-color: rgb(255, 172, 18);
+  background-color: var(--color-accent-alt);
   border-radius: 2px;
   opacity: 0;
   pointer-events: none;
@@ -102,7 +102,7 @@
 
 /* Chevron icon styling */
 .chevron {
-  color: rgb(255, 255, 255);
+  color: var(--color-primary-contrast);
   flex-shrink: 0;
   transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
   width: 18px;
@@ -111,7 +111,7 @@
 
 /* Dark chevron when scrolled */
 .scrolled .chevron {
-  color: #0b1f33;
+  color: var(--color-text-dark);
 }
 
 .navLink:hover {
@@ -122,52 +122,52 @@
 /* When scrolled, text should be dark */
 .scrolled .brand,
 .scrolled .navLink {
-  color: #0b1f33;
+  color: var(--color-text-dark);
 }
 
 /* Keep white text when dark (blog page) - but NOT when scrolled */
 .header.dark .brand,
 .header.dark .navLink {
-  color: rgb(255, 255, 255);
+  color: var(--color-primary-contrast);
 }
 
 /* Override: when dark header is scrolled, use dark text (must come after .header.dark) */
 .header.dark.scrolled .brand,
 .header.dark.scrolled .navLink {
-  color: #0b1f33;
+  color: var(--color-text-dark);
 }
 
 /* Override: when dark header is scrolled, use dark chevron (must come after .header.dark) */
 .header.dark.scrolled .chevron {
-  color: #0b1f33;
+  color: var(--color-text-dark);
 }
 
 /* Light variant for blog post pages - starts with white background and dark text */
 .header.light {
-  background-color: #ffffff;
+  background-color: var(--color-bg);
 }
 
 .header.light .brand,
 .header.light .navLink {
-  color: #0b1f33;
+  color: var(--color-text-dark);
 }
 
 .header.light .chevron {
-  color: #0b1f33;
+  color: var(--color-text-dark);
 }
 
 .header.light.scrolled {
-  background-color: #ffffff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  background-color: var(--color-bg);
+  box-shadow: 0 3px 6px var(--color-shadow);
 }
 
 .header.light.scrolled .brand,
 .header.light.scrolled .navLink {
-  color: #0b1f33;
+  color: var(--color-text-dark);
 }
 
 .header.light.scrolled .chevron {
-  color: #0b1f33;
+  color: var(--color-text-dark);
 }
 
 .cta {
