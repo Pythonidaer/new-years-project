@@ -27,7 +27,7 @@ interface BlogPost {
   image: string;           // Required: Use placeholder URL format
   link: string;           // Required: URL path
   slug?: string;          // Optional: Auto-generated from title if not provided
-  author?: string;        // Optional: Defaults to "Senior Engineer"
+  author?: string;        // Optional: Defaults to "LLM Writer"
   content?: string;       // Optional: HTML string format (not Markdown)
   tags?: string[];        // Optional: Array of tag strings
 }
@@ -283,7 +283,7 @@ Here's a complete example for a file named `interview_state_management.json`:
     "category": "State Management & Data Flow",
     "image": "https://picsum.photos/367/197?random=38",
     "link": "/blog/state-management-patterns-react",
-    "author": "Senior Engineer",
+    "author": "LLM Writer",
     "tags": ["react", "state-management", "redux", "zustand"],
     "content": "<p>Content in HTML format...</p>"
   }

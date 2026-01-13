@@ -170,7 +170,7 @@ Example blog post structure (see `src/data/blog/interview_reusable_vs_feature_sp
     "image": "https://picsum.photos/367/197?random=37",
     "link": "/blog/post-slug",
     "slug": "post-slug",
-    "author": "Senior Engineer",
+    "author": "LLM Writer",
     "tags": ["React", "Component Design", "Frontend Architecture"],
     "content": "<h2>Heading</h2><p>Content in HTML format...</p><pre><code>Code blocks with proper line breaks</code></pre>"
   }

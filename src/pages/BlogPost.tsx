@@ -64,7 +64,7 @@ export function BlogPost() {
             <h1 className={styles.entryTitle}>{post.title}</h1>
             <div className={styles.postMeta}>
               <div className={styles.postAuthors}>
-                <span>By: <a href="#author" className={styles.heroAuthorLink}>{post.author || "Senior Engineer"}</a></span>
+                <span>By: <a href="#author" className={styles.heroAuthorLink}>{post.author || "LLM Writer"}</a></span>
               </div>
               <div className={styles.postDate}>
                 {post.date}
@@ -120,7 +120,7 @@ export function BlogPost() {
                   <div className={styles.authorContent}>
                     <div className={styles.authorHeader}>
                       <div className={styles.authorTitles}>
-                        <div className={styles.authorName}>{post.author || "Senior Engineer"}</div>
+                        <div className={styles.authorName}>{post.author || "LLM Writer"}</div>
                       </div>
                     </div>
                     <a 
