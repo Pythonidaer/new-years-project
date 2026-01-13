@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FaCaretRight } from "react-icons/fa";
 import type { BlogPost } from "../../data/blog/types";
 import { getBlogPostSlug } from "../../data/blog";
 import styles from "./FeaturedBlogPost.module.css";
@@ -33,16 +34,7 @@ export function FeaturedBlogPost({ post }: FeaturedBlogPostProps) {
         {post && (
           <Link to={`/resources/blog/${getBlogPostSlug(displayPost)}`} className={styles.ctaLink}>
             READ THE BLOG
-            <svg
-              className={styles.triangleRight}
-              width="12"
-              height="14"
-              viewBox="0 0 10 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M0 0L10 4L0 8V0Z" fill="#0b1f33" />
-            </svg>
+            <FaCaretRight className={styles.triangleRight} size={16} />
           </Link>
         )}
       </div>

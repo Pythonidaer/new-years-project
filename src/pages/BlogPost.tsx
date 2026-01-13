@@ -1,12 +1,12 @@
 import { useParams, Link } from "react-router-dom";
 import parse from "html-react-parser";
+import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 import { Header } from "../sections/Header";
 import { Footer } from "../sections/Footer";
 import { getBlogPostBySlug, getRelatedPosts } from "../data/blog";
 import { Button } from "../components/Button";
 import { BlogGrid } from "../sections/BlogGrid";
 import { slugify } from "../utils/slug";
-import { ChevronRight } from "lucide-react";
 import styles from "./BlogPost.module.css";
 
 export function BlogPost() {
@@ -120,7 +120,7 @@ export function BlogPost() {
                       className={styles.authorLink}
                     >
                       More about this author
-                      <ChevronRight className={styles.authorChevron} size={10} />
+                      <FaCaretRight className={styles.authorChevron} size={16} />
                     </a>
                   </div>
                 </div>
@@ -129,7 +129,7 @@ export function BlogPost() {
               {/* Back to Blog Button */}
               <Link to="/resources/blog" className={styles.backButton}>
                 <span className={styles.backButtonInner}>
-                  <ChevronRight className={styles.backChevron} size={10} />
+                  <FaCaretLeft className={styles.backChevron} size={16} />
                   <span>Back to Blog</span>
                 </span>
               </Link>

@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes } from "react";
-import { ChevronRight } from "lucide-react";
+import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 import styles from "./Button.module.css";
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -22,11 +22,11 @@ export function Button({
   return (
     <button className={[v, className].filter(Boolean).join(" ")} {...props}>
       {shouldShowChevron && chevronPosition === "left" && (
-        <ChevronRight className={styles.chevronLeft} size={10} />
+        <FaCaretLeft className={styles.chevronLeft} size={16} />
       )}
       {children}
       {shouldShowChevron && chevronPosition === "right" && (
-        <ChevronRight className={styles.chevron} size={10} />
+        <FaCaretRight className={styles.chevron} size={16} />
       )}
     </button>
   );

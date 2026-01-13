@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
+import { FaCaretRight } from "react-icons/fa";
 import styles from "./Header.module.css";
 import buttonStyles from "../../components/Button.module.css";
 
@@ -87,7 +88,7 @@ export function Header() {
           className={`${buttonStyles.primary} ${styles.cta}`}
         >
           Hire Me
-          <ChevronRight className={buttonStyles.chevron} size={10} />
+          <FaCaretRight className={buttonStyles.chevron} size={16} />
         </a>
       </div>
     </header>
