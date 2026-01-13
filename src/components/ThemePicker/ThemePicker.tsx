@@ -331,7 +331,7 @@ export function ThemePicker() {
                 {presets.map((preset) => {
                   const isBuiltIn = preset.id === 'default' || 
                     preset.id.startsWith('cedar') || 
-                    preset.id.startsWith('midnight') || 
+                    preset.id.startsWith('mark43') || 
                     preset.id.startsWith('sage') ||
                     preset.id.startsWith('crimson') ||
                     preset.id.startsWith('vapor') ||

@@ -224,9 +224,9 @@ The theming system follows a clear separation of concerns:
 - `src/design/theming-goals.md` - Original theming architecture documentation
 
 **Built-in Preset Themes (9 total):**
-1. **Default** - Original theme (orange/blue)
+1. **Default** - Dark theme with blue accents (Midnight Blue)
 2. **Cedar Oak** - Warm earth tones (browns/greens)
-3. **Midnight Blue** - Dark theme with blue accents
+3. **Mark43** - Original Mark43-inspired theme (orange/blue)
 4. **Sage Green** - Light theme with green tones
 5. **Crimson Flame** - Fire fighter inspired (red/orange)
 6. **Vapor Wave** - 80s aesthetic (magenta/cyan)
