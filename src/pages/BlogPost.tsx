@@ -3,7 +3,8 @@ import parse from "html-react-parser";
 import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 import { Header } from "../sections/Header";
 import { Footer } from "../sections/Footer";
-import { getBlogPostBySlug, getRelatedPosts } from "../data/blog";
+import { MetaTags } from "../components/MetaTags";
+import { getBlogPostBySlug, getRelatedPosts, getBlogPostSlug } from "../data/blog";
 import { Button } from "../components/Button";
 import { BlogGrid } from "../sections/BlogGrid";
 import { slugify } from "../utils/slug";
@@ -39,9 +40,18 @@ export function BlogPost() {
   }
 
   const relatedPosts = getRelatedPosts(post.id, 3);
+  const postSlug = getBlogPostSlug(post);
+  const postUrl = `/resources/blog/${postSlug}`;
 
   return (
     <main className={styles.main}>
+      <MetaTags
+        title={`${post.title} | Johnny H.`}
+        description={post.excerpt || `Read about ${post.title} on Johnny H.'s technical blog.`}
+        image={post.image}
+        url={postUrl}
+        type="article"
+      />
       <Header />
       
       {/* Hero Section */}

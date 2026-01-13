@@ -5,6 +5,7 @@ import { FeaturedBlogPost } from "../sections/FeaturedBlogPost";
 import { BlogFilters } from "../sections/BlogFilters";
 import { BlogGrid } from "../sections/BlogGrid";
 import { Footer } from "../sections/Footer";
+import { MetaTags } from "../components/MetaTags";
 import { getAllBlogPosts, getBlogPostSlug } from "../data/blog";
 import type { BlogPost } from "../data/blog/types";
 import styles from "./Blog.module.css";
@@ -43,6 +44,13 @@ export function Blog() {
 
   return (
     <main className={styles.main}>
+      <MetaTags
+        title="Resources | Johnny H."
+        description="Technical blog posts, tutorials, and insights on software engineering, React, TypeScript, and web development. Learn from real-world experiences and best practices."
+        url="/resources/blog"
+        type="website"
+        image={featuredPost?.image}
+      />
       <Header />
       <div className={styles.content}>
         <BlogHeading />

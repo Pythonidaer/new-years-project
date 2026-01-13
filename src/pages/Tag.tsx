@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { Header } from "../sections/Header";
 import { BlogGrid } from "../sections/BlogGrid";
 import { Footer } from "../sections/Footer";
+import { MetaTags } from "../components/MetaTags";
 import { getAllBlogPosts, getAllUniqueTags } from "../data/blog";
 import { ALL_CATEGORIES } from "../data/blog/categories";
 import { slugify } from "../utils/slug";
@@ -66,8 +67,17 @@ export function Tag() {
     );
   }
   
+  const tagUrl = `/resources/tag/${categoryName}`;
+  const tagDescription = `Browse ${filteredPosts.length} article${filteredPosts.length !== 1 ? 's' : ''} about ${tagName} on Johnny H.'s technical blog.`;
+
   return (
     <main className={styles.main}>
+      <MetaTags
+        title={`${tagName} | Resources | Johnny H.`}
+        description={tagDescription}
+        url={tagUrl}
+        type="website"
+      />
       <Header />
       <div className={styles.content}>
         <div className={`${headingStyles.container} ${tagStyles.container}`}>
