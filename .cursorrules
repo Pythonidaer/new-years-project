@@ -223,7 +223,7 @@ The theming system follows a clear separation of concerns:
 - `src/utils/contrast.ts` - WCAG contrast checking with detailed warnings
 - `src/design/theming-goals.md` - Original theming architecture documentation
 
-**Built-in Preset Themes (9 total):**
+**Built-in Preset Themes (10 total):**
 1. **Default** - Dark theme with blue accents (Midnight Blue)
 2. **Cedar Oak** - Warm earth tones (browns/greens)
 3. **Mark43** - Original Mark43-inspired theme (orange/blue)
@@ -233,6 +233,7 @@ The theming system follows a clear separation of concerns:
 7. **Gothic** - Dark theme with purple accents
 8. **Horror** - Dark theme with red accents
 9. **Pride** - Rainbow colors (indigo/pink/rainbow gradients)
+10. **Yuko** - Vibrant kaiju-inspired theme (hot pink, neon yellow, crimson red, light blue)
 
 **Important Implementation Notes:**
 - **CSS variables are the styling layer**: All color styling happens via CSS variables (`var(--color-*)`)

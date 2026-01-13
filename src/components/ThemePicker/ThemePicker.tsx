@@ -338,7 +338,8 @@ export function ThemePicker() {
                     preset.id.startsWith('gothic') ||
                     preset.id.startsWith('pastel') ||
                     preset.id.startsWith('horror') ||
-                    preset.id.startsWith('pride');
+                    preset.id.startsWith('pride') ||
+                    preset.id.startsWith('yuko');
                   return (
                     <button
                       key={preset.id}
