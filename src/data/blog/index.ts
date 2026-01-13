@@ -100,27 +100,85 @@ export function getBlogPostSlug(post: BlogPost): string {
 }
 
 /**
- * Get related blog posts (next 3 posts from all topics, excluding current post)
+ * Get related blog posts based on shared tags or category.
+ * 
+ * Uses a scoring algorithm to rank relevance:
+ * - Category match: +10 points (category is a stronger signal than individual tags)
+ * - Tag match: +5 points per matching tag (case-insensitive)
+ * 
+ * Posts are sorted by score (highest first) and top N are returned.
+ * If fewer than N posts have matches, remaining slots are filled with
+ * random posts as a fallback to ensure the section always shows content.
+ * 
+ * @param currentPost - The blog post to find related posts for
+ * @param limit - Maximum number of related posts to return (default: 3)
+ * @returns Array of related blog posts, sorted by relevance score
  */
-export function getRelatedPosts(currentPostId: number, limit: number = 3): BlogPosts {
+export function getRelatedPosts(currentPost: BlogPost, limit: number = 3): BlogPosts {
   const allPosts = getAllBlogPosts();
   
-  // Find current post index
-  const currentIndex = allPosts.findIndex((p) => p.id === currentPostId);
+  // Exclude current post using slug comparison (not ID) because IDs can be
+  // duplicated across different topics, but slugs are unique
+  const otherPosts = allPosts.filter((p) => {
+    const currentSlug = getBlogPostSlug(currentPost);
+    const postSlug = getBlogPostSlug(p);
+    return currentSlug !== postSlug;
+  });
   
-  if (currentIndex === -1) {
-    // If post not found, return first N posts
-    return allPosts.slice(0, limit);
+  if (otherPosts.length === 0) {
+    return [];
   }
   
-  // Get next posts after current one, wrapping around if needed
-  const nextPosts = [];
-  for (let i = 1; i <= limit && i < allPosts.length; i++) {
-    const index = (currentIndex + i) % allPosts.length;
-    nextPosts.push(allPosts[index]);
+  // Score each post based on tag/category matches
+  const scoredPosts = otherPosts.map((post) => {
+    let score = 0;
+    
+    // Category match: +10 points
+    // Category is weighted higher because it represents broader topic alignment
+    if (currentPost.category && post.category && currentPost.category === post.category) {
+      score += 10;
+    }
+    
+    // Tag matches: +5 points per matching tag
+    // Tags are case-insensitive to handle variations like "React" vs "react"
+    if (currentPost.tags && post.tags) {
+      const currentTags = new Set(currentPost.tags.map(t => t.toLowerCase()));
+      const postTags = new Set(post.tags.map(t => t.toLowerCase()));
+      
+      currentTags.forEach(tag => {
+        if (postTags.has(tag)) {
+          score += 5;
+        }
+      });
+    }
+    
+    return { post, score };
+  });
+  
+  // Filter to posts with at least one match, sort by score (descending), take top N
+  const related = scoredPosts
+    .filter(item => item.score > 0) // Only include posts with at least one match
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(item => item.post);
+  
+  // Fallback: If we don't have enough matching posts, fill remaining slots
+  // with random posts to ensure the "Related Content" section always displays
+  // the requested number of posts (improves UX even if relevance is lower)
+  if (related.length < limit) {
+    const usedSlugs = new Set(related.map(p => getBlogPostSlug(p)));
+    const currentSlug = getBlogPostSlug(currentPost);
+    const fallback = otherPosts
+      .filter(p => {
+        const slug = getBlogPostSlug(p);
+        return !usedSlugs.has(slug) && slug !== currentSlug;
+      })
+      .slice(0, limit - related.length);
+    
+    related.push(...fallback);
   }
   
-  return nextPosts;
+  return related;
 }
 
 /**

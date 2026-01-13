@@ -39,7 +39,7 @@ export function BlogPost() {
     );
   }
 
-  const relatedPosts = getRelatedPosts(post.id, 3);
+  const relatedPosts = getRelatedPosts(post, 3);
   const postSlug = getBlogPostSlug(post);
   const postUrl = `/resources/blog/${postSlug}`;
 
