@@ -1,39 +1,41 @@
 import { Container } from "../../layout/Container";
-import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Facebook, Twitter, Linkedin, Github } from "lucide-react";
+import { slugify } from "../../utils/slug";
 import styles from "./Footer.module.css";
 
-const footerLinks = {
-  platform: [
-    { label: "Lorem Ipsum", href: "#" },
-    { label: "Dolor Sit", href: "#" },
-    { label: "Amet Consectetur", href: "#" },
-    { label: "Adipiscing Elit", href: "#" },
-  ],
-  solutions: [
-    { label: "Sed Do Eiusmod", href: "#" },
-    { label: "Tempor Incididunt", href: "#" },
-    { label: "Ut Labore", href: "#" },
-    { label: "Dolore Magna", href: "#" },
-  ],
-  resources: [
-    { label: "Aliqua Ut Enim", href: "#" },
-    { label: "Minim Veniam", href: "#" },
-    { label: "Quis Nostrud", href: "#" },
-    { label: "Exercitation", href: "#" },
-  ],
-  company: [
-    { label: "Ullamco Laboris", href: "#" },
-    { label: "Nisi Ut Aliquip", href: "#" },
-    { label: "Ex Ea Commodo", href: "#" },
-    { label: "Consequat Duis", href: "#" },
-  ],
-};
+const aboutMeLinks = [
+  { label: "Experience", href: "/#experience" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Resources", href: "/resources/blog" },
+  { label: "Contact", href: "/#contact" },
+];
+
+const hobbies = [
+  { label: "Comedy", url: "https://en.wikipedia.org/wiki/Comedy" },
+  { label: "Boxing", url: "https://en.wikipedia.org/wiki/Boxing" },
+  { label: "Coding", url: "https://en.wikipedia.org/wiki/Computer_programming" },
+  { label: "Movies", url: "https://en.wikipedia.org/wiki/Film" },
+];
+
+const desiredRoles = [
+  { label: "Frontend Engineer", url: "https://en.wikipedia.org/wiki/Front-end_web_development" },
+  { label: "Software Engineer", url: "https://en.wikipedia.org/wiki/Software_engineering" },
+  { label: "Data Analyst", url: "https://en.wikipedia.org/wiki/Data_analysis" },
+  { label: "AI Engineer", url: "https://en.wikipedia.org/wiki/Artificial_intelligence" },
+];
+
+const blogCategories = [
+  { label: "Architecture", category: "Frontend Architecture" },
+  { label: "Maintainability", category: "Maintainability" },
+  { label: "Caching", category: "Caching" },
+  { label: "Interview Prep", category: "Interview Prep" },
+];
 
 const socialLinks = [
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: Facebook, href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", label: "Facebook" },
+  { icon: Twitter, href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", label: "Twitter" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/jonamichahammo", label: "LinkedIn" },
+  { icon: Github, href: "https://github.com/pythonidaer", label: "Github" },
 ];
 
 export function Footer() {
@@ -42,9 +44,9 @@ export function Footer() {
       <Container>
         <div className={styles.top}>
           <div className={styles.brand}>
-            <div className={styles.brandName}>Lorem Ipsum</div>
+            <div className={styles.brandName}>Find Me Easily</div>
             <p className={styles.brandText}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+              I am frequently checking my LinkedIn and email. Feel free to visit my profile or code repositories below.
             </p>
             <div className={styles.social}>
               {socialLinks.map((social) => {
@@ -55,6 +57,7 @@ export function Footer() {
                     href={social.href}
                     className={styles.socialLink}
                     aria-label={social.label}
+                    target="_blank"
                   >
                     <Icon size={20} />
                   </a>
@@ -64,9 +67,9 @@ export function Footer() {
           </div>
           <div className={styles.links}>
             <div className={styles.linkColumn}>
-              <h3 className={styles.linkHeading}>Lorem Ipsum</h3>
+              <h3 className={styles.linkHeading}>About Me</h3>
               <ul className={styles.linkList}>
-                {footerLinks.platform.map((link) => (
+                {aboutMeLinks.map((link) => (
                   <li key={link.label}>
                     <a href={link.href} className={styles.link}>
                       {link.label}
@@ -76,36 +79,36 @@ export function Footer() {
               </ul>
             </div>
             <div className={styles.linkColumn}>
-              <h3 className={styles.linkHeading}>Dolor Sit</h3>
+              <h3 className={styles.linkHeading}>Blogs</h3>
               <ul className={styles.linkList}>
-                {footerLinks.solutions.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href} className={styles.link}>
-                      {link.label}
+                {blogCategories.map((item) => (
+                  <li key={item.label}>
+                    <a href={`/resources/tag/${slugify(item.category)}`} className={styles.link}>
+                      {item.label}
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
             <div className={styles.linkColumn}>
-              <h3 className={styles.linkHeading}>Amet Consectetur</h3>
+              <h3 className={styles.linkHeading}>Hobbies</h3>
               <ul className={styles.linkList}>
-                {footerLinks.resources.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href} className={styles.link}>
-                      {link.label}
+                {hobbies.map((hobby) => (
+                  <li key={hobby.label}>
+                    <a href={hobby.url} className={styles.link} target="_blank" rel="noopener noreferrer">
+                      {hobby.label}
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
             <div className={styles.linkColumn}>
-              <h3 className={styles.linkHeading}>Adipiscing Elit</h3>
+              <h3 className={styles.linkHeading}>Desired Roles</h3>
               <ul className={styles.linkList}>
-                {footerLinks.company.map((link) => (
-                  <li key={link.label}>
-                    <a href={link.href} className={styles.link}>
-                      {link.label}
+                {desiredRoles.map((role) => (
+                  <li key={role.label}>
+                    <a href={role.url} className={styles.link} target="_blank" rel="noopener noreferrer">
+                      {role.label}
                     </a>
                   </li>
                 ))}
@@ -115,14 +118,11 @@ export function Footer() {
         </div>
         <div className={styles.bottom}>
           <p className={styles.copyright}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Copyright {new Date().getFullYear()}
           </p>
           <div className={styles.legal}>
             <a href="#" className={styles.legalLink}>
-              Sed Do Eiusmod
-            </a>
-            <a href="#" className={styles.legalLink}>
-              Tempor Incididunt
+              Jonnovative Designs
             </a>
           </div>
         </div>

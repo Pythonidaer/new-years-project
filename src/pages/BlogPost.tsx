@@ -1,6 +1,5 @@
 import { useParams, Link } from "react-router-dom";
 import parse from "html-react-parser";
-import { TopBanner } from "../sections/TopBanner";
 import { Header } from "../sections/Header";
 import { Footer } from "../sections/Footer";
 import { getBlogPostBySlug, getRelatedPosts } from "../data/blog";
@@ -16,7 +15,6 @@ export function BlogPost() {
   if (!slug) {
     return (
       <main>
-        <TopBanner />
         <Header />
         <div className={styles.content}>
           <h1>Post not found</h1>
@@ -31,7 +29,6 @@ export function BlogPost() {
   if (!post) {
     return (
       <main>
-        <TopBanner />
         <Header />
         <div className={styles.content}>
           <h1>Post not found</h1>
@@ -45,7 +42,6 @@ export function BlogPost() {
 
   return (
     <main className={styles.main}>
-      <TopBanner />
       <Header />
       
       {/* Hero Section */}

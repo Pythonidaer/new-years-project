@@ -1,5 +1,4 @@
 import { useMemo, useState, useEffect, useCallback } from "react";
-import { TopBanner } from "../sections/TopBanner";
 import { Header } from "../sections/Header";
 import { BlogHeading } from "../sections/BlogHeading";
 import { FeaturedBlogPost } from "../sections/FeaturedBlogPost";
@@ -44,7 +43,6 @@ export function Blog() {
 
   return (
     <main className={styles.main}>
-      <TopBanner />
       <Header />
       <div className={styles.content}>
         <BlogHeading />

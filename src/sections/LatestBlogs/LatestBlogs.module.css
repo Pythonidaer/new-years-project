@@ -32,15 +32,15 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   background: var(--color-surface);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-muted);
-  font-size: 14px;
+  overflow: hidden;
+  position: relative;
 }
 
-.placeholderText {
-  text-align: center;
+.cardImageContent {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .cardContent {
@@ -63,7 +63,16 @@
   line-height: 1.3;
   font-weight: 700;
   margin: 0;
+}
+
+.cardTitleLink {
   color: var(--color-text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.cardTitleLink:hover {
+  color: var(--color-primary);
 }
 
 .cardExcerpt {

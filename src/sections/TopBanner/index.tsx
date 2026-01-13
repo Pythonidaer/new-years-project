@@ -55,7 +55,7 @@ export function TopBanner() {
     >
       <div className={styles.container}>
         <p className={styles.text}>
-        Johnny Hammond is currently open to employment opportunities as a frontend-focused software engineer.
+        I am currently open to employment opportunities as a frontend-focused software engineer 😁
         </p>
 
         <button
