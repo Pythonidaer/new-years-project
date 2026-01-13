@@ -8,6 +8,7 @@ import buttonStyles from "../../components/Button.module.css";
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const isHomePage = location.pathname === "/";
   const isBlogListingPage = location.pathname === "/resources/blog";
   const isBlogPostPage = location.pathname.match(/^\/resources\/blog\/[^/]+$/);
   const isTagPage = location.pathname.match(/^\/resources\/tag\/[^/]+$/);
@@ -56,6 +57,19 @@ export function Header() {
 
     root.style.setProperty("--header-height", `${headerHeight}px`);
   }, [isScrolled]);
+
+  // Reset banner-height to 0px on pages without TopBanner
+  // This ensures Header doesn't have a gap when TopBanner isn't present
+  useEffect(() => {
+    const root = document.documentElement;
+    
+    // Only reset if we're not on the Home page (where TopBanner exists)
+    // TopBanner will manage --banner-height on pages where it's present
+    if (!isHomePage) {
+      root.style.setProperty("--banner-height", "0px");
+    }
+    // On Home page, let TopBanner manage the variable
+  }, [isHomePage]);
 
   return (
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""} ${isBlogListingPage ? styles.dark : ""} ${isBlogPostPage || isTagPage ? styles.light : ""}`}>
