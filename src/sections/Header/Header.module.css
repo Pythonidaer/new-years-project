@@ -52,10 +52,37 @@
   text-decoration: none;
   cursor: pointer;
   transition: opacity 0.2s ease-in-out;
+  
+  /* Converge at corners animated border */
+  display: inline-block;
+  padding: 8px 16px;
+  
+  /* Border color - use theme colors, create gradient for visual interest */
+  --border-color: var(--color-primary);
+  --border-color-alt: var(--color-accent);
+  
+  /* 4 linear gradients for each border side */
+  /* Top border (grows left to right), Bottom border (grows right to left), Left border (grows top to bottom), Right border (grows bottom to top) */
+  background: 
+    linear-gradient(to right, var(--border-color), var(--border-color-alt)),
+    linear-gradient(to right, var(--border-color-alt), var(--border-color)),
+    linear-gradient(to bottom, var(--border-color), var(--border-color-alt)),
+    linear-gradient(to bottom, var(--border-color-alt), var(--border-color));
+  
+  /* Position each gradient at its starting corner */
+  background-position: 0% 0%, 100% 100%, 0% 0%, 100% 100%;
+  
+  /* Initial size: 0% width for top/bottom, 0% height for left/right */
+  background-size: 0% 2px, 0% 2px, 2px 0%, 2px 0%;
+  
+  background-repeat: no-repeat;
+  transition: background-size 0.5s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 .brand:hover {
-  opacity: 0.8;
+  opacity: 1;
+  /* On hover, all borders grow to full size - converge at corners effect */
+  background-size: 100% 2px, 100% 2px, 2px 100%, 2px 100%;
 }
 
 .nav {
@@ -125,10 +152,22 @@
   color: var(--color-text-dark);
 }
 
+/* Update border colors for scrolled state */
+.scrolled .brand {
+  --border-color: var(--color-primary);
+  --border-color-alt: var(--color-accent);
+}
+
 /* Keep white text when dark (blog page) - but NOT when scrolled */
 .header.dark .brand,
 .header.dark .navLink {
   color: var(--color-primary-contrast);
+}
+
+/* Update border colors for dark header */
+.header.dark .brand {
+  --border-color: var(--color-primary);
+  --border-color-alt: var(--color-accent);
 }
 
 /* Override: when dark header is scrolled, use dark text (must come after .header.dark) */
@@ -150,6 +189,12 @@
 .header.light .brand,
 .header.light .navLink {
   color: var(--color-text-dark);
+}
+
+/* Update border colors for light header */
+.header.light .brand {
+  --border-color: var(--color-primary);
+  --border-color-alt: var(--color-accent);
 }
 
 .header.light .chevron {
