@@ -36,7 +36,7 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
    - **Stage 2: ✅ Completed** - ThemePicker component with presets
      - Floating color picker UI (`src/components/ThemePicker/`)
      - Real-time contrast checking with WCAG AA/AAA warnings
-     - 13 built-in preset themes: Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic
+     - 14 built-in preset themes: Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic, AFB
      - Custom preset saving/loading (stored in `localStorage`)
      - Theme persistence with no-flicker loading
      - Export/import theme JSON functionality
@@ -73,7 +73,7 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
   - All colors migrated to semantic CSS variables (`src/design/tokens.css`)
   - ThemeProvider with React Context (`src/context/ThemeContext.tsx`)
   - ThemePicker component with floating UI (`src/components/ThemePicker/`)
-  - 13 built-in preset themes (Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic)
+  - 14 built-in preset themes (Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic, AFB)
   - Custom preset saving/loading with `localStorage`
   - Real-time WCAG contrast checking (`src/utils/contrast.ts`)
   - No-flicker theme loading (applied before React render)
@@ -131,7 +131,7 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
 3. **`src/context/ThemeContext.tsx`** - Theme state management
    - `Theme` type definition
    - `ThemeProvider` component with `useTheme` hook
-   - Built-in preset themes (13 themes)
+   - Built-in preset themes (14 themes)
    - Custom preset saving/loading
    - Export/import theme JSON
    - `localStorage` persistence
@@ -270,7 +270,7 @@ Full process documented in `docs/BLOG_POST_INTEGRATION.md`.
 ### Stage 2: ✅ Completed
 - ThemePicker component with floating UI
 - Real-time contrast checking with WCAG warnings
-- 13 built-in preset themes (all meet WCAG AA requirements)
+- 14 built-in preset themes (all meet WCAG AA requirements)
 - Custom preset saving/loading
 - Theme persistence with no-flicker loading
 - Export/import theme JSON

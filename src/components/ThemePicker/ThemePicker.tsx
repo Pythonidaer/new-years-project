@@ -342,7 +342,8 @@ export function ThemePicker() {
                     preset.id.startsWith('yuko') ||
                     preset.id.startsWith('hokusai') ||
                     preset.id.startsWith('noname') ||
-                    preset.id.startsWith('sadikovic');
+                    preset.id.startsWith('sadikovic') ||
+                    preset.id.startsWith('afb');
                   return (
                     <button
                       key={preset.id}
