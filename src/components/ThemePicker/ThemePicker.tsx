@@ -349,7 +349,8 @@ export function ThemePicker() {
                     preset.id.startsWith('dalmatian') ||
                     preset.id.startsWith('querida') ||
                     preset.id.startsWith('ris') ||
-                    preset.id.startsWith('gulu');
+                    preset.id.startsWith('gulu') ||
+                    preset.id.startsWith('maxine');
                   return (
                     <button
                       key={preset.id}
