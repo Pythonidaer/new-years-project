@@ -518,13 +518,14 @@ export function ThemePicker() {
                                   style={{ backgroundColor: currentValue, borderRadius: '8px' }}
                                 />
                                 <div className={styles.colorInfo}>
-                                  <label className={styles.colorLabel}>{token.label}</label>
+                                  <label htmlFor={`color-input-${token.key}`} className={styles.colorLabel}>{token.label}</label>
                                   {token.usage && (
                                     <div className={styles.colorUsage}>{token.usage}</div>
                                   )}
                                   <div className={styles.colorValue}>{currentValue}</div>
                                 </div>
                                 <input
+                                  id={`color-input-${token.key}`}
                                   type="color"
                                   value={colorToHex(currentValue)}
                                   onChange={(e) => handleColorChange(token.key, e.target.value)}
@@ -561,13 +562,14 @@ export function ThemePicker() {
                                   style={{ backgroundColor: currentValue, borderRadius: '8px' }}
                                 />
                                 <div className={styles.colorInfo}>
-                                  <label className={styles.colorLabel}>{token.label}</label>
+                                  <label htmlFor={`color-input-${token.key}`} className={styles.colorLabel}>{token.label}</label>
                                   {token.usage && (
                                     <div className={styles.colorUsage}>{token.usage}</div>
                                   )}
                                   <div className={styles.colorValue}>{currentValue}</div>
                                 </div>
                                 <input
+                                  id={`color-input-${token.key}`}
                                   type="color"
                                   value={colorToHex(currentValue)}
                                   onChange={(e) => handleColorChange(token.key, e.target.value)}
@@ -604,13 +606,14 @@ export function ThemePicker() {
                                   style={{ backgroundColor: currentValue, borderRadius: '8px' }}
                                 />
                                 <div className={styles.colorInfo}>
-                                  <label className={styles.colorLabel}>{token.label}</label>
+                                  <label htmlFor={`color-input-${token.key}`} className={styles.colorLabel}>{token.label}</label>
                                   {token.usage && (
                                     <div className={styles.colorUsage}>{token.usage}</div>
                                   )}
                                   <div className={styles.colorValue}>{currentValue}</div>
                                 </div>
                                 <input
+                                  id={`color-input-${token.key}`}
                                   type="color"
                                   value={colorToHex(currentValue)}
                                   onChange={(e) => handleColorChange(token.key, e.target.value)}
@@ -647,13 +650,14 @@ export function ThemePicker() {
                                   style={{ backgroundColor: currentValue, borderRadius: '8px' }}
                                 />
                                 <div className={styles.colorInfo}>
-                                  <label className={styles.colorLabel}>{token.label}</label>
+                                  <label htmlFor={`color-input-${token.key}`} className={styles.colorLabel}>{token.label}</label>
                                   {token.usage && (
                                     <div className={styles.colorUsage}>{token.usage}</div>
                                   )}
                                   <div className={styles.colorValue}>{currentValue}</div>
                                 </div>
                                 <input
+                                  id={`color-input-${token.key}`}
                                   type="color"
                                   value={colorToHex(currentValue)}
                                   onChange={(e) => handleColorChange(token.key, e.target.value)}
@@ -693,13 +697,14 @@ export function ThemePicker() {
                             style={{ backgroundColor: currentValue, borderRadius: '8px' }}
                           />
                           <div className={styles.colorInfo}>
-                            <label className={styles.colorLabel}>{token.label}</label>
+                            <label htmlFor={`color-input-${token.key}`} className={styles.colorLabel}>{token.label}</label>
                             {token.usage && (
                               <div className={styles.colorUsage}>{token.usage}</div>
                             )}
                             <div className={styles.colorValue}>{currentValue}</div>
                           </div>
                           <input
+                            id={`color-input-${token.key}`}
                             type="color"
                             value={colorToHex(currentValue)}
                             onChange={(e) => handleColorChange(token.key, e.target.value)}
