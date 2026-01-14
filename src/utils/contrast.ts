@@ -334,6 +334,51 @@ export function checkContrastIssues(theme: {
     });
   }
 
+  // Blog card contrast checks (Latest Blogs section)
+  // Check date text (text at 0.75 opacity) on card background
+  // Apply opacity to text color, then blend with background
+  const dateTextWithOpacity = Color(theme.text).alpha(0.75).rgb().string();
+  const blendedDateText = blendColor(dateTextWithOpacity, theme.bg);
+  const dateTextBgRatio = getContrastRatio(blendedDateText, theme.bg);
+  if (dateTextBgRatio < 4.5) {
+    issues.push({
+      pair: 'Date Text (75% opacity) on Card Background',
+      foreground: blendedDateText,
+      background: theme.bg,
+      ratio: dateTextBgRatio,
+      level: getContrastLevel(dateTextBgRatio),
+      usage: 'Blog card date in Latest Blogs section',
+    });
+  }
+
+  // Check excerpt text (text at 0.8 opacity) on card background
+  const excerptTextWithOpacity = Color(theme.text).alpha(0.8).rgb().string();
+  const blendedExcerptText = blendColor(excerptTextWithOpacity, theme.bg);
+  const excerptTextBgRatio = getContrastRatio(blendedExcerptText, theme.bg);
+  if (excerptTextBgRatio < 4.5) {
+    issues.push({
+      pair: 'Excerpt Text (80% opacity) on Card Background',
+      foreground: blendedExcerptText,
+      background: theme.bg,
+      ratio: excerptTextBgRatio,
+      level: getContrastLevel(excerptTextBgRatio),
+      usage: 'Blog card excerpt in Latest Blogs section',
+    });
+  }
+
+  // Check card link (link color) on card background
+  const cardLinkBgRatio = getContrastRatio(theme.link, theme.bg);
+  if (cardLinkBgRatio < 4.5) {
+    issues.push({
+      pair: 'Card Link (Link) on Card Background',
+      foreground: theme.link,
+      background: theme.bg,
+      ratio: cardLinkBgRatio,
+      level: getContrastLevel(cardLinkBgRatio),
+      usage: 'Blog card "Read More" link in Latest Blogs section',
+    });
+  }
+
   return issues;
 }
 

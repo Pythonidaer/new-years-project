@@ -54,7 +54,7 @@
 .date {
   font-size: 14px;
   color: var(--color-text);
-  opacity: 0.6;
+  opacity: 0.75;
   font-weight: 500;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .cardLink {
-  color: var(--color-primary);
+  color: var(--color-link);
   font-weight: 600;
   font-size: 16px;
   text-decoration: none;
