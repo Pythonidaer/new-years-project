@@ -156,6 +156,22 @@ export function checkContrastIssues(theme: {
     });
   }
 
+  // Check author role text (text at 75% opacity) on surface background
+  // Used in CustomerSpotlight section on homepage
+  const authorRoleTextWithOpacity = Color(theme.text).alpha(0.75).rgb().string();
+  const blendedAuthorRoleText = blendColor(authorRoleTextWithOpacity, theme.surface);
+  const authorRoleTextSurfaceRatio = getContrastRatio(blendedAuthorRoleText, theme.surface);
+  if (authorRoleTextSurfaceRatio < 4.5) {
+    issues.push({
+      pair: 'Author Role Text (75% opacity) on Surface Background',
+      foreground: blendedAuthorRoleText,
+      background: theme.surface,
+      ratio: authorRoleTextSurfaceRatio,
+      level: getContrastLevel(authorRoleTextSurfaceRatio),
+      usage: 'Customer spotlight author role on homepage',
+    });
+  }
+
   // Check code text on code background
   const codeTextCodeBgRatio = getContrastRatio(theme.codeText, theme.codeBg);
   if (codeTextCodeBgRatio < 4.5) {
