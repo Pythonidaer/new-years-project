@@ -223,7 +223,7 @@ The theming system follows a clear separation of concerns:
 - `src/utils/contrast.ts` - WCAG contrast checking with detailed warnings
 - `src/design/theming-goals.md` - Original theming architecture documentation
 
-**Built-in Preset Themes (15 total):**
+**Built-in Preset Themes (16 total):**
 1. **Default** - Dark theme with blue accents (Midnight Blue)
 2. **Cedar Oak** - Warm earth tones (browns/greens)
 3. **Mark43** - Original Mark43-inspired theme (orange/blue)
@@ -239,6 +239,7 @@ The theming system follows a clear separation of concerns:
 13. **Sadikovic** - Boxing arena inspired (dark blue-black, electric blue, purple, gold, red accents)
 14. **AFB** - Boxing gloves inspired (royal blue, metallic purple, gold, crimson red accents)
 15. **TUF** - Athletic gear inspired (royal blue tank top, black base, red accents, silver/metallic grey gloves)
+16. **Royboy** - Warm sepia portrait inspired (dark brown-black, muted reddish-brown, warm cream/blonde)
 
 **Important Implementation Notes:**
 - **CSS variables are the styling layer**: All color styling happens via CSS variables (`var(--color-*)`)
