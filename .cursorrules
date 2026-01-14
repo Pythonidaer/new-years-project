@@ -223,10 +223,21 @@ The theming system follows a clear separation of concerns:
 - `src/utils/contrast.ts` - WCAG contrast checking with detailed warnings
 - `src/design/theming-goals.md` - Original theming architecture documentation
 
-**Built-in Preset Themes (19 total):**
+**Documentation Files (READ THESE FOR THEME PICKER WORK):**
+- `docs/REACT_PACKAGE_GUIDE.md` - **PRIMARY REFERENCE** - Complete guide for React package usage, customization, token creation, preset management, accessibility checks, image-based themes, and adapting to existing codebases
+- `docs/THEME_PICKER_NPM_PACKAGE_PLAN.md` - Extraction plan for npm package with TDD approach, phases, and architecture decisions
+- `docs/COLOR_PICKER_INTEGRATION.md` - Integration reference for adding theme picker to new projects
+- `src/design/theming-goals.md` - Architecture overview and design decisions
+
+**When working on theme picker related tasks, ALWAYS read:**
+1. `docs/REACT_PACKAGE_GUIDE.md` - For user-facing features, customization, and API usage
+2. `docs/THEME_PICKER_NPM_PACKAGE_PLAN.md` - For extraction/package development work
+3. `docs/COLOR_PICKER_INTEGRATION.md` - For integration patterns and file structure
+
+**Built-in Preset Themes (25 total):**
 1. **Default** - Dark theme with blue accents (Midnight Blue)
 2. **Cedar Oak** - Warm earth tones (browns/greens)
-3. **Mark43** - Original Mark43-inspired theme (orange/blue)
+3. **Mark43** - Original Mark43-inspired theme (orange/blue) - *Commented out in UI but code preserved*
 4. **Sage Green** - Light theme with green tones
 5. **Crimson Flame** - Fire fighter inspired (red/orange)
 6. **Vapor Wave** - 80s aesthetic (magenta/cyan)
@@ -243,6 +254,12 @@ The theming system follows a clear separation of concerns:
 17. **Dalmatian** - High contrast black and white with warm blonde accents (diagonal split hoodie, minimalist)
 18. **Querida** - Modern gray base with vibrant lime green accents (modern building, clean aesthetic)
 19. **Ris** - Bright yellow background with light blue, red, purple, and brown accents (whimsical cartoon art)
+20. **Gulu** - Warm beagle-inspired theme (cream, tan, rich browns)
+21. **Maxine** - Vibrant portrait-inspired theme (platinum blonde, purple, orange, pink)
+22. **Sunrise** - Coastal sunrise theme (light blue, teal, orange, purple)
+23. **Noir** - Classic black and white photography theme (grayscale)
+24. **Hatsune** - Anime-inspired theme (bright teal, light blue, purple, pink)
+25. **Scotland** - Rugged valley landscape theme (pale grey-blue sky, dark blue-grey river, golden brown heather, muted greens)
 
 **Important Implementation Notes:**
 - **CSS variables are the styling layer**: All color styling happens via CSS variables (`var(--color-*)`)
@@ -257,6 +274,54 @@ The theming system follows a clear separation of concerns:
 - Semi-transparent colors are blended with backgrounds before contrast calculation
 - Custom presets are stored in separate `localStorage` key from active theme
 - Theme is applied to DOM before React render to prevent flicker on page load
+
+### 11. Theme Picker Documentation & npm Package
+
+**For Theme Picker Development & Customization:**
+
+When working on theme picker features, customization, or npm package extraction:
+
+1. **Read Primary Documentation:**
+   - `docs/REACT_PACKAGE_GUIDE.md` - Complete user guide covering:
+     - Installation & setup
+     - Token creation & theme definition
+     - Adding theme presets
+     - Adding accessibility checks (with code examples)
+     - Creating themes from images
+     - Customization (button colors, categories, CSS variables)
+     - Adapting to existing codebases
+     - Cursor rules & AI prompts for users
+     - API reference
+     - Troubleshooting
+
+2. **For npm Package Extraction:**
+   - `docs/THEME_PICKER_NPM_PACKAGE_PLAN.md` - Extraction plan with:
+     - TDD approach (tests in `src/__tests__/`)
+     - Phase-by-phase extraction plan
+     - Package architecture
+     - Testing strategy
+     - Publishing checklist
+
+3. **For Integration:**
+   - `docs/COLOR_PICKER_INTEGRATION.md` - Integration reference for:
+     - File structure
+     - Dependencies
+     - Step-by-step integration
+     - API reference
+
+**Key Principles:**
+- All theme colors must be on `#root` (not `:root`)
+- CSS variables follow pattern: `--color-{kebab-case-key}`
+- Always check contrast ratios (WCAG AA: ≥4.5:1)
+- ThemePicker UI uses fixed colors (theme-agnostic)
+- Tests should be written first (TDD approach)
+- Documentation should be comprehensive and user-friendly
+
+**When Adding New Features:**
+- Update relevant documentation files
+- Add tests following TDD approach
+- Update API reference if needed
+- Provide examples in documentation
 
 ---
 

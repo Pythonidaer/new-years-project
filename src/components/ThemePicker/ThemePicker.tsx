@@ -353,7 +353,8 @@ export function ThemePicker() {
                     preset.id.startsWith('maxine') ||
                     preset.id.startsWith('sunrise') ||
                     preset.id.startsWith('noir') ||
-                    preset.id.startsWith('hatsune');
+                    preset.id.startsWith('hatsune') ||
+                    preset.id.startsWith('scotland');
                   return (
                     <button
                       key={preset.id}
