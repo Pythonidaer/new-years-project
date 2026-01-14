@@ -771,8 +771,8 @@ const builtInPresets: Preset[] = [
     },
   },
   {
-    id: 'dalmation',
-    name: 'Dalmation',
+    id: 'dalmatian',
+    name: 'Dalmatian',
     theme: {
       ...defaultTheme,
       bg: '#FFFFFF', // Pure white (background)

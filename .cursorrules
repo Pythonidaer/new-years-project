@@ -240,7 +240,7 @@ The theming system follows a clear separation of concerns:
 14. **AFB** - Boxing gloves inspired (royal blue, metallic purple, gold, crimson red accents)
 15. **TUF** - Athletic gear inspired (royal blue tank top, black base, red accents, silver/metallic grey gloves)
 16. **Royboy** - Warm sepia portrait inspired (dark brown-black, muted reddish-brown, warm cream/blonde)
-17. **Dalmation** - High contrast black and white with warm blonde accents (diagonal split hoodie, minimalist)
+17. **Dalmatian** - High contrast black and white with warm blonde accents (diagonal split hoodie, minimalist)
 
 **Important Implementation Notes:**
 - **CSS variables are the styling layer**: All color styling happens via CSS variables (`var(--color-*)`)

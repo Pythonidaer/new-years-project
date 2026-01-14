@@ -36,7 +36,7 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
    - **Stage 2: ✅ Completed** - ThemePicker component with presets
      - Floating color picker UI (`src/components/ThemePicker/`)
      - Real-time contrast checking with WCAG AA/AAA warnings
-     - 17 built-in preset themes: Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic, AFB, TUF, Royboy, Dalmation
+     - 17 built-in preset themes: Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic, AFB, TUF, Royboy, Dalmatian
      - Custom preset saving/loading (stored in `localStorage`)
      - Theme persistence with no-flicker loading
      - Export/import theme JSON functionality
@@ -73,7 +73,7 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
   - All colors migrated to semantic CSS variables (`src/design/tokens.css`)
   - ThemeProvider with React Context (`src/context/ThemeContext.tsx`)
   - ThemePicker component with floating UI (`src/components/ThemePicker/`)
-  - 17 built-in preset themes (Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic, AFB, TUF, Royboy, Dalmation)
+  - 17 built-in preset themes (Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic, AFB, TUF, Royboy, Dalmatian)
   - Custom preset saving/loading with `localStorage`
   - Real-time WCAG contrast checking (`src/utils/contrast.ts`)
   - No-flicker theme loading (applied before React render)
