@@ -103,6 +103,8 @@
 .dots {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .dot {
@@ -110,18 +112,37 @@
   height: 10px;
   border-radius: 50%;
   border: 0;
-  background: var(--color-border);
+  background: transparent;
   cursor: pointer;
-  padding: 0;
+  padding: 7px;
+  /* Touch target: 10px visual + 7px padding on each side = 24px total */
+  margin: -7px;
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+/* Visual dot - 10px, centered within the 24px touch target */
+.dot::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-border);
+  display: block;
+  position: absolute;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.dot:hover {
+.dot:hover::before {
   background: var(--color-text);
   opacity: 0.5;
 }
 
-.dotActive {
+.dotActive::before {
   background: var(--color-primary);
   transform: scale(1.2);
 }
