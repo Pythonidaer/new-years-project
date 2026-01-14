@@ -379,6 +379,22 @@ export function checkContrastIssues(theme: {
     });
   }
 
+  // Blog grid card contrast checks
+  // Check category link (footer text muted) on surface dark background
+  // Note: footerTextMuted is semi-transparent, so we need to blend it with surfaceDark first
+  const blendedCategoryLink = blendColor(theme.footerTextMuted, theme.surfaceDark);
+  const categoryLinkSurfaceDarkRatio = getContrastRatio(blendedCategoryLink, theme.surfaceDark);
+  if (categoryLinkSurfaceDarkRatio < 4.5) {
+    issues.push({
+      pair: 'Category Link on Blog Card Background',
+      foreground: blendedCategoryLink,
+      background: theme.surfaceDark,
+      ratio: categoryLinkSurfaceDarkRatio,
+      level: getContrastLevel(categoryLinkSurfaceDarkRatio),
+      usage: 'Blog grid card category links on dark card background',
+    });
+  }
+
   return issues;
 }
 

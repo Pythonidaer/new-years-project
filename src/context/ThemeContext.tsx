@@ -390,7 +390,7 @@ const builtInPresets: Preset[] = [
       accent: '#e8b8b8',
       accentAlt: '#f0c8c8',
       footerBg: '#2d1a1a',
-      footerTextMuted: 'rgba(255, 255, 255, 0.75)',
+      footerTextMuted: 'rgba(255, 255, 255, 0.85)',
       footerTextSubtle: 'rgba(255, 255, 255, 0.65)',
       footerSocialBg: 'rgba(255, 255, 255, 0.12)',
       footerBorder: 'rgba(255, 255, 255, 0.12)',
