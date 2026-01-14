@@ -115,7 +115,7 @@ export function BlogPost() {
               
               {/* About the Author */}
               <div id="author" className={styles.authorBox}>
-                <h6 className={styles.authorHeading}>About the Author</h6>
+                <h2 className={styles.authorHeading}>About the Author</h2>
                 <div className={styles.author}>
                   <div className={styles.authorContent}>
                     <div className={styles.authorHeader}>
