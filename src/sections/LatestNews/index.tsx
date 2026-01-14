@@ -44,7 +44,11 @@ export function LatestNews() {
                   </Link>
                 </h3>
                 <p className={styles.cardExcerpt}>{post.excerpt}</p>
-                <Link to={`/resources/blog/${getBlogPostSlug(post)}`} className={styles.cardLink}>
+                <Link 
+                  to={`/resources/blog/${getBlogPostSlug(post)}`} 
+                  className={styles.cardLink}
+                  aria-label={`Read more about ${post.title}`}
+                >
                   Read More
                 </Link>
               </div>
