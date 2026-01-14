@@ -24,7 +24,7 @@ globalThis.IntersectionObserver = class IntersectionObserver {
     return [];
   }
   unobserve() {}
-} as any;
+} as unknown as typeof IntersectionObserver;
 
 // Polyfill for ResizeObserver (needed for embla-carousel)
 globalThis.ResizeObserver = class ResizeObserver {
@@ -32,4 +32,4 @@ globalThis.ResizeObserver = class ResizeObserver {
   disconnect() {}
   observe() {}
   unobserve() {}
-} as any;
+} as unknown as typeof ResizeObserver;
