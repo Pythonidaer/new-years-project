@@ -24,13 +24,13 @@ export function FeaturedBlogPost({ post }: FeaturedBlogPostProps) {
   return (
     <article className={styles.featuredCard}>
       <div className={styles.content}>
-        <h4 className={styles.title}>
+        <h2 className={styles.title}>
           {post ? (
             <Link to={`/resources/blog/${getBlogPostSlug(displayPost)}`}>{displayPost.title}</Link>
           ) : (
             <span>{displayPost.title}</span>
           )}
-        </h4>
+        </h2>
         {post && (
           <Link to={`/resources/blog/${getBlogPostSlug(displayPost)}`} className={styles.ctaLink}>
             READ THE BLOG

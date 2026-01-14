@@ -52,6 +52,9 @@ export function BlogFilters({ posts, onFilterChange }: BlogFiltersProps) {
     <div className={styles.container}>
       <div className={styles.selectContainer}>
         <div className={styles.selectWrapper}>
+          <label htmlFor="category-select" className={styles.srOnly}>
+            Filter by Type
+          </label>
           <select
             id="category-select"
             value={selectedCategory}
