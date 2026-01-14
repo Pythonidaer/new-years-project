@@ -351,7 +351,9 @@ export function ThemePicker() {
                     preset.id.startsWith('ris') ||
                     preset.id.startsWith('gulu') ||
                     preset.id.startsWith('maxine') ||
-                    preset.id.startsWith('sunrise');
+                    preset.id.startsWith('sunrise') ||
+                    preset.id.startsWith('noir') ||
+                    preset.id.startsWith('hatsune');
                   return (
                     <button
                       key={preset.id}
