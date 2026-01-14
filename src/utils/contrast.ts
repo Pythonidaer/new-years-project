@@ -117,7 +117,7 @@ export function checkContrastIssues(theme: {
     });
   }
 
-  // Check text dark on background (for header scrolled state)
+  // Check text dark on background (for header scrolled state and blog heading)
   const textDarkBgRatio = getContrastRatio(theme.textDark, theme.bg);
   if (textDarkBgRatio < 4.5) {
     issues.push({
@@ -126,7 +126,7 @@ export function checkContrastIssues(theme: {
       background: theme.bg,
       ratio: textDarkBgRatio,
       level: getContrastLevel(textDarkBgRatio),
-      usage: 'Header (scrolled state)',
+      usage: 'Header (scrolled state), Blog heading on white background',
     });
   }
 
@@ -179,6 +179,19 @@ export function checkContrastIssues(theme: {
       ratio: linkBgRatio,
       level: getContrastLevel(linkBgRatio),
       usage: 'Hyperlinks on page background',
+    });
+  }
+
+  // Check blog link on background (for post content links and tag links)
+  const blogLinkBgRatio = getContrastRatio(theme.blogLink, theme.bg);
+  if (blogLinkBgRatio < 4.5) {
+    issues.push({
+      pair: 'Blog Link on Background',
+      foreground: theme.blogLink,
+      background: theme.bg,
+      ratio: blogLinkBgRatio,
+      level: getContrastLevel(blogLinkBgRatio),
+      usage: 'Blog post content links, tag links on page background',
     });
   }
 

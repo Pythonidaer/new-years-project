@@ -12,6 +12,9 @@
   --radius-button: 2px;
   --container-max: 1210px;
   --nav-breakpoint: 990px;
+  
+  /* Background color fallback (for body element - will be overridden by theme) */
+  --color-bg: #ffffff;
 }
 
 /* Themeable color tokens (on #root for nested theme support) */

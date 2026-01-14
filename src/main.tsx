@@ -22,6 +22,11 @@ if (savedTheme) {
       const cssVar = themeKeyToCssVar(key);
       root.style.setProperty(cssVar, value as string);
     });
+    // Also apply --color-bg to html so body element can use it
+    // (body is a parent of #root, so it can't access variables defined on #root)
+    if (theme.bg) {
+      document.documentElement.style.setProperty('--color-bg', theme.bg);
+    }
   } catch {
     // Ignore parse errors, will use defaults
   }

@@ -62,7 +62,7 @@
   font-weight: 700;
   line-height: 1.63;
   color: var(--color-text);
-  background-color: transparent;
+  background-color: var(--color-bg);
   cursor: pointer;
   appearance: none;
   outline: none;

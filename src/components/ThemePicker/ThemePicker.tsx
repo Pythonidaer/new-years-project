@@ -331,7 +331,7 @@ export function ThemePicker() {
                 {presets.map((preset) => {
                   const isBuiltIn = preset.id === 'default' || 
                     preset.id.startsWith('cedar') || 
-                    preset.id.startsWith('mark43') || 
+                    // preset.id.startsWith('mark43') || // Commented out - Mark43 theme hidden 
                     preset.id.startsWith('sage') ||
                     preset.id.startsWith('crimson') ||
                     preset.id.startsWith('vapor') ||
@@ -348,7 +348,8 @@ export function ThemePicker() {
                     preset.id.startsWith('royboy') ||
                     preset.id.startsWith('dalmatian') ||
                     preset.id.startsWith('querida') ||
-                    preset.id.startsWith('ris');
+                    preset.id.startsWith('ris') ||
+                    preset.id.startsWith('gulu');
                   return (
                     <button
                       key={preset.id}

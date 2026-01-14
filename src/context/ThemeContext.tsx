@@ -40,42 +40,43 @@ export type Theme = {
 };
 
 // Original Mark43-inspired theme (preserved as Mark43 preset)
-const mark43Theme: Theme = {
-  bg: '#ffffff',
-  surface: '#f6f7f9',
-  surfaceDark: 'rgb(36, 54, 78)',
-  marqueeBg: '#0f2036',
-  text: '#24364e',
-  textDark: '#0b1f33',
-  muted: '#555555',
-  border: 'rgba(36, 54, 78, 0.25)',
-  codeBg: '#f6f7f9',
-  codeText: '#24364e',
-  primary: '#d34120',
-  primaryHover: '#e07962',
-  primaryContrast: '#ffffff',
-  blogLink: '#134dd1',
-  link: '#d34120',
-  focus: '#93c5fd',
-  accent: '#f5b027',
-  accentAlt: '#ffac12',
-  footerBg: '#0a1a2a',
-  footerTextMuted: 'rgba(255, 255, 255, 0.7)',
-  footerTextSubtle: 'rgba(255, 255, 255, 0.6)',
-  footerSocialBg: 'rgba(255, 255, 255, 0.1)',
-  footerBorder: 'rgba(255, 255, 255, 0.1)',
-  heroStart: '#152a44',
-  heroEnd: '#0f2036',
-  heroRadial: 'rgba(255, 255, 255, 0.08)',
-  campaignStart: '#134dd1',
-  campaignEnd: '#2962ff',
-  authorBoxStart: 'rgba(242, 242, 242, 0.57)',
-  authorBoxEnd: 'rgba(180, 199, 207, 0.57)',
-  relatedSectionStart: 'rgba(180, 199, 207, 0.4)',
-  relatedSectionEnd: 'rgba(255, 255, 255, 0.4)',
-  shadow: 'rgba(0, 0, 0, 0.16)',
-  shadowSubtle: 'rgba(0, 0, 0, 0.08)',
-};
+// Commented out - Mark43 theme hidden from ThemePicker menu
+// const mark43Theme: Theme = {
+//   bg: '#ffffff',
+//   surface: '#f6f7f9',
+//   surfaceDark: 'rgb(36, 54, 78)',
+//   marqueeBg: '#0f2036',
+//   text: '#24364e',
+//   textDark: '#0b1f33',
+//   muted: '#555555',
+//   border: 'rgba(36, 54, 78, 0.25)',
+//   codeBg: '#f6f7f9',
+//   codeText: '#24364e',
+//   primary: '#d34120',
+//   primaryHover: '#e07962',
+//   primaryContrast: '#ffffff',
+//   blogLink: '#134dd1',
+//   link: '#d34120',
+//   focus: '#93c5fd',
+//   accent: '#f5b027',
+//   accentAlt: '#ffac12',
+//   footerBg: '#0a1a2a',
+//   footerTextMuted: 'rgba(255, 255, 255, 0.7)',
+//   footerTextSubtle: 'rgba(255, 255, 255, 0.6)',
+//   footerSocialBg: 'rgba(255, 255, 255, 0.1)',
+//   footerBorder: 'rgba(255, 255, 255, 0.1)',
+//   heroStart: '#152a44',
+//   heroEnd: '#0f2036',
+//   heroRadial: 'rgba(255, 255, 255, 0.08)',
+//   campaignStart: '#134dd1',
+//   campaignEnd: '#2962ff',
+//   authorBoxStart: 'rgba(242, 242, 242, 0.57)',
+//   authorBoxEnd: 'rgba(180, 199, 207, 0.57)',
+//   relatedSectionStart: 'rgba(180, 199, 207, 0.4)',
+//   relatedSectionEnd: 'rgba(255, 255, 255, 0.4)',
+//   shadow: 'rgba(0, 0, 0, 0.16)',
+//   shadowSubtle: 'rgba(0, 0, 0, 0.08)',
+// };
 
 // Default theme (Midnight Blue)
 const defaultTheme: Theme = {
@@ -141,6 +142,11 @@ function applyThemeToDom(theme: Theme) {
     const cssVar = themeKeyToCssVar(key as keyof Theme);
     root.style.setProperty(cssVar, value);
   });
+
+  // Also apply --color-bg to html/body so body element can use it
+  // (body is a parent of #root, so it can't access variables defined on #root)
+  const html = document.documentElement;
+  html.style.setProperty('--color-bg', theme.bg);
 }
 
 // Built-in preset themes
@@ -191,11 +197,11 @@ const builtInPresets: Preset[] = [
       shadowSubtle: 'rgba(45, 58, 42, 0.08)',
     },
   },
-  {
-    id: 'mark43',
-    name: 'Mark43',
-    theme: mark43Theme,
-  },
+  // {
+  //   id: 'mark43',
+  //   name: 'Mark43',
+  //   theme: mark43Theme,
+  // },
   {
     id: 'sage-green',
     name: 'Sage Green',
@@ -891,6 +897,47 @@ const builtInPresets: Preset[] = [
       relatedSectionEnd: 'rgba(135, 206, 235, 0.7)', // Light blue section
       shadow: 'rgba(128, 0, 128, 0.4)', // Purple shadows
       shadowSubtle: 'rgba(128, 0, 128, 0.2)', // Subtle purple shadows
+    },
+  },
+  {
+    id: 'gulu',
+    name: 'Gulu',
+    theme: {
+      ...defaultTheme,
+      bg: '#F5F1E8', // Warm cream (white parts of Beagle)
+      surface: '#E8DFD0', // Light tan (soft Beagle fur)
+      surfaceDark: '#6B4423', // Rich brown (couch, brown patches)
+      marqueeBg: '#5A3518', // Darker brown (couch shadow)
+      text: '#2D1B0E', // Dark brown (almost black, like Beagle's eyes/nose)
+      textDark: '#1A0F07', // Very dark brown (black patches)
+      muted: '#8B7355', // Medium brown (muted accent)
+      border: 'rgba(107, 68, 35, 0.3)', // Brown borders
+      codeBg: '#E8DFD0', // Light tan for code blocks
+      codeText: '#2D1B0E', // Dark brown code text
+      primary: '#8B5A3C', // Warm brown (brown patches) for better contrast with white text (meets 4.5:1 WCAG AA)
+      primaryHover: '#A67C52', // Lighter brown on hover
+      primaryContrast: '#FFFFFF', // White text on brown buttons (meets 4.5:1 WCAG AA)
+      link: '#5A3518', // Dark brown links for better contrast on cream background (meets 4.5:1 WCAG AA)
+      blogLink: '#3D2514', // Very dark brown for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
+      focus: '#A67C52', // Light brown focus ring
+      accent: '#B8865B', // Tan accent (lighter brown patches)
+      accentAlt: '#D4A574', // Light tan accent (highlights)
+      footerBg: '#3D2514', // Very dark brown (footer, like dark couch areas)
+      footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text
+      footerTextSubtle: 'rgba(255, 255, 255, 0.65)', // Subtle white text
+      footerSocialBg: 'rgba(255, 255, 255, 0.12)', // Subtle white social bg
+      footerBorder: 'rgba(255, 255, 255, 0.15)', // White borders
+      heroStart: '#6B4423', // Rich brown start (couch color)
+      heroEnd: '#5A3518', // Darker brown end
+      heroRadial: 'rgba(255, 255, 255, 0.1)', // Soft white glow
+      campaignStart: '#8B5A3C', // Warm brown (brown patches)
+      campaignEnd: '#6B4423', // Rich brown (couch)
+      authorBoxStart: 'rgba(232, 223, 208, 0.9)', // Light tan
+      authorBoxEnd: 'rgba(212, 165, 116, 0.9)', // Light tan accent
+      relatedSectionStart: 'rgba(212, 165, 116, 0.5)', // Light tan section
+      relatedSectionEnd: 'rgba(245, 241, 232, 0.5)', // Cream section
+      shadow: 'rgba(107, 68, 35, 0.25)', // Brown shadows
+      shadowSubtle: 'rgba(107, 68, 35, 0.12)', // Subtle brown shadows
     },
   },
 ];

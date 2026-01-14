@@ -56,7 +56,7 @@ export function BlogFilters({ posts, onFilterChange }: BlogFiltersProps) {
             id="category-select"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className={`${styles.select} ${styles.selected}`}
+            className={styles.select}
           >
             <option value="all">Type</option>
             {allFilterOptions.map((option) => (
