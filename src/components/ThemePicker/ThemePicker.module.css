@@ -1,10 +1,10 @@
 /* Trigger button - fixed colors, never changes */
 .trigger {
   position: fixed;
-  bottom: 24px;
-  left: 24px;
-  width: 48px;
-  height: 48px;
+  bottom: 12px;
+  left: 12px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: #d34120; /* Fixed primary color */
   color: #ffffff; /* Fixed white */
@@ -14,35 +14,72 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16); /* Fixed shadow */
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  z-index: 1000;
+  padding: 0;
+  outline: none;
+  opacity: 0.9;
+  transform: scale(1);
+  transition: transform 100ms linear 0s, opacity 200ms linear 0ms, visibility 0ms linear 0ms;
+  visibility: visible;
+  z-index: 2147483636;
 }
 
 .trigger:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* Fixed shadow */
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 .trigger:active {
   transform: scale(0.95);
 }
 
-/* Popup container - fixed colors, never changes */
-.popup {
+.triggerHidden {
+  opacity: 0;
+  visibility: hidden;
+  transition-delay: 0ms, 0ms, 0ms; /* Fade out immediately when drawer opens */
+}
+
+/* Backdrop overlay - fixed colors, never changes */
+.backdrop {
   position: fixed;
-  bottom: 88px;
-  left: 24px;
-  width: 800px;
-  max-width: calc(100vw - 48px);
-  max-height: calc(100vh - 120px);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 2147483637;
+  transition-property: opacity, visibility;
+  transition-duration: 200ms, 0ms;
+  transition-delay: 0ms, 0ms;
+  opacity: 1;
+  visibility: visible;
+}
+
+.backdropHidden {
+  opacity: 0;
+  transition-delay: 0ms, 200ms;
+  visibility: hidden;
+}
+
+/* Drawer container - fixed colors, never changes */
+.drawer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 600px;
+  max-width: calc(100vw - 60px);
+  height: 100vh;
   background: #ffffff; /* Fixed white background */
-  border: 1px solid rgba(36, 54, 78, 0.25); /* Fixed border */
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16); /* Fixed shadow */
-  z-index: 1001;
+  box-shadow: 2px 0 24px rgba(0, 0, 0, 0.16); /* Fixed shadow */
+  z-index: 2147483638;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transform: translateX(0);
+  transition: transform 200ms ease-in-out;
+}
+
+.drawerHidden {
+  transform: translateX(-100%);
 }
 
 /* Header - fixed colors */
@@ -217,35 +254,63 @@
   padding: 20px;
   border-bottom: 1px solid rgba(36, 54, 78, 0.25); /* Fixed border */
   flex-shrink: 0;
-  max-height: 300px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
-.presetsTitle {
+.presetsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
   flex-shrink: 0;
 }
 
-.presetsGrid {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
+.presetsHeaderCollapsed {
+  margin-bottom: 0;
 }
 
 .presetsTitle {
   font-size: 14px;
   font-weight: 600;
   color: #24364e; /* Fixed text color */
-  margin: 0 0 12px 0;
+  margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+.presetsToggle {
+  background: transparent;
+  border: none;
+  color: #24364e; /* Fixed text color */
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  border-radius: 4px;
+}
+
+.presetsToggle:hover {
+  background: rgba(36, 54, 78, 0.1); /* Fixed hover background */
 }
 
 .presetsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 50vh;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+
+.presetsGridCollapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
 }
 
 .presetButton {
@@ -570,10 +635,9 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .popup {
-    width: calc(100vw - 48px);
-    left: 24px;
-    max-width: 800px;
+  .drawer {
+    width: calc(100vw - 60px);
+    max-width: 600px;
   }
   
   .colors {
@@ -586,8 +650,8 @@
 }
 
 @media (max-width: 768px) {
-  .popup {
-    width: calc(100vw - 48px);
+  .drawer {
+    width: calc(100vw - 40px);
     max-width: 100%;
   }
 }

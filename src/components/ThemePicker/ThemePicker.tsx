@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useTheme } from '../../context/useTheme';
 import { checkContrastIssues } from '../../utils/contrast';
-import { RotateCcw, Save, X, Palette, Bookmark, Trash2 } from 'lucide-react';
+import { RotateCcw, Save, X, Palette, Bookmark, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import Color from 'color';
 import styles from './ThemePicker.module.css';
 
@@ -78,7 +78,11 @@ export function ThemePicker() {
   const [isOpen, setIsOpen] = useState(false);
   const [presetName, setPresetName] = useState('');
   const [showSavePreset, setShowSavePreset] = useState(false);
-  const popupRef = useRef<HTMLDivElement>(null);
+  const [isPresetsExpanded, setIsPresetsExpanded] = useState(true);
+  const [isPresetsHeaderCollapsed, setIsPresetsHeaderCollapsed] = useState(false);
+  const [isTriggerHidden, setIsTriggerHidden] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
   // Check contrast issues whenever theme or local changes update (useMemo to avoid effect warning)
@@ -177,14 +181,13 @@ export function ThemePicker() {
     }
   };
 
-  // Close on outside click (but not when clicking the trigger button)
+  // Close on backdrop click (but not when clicking the trigger button or drawer)
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleBackdropClick = (event: MouseEvent) => {
       const target = event.target as Node;
-      // Don't close if clicking the trigger button or inside the popup
+      // Close if clicking the backdrop (but not the drawer or trigger)
       if (
-        popupRef.current &&
-        !popupRef.current.contains(target) &&
+        backdropRef.current === target &&
         triggerRef.current &&
         !triggerRef.current.contains(target)
       ) {
@@ -192,10 +195,48 @@ export function ThemePicker() {
       }
     };
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
+      document.addEventListener('mousedown', handleBackdropClick);
+      return () => document.removeEventListener('mousedown', handleBackdropClick);
     }
   }, [isOpen]);
+
+  // Body scroll lock when drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = '';
+      };
+    }
+  }, [isOpen]);
+
+  // Control trigger icon visibility with delay when drawer closes
+  useEffect(() => {
+    if (isOpen) {
+      // Hide icon immediately when drawer opens
+      setIsTriggerHidden(true);
+    } else {
+      // Show icon after drawer slide-out animation completes (200ms)
+      const timer = setTimeout(() => {
+        setIsTriggerHidden(false);
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
+
+  // Control presets header margin with delay when closing
+  useEffect(() => {
+    if (isPresetsExpanded) {
+      // Remove collapsed state immediately when opening
+      setIsPresetsHeaderCollapsed(false);
+    } else {
+      // Add collapsed state after transition completes (300ms)
+      const timer = setTimeout(() => {
+        setIsPresetsHeaderCollapsed(true);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isPresetsExpanded]);
 
   // Helper to convert color to hex for input
   const colorToHex = (color: string): string => {
@@ -255,15 +296,22 @@ export function ThemePicker() {
     <>
       <button
         ref={triggerRef}
-        className={styles.trigger}
+        className={`${styles.trigger} ${isTriggerHidden ? styles.triggerHidden : ''}`}
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Open theme picker"
         title="Theme Picker"
       >
         <Palette size={20} />
       </button>
-      {isOpen && (
-        <div ref={popupRef} className={styles.popup}>
+      <>
+        <div 
+          ref={backdropRef} 
+          className={`${styles.backdrop} ${!isOpen ? styles.backdropHidden : ''}`}
+        />
+        <div 
+          ref={drawerRef} 
+          className={`${styles.drawer} ${!isOpen ? styles.drawerHidden : ''}`}
+        >
           <div className={styles.header}>
             <h3 className={styles.title}>Theme Colors</h3>
             <div className={styles.actions}>
@@ -326,8 +374,18 @@ export function ThemePicker() {
             
             {/* Presets Section */}
             <div className={styles.presetsSection}>
-              <h4 className={styles.presetsTitle}>Presets</h4>
-              <div className={styles.presetsGrid}>
+              <div className={`${styles.presetsHeader} ${isPresetsHeaderCollapsed ? styles.presetsHeaderCollapsed : ''}`}>
+                <h4 className={styles.presetsTitle}>Presets</h4>
+                <button
+                  className={styles.presetsToggle}
+                  onClick={() => setIsPresetsExpanded(!isPresetsExpanded)}
+                  aria-label={isPresetsExpanded ? 'Collapse presets' : 'Expand presets'}
+                  aria-expanded={isPresetsExpanded}
+                >
+                  {isPresetsExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                </button>
+              </div>
+              <div className={`${styles.presetsGrid} ${!isPresetsExpanded ? styles.presetsGridCollapsed : ''}`}>
                 {presets.map((preset) => {
                   const isBuiltIn = preset.id === 'default' || 
                     preset.id.startsWith('cedar') || 
@@ -354,6 +412,7 @@ export function ThemePicker() {
                     preset.id.startsWith('sunrise') ||
                     preset.id.startsWith('noir') ||
                     preset.id.startsWith('hatsune') ||
+                    preset.id.startsWith('trippie') ||
                     preset.id.startsWith('scotland');
                   return (
                     <button
@@ -665,7 +724,7 @@ export function ThemePicker() {
             </div>
           </div>
         </div>
-      )}
+      </>
     </>
   );
 }
