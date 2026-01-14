@@ -223,7 +223,7 @@ The theming system follows a clear separation of concerns:
 - `src/utils/contrast.ts` - WCAG contrast checking with detailed warnings
 - `src/design/theming-goals.md` - Original theming architecture documentation
 
-**Built-in Preset Themes (18 total):**
+**Built-in Preset Themes (19 total):**
 1. **Default** - Dark theme with blue accents (Midnight Blue)
 2. **Cedar Oak** - Warm earth tones (browns/greens)
 3. **Mark43** - Original Mark43-inspired theme (orange/blue)
@@ -242,6 +242,7 @@ The theming system follows a clear separation of concerns:
 16. **Royboy** - Warm sepia portrait inspired (dark brown-black, muted reddish-brown, warm cream/blonde)
 17. **Dalmatian** - High contrast black and white with warm blonde accents (diagonal split hoodie, minimalist)
 18. **Querida** - Modern gray base with vibrant lime green accents (modern building, clean aesthetic)
+19. **Ris** - Bright yellow background with light blue, red, purple, and brown accents (whimsical cartoon art)
 
 **Important Implementation Notes:**
 - **CSS variables are the styling layer**: All color styling happens via CSS variables (`var(--color-*)`)
