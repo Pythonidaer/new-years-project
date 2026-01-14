@@ -350,7 +350,8 @@ export function ThemePicker() {
                     preset.id.startsWith('querida') ||
                     preset.id.startsWith('ris') ||
                     preset.id.startsWith('gulu') ||
-                    preset.id.startsWith('maxine');
+                    preset.id.startsWith('maxine') ||
+                    preset.id.startsWith('sunrise');
                   return (
                     <button
                       key={preset.id}
