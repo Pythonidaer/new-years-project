@@ -346,7 +346,8 @@ export function ThemePicker() {
                     preset.id.startsWith('afb') ||
                     preset.id.startsWith('tuf') ||
                     preset.id.startsWith('royboy') ||
-                    preset.id.startsWith('dalmatian');
+                    preset.id.startsWith('dalmatian') ||
+                    preset.id.startsWith('querida');
                   return (
                     <button
                       key={preset.id}
