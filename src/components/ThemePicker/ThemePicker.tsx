@@ -413,7 +413,9 @@ export function ThemePicker() {
                     preset.id.startsWith('noir') ||
                     preset.id.startsWith('hatsune') ||
                     preset.id.startsWith('trippie') ||
-                    preset.id.startsWith('scotland');
+                    preset.id.startsWith('scotland') ||
+                    preset.id.startsWith('pbr') ||
+                    preset.id.startsWith('reeses');
                   return (
                     <button
                       key={preset.id}

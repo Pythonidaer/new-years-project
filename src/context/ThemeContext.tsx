@@ -1186,6 +1186,88 @@ const builtInPresets: Preset[] = [
       shadowSubtle: 'rgba(74, 85, 104, 0.12)', // Subtle blue-grey shadows
     },
   },
+  {
+    id: 'pbr',
+    name: 'PBR',
+    theme: {
+      ...defaultTheme,
+      bg: '#F0F4FA', // Light blue-tinted white (PBR label with blue influence)
+      surface: '#E8F0F8', // Light blue-tinted surface (metallic can with blue tint)
+      surfaceDark: '#0A1A2D', // Dark blue background (dark blue instead of black)
+      marqueeBg: '#0A1525', // Very dark blue background
+      text: '#1A1A1A', // Dark text (readable on light)
+      textDark: '#000000', // Black (headings)
+      muted: '#4A5A6B', // Medium blue-grey (muted accent)
+      border: 'rgba(0, 61, 165, 0.25)', // PBR blue borders
+      codeBg: '#E8F0F8', // Light blue-tinted for code blocks
+      codeText: '#1A1A1A', // Dark code text
+      primary: '#003DA5', // PBR Blue (classic Pabst Blue Ribbon blue) for better contrast with white text (meets 4.5:1 WCAG AA)
+      primaryHover: '#0040C0', // Lighter blue on hover
+      primaryContrast: '#FFFFFF', // White text on blue buttons (meets 4.5:1 WCAG AA)
+      link: '#003DA5', // PBR blue links for better contrast on light background (meets 4.5:1 WCAG AA)
+      blogLink: '#002D7A', // Darker blue for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
+      focus: '#003DA5', // PBR blue focus ring
+      accent: '#C41E1E', // Red (diagonal stripes on label)
+      accentAlt: '#FF4D4D', // Brighter red accent for better contrast on dark footer (meets 4.5:1 WCAG AA)
+      footerBg: '#0A1525', // Dark blue background (dark blue instead of black)
+      footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text
+      footerTextSubtle: 'rgba(255, 255, 255, 0.65)', // Subtle white text
+      footerSocialBg: 'rgba(0, 61, 165, 0.2)', // Subtle blue social bg
+      footerBorder: 'rgba(0, 61, 165, 0.25)', // Blue borders
+      heroStart: '#0A1A2D', // Dark blue start
+      heroEnd: '#0A1525', // Very dark blue end
+      heroRadial: 'rgba(0, 61, 165, 0.2)', // PBR blue glow
+      campaignStart: '#003DA5', // PBR blue
+      campaignEnd: '#002D7A', // Darker blue
+      authorBoxStart: 'rgba(240, 248, 255, 0.95)', // Light blue-tinted
+      authorBoxEnd: 'rgba(232, 240, 248, 0.95)', // Slightly darker blue-tinted
+      relatedSectionStart: 'rgba(232, 240, 248, 0.7)', // Blue-tinted section
+      relatedSectionEnd: 'rgba(240, 248, 255, 0.7)', // Light blue-tinted section
+      shadow: 'rgba(0, 61, 165, 0.2)', // PBR blue shadows
+      shadowSubtle: 'rgba(0, 61, 165, 0.1)', // Subtle blue shadows
+    },
+  },
+  {
+    id: 'reeses',
+    name: 'Reeses',
+    theme: {
+      ...defaultTheme,
+      bg: '#FFF8F0', // Light orange-tinted white (Reese's Pieces box background)
+      surface: '#FFE8D0', // Light orange surface (candy box orange)
+      surfaceDark: '#1A0A00', // Dark brown-black (chocolate/peanut butter)
+      marqueeBg: '#0A0500', // Very dark background
+      text: '#2A1A0A', // Dark brown text (readable on light)
+      textDark: '#1A0A00', // Very dark brown (headings)
+      muted: '#8B6B3A', // Medium brown-orange (muted accent)
+      border: 'rgba(255, 153, 0, 0.3)', // Orange borders
+      codeBg: '#FFE8D0', // Light orange for code blocks
+      codeText: '#2A1A0A', // Dark brown code text
+      primary: '#B34D00', // Dark orange for better contrast with white text (meets 4.5:1 WCAG AA)
+      primaryHover: '#CC5200', // Slightly lighter orange on hover
+      primaryContrast: '#FFFFFF', // White text on orange buttons (meets 4.5:1 WCAG AA)
+      link: '#993D00', // Very dark orange links for better contrast on light background (meets 4.5:1 WCAG AA)
+      blogLink: '#803300', // Darkest orange for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
+      focus: '#B34D00', // Orange focus ring
+      accent: '#FFC107', // Yellow (Reese's Pieces logo yellow)
+      accentAlt: '#FFD54F', // Lighter yellow accent for better contrast on dark footer (meets 4.5:1 WCAG AA)
+      footerBg: '#1A0A00', // Dark brown-black footer (chocolate/peanut butter)
+      footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text
+      footerTextSubtle: 'rgba(255, 255, 255, 0.65)', // Subtle white text
+      footerSocialBg: 'rgba(255, 153, 0, 0.2)', // Subtle orange social bg
+      footerBorder: 'rgba(255, 153, 0, 0.25)', // Orange borders
+      heroStart: '#1A0A00', // Dark brown-black start
+      heroEnd: '#0A0500', // Very dark brown-black end
+      heroRadial: 'rgba(255, 153, 0, 0.15)', // Orange glow
+      campaignStart: '#B34D00', // Dark orange
+      campaignEnd: '#CC5200', // Darker orange
+      authorBoxStart: 'rgba(255, 248, 240, 0.95)', // Light orange-tinted
+      authorBoxEnd: 'rgba(255, 232, 208, 0.95)', // Slightly darker orange-tinted
+      relatedSectionStart: 'rgba(255, 232, 208, 0.7)', // Orange-tinted section
+      relatedSectionEnd: 'rgba(255, 248, 240, 0.7)', // Light orange-tinted section
+      shadow: 'rgba(255, 102, 0, 0.2)', // Orange shadows
+      shadowSubtle: 'rgba(255, 102, 0, 0.1)', // Subtle orange shadows
+    },
+  },
 ];
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
