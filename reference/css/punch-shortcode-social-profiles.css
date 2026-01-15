@@ -1,0 +1,3 @@
+.ep-social-bookmarks,.ep-social-bookmarks li{margin:0;padding:0;list-style:none}.ep-social-bookmarks{display:flex}.ep-social-bookmarks.ep-align-right{justify-content:flex-end}.ep-social-bookmarks.ep-align-center{justify-content:center}.ep-social-bookmarks li{display:flex}.ep-social-bookmarks li a{font-size:28px;background-color:transparent !important;text-decoration:none !important}@media only screen and (max-width: 767px){.ep-social-bookmarks{flex-direction:column}}
+
+/*# sourceMappingURL=social-profiles.css.map */

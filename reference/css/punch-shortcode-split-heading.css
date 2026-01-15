@@ -1,0 +1,3 @@
+.ep-split-heading--highlight{padding-top:var(--epHighlightPaddingTop, inherit);padding-bottom:var(--epHighlightPaddingBottom, inherit);padding-left:var(--epHighlightPaddingLeft, 0.25em);padding-right:var(--epHighlightPaddingRight, 0.25em);font-size:inherit;color:var(--epHighlightColor, inherit);background-color:var(--epHighlightBgColor, inherit)}.ep-split-heading--split{display:block;max-width:fit-content}
+
+/*# sourceMappingURL=split-heading.css.map */
