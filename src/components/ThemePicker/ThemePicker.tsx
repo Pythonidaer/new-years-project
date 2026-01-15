@@ -374,11 +374,27 @@ export function ThemePicker() {
             
             {/* Presets Section */}
             <div className={styles.presetsSection}>
-              <div className={`${styles.presetsHeader} ${isPresetsHeaderCollapsed ? styles.presetsHeaderCollapsed : ''}`}>
+              <div 
+                className={`${styles.presetsHeader} ${isPresetsHeaderCollapsed ? styles.presetsHeaderCollapsed : ''}`}
+                onClick={() => setIsPresetsExpanded(!isPresetsExpanded)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setIsPresetsExpanded(!isPresetsExpanded);
+                  }
+                }}
+                aria-label={isPresetsExpanded ? 'Collapse presets' : 'Expand presets'}
+                aria-expanded={isPresetsExpanded}
+              >
                 <h4 className={styles.presetsTitle}>Presets</h4>
                 <button
                   className={styles.presetsToggle}
-                  onClick={() => setIsPresetsExpanded(!isPresetsExpanded)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent double-toggle
+                    setIsPresetsExpanded(!isPresetsExpanded);
+                  }}
                   aria-label={isPresetsExpanded ? 'Collapse presets' : 'Expand presets'}
                   aria-expanded={isPresetsExpanded}
                 >

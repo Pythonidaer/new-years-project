@@ -264,6 +264,8 @@
   justify-content: space-between;
   margin-bottom: 12px;
   flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
 }
 
 .presetsHeaderCollapsed {

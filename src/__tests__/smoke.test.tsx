@@ -13,8 +13,8 @@ describe("App", () => {
         </ThemeProvider>
       </BrowserRouter>
     );
-    // Check for hero title - should contain "Lorem" and "dolce decorum"
-    const heroTitle = screen.getByText(/dolce decorum/i);
+    // Check for hero title - should contain "beautiful interfaces" (text is split across span)
+    const heroTitle = screen.getByText(/beautiful interfaces/i);
     expect(heroTitle).toBeTruthy();
   });
 });

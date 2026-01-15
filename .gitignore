@@ -1,8 +1,6 @@
 # Dependencies
 node_modules/
 reference/
-mark43_cursor_handoff_pack.md
-MARK43_CURSOR_INSTRUCTIONS.md
 
 # Build output
 dist/

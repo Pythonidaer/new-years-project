@@ -1,5 +1,70 @@
 # Cursor Content Rules — Interview Blog Articles
 
+## 🚀 Quick Start for Agents
+
+**When starting a new session, read these files in order to understand the project:**
+
+### 1. Current Status & TODOs
+- **`README.md`** - **START HERE** - Contains current TODO list and next priority (currently: Mobile Responsiveness)
+  - See section "🎯 Next Priority: Mobile Responsiveness" for current focus
+  - See "TODO: Lighthouse 100 Score & SEO Optimization" for remaining tasks
+  - Review "Notes" section for important implementation details
+
+### 2. Project Overview
+- **`docs/PROJECT_SUMMARY.md`** - Complete project overview, architecture, and current state
+  - Project structure and tech stack
+  - Key features (Content System, Blog System, Theming System)
+  - Important files to read for each feature
+  - Current status and next steps
+
+### 3. Documentation Index
+- **`docs/README.md`** - Documentation structure and quick links
+  - Organized by topic (blog, theming, workflow, reference)
+  - Quick links to relevant documentation
+
+### 4. Key Documentation by Task Type
+
+**For Blog Work:**
+- `docs/blog/BLOG_POST_INTEGRATION.md` - Blog post integration process
+
+**For Theming Work:**
+- `docs/theming/REACT_PACKAGE_GUIDE.md` - **PRIMARY REFERENCE** for theme picker
+- `docs/theming/THEME_PICKER_NPM_PACKAGE_PLAN.md` - Package extraction plan
+- `docs/theming/COLOR_PICKER_INTEGRATION.md` - Integration reference
+- `docs/theming/THEME_PICKER_TRANSITION_PLAN.md` - Transition plan
+
+**For Workflow/Methodology:**
+- `docs/workflow/SCALABLE_CURSOR_WEBSITE_REBUILD_WORKFLOW.md` - General methodology
+
+**For Historical Reference:**
+- `docs/reference/` - Mark43 reference materials (historical)
+
+### 5. Code Structure Understanding
+- **`src/design/tokens.css`** - CSS variables and design tokens
+- **`src/context/ThemeContext.tsx`** - Theme state management
+- **`src/components/ThemePicker/`** - Theme picker UI component
+- **`src/data/blog/`** - Blog post data and utilities
+- **`src/pages/`** - Page components (Home, Blog, BlogPost)
+- **`src/sections/`** - Reusable section components
+
+### 6. Current Priority: Mobile Responsiveness
+**Goal:** Make the website fully mobile responsive based on Mark43's CSS and design patterns.
+
+**Approach:**
+- Human-in-the-loop communication to gather computed styles from Mark43
+- Update CSS Modules with responsive media queries
+- Implement mobile-first adjustments
+
+**Key Tasks:**
+- Gather reference data (computed styles, breakpoints, mobile patterns)
+- Update global styles (`src/design/tokens.css`) with responsive breakpoints
+- Update components: Header/Navigation, Hero, Grids, Blog, Footer
+- Test on multiple devices and screen sizes
+
+**See `README.md` section "🎯 Next Priority: Mobile Responsiveness" for full task breakdown.**
+
+---
+
 These rules enforce writing quality, structure, and consistency for interview-style blog articles rendered via `html-react-parser`.
 
 ---
@@ -125,7 +190,7 @@ Focus on clarity, correctness, and usefulness.
 
 When the user says "Please add/integrate/incorporate the <filename>.json file" or similar, follow this process:
 
-**Reference**: Full details in `docs/BLOG_POST_INTEGRATION.md`
+**Reference**: Full details in `docs/blog/BLOG_POST_INTEGRATION.md`
 
 **Quick Integration Steps**:
 
@@ -223,16 +288,26 @@ The theming system follows a clear separation of concerns:
 - `src/utils/contrast.ts` - WCAG contrast checking with detailed warnings
 - `src/design/theming-goals.md` - Original theming architecture documentation
 
+**Documentation Structure:**
+
+Documentation is organized into subfolders:
+- `docs/blog/` - Blog post integration guides
+- `docs/theming/` - Theme picker and theming system documentation
+- `docs/workflow/` - Workflow and methodology guides
+- `docs/reference/` - Historical reference documentation
+- `docs/PROJECT_SUMMARY.md` - Main project overview (root level)
+
 **Documentation Files (READ THESE FOR THEME PICKER WORK):**
-- `docs/REACT_PACKAGE_GUIDE.md` - **PRIMARY REFERENCE** - Complete guide for React package usage, customization, token creation, preset management, accessibility checks, image-based themes, and adapting to existing codebases
-- `docs/THEME_PICKER_NPM_PACKAGE_PLAN.md` - Extraction plan for npm package with TDD approach, phases, and architecture decisions
-- `docs/COLOR_PICKER_INTEGRATION.md` - Integration reference for adding theme picker to new projects
+- `docs/theming/REACT_PACKAGE_GUIDE.md` - **PRIMARY REFERENCE** - Complete guide for React package usage, customization, token creation, preset management, accessibility checks, image-based themes, and adapting to existing codebases
+- `docs/theming/THEME_PICKER_NPM_PACKAGE_PLAN.md` - Extraction plan for npm package with TDD approach, phases, and architecture decisions
+- `docs/theming/COLOR_PICKER_INTEGRATION.md` - Integration reference for adding theme picker to new projects
+- `docs/theming/THEME_PICKER_TRANSITION_PLAN.md` - Transition plan for npm package extraction
 - `src/design/theming-goals.md` - Architecture overview and design decisions
 
 **When working on theme picker related tasks, ALWAYS read:**
-1. `docs/REACT_PACKAGE_GUIDE.md` - For user-facing features, customization, and API usage
-2. `docs/THEME_PICKER_NPM_PACKAGE_PLAN.md` - For extraction/package development work
-3. `docs/COLOR_PICKER_INTEGRATION.md` - For integration patterns and file structure
+1. `docs/theming/REACT_PACKAGE_GUIDE.md` - For user-facing features, customization, and API usage
+2. `docs/theming/THEME_PICKER_NPM_PACKAGE_PLAN.md` - For extraction/package development work
+3. `docs/theming/COLOR_PICKER_INTEGRATION.md` - For integration patterns and file structure
 
 **Built-in Preset Themes (29 total):**
 1. **Default** - Dark theme with blue accents (Midnight Blue)
@@ -286,7 +361,7 @@ The theming system follows a clear separation of concerns:
 When working on theme picker features, customization, or npm package extraction:
 
 1. **Read Primary Documentation:**
-   - `docs/REACT_PACKAGE_GUIDE.md` - Complete user guide covering:
+   - `docs/theming/REACT_PACKAGE_GUIDE.md` - Complete user guide covering:
      - Installation & setup
      - Token creation & theme definition
      - Adding theme presets
@@ -299,7 +374,7 @@ When working on theme picker features, customization, or npm package extraction:
      - Troubleshooting
 
 2. **For npm Package Extraction:**
-   - `docs/THEME_PICKER_NPM_PACKAGE_PLAN.md` - Extraction plan with:
+   - `docs/theming/THEME_PICKER_NPM_PACKAGE_PLAN.md` - Extraction plan with:
      - TDD approach (tests in `src/__tests__/`)
      - Phase-by-phase extraction plan
      - Package architecture
@@ -307,7 +382,7 @@ When working on theme picker features, customization, or npm package extraction:
      - Publishing checklist
 
 3. **For Integration:**
-   - `docs/COLOR_PICKER_INTEGRATION.md` - Integration reference for:
+   - `docs/theming/COLOR_PICKER_INTEGRATION.md` - Integration reference for:
      - File structure
      - Dependencies
      - Step-by-step integration
@@ -338,3 +413,22 @@ Before merging or publishing:
 - [ ] Final `.takeaway` present and interview-ready
 - [ ] Paragraph-driven, list-light writing
 - [ ] Valid HTML compatible with `html-react-parser`
+
+---
+
+## Agent Session Checklist
+
+**Before starting work, ensure you have:**
+- [ ] Read `README.md` to understand current TODOs and priorities
+- [ ] Read `docs/PROJECT_SUMMARY.md` for project overview
+- [ ] Reviewed `docs/README.md` for documentation structure
+- [ ] Understood the current priority (check README.md "🎯 Next Priority" section)
+- [ ] Located relevant documentation for your task type
+- [ ] Familiarized yourself with key code files mentioned in PROJECT_SUMMARY.md
+
+**When working on mobile responsiveness:**
+- [ ] Review `README.md` "🎯 Next Priority: Mobile Responsiveness" section
+- [ ] Check `docs/workflow/SCALABLE_CURSOR_WEBSITE_REBUILD_WORKFLOW.md` for methodology
+- [ ] Reference `docs/reference/` for Mark43 design patterns
+- [ ] Update `src/design/tokens.css` with responsive breakpoints
+- [ ] Test changes on multiple viewport sizes

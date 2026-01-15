@@ -350,7 +350,7 @@ theme-picker-package/
 **Last Updated:** January 2026  
 **Testing Approach:** Test-Driven Development (TDD)  
 **Related Documents:**
-- `docs/REACT_PACKAGE_GUIDE.md` - Complete user guide
-- `docs/COLOR_PICKER_INTEGRATION.md` - Integration reference
+- `docs/theming/REACT_PACKAGE_GUIDE.md` - Complete user guide
+- `docs/theming/COLOR_PICKER_INTEGRATION.md` - Integration reference
 - `src/design/theming-goals.md` - Architecture overview
 

@@ -1075,7 +1075,7 @@ const blended = blendColor('rgba(0,0,0,0.5)', '#ffffff');
 **Last Updated:** January 2026  
 **Maintained by:** [Your Name/Org]  
 **Related Documentation:**
-- `docs/THEME_PICKER_NPM_PACKAGE_PLAN.md` - Extraction plan
-- `docs/COLOR_PICKER_INTEGRATION.md` - Integration reference
+- `docs/theming/THEME_PICKER_NPM_PACKAGE_PLAN.md` - Extraction plan
+- `docs/theming/COLOR_PICKER_INTEGRATION.md` - Integration reference
 - `src/design/theming-goals.md` - Architecture overview
 

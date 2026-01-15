@@ -36,7 +36,7 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
    - **Stage 2: ✅ Completed** - ThemePicker component with presets
      - Floating color picker UI (`src/components/ThemePicker/`)
      - Real-time contrast checking with WCAG AA/AAA warnings
-     - 19 built-in preset themes: Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic, AFB, TUF, Royboy, Dalmatian, Querida, Ris
+     - 29 built-in preset themes: Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic, AFB, TUF, Royboy, Dalmatian, Querida, Ris, Gulu, Maxine, Sunrise, Noir, Hatsune, Scotland, PBR, Reeses, Fallout, Bergé
      - Custom preset saving/loading (stored in `localStorage`)
      - Theme persistence with no-flicker loading
      - Export/import theme JSON functionality
@@ -65,7 +65,7 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
   - "About the Author" section
   - "Back to Blog" button
   - Related content section (shows next 3 posts)
-- Blog post integration process documented in `docs/BLOG_POST_INTEGRATION.md`
+- Blog post integration process documented in `docs/blog/BLOG_POST_INTEGRATION.md`
 - Header with conditional styling (light/dark based on page)
 - All blog posts from all topics display on listing page
 - Tags formatted as uppercase with spaces (e.g., "React", "Component Design")
@@ -73,7 +73,7 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
   - All colors migrated to semantic CSS variables (`src/design/tokens.css`)
   - ThemeProvider with React Context (`src/context/ThemeContext.tsx`)
   - ThemePicker component with floating UI (`src/components/ThemePicker/`)
-  - 19 built-in preset themes (Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic, AFB, TUF, Royboy, Dalmatian, Querida, Ris)
+  - 29 built-in preset themes (Default, Cedar Oak, Mark43, Sage Green, Crimson Flame, Vapor Wave, Gothic, Horror, Pride, Yuko, Hokusai, Noname, Sadikovic, AFB, TUF, Royboy, Dalmatian, Querida, Ris, Gulu, Maxine, Sunrise, Noir, Hatsune, Scotland, PBR, Reeses, Fallout, Bergé)
   - Custom preset saving/loading with `localStorage`
   - Real-time WCAG contrast checking (`src/utils/contrast.ts`)
   - No-flicker theme loading (applied before React render)
@@ -92,7 +92,7 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
 ## Important Files to Read
 
 ### For Blog Integration Process:
-1. **`docs/BLOG_POST_INTEGRATION.md`** - Complete guide for integrating new blog post JSON files
+1. **`docs/blog/BLOG_POST_INTEGRATION.md`** - Complete guide for integrating new blog post JSON files
    - Explains JSON structure requirements
    - Step-by-step integration process
    - Tag formatting rules (uppercase, spaces not dashes)
@@ -131,13 +131,13 @@ This is a **React + Vite + TypeScript** application that replicates Mark43's web
 3. **`src/context/ThemeContext.tsx`** - Theme state management
    - `Theme` type definition
    - `ThemeProvider` component with `useTheme` hook
-   - Built-in preset themes (19 themes)
+   - Built-in preset themes (29 themes)
    - Custom preset saving/loading
    - Export/import theme JSON
    - `localStorage` persistence
 
 4. **`src/components/ThemePicker/ThemePicker.tsx`** - Color picker UI
-   - Floating palette button (bottom-right)
+   - Floating palette button (bottom-left corner)
    - Color token organization by category
    - Real-time contrast checking integration
    - Preset management UI
@@ -208,14 +208,14 @@ When a new blog post JSON file is provided:
    - Post appears in `/blog` listing
    - Post accessible at `/blog/:slug`
 
-Full process documented in `docs/BLOG_POST_INTEGRATION.md`.
+Full process documented in `docs/blog/BLOG_POST_INTEGRATION.md`.
 
 ## Styling Approach
 
 - **CSS Modules** for all component styles
 - Pixel-accurate styling based on Mark43 reference computed styles
 - Reference files in `reference/` directory
-- Follow `SCALABLE_CURSOR_WEBSITE_REBUILD_WORKFLOW.md` methodology
+- Follow `docs/workflow/SCALABLE_CURSOR_WEBSITE_REBUILD_WORKFLOW.md` methodology
 - Header has conditional styling:
   - `.dark` - Dark blue background (blog listing page)
   - `.light` - White background (blog post pages with hero section)
@@ -231,12 +231,12 @@ Full process documented in `docs/BLOG_POST_INTEGRATION.md`.
 - **ThemeProvider** (`src/context/ThemeContext.tsx`):
   - React Context for theme state management
   - `localStorage` persistence with no-flicker loading
-  - Built-in preset themes (9 themes)
+  - Built-in preset themes (29 themes)
   - Custom preset saving/loading
   - Export/import theme JSON
 
 - **ThemePicker Component** (`src/components/ThemePicker/`):
-  - Floating palette button (bottom-right corner)
+  - Floating palette button (bottom-left corner)
   - Color picker UI with organized categories (Core, Primary, Accent, Gradients, Footer, Shadows)
   - Real-time contrast warnings with WCAG AA/AAA compliance
   - Preset selection and management
@@ -270,7 +270,7 @@ Full process documented in `docs/BLOG_POST_INTEGRATION.md`.
 ### Stage 2: ✅ Completed
 - ThemePicker component with floating UI
 - Real-time contrast checking with WCAG warnings
-- 19 built-in preset themes (all meet WCAG AA requirements)
+- 29 built-in preset themes (all meet WCAG AA requirements)
 - Custom preset saving/loading
 - Theme persistence with no-flicker loading
 - Export/import theme JSON
@@ -290,10 +290,21 @@ Full process documented in `docs/BLOG_POST_INTEGRATION.md`.
 
 ## Next Steps
 
-1. Read `docs/BLOG_POST_INTEGRATION.md` for blog integration process
+### 🎯 Current Priority: Mobile Responsiveness
+1. Gather computed styles and responsive design patterns from Mark43 website
+2. Document breakpoints and mobile-specific layout changes
+3. Update global styles (`src/design/tokens.css`) with responsive breakpoints
+4. Implement responsive layouts for all components:
+   - Header/Navigation (mobile menu)
+   - Hero section
+   - Grid layouts
+   - Blog components
+   - Footer
+5. Test on multiple mobile devices and screen sizes
+
+### Other Tasks
+1. Read `docs/blog/BLOG_POST_INTEGRATION.md` for blog integration process
 2. Review existing page structures (`src/pages/Blog.tsx`, `src/pages/BlogPost.tsx`)
-3. Implement category page following requirements above
-4. Update category links in `BlogGrid` and `BlogPost` components
-5. Test category filtering and routing
-6. Ensure all tests pass
+3. Complete remaining Lighthouse optimizations (see `README.md` for full checklist)
+4. Ensure all tests pass
 
