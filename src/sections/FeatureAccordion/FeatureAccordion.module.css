@@ -1,31 +1,37 @@
-.wrapper {
-  display: grid;
-  grid-template-columns: 48.7% 49.01%; /* right side slightly larger */
-  column-gap: 2.29%;                 /* matches their margin-right */
-  align-items: stretch; /* Make both columns equal height */
+.projectsContainer {
+  width: 100%;
+  max-width: 1410px;
+  margin: 0 auto;
+  padding: 0 50px;
 }
 
-.content {
+.wrapper {
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  align-items: stretch;
 }
 
 .heading {
-  font-size: 48px;
+  font-size: 50px;
   line-height: 1.2;
-  font-weight: 700;
-  margin: 0 0 32px;
+  font-weight: 400;
+  margin: 25px 0 50px;
   color: var(--color-ink, #24364e);
   text-align: center;
-  flex-shrink: 0; /* Prevent heading from shrinking */
+  flex-shrink: 0;
+}
+
+/* LEFT: Controls Wrapper */
+.controlsWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 48.70%;
+  margin-right: 2.29%;
 }
 
 .accordion {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  flex: 1; /* Grow to fill available space */
 }
 
 .item {
@@ -36,9 +42,12 @@
 }
 
 .itemActive {
-  /* Active item - class used for conditional styling */
-  /* No additional styles needed beyond hover override */
-  position: relative; /* Prevents empty ruleset lint warning */
+  position: relative;
+}
+
+.itemInner {
+  display: flex;
+  flex-direction: column;
 }
 
 .trigger {
@@ -58,6 +67,10 @@
   background: var(--color-surface);
 }
 
+.itemActive .trigger {
+  padding-bottom: 0;
+}
+
 .itemActive .trigger:hover {
   background: transparent;
 }
@@ -70,6 +83,7 @@
   color: var(--color-text);
   margin: 0;
   cursor: pointer;
+  flex: 1;
 }
 
 .featureIcon {
@@ -78,37 +92,118 @@
   margin-left: 16px;
 }
 
-.panel {
-  padding: 0 24px 22px;
-  animation: slideDown 0.25s ease;
+/* Desktop: Text and button content (shown below trigger when active) */
+.controlContent {
+  display: none;
+  flex-direction: column;
+  padding: 0 24px 24px 24px;
+  gap: 16px;
 }
 
-.panelText {
-  margin: 0 0 16px;
-  font-size: 16px;
+.itemActive .controlContent {
+  display: flex;
+}
+
+.controlText {
+  display: flex;
+  flex-direction: column;
+}
+
+.controlText .panelText {
+  margin: 0;
+  margin-top: 15px;
+  font-size: 18px;
   line-height: 1.7;
   color: var(--color-text);
   opacity: 0.85;
-  max-width: 52ch;
 }
 
-.ctaButton {
+.controlCtaWrapper {
+  display: block;
   margin-top: 8px;
+}
+
+.controlCtaButton {
+  display: inline-flex;
+  box-sizing: border-box;
+  width: auto;
+}
+
+/* RIGHT: Contents Wrapper */
+.contentsWrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.contentItem {
+  display: none;
+}
+
+.contentItemActive {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  animation: slideDown 0.25s ease;
+}
+
+.contentItemInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+/* Radio input - hidden on desktop, used for mobile */
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+/* Mobile label - hidden on desktop */
+.mobileLabel {
+  display: none;
+}
+
+.mobileLabelInner {
+  flex: 1;
+}
+
+/* Content area with image and text */
+.contentContent {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 .image {
   position: relative;
+  width: 100%;
   height: 100%;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .imagePlaceholder {
   width: 100%;
-  flex: 1; /* Fill remaining height after padding-top */
-  min-height: 0; /* Allow flex item to shrink below content size */
-  border-radius: 8px;      /* target looks closer to 8px than 14px */
+  height: 100%;
+  max-height: 100%;
+  border-radius: 8px;
   background: var(--color-surface);
   display: flex;
   align-items: center;
@@ -117,6 +212,9 @@
   font-size: 14px;
   text-align: center;
   box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .placeholderText {
@@ -126,9 +224,37 @@
 .imageContent {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
   border-radius: 8px;
+}
+
+/* Text content area (hidden on desktop, shown on mobile) */
+.textContent {
+  display: none;
+}
+
+.textContentInner {
+  display: flex;
+  flex-direction: column;
+}
+
+.panelText {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--color-text);
+  opacity: 0.85;
+  max-width: 52ch;
+}
+
+.ctaWrapper {
+  display: block;
+  margin-top: 16px;
+}
+
+.ctaButton {
+  display: inline-block;
 }
 
 @keyframes slideDown {
@@ -143,25 +269,209 @@
 }
 
 @media (max-width: 990px) {
+  /* Override base container styles for mobile - match Mark43 pattern */
+  .projectsContainer {
+    width: 85%;
+    max-width: 85%;
+    margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .wrapper {
     grid-template-columns: 1fr;
-    row-gap: 32px;
+    row-gap: 0;
+  }
+
+  /* Hide desktop controls on mobile */
+  .controlsWrapper {
+    display: none;
   }
 
   .heading {
-    font-size: 42px;
+    font-size: 25px;
+    margin-bottom: 36px;
   }
 
+  /* Contents wrapper - mobile styles */
+  .contentsWrapper {
+    display: block;
+    width: 100%;
+    max-width: 331.5px;
+    height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  /* Content items - all visible on mobile, but content hidden by default */
+  .contentItem {
+    display: block !important; /* Override desktop hide */
+    width: 100%;
+    max-width: 331.5px;
+    height: auto;
+    min-height: 0;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+  }
+
+  /* Active content item spacing */
+  .contentItemActive {
+    margin-bottom: 20px;
+  }
+
+  .contentItemInner {
+    display: block;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+  }
+
+  /* Hide desktop control content on mobile */
+  .controlContent {
+    display: none !important;
+  }
+
+  /* Show mobile labels - styled like ep-tab-control */
+  .mobileLabel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 22px 0;
+    border-top: 1px solid rgb(180, 199, 207);
+    border-bottom: 1px solid rgb(180, 199, 207);
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    background: var(--color-bg);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .mobileLabel:hover {
+    background: var(--color-surface);
+  }
+
+  .mobileLabelInner {
+    font-family: var(--font-family, Archivo, sans-serif);
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 28.8px;
+    color: var(--color-text);
+    flex: 1;
+  }
+
+  /* Radio input - visible and accessible on mobile */
+  .radioInput {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+  }
+
+  /* Content area - hidden by default on mobile */
+  .contentContent {
+    display: none;
+    flex-direction: column !important;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 0;
+  }
+
+  /* Show content when item is active (controlled by React state) */
+  .contentItemActive .contentContent {
+    display: flex !important;
+    flex-direction: column !important;
+    margin-top: 0;
+    gap: 0;
+  }
+
+  /* Adjust label border when content is open */
+  .contentItemActive .mobileLabel {
+    margin-bottom: 20px;
+  }
+
+  /* Image - mobile styles */
   .image {
-    padding-top: 0; /* Reset on mobile since image comes after accordion */
+    display: block;
+    width: 100%;
+    max-width: 331.5px;
+    height: 207.188px;
+    margin: 0;
+    margin-bottom: 0;
+    padding: 0;
+    box-sizing: border-box;
+    order: -1; /* Ensure image appears first */
+    flex: none;
   }
 
   .imagePlaceholder {
-    height: 360px; /* or whatever the target uses at tablet/mobile */
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-muted);
+    font-size: 14px;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
-  .triggerText {
-    font-size: 26px;
-    line-height: 31.2px;
+  .imageContent {
+    width: 331.5px;
+    max-width: 100%;
+    height: 207.188px;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: 50% 50%;
+    display: block;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  /* Text content - mobile styles */
+  .textContent {
+    display: block !important;
+    width: 100%;
+    max-width: 331.5px;
+    height: auto;
+    margin: 0;
+    margin-top: 0;
+    padding: 20px 0 0;
+    padding-left: 0 !important;
+    box-sizing: border-box;
+    order: 0; /* Text appears after image */
+    flex: none;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .textContentInner {
+    display: block;
+  }
+
+  /* CTA wrapper and button - mobile styles */
+  .ctaWrapper {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .ctaButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 331.5px;
+    height: 43.875px;
+    padding: 13px 15px 12px;
+    box-sizing: border-box;
   }
 }

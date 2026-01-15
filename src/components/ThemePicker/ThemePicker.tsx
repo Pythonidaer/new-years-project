@@ -435,12 +435,13 @@ export function ThemePicker() {
                     preset.id.startsWith('fallout') ||
                     preset.id.startsWith('berge');
                   return (
-                    <button
-                      key={preset.id}
-                      className={styles.presetButton}
-                      onClick={() => handleLoadPreset(preset.id)}
-                    >
-                      <span className={styles.presetName}>{preset.name}</span>
+                    <div key={preset.id} className={styles.presetButtonWrapper}>
+                      <button
+                        className={styles.presetButton}
+                        onClick={() => handleLoadPreset(preset.id)}
+                      >
+                        <span className={styles.presetName}>{preset.name}</span>
+                      </button>
                       {!isBuiltIn && (
                         <button
                           className={styles.deletePresetBtn}
@@ -451,7 +452,7 @@ export function ThemePicker() {
                           <Trash2 size={14} />
                         </button>
                       )}
-                    </button>
+                    </div>
                   );
                 })}
                 <div className={styles.savePresetContainer}>
