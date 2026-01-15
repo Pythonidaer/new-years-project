@@ -234,7 +234,7 @@ The theming system follows a clear separation of concerns:
 2. `docs/THEME_PICKER_NPM_PACKAGE_PLAN.md` - For extraction/package development work
 3. `docs/COLOR_PICKER_INTEGRATION.md` - For integration patterns and file structure
 
-**Built-in Preset Themes (25 total):**
+**Built-in Preset Themes (29 total):**
 1. **Default** - Dark theme with blue accents (Midnight Blue)
 2. **Cedar Oak** - Warm earth tones (browns/greens)
 3. **Mark43** - Original Mark43-inspired theme (orange/blue) - *Commented out in UI but code preserved*
@@ -260,6 +260,10 @@ The theming system follows a clear separation of concerns:
 23. **Noir** - Classic black and white photography theme (grayscale)
 24. **Hatsune** - Anime-inspired theme (bright teal, light blue, purple, pink)
 25. **Scotland** - Rugged valley landscape theme (pale grey-blue sky, dark blue-grey river, golden brown heather, muted greens)
+26. **PBR** - Pabst Blue Ribbon inspired theme (PBR blue #003DA5, red accents, light blue-tinted backgrounds, dark blue footer)
+27. **Reeses** - Reese's Pieces candy inspired theme (bright orange #B34D00, yellow accents, light orange-tinted backgrounds, dark brown-black footer)
+28. **Fallout** - Vault-Tec inspired theme (Vault-Tec blue #0066CC, gold accents #FFD700, light blue-tinted backgrounds, dark blue footer, purple-blue hero radial #434fad)
+29. **Bergé** - Vibrant fashion-inspired theme (forest green #1F7A1F primary, hot pink #FF1493 accents, light green-tinted backgrounds, dark green footer)
 
 **Important Implementation Notes:**
 - **CSS variables are the styling layer**: All color styling happens via CSS variables (`var(--color-*)`)

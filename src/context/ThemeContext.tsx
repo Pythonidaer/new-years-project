@@ -1268,6 +1268,88 @@ const builtInPresets: Preset[] = [
       shadowSubtle: 'rgba(255, 102, 0, 0.1)', // Subtle orange shadows
     },
   },
+  {
+    id: 'fallout',
+    name: 'Fallout',
+    theme: {
+      ...defaultTheme,
+      bg: '#F0F4FA', // Light blue-tinted white (Vault-Tec aesthetic)
+      surface: '#E8F0F8', // Light blue surface (vault interior)
+      surfaceDark: '#0A1A2D', // Dark blue (Vault-Tec background)
+      marqueeBg: '#0A1525', // Very dark blue background
+      text: '#1A1A1A', // Dark text (readable on light)
+      textDark: '#000000', // Black (headings)
+      muted: '#4A5A6B', // Medium blue-grey (muted accent)
+      border: 'rgba(0, 102, 204, 0.25)', // Vault-Tec blue borders
+      codeBg: '#E8F0F8', // Light blue for code blocks
+      codeText: '#1A1A1A', // Dark code text
+      primary: '#0066CC', // Vault-Tec blue for better contrast with white text (meets 4.5:1 WCAG AA)
+      primaryHover: '#0077DD', // Lighter blue on hover
+      primaryContrast: '#FFFFFF', // White text on blue buttons (meets 4.5:1 WCAG AA)
+      link: '#0052A3', // Darker blue links for better contrast on light background (meets 4.5:1 WCAG AA)
+      blogLink: '#004080', // Very dark blue for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
+      focus: '#0066CC', // Vault-Tec blue focus ring
+      accent: '#FFD700', // Gold (Vault-Tec zipper/gold accents)
+      accentAlt: '#FFE44D', // Lighter gold accent for better contrast on dark footer (meets 4.5:1 WCAG AA)
+      footerBg: '#0A1525', // Dark blue background (Vault-Tec dark background)
+      footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text
+      footerTextSubtle: 'rgba(255, 255, 255, 0.65)', // Subtle white text
+      footerSocialBg: 'rgba(255, 215, 0, 0.25)', // Gold-tinted social bg
+      footerBorder: 'rgba(255, 215, 0, 0.3)', // Gold borders
+      heroStart: '#0A1A2D', // Dark blue start
+      heroEnd: '#0A1525', // Very dark blue end
+      heroRadial: 'rgba(67, 79, 173, 0.15)', // Purple-blue glow (#434fad)
+      campaignStart: '#0066CC', // Vault-Tec blue
+      campaignEnd: '#004080', // Darker blue
+      authorBoxStart: 'rgba(255, 248, 240, 0.95)', // Light gold-tinted (blog page sides)
+      authorBoxEnd: 'rgba(255, 240, 200, 0.95)', // Gold-tinted (blog page sides)
+      relatedSectionStart: 'rgba(255, 240, 200, 0.7)', // Gold-tinted section
+      relatedSectionEnd: 'rgba(255, 248, 240, 0.7)', // Light gold-tinted section
+      shadow: 'rgba(255, 215, 0, 0.2)', // Gold shadows
+      shadowSubtle: 'rgba(255, 215, 0, 0.1)', // Subtle gold shadows
+    },
+  },
+  {
+    id: 'berge',
+    name: 'Bergé',
+    theme: {
+      ...defaultTheme,
+      bg: '#F0FFF0', // Light green-tinted white (bright green background)
+      surface: '#E8FFE8', // Light green surface
+      surfaceDark: '#0A2A0A', // Dark green (deep green background)
+      marqueeBg: '#0A1A0A', // Very dark green background
+      text: '#1A2A1A', // Dark green-black text (readable on light)
+      textDark: '#000000', // Black (headings)
+      muted: '#4A6B4A', // Medium green-grey (muted accent)
+      border: 'rgba(0, 128, 0, 0.25)', // Green borders
+      codeBg: '#E8FFE8', // Light green for code blocks
+      codeText: '#1A2A1A', // Dark green-black code text
+      primary: '#1F7A1F', // Darker forest green for better contrast with white text (meets 4.5:1 WCAG AA)
+      primaryHover: '#228B22', // Lighter green on hover
+      primaryContrast: '#FFFFFF', // White text on green buttons (meets 4.5:1 WCAG AA)
+      link: '#1A7A1A', // Darker green links for better contrast on light background (meets 4.5:1 WCAG AA)
+      blogLink: '#0A5A0A', // Very dark green for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
+      focus: '#1F7A1F', // Darker forest green focus ring
+      accent: '#FF1493', // Hot pink (accent color - top/dress)
+      accentAlt: '#FF6B9D', // Lighter pink accent for better contrast on dark footer (meets 4.5:1 WCAG AA)
+      footerBg: '#0A2A0A', // Dark green footer
+      footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text
+      footerTextSubtle: 'rgba(255, 255, 255, 0.65)', // Subtle white text
+      footerSocialBg: 'rgba(255, 20, 147, 0.2)', // Subtle hot pink social bg (accent)
+      footerBorder: 'rgba(255, 20, 147, 0.25)', // Hot pink borders (accent)
+      heroStart: '#0A2A0A', // Dark green start
+      heroEnd: '#0A1A0A', // Very dark green end
+      heroRadial: 'rgba(31, 122, 31, 0.15)', // Green glow
+      campaignStart: '#1F7A1F', // Darker forest green
+      campaignEnd: '#1A7A1A', // Darker green
+      authorBoxStart: 'rgba(240, 255, 240, 0.95)', // Light green-tinted
+      authorBoxEnd: 'rgba(232, 255, 232, 0.95)', // Slightly darker green-tinted
+      relatedSectionStart: 'rgba(232, 255, 232, 0.7)', // Green-tinted section
+      relatedSectionEnd: 'rgba(240, 255, 240, 0.7)', // Light green-tinted section
+      shadow: 'rgba(34, 139, 34, 0.2)', // Green shadows
+      shadowSubtle: 'rgba(34, 139, 34, 0.1)', // Subtle green shadows
+    },
+  },
 ];
 
 export function ThemeProvider({ children }: { children: ReactNode }) {

@@ -415,7 +415,9 @@ export function ThemePicker() {
                     preset.id.startsWith('trippie') ||
                     preset.id.startsWith('scotland') ||
                     preset.id.startsWith('pbr') ||
-                    preset.id.startsWith('reeses');
+                    preset.id.startsWith('reeses') ||
+                    preset.id.startsWith('fallout') ||
+                    preset.id.startsWith('berge');
                   return (
                     <button
                       key={preset.id}
