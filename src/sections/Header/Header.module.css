@@ -12,6 +12,18 @@
     height 0.2s ease-in-out, top 0.2s ease-in-out;
 }
 
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.25);
+  opacity: 0;
+  transition: opacity ease-in-out 0.2s;
+}
+
 /* Dark blue background for blog page */
 .header.dark {
   background-color: var(--color-surface-dark);
@@ -23,6 +35,11 @@
   background-color: var(--color-bg);
   box-shadow: 0 3px 6px var(--color-shadow);
   transition: height 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.header.scrolled::after,
+.header.dark.scrolled::after {
+  opacity: 1;
 }
 
 /* Keep dark blue when scrolled on blog page - must come after .scrolled to override */
@@ -215,18 +232,255 @@
   color: var(--color-text-dark);
 }
 
+/* Header gets scrolled styles when menu is open and moves to top: 0 */
+.header.menuOpen {
+  top: 0;
+}
+
 .cta {
   white-space: nowrap;
 }
 
+/* Hamburger Toggle Button */
+.hamburgerToggle {
+  display: none; /* Hidden on desktop */
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 19px;
+  position: relative;
+  z-index: 14;
+  transition-property: background-color;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.2s;
+}
+
+.burgerBox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition-property: background-color;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.2s;
+}
+
+.burgerLine {
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-primary-contrast);
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  transform-origin: center;
+}
+
+/* Hamburger to X transformation */
+.hamburgerToggle.isOpen .burgerLine:nth-child(1) {
+  transform: translateY(8.5px) rotate(45deg);
+}
+
+.hamburgerToggle.isOpen .burgerLine:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburgerToggle.isOpen .burgerLine:nth-child(3) {
+  transform: translateY(-8.5px) rotate(-45deg);
+}
+
+/* When scrolled, hamburger should be dark */
+.scrolled .burgerLine {
+  background-color: var(--color-text-dark);
+}
+
+.header.dark .burgerLine {
+  background-color: var(--color-primary-contrast);
+}
+
+.header.dark.scrolled .burgerLine {
+  background-color: var(--color-text-dark);
+}
+
+.header.light .burgerLine {
+  background-color: var(--color-text-dark);
+}
+
+/* Hamburger Overlay */
+.hamburgerOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.hamburgerOverlay.isOpen {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Hamburger Content (Mobile Menu) */
+.hamburgerContent {
+  display: block;
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 100%;
+  max-width: 375px;
+  background-color: var(--color-surface-dark);
+  z-index: 14;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, height 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  overflow-y: auto;
+  pointer-events: none;
+  height: calc(100vh - 60px);
+  box-sizing: border-box;
+}
+
+.hamburgerContent.isOpen {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.hamburgerContentInner {
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileCloseButton:hover {
+  opacity: 1;
+}
+
+.mobileNav {
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 20px 0 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  width: 100%;
+}
+
+.mobileNavItem {
+  display: list-item;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.mobileNavLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px 0 20px;
+  color: var(--color-primary-contrast);
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  height: 70px;
+  box-sizing: border-box;
+}
+
+.mobileNavLink:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.mobileNavText {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 32px;
+  color: rgb(255, 255, 255);
+}
+
+.mobileChevron {
+  color: var(--color-primary-contrast);
+  flex-shrink: 0;
+  width: 28px;
+  height: 28.8px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.mobileCta {
+  padding: 40px 20px;
+}
+
+.mobileCtaButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 13px 15px 12px;
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 18.88px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.mobileCtaIcon {
+  color: rgb(255, 255, 255);
+  display: block;
+  margin-left: 15px;
+  width: auto;
+  height: auto;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.mobileCtaButton:hover {
+  background-color: var(--color-primary-hover);
+}
+
 @media (max-width: 990px) {
-  .nav {
-    display: none;
+  .header {
+    height: 60px;
+  }
+
+  .header.scrolled {
+    height: 60px;
+  }
+
+  .brand {
+    padding: 0;
+  }
+
+  .nav,
+  .cta {
+    display: none !important;
+  }
+
+  .hamburgerToggle {
+    display: block;
   }
 
   .inner {
     gap: 16px;
-    padding: 0 24px;
+    padding: 0 20px;
+    height: 60px;
+    max-width: 1600px;
   }
 }
 

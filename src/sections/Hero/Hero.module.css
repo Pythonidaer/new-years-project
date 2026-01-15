@@ -38,16 +38,38 @@
 
 @media (max-width: 990px) {
   .hero {
-    padding: 80px 0 100px;
+    padding: calc(60px + 50px) 0 100px; /* 60px header + breathing room */
   }
 
   .title {
-    font-size: 48px;
-    line-height: 1.2;
+    font-size: 40px;
+    line-height: 45.6px;
+    letter-spacing: normal;
+    display: block;
+    width: 100%;
   }
 
   .subtitle {
-    font-size: 18px;
+    font-size: 20px;
+  }
+
+  .cta {
+    margin-top: 28px;
+  }
+
+  /* Hero button styling for mobile - matches Mark43 computed styles */
+  .cta > * {
+    width: 348.75px;
+    max-width: 100%;
+    height: 43.875px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 18.88px !important;
+    padding: 13px 15px 12px !important;
   }
 }
 
