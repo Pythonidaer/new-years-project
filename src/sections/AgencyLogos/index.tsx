@@ -59,36 +59,45 @@ export function AgencyLogos() {
     <Section variant="alt">
       <Container>
         <h2 className={styles.heading}>Some of the Tech I Know</h2>
-        <div className={styles.carouselWrapper}>
-          <div className={styles.viewport} ref={emblaRef}>
-            <div className={styles.container}>
+      </Container>
+      <div className={styles.carouselWrapper}>
+        <div className={styles.viewport} ref={emblaRef}>
+          <div className={styles.container}>
               {technologies.map((tech) => (
                 <div key={tech.id} className={styles.slide}>
-                  <div className={styles.logoPlaceholder} title={tech.name}>
-                    <img
-                      src={`https://cdn.simpleicons.org/${tech.icon}`}
-                      alt={tech.name}
-                      className={styles.logoImage}
-                    />
+                  <div className={styles.itemInner}>
+                    <div className={styles.itemMedia}>
+                      <div className={styles.itemImage}>
+                        <img
+                          src={`https://cdn.simpleicons.org/${tech.icon}`}
+                          alt={tech.name}
+                          className={styles.logoImage}
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.itemContents}>
+                      <div className={styles.itemTitleWrapper}>
+                        <div className={styles.itemTitle}>{tech.name}</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-          <div className={styles.dots}>
-            {scrollSnaps.map((_, index) => (
-              <button
-                key={index}
-                className={`${styles.dot} ${
-                  index === selectedIndex ? styles.dotActive : ""
-                }`}
-                onClick={() => scrollTo(index)}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
           </div>
         </div>
-      </Container>
+        <div className={styles.dots}>
+          {scrollSnaps.map((_, index) => (
+            <button
+              key={index}
+              className={`${styles.dot} ${
+                index === selectedIndex ? styles.dotActive : ""
+              }`}
+              onClick={() => scrollTo(index)}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
     </Section>
   );
 }

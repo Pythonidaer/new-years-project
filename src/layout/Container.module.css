@@ -12,4 +12,9 @@
     padding-left: 3.5%;
     padding-right: 3.5%;
   }
+
+  .container.experience {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 }

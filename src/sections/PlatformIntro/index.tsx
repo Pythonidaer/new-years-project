@@ -1,5 +1,6 @@
 import { Container } from "../../layout/Container";
 import { Section } from "../../layout/Section";
+import containerStyles from "../../layout/Container.module.css";
 import styles from "./PlatformIntro.module.css";
 import cardStyles from "../PlatformCards/PlatformCards.module.css";
 
@@ -37,7 +38,7 @@ const cards = [
 export function PlatformIntro() {
   return (
     <Section id="experience">
-      <Container>
+      <Container className={containerStyles.experience}>
         <div className={styles.wrapper}>
           <h2 className={styles.heading}>
             My Experience
