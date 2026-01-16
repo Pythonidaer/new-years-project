@@ -36,7 +36,31 @@
   justify-content: center;
 }
 
-@media (max-width: 990px) {
+/* Tablet breakpoint: 768px - 989px */
+@media (min-width: 768px) and (max-width: 989px) {
+  .hero {
+    padding: calc(60px + 70px) 0 100px; /* 60px header + breathing room */
+  }
+
+  .title {
+    font-size: 61px;
+    line-height: 69.54px; /* 61px * 1.14 ratio to match desktop/mobile */
+    letter-spacing: -0.02em;
+    display: block;
+    width: 100%;
+  }
+
+  .subtitle {
+    font-size: 20px;
+  }
+
+  .cta {
+    margin-top: 28px;
+  }
+}
+
+/* Mobile breakpoint: < 768px */
+@media (max-width: 767px) {
   .hero {
     padding: calc(60px + 50px) 0 100px; /* 60px header + breathing room */
   }
