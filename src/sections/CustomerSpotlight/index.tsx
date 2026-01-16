@@ -7,21 +7,27 @@ import styles from "./CustomerSpotlight.module.css";
 const testimonials = [
   {
     id: 1,
-    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    author: "Lorem Ipsum",
-    role: "Dolor Sit Amet, Consectetur Adipiscing",
+    quote: "Jonathan built a clear, reliablee and accessible campaign website that fit our needs perfectly. He explained every option and delivered thoughtful solutions on time.",
+    author: "Bil Legault",
+    role: "Former Salem City Counselor At-Large",
+    image: "/bil_legault.png",
+    alt: "Bil Legault",
   },
   {
     id: 2,
-    quote: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    author: "Sed Do Eiusmod",
-    role: "Tempor Incididunt, Ut Labore",
+    quote: "Johnny showed consistent drive and curiosity while growing from IT intern into developer. He learned quickly, solved problems, and earned trust across teams.",
+    author: "Johnathon Broekhuizen",
+    role: "Director of IT Services",
+    image: "/john_broekhuizen.png",
+    alt: "Johnathon Broekhuizen",
   },
   {
     id: 3,
-    quote: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    author: "Dolore Magna",
-    role: "Aliqua Ut Enim, Minim Veniam",
+    quote: "Johnny brings strong frontend instincts and communicates complex ideas clearly. I have seen his projects evolve with solid architecture and careful attention.",
+    author: "John Bauer",
+    role: "Principal Software Engines",
+    image: "/john_bauer.png",
+    alt: "John Bauer",
   },
 ];
 
@@ -41,12 +47,20 @@ export function CustomerSpotlight() {
 
   return (
     <Section variant="alt">
-      <Container>
-        <h2 className={styles.heading}>Lorem Ipsum Dolor</h2>
+      <Container className={styles.referencesContainer}>
+        <h2 className={styles.heading}>References</h2>
         <div className={styles.wrapper}>
-          <div className={styles.video}>
-            <div className={styles.videoPlaceholder}>
-              <span className={styles.placeholderText}>Video Player</span>
+          <div className={styles.image}>
+            <div className={styles.imageContainer}>
+              {currentTestimonial.image ? (
+                <img
+                  src={currentTestimonial.image}
+                  alt={currentTestimonial.alt || currentTestimonial.author}
+                  className={styles.imageContent}
+                />
+              ) : (
+                <span className={styles.placeholderText}>Image</span>
+              )}
             </div>
           </div>
           <div className={styles.quote}>

@@ -22,7 +22,7 @@ export function LatestBlogs() {
 
   return (
     <Section>
-      <Container>
+      <Container className={styles.latestBlogsContainer}>
         <h2 className={styles.heading}>Latest Blogs</h2>
         <div className={styles.grid}>
           {recentPosts.map((post) => (

@@ -41,7 +41,7 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer className={styles.footer}>
-      <Container>
+      <Container className={styles.footerContainer}>
         <div className={styles.top}>
           <div className={styles.brand}>
             <div className={styles.brandName}>Find Me Easily</div>

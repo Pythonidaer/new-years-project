@@ -67,6 +67,15 @@
 }
 
 @media (max-width: 990px) {
+  /* Override base container styles for mobile - match Mark43 pattern */
+  .contactContainer {
+    width: 85%;
+    max-width: 85%;
+    margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   .banner {
     padding: 64px 0;
   }
@@ -78,10 +87,26 @@
 
   .heading {
     font-size: 36px;
+    text-align: center;
   }
 
   .text {
     font-size: 16px;
+  }
+
+  .cta {
+    width: 100%;
+  }
+
+  .cta > * {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    line-height: 18.8px;
+  }
+
+  .image {
+    display: none;
   }
 }
 

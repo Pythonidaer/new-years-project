@@ -6,7 +6,7 @@ import buttonStyles from "../../components/Button.module.css";
 export function CampaignBanner() {
   return (
     <Section className={styles.banner} id="contact">
-      <Container>
+      <Container className={styles.contactContainer}>
         <div className={styles.wrapper}>
           <div className={styles.content}>
             <h2 className={styles.heading}>
