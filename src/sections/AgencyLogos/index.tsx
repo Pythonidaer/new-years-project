@@ -26,12 +26,20 @@ export function AgencyLogos() {
     loop: true,
     align: "start",
     dragFree: true,
+    skipSnaps: false,
+    containScroll: "trimSnaps",
   });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [autoplayEnabled, setAutoplayEnabled] = useState(true);
 
   const scrollTo = useCallback(
-    (index: number) => emblaApi && emblaApi.scrollTo(index),
+    (index: number) => {
+      if (emblaApi) {
+        setAutoplayEnabled(false); // Stop autoplay on user interaction
+        emblaApi.scrollTo(index);
+      }
+    },
     [emblaApi]
   );
 
@@ -43,17 +51,46 @@ export function AgencyLogos() {
   useEffect(() => {
     if (!emblaApi) return;
     
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", () => {
+    const handleReInit = () => {
       setScrollSnaps(emblaApi.scrollSnapList());
-    });
+    };
+    
+    const handlePointerDown = () => {
+      setAutoplayEnabled(false); // Stop autoplay on drag/interaction
+    };
+    
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", handleReInit);
+    emblaApi.on("pointerDown", handlePointerDown);
     
     // Initialize scroll snaps and selected index asynchronously
     requestAnimationFrame(() => {
       setScrollSnaps(emblaApi.scrollSnapList());
       onSelect();
     });
+
+    // Cleanup event listeners
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", handleReInit);
+      emblaApi.off("pointerDown", handlePointerDown);
+    };
   }, [emblaApi, onSelect]);
+
+  // Autoplay: advance carousel every second
+  useEffect(() => {
+    if (!emblaApi || !autoplayEnabled) return;
+
+    const autoplayInterval = setInterval(() => {
+      if (emblaApi && autoplayEnabled) {
+        emblaApi.scrollNext();
+      }
+    }, 2000); // Advance every 1 second
+
+    return () => {
+      clearInterval(autoplayInterval);
+    };
+  }, [emblaApi, autoplayEnabled]);
 
   return (
     <Section variant="alt">
