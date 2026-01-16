@@ -1385,6 +1385,35 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return builtInPresets;
   });
 
+  const [currentPresetId, setCurrentPresetId] = useState<string | null>(() => {
+    // Try to determine current preset ID from saved theme
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          // Find matching preset
+          const allPresets = [...builtInPresets];
+          const savedPresets = localStorage.getItem(PRESETS_STORAGE_KEY);
+          if (savedPresets) {
+            try {
+              allPresets.push(...JSON.parse(savedPresets));
+            } catch {}
+          }
+          const matchingPreset = allPresets.find((p) => {
+            return Object.keys(p.theme).every((key) => {
+              return p.theme[key as keyof Theme] === parsed[key as keyof Theme];
+            });
+          });
+          return matchingPreset?.id || null;
+        } catch {
+          return null;
+        }
+      }
+    }
+    return null;
+  });
+
   // Apply theme to DOM whenever it changes
   useEffect(() => {
     applyThemeToDom(theme);
@@ -1401,6 +1430,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const resetTheme = () => {
     setTheme(defaultTheme);
+    setCurrentPresetId(null);
     localStorage.removeItem(STORAGE_KEY);
     // Reapply default theme to DOM
     applyThemeToDom(defaultTheme);
@@ -1439,6 +1469,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const preset = presets.find((p) => p.id === presetId);
     if (preset) {
       setTheme(preset.theme);
+      setCurrentPresetId(presetId);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(preset.theme));
       applyThemeToDom(preset.theme);
     }
@@ -1467,6 +1498,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         savePreset,
         loadPreset,
         deletePreset,
+        currentPresetId,
       }}
     >
       {children}

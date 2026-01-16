@@ -11,6 +11,7 @@ export type ThemeContextType = {
   savePreset: (name: string, themeToSave?: Theme) => void;
   loadPreset: (presetId: string) => void;
   deletePreset: (presetId: string) => void;
+  currentPresetId: string | null;
 };
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);

@@ -6,6 +6,7 @@ import { Tag } from "./pages/Tag";
 import { ScrollToTop } from "./components/ScrollToTop";
 import "./design/globals.css";
 import { ThemePicker } from "./components/ThemePicker/ThemePicker";
+import { AudioControl } from "./components/AudioControl/AudioControl";
 
 function AppContent() {
   return (
@@ -18,6 +19,7 @@ function AppContent() {
         <Route path="/resources/tag/:categoryName" element={<Tag />} />
       </Routes>
       <ThemePicker />
+      <AudioControl />
     </>
   );
 }
