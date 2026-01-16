@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../../context/useTheme';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Play, Pause } from 'lucide-react';
 import styles from './AudioControl.module.css';
 
 export function AudioControl() {
   const { currentPresetId } = useTheme();
-  const [isMuted, setIsMuted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Only show when noname theme is active
@@ -18,48 +18,58 @@ export function AudioControl() {
       audio.loop = true; // Loop the audio
       audioRef.current = audio;
 
-      // Try to play when theme is selected
-      audio.play().catch((error) => {
-        // Silently fail if autoplay is blocked (browser policy)
+      // Create event handlers
+      const handlePlay = () => setIsPlaying(true);
+      const handlePause = () => setIsPlaying(false);
+      const handleEnded = () => setIsPlaying(false);
+
+      // Listen for play/pause events to update state
+      audio.addEventListener('play', handlePlay);
+      audio.addEventListener('pause', handlePause);
+      audio.addEventListener('ended', handleEnded);
+
+      // Try to play when theme is selected (may be blocked by browser)
+      audio.play().then(() => {
+        setIsPlaying(true);
+      }).catch((error) => {
+        // Autoplay blocked - user will need to click play
         console.log('Audio autoplay blocked or failed:', error);
+        setIsPlaying(false);
       });
+
+      // Store cleanup function
+      return () => {
+        audio.pause();
+        audio.removeEventListener('play', handlePlay);
+        audio.removeEventListener('pause', handlePause);
+        audio.removeEventListener('ended', handleEnded);
+        audioRef.current = null;
+        setIsPlaying(false);
+      };
     } else if (!isNonameActive && audioRef.current) {
       // Clean up audio when theme changes away from noname
       audioRef.current.pause();
       audioRef.current = null;
+      setIsPlaying(false);
     }
-
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-    };
   }, [isNonameActive]);
 
-  // Handle mute/unmute
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.muted = isMuted;
-    }
-  }, [isMuted]);
-
-  const toggleMute = async () => {
+  const togglePlayPause = async () => {
     if (!audioRef.current) return;
     
-    if (isMuted) {
-      // Unmuting - ensure audio is playing (in case autoplay was blocked)
-      audioRef.current.muted = false;
-      setIsMuted(false);
+    if (isPlaying) {
+      // Pause
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      // Play
       try {
         await audioRef.current.play();
+        setIsPlaying(true);
       } catch (error) {
         console.log('Failed to play audio:', error);
+        setIsPlaying(false);
       }
-    } else {
-      // Muting
-      audioRef.current.muted = true;
-      setIsMuted(true);
     }
   };
 
@@ -70,11 +80,11 @@ export function AudioControl() {
   return (
     <button
       className={styles.trigger}
-      onClick={toggleMute}
-      aria-label={isMuted ? 'Unmute audio' : 'Mute audio'}
-      title={isMuted ? 'Unmute audio' : 'Mute audio'}
+      onClick={togglePlayPause}
+      aria-label={isPlaying ? 'Pause audio' : 'Play audio'}
+      title={isPlaying ? 'Pause audio' : 'Play audio'}
     >
-      {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+      {isPlaying ? <Pause size={20} /> : <Play size={20} />}
     </button>
   );
 }
