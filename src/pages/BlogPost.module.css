@@ -688,3 +688,47 @@
     margin-top: -50px; /* Further reduce overlap on mobile */
   }
 }
+
+@media (max-width: 767px) {
+  .contentSection {
+    padding: 100px 0 50px; /* Keep top padding, change bottom to 50px */
+  }
+
+  .backButton {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.18px;
+    font-size: 13px; /* Increased from 11px by 2px */
+  }
+
+  .backButton svg {
+    width: 18px;
+    height: 18px; /* Increased from 16px by 2px */
+  }
+
+  .relatedSection {
+    padding: 50px 0 40px; /* 50px top, 40px bottom on mobile */
+  }
+
+  .relatedHeaderRight {
+    width: 100%;
+  }
+
+  .relatedHeaderRight a {
+    display: block;
+    width: 100%;
+  }
+
+  .relatedHeaderRight a > * {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .relatedHeaderRight a > * svg {
+    width: 20px;
+    height: 20px;
+  }
+}

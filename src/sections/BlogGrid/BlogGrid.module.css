@@ -137,12 +137,50 @@
 @media (max-width: 990px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .imageContainer {
+    height: auto;
+  }
+
+  .imageLink {
+    height: auto; /* Remove fixed height */
+    aspect-ratio: unset; /* Remove aspect ratio constraint on tablet/mobile */
+    width: 100%;
+  }
+
+  .image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 367 / 197; /* Let the image maintain aspect ratio */
+    object-fit: cover;
   }
 }
 
 @media (max-width: 767px) {
   .grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .imageContainer {
+    height: auto;
+  }
+
+  .imageLink {
+    height: auto; /* Remove fixed height */
+    aspect-ratio: unset; /* Remove aspect ratio - let image control it */
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 367 / 197; /* Image maintains aspect ratio */
+    object-fit: cover;
   }
 }
 
