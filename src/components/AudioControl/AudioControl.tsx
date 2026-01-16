@@ -28,14 +28,8 @@ export function AudioControl() {
       audio.addEventListener('pause', handlePause);
       audio.addEventListener('ended', handleEnded);
 
-      // Try to play when theme is selected (may be blocked by browser)
-      audio.play().then(() => {
-        setIsPlaying(true);
-      }).catch((error) => {
-        // Autoplay blocked - user will need to click play
-        console.log('Audio autoplay blocked or failed:', error);
-        setIsPlaying(false);
-      });
+      // Don't autoplay - user must click Play button
+      setIsPlaying(false);
 
       // Store cleanup function
       return () => {
