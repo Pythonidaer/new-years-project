@@ -134,7 +134,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 990px) {
+@media (max-width: 1024px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;

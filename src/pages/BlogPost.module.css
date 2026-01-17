@@ -11,7 +11,9 @@
   min-height: 734px;
   padding: 250px 0 100px;
   margin: 0;
-  margin-top: var(--header-height, 110px);
+  /* Flexible: Use --top-offset if available (when TopBanner is present), 
+     otherwise use --header-height. This makes it work with or without TopBanner. */
+  margin-top: var(--top-offset, var(--header-height, 110px));
   position: relative;
   display: block;
   box-sizing: border-box;
@@ -173,7 +175,7 @@
   display: block;
   width: 100%;
   max-width: 800px;
-  margin: -300px 0 0;
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
@@ -190,8 +192,7 @@
   border-radius: 7px;
   border: 0;
   padding: 0;
-  margin: 0;
-  margin-bottom: 0;
+  margin: -300px 0 0;
   box-sizing: border-box;
   color: var(--color-text);
   font-family: var(--font-family, Archivo, sans-serif);
@@ -265,7 +266,7 @@
   font-weight: 700;
   text-decoration: underline;
   font-size: 22px;
-  line-height: 35.2px;
+  /* line-height: 35.2px; */
   cursor: pointer;
   transition: color 0.2s ease-in-out;
 }
@@ -302,12 +303,27 @@
   box-sizing: border-box;
 }
 
-/* List bullet points */
+/* List bullet points - using right-pointing triangle/caret to match button style */
 .postContent ul li::before {
-  content: "•";
+  /* Option 1: Unicode triangle (simpler, works everywhere) */
+  content: "▶"; /* Right-pointing triangle (Unicode U+25B6) */
+  
+  /* Option 2: SVG data URI matching FaCaretRight icon (uncomment to use instead) */
+  /* content: ""; */
+  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512'%3E%3Cpath fill='currentColor' d='M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z'/%3E%3C/svg%3E"); */
+  /* background-size: contain; */
+  /* background-repeat: no-repeat; */
+  /* background-position: left center; */
+  /* width: 0.6em; */
+  /* height: 0.6em; */
+  /* display: inline-block; */
+  
   position: absolute;
   left: 0;
   color: var(--color-text);
+  font-size: 0.7em; /* Slightly smaller than text for better visual balance */
+  line-height: 35.2px; /* Match list item line-height */
+  vertical-align: middle;
 }
 
 .postContent ol {
@@ -410,7 +426,7 @@
   }
 
   .postContent pre code {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.5;
   }
 
@@ -664,6 +680,11 @@
 }
 
 @media (max-width: 990px) {
+  .heroSection {
+    /* On tablet/mobile, ensure correct spacing: banner (0px if not present) + header (60px) */
+    margin-top: calc(var(--banner-height, 0px) + var(--header-height, 60px));
+  }
+
   .entryTitle {
     font-size: 36px;
     line-height: 44px;
@@ -683,15 +704,154 @@
     align-items: flex-start;
     gap: 24px;
   }
+}
+
+/* iPad Mini / Tablet breakpoint - must come after max-width: 990px to override */
+@media only screen and (min-width: 768px) and (max-width: 990px) {
+  .heroSection {
+    padding: 110px 0 100px; /* Reduced top padding from 250px to 110px for tablet */
+    min-height: 100px; /* Reduced from 734px for tablet */
+  }
+
+  .heroContainer {
+    padding: 0 50px;
+  }
+
+  .entryTitle {
+    font-size: 50px;
+  }
+
+  .entryContentWrapper {
+    padding: 0 50px;
+  }
+
+  .postFooter {
+    padding: 0 50px;
+  }
+
+  .relatedContainer {
+    padding: 0 50px;
+  }
+
+  .relatedHeader {
+    flex-direction: row; /* Keep header and button on same row for tablet */
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .contentSection {
+    padding: 0 0 100px; /* No top padding, only bottom padding */
+  }
+
+  /* Tablet: Create shared variables for the overlap calculation */
+  .main {
+    /* Base spacing for hero content padding-bottom on tablet - creates space for image overlap */
+    --hero-content-spacing-tablet: calc(6vw + 150px);
+    /* Image overlap: 50% of content spacing to create true halfway overlap */
+    --hero-image-overlap-tablet: calc(var(--hero-content-spacing-tablet) * 1);
+  }
+
+  .heroContent {
+    /* Padding-bottom creates space for image overlap on tablet - image will overlap halfway into this space */
+    padding: 0 0 var(--hero-content-spacing-tablet);
+  }
 
   .postThumbnail {
-    margin-top: -50px; /* Further reduce overlap on mobile */
+    margin: 0 auto; /* Center the thumbnail container */
+    margin-top: 0; /* Remove any margin-top, let featuredImage handle the overlap */
+    text-align: center; /* Center the inline-block image */
+  }
+
+  .featuredImage {
+    /* Negative margin pulls image up into hero section on tablet - 50% overlap (halfway) */
+    /* Explicitly override desktop margin: -300px 0 0 */
+    margin-top: calc(var(--hero-image-overlap-tablet) * -1);
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    display: inline-block; /* Keep inline-block - parent container handles centering */
+  }
+
+  /* List items - tablet font size */
+  .postContent ul li {
+    font-size: 18px;
+    line-height: 28.8px;
+  }
+
+  .postContent ul li::before {
+    line-height: 28.8px; /* Match list item line-height */
+  }
+
+  .postContent ol li {
+    font-size: 18px;
+    line-height: 28.8px;
+  }
+}
+
+/* iPad landscape breakpoint: 768px - 1024px */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .relatedHeader {
+    flex-direction: row; /* Keep header and button on same row for iPad landscape */
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+  }
+
+  .backButton {
+    line-height: 18.8px;
   }
 }
 
 @media (max-width: 767px) {
+  /* Mobile: Create shared variables for the overlap calculation */
+  .main {
+    /* Base spacing for hero content padding-bottom */
+    --hero-content-spacing: calc(4vw + 230px);
+    /* Base spacing for image margin calculation */
+    --hero-image-spacing: calc(4vw + 130px);
+    /* 
+     * Image overlap ratio: ~0.634 (63.4%)
+     * This comes from Mark43's pattern where margin-top is ~63% of padding-bottom
+     * Example: padding-bottom: 136.658px → margin-top: -86.658px (86.658/136.658 ≈ 0.634)
+     * The image doesn't need to overlap by 100% - partial overlap creates the visual effect
+     */
+    --hero-overlap-ratio: 0.634;
+    /* Final image overlap: spacing * ratio (negative to pull up) */
+    --hero-image-overlap: calc(var(--hero-image-spacing) * var(--hero-overlap-ratio));
+  }
+
+  .heroSection {
+    /* On mobile, ensure correct spacing: banner (0px if not present) + header (60px) */
+    margin-top: calc(var(--banner-height, 0px) + var(--header-height, 60px));
+    padding: 50px 0 0; /* Reduced top padding, no bottom padding */
+    min-height: auto; /* Remove fixed min-height on mobile */
+  }
+
+  .heroContent {
+    width: 85%;
+    /* Padding-bottom creates space below the title/author for the image to overlap into */
+    padding: 0 0 var(--hero-content-spacing);
+  }
+
+  .featuredImage {
+    /* Negative margin pulls image up into the hero section, creating overlap effect */
+    /* The ratio ensures partial overlap (not 100%) for the desired visual effect */
+    margin: calc(var(--hero-image-overlap) * -1) 0 0;
+  }
+
+  .entryContentWrapper {
+    max-width: 85%;
+    padding: 0;
+  }
+
+  .postThumbnail {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .contentSection {
-    padding: 100px 0 50px; /* Keep top padding, change bottom to 50px */
+    padding: 0 0 50px; /* No padding-top on mobile, only bottom */
   }
 
   .backButton {
@@ -730,5 +890,39 @@
   .relatedHeaderRight a > * svg {
     width: 20px;
     height: 20px;
+  }
+
+  /* Mobile list item adjustments to match Mark43 */
+  .postContent ul li {
+    font-size: 18px;
+    line-height: 28.8px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-left: 25.2px;
+  }
+
+  .postContent ul li::before {
+    line-height: 28.8px; /* Match mobile list item line-height */
+  }
+
+  .postContent ol li {
+    font-size: 18px;
+    line-height: 28.8px;
+    margin-top: 18px;
+    margin-bottom: 18px;
+  }
+
+  .postContent a {
+    font-size: 18px; /* Match paragraph and list font size on mobile */
+  }
+
+  .relatedContainer {
+    width: 85%;
+    padding: 0;
+  }
+
+  .postFooter {
+    width: 85%;
+    padding: 0;
   }
 }

@@ -131,9 +131,25 @@ export function Header() {
   // Header controls only header height
   useEffect(() => {
     const root = document.documentElement;
-    const headerHeight = isScrolled ? 60 : 110;
+    
+    // Check if we're on mobile (max-width: 990px)
+    const isMobile = window.matchMedia("(max-width: 990px)").matches;
+    
+    // On mobile, header is always 60px regardless of scroll
+    // On desktop, it's 60px when scrolled, 110px when not scrolled
+    const headerHeight = isMobile ? 60 : (isScrolled ? 60 : 110);
 
     root.style.setProperty("--header-height", `${headerHeight}px`);
+    
+    // Update on resize to handle mobile/desktop transitions
+    const handleResize = () => {
+      const isMobileNow = window.matchMedia("(max-width: 990px)").matches;
+      const newHeight = isMobileNow ? 60 : (isScrolled ? 60 : 110);
+      root.style.setProperty("--header-height", `${newHeight}px`);
+    };
+    
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [isScrolled]);
 
   // Reset banner-height to 0px on pages without TopBanner
