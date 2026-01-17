@@ -78,7 +78,7 @@ export function ThemePicker() {
   const [isOpen, setIsOpen] = useState(false);
   const [presetName, setPresetName] = useState('');
   const [showSavePreset, setShowSavePreset] = useState(false);
-  const [isPresetsExpanded, setIsPresetsExpanded] = useState(true);
+  const [isPresetsExpanded, setIsPresetsExpanded] = useState(false);
   const [isPresetsHeaderCollapsed, setIsPresetsHeaderCollapsed] = useState(false);
   const [isTriggerHidden, setIsTriggerHidden] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
@@ -388,7 +388,7 @@ export function ThemePicker() {
                 aria-label={isPresetsExpanded ? 'Collapse presets' : 'Expand presets'}
                 aria-expanded={isPresetsExpanded}
               >
-                <h4 className={styles.presetsTitle}>Presets</h4>
+                <h4 className={styles.presetsTitle}>Choose a theme</h4>
                 <button
                   className={styles.presetsToggle}
                   onClick={(e) => {

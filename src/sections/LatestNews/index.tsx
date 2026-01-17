@@ -28,7 +28,10 @@ export function LatestNews() {
           {recentPosts.map((post) => (
             <article key={post.id} className={styles.card}>
               <div className={styles.cardImage}>
-                <Link to={`/resources/blog/${getBlogPostSlug(post)}`}>
+                <Link 
+                  to={`/resources/blog/${getBlogPostSlug(post)}`}
+                  aria-label={`Read ${post.title}`}
+                >
                   <img
                     src={post.image}
                     alt={post.title}
@@ -37,19 +40,12 @@ export function LatestNews() {
                 </Link>
               </div>
               <div className={styles.cardContent}>
-                <time className={styles.date}>{post.date}</time>
                 <h3 className={styles.cardTitle}>
                   <Link to={`/resources/blog/${getBlogPostSlug(post)}`} className={styles.cardTitleLink}>
                     {post.title}
                   </Link>
                 </h3>
-                <p className={styles.cardExcerpt}>{post.excerpt}</p>
-                <Link 
-                  to={`/resources/blog/${getBlogPostSlug(post)}`} 
-                  className={styles.cardLink}
-                >
-                  Read more about {post.title}
-                </Link>
+                <time className={styles.date}>{post.date}</time>
               </div>
             </article>
           ))}

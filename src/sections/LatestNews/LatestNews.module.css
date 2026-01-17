@@ -47,8 +47,13 @@
   padding: 24px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 12px;
   flex: 1;
+}
+
+.cardExcerpt {
+  display: none; /* Hide excerpt to match Mark43 design */
 }
 
 .date {
