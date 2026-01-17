@@ -13,7 +13,7 @@
 
 .content {
   flex: 1;
-  padding: 25px 45px;
+  padding: 25px 45px 0;
   display: inline-flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -95,13 +95,56 @@
     flex-direction: column;
     padding: 25px;
   }
+}
+
+/* iPad landscape breakpoint: 768px - 1024px */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .featuredCard {
+    flex-direction: column;
+  }
 
   .imageContainer {
-    width: 100%;
+    width: 100%; /* Full width on iPad instead of 43% */
+    order: -1; /* Image appears first on iPad */
+  }
+
+  .content {
+    margin-top: 50px;
+    padding: 25px 0 0;
+    order: 0; /* Content appears after image */
   }
 
   .title {
-    font-size: 24px;
+    font-size: 23px;
+    margin-bottom: 20px;
+  }
+
+  .title a {
+    font-size: 23px;
+  }
+}
+
+@media (max-width: 767px) {
+  .featuredCard {
+    margin-bottom: 36px;
+  }
+
+  .imageContainer {
+    width: 100%;
+    order: -1; /* Image appears first on mobile */
+  }
+
+  .content {
+    padding: 25px 0 0; /* Remove horizontal padding and bottom padding on mobile */
+    order: 0; /* Content appears after image */
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .title a {
+    font-size: 20px;
   }
 }
 

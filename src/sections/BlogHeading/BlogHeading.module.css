@@ -13,9 +13,21 @@
   width: 100%;
 }
 
+/* iPad landscape breakpoint: 768px - 1024px */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    margin-bottom: 50px;
+  }
+
+  .heading {
+    font-size: 61px;
+    line-height: 1.14;
+  }
+}
+
 @media (max-width: 767px) {
   .heading {
-    font-size: 48px;
+    font-size: 40px;
     line-height: 1.2;
   }
 }

@@ -138,6 +138,7 @@
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    max-width: 100%;
   }
 
   .imageContainer {
@@ -155,6 +156,14 @@
     height: auto;
     aspect-ratio: 367 / 197; /* Let the image maintain aspect ratio */
     object-fit: cover;
+  }
+}
+
+/* iPad landscape breakpoint: 768px - 1024px */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr; /* Single column for full-width cards on iPad */
+    gap: 20px;
   }
 }
 

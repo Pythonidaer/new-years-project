@@ -44,8 +44,7 @@
   pointer-events: none;
   z-index: 10;
   flex-shrink: 0;
-  width: 16px;
-  height: 10px;
+  color: var(--color-text);
 }
 
 .select {
@@ -128,6 +127,30 @@
   border-width: 0;
 }
 
+/* iPad landscape breakpoint: 768px - 1024px */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    margin-bottom: 25px;
+  }
+
+  .selectContainer {
+    width: 100%; /* Full width within padded container */
+  }
+
+  .selectWrapper {
+    width: 100%; /* Full width within padded container */
+  }
+
+  .searchContainer {
+    width: 100%; /* Full width within padded container */
+    min-width: 0; /* Remove min-width constraint */
+  }
+
+  .searchInput {
+    width: 100%; /* Full width instead of fixed 370px */
+  }
+}
+
 @media (max-width: 767px) {
   .container {
     flex-direction: column;
@@ -135,8 +158,13 @@
     gap: 16px;
   }
 
+  .selectWrapper {
+    width: 100%; /* Use full width instead of fixed 300px */
+  }
+
   .searchContainer {
-    min-width: 100%;
+    width: 100%; /* Use full width instead of fixed min-width */
+    min-width: 0; /* Remove min-width constraint */
     order: 2;
   }
 
@@ -144,10 +172,15 @@
     flex-direction: column;
     align-items: stretch;
     order: 1;
+    width: 100%; /* Ensure container respects parent width */
   }
 
   .select {
-    min-width: 100%;
+    width: 100%; /* Use full width */
+  }
+
+  .searchInput {
+    width: 100%; /* Use full width instead of fixed 370px */
   }
 }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import type { BlogPost } from "../../data/blog/types";
 import { getAllUniqueTags } from "../../data/blog";
-import { Search } from "lucide-react";
+import { Search, ChevronDown } from "lucide-react";
 import styles from "./BlogFilters.module.css";
 
 interface BlogFiltersProps {
@@ -68,22 +68,14 @@ export function BlogFilters({ posts, onFilterChange }: BlogFiltersProps) {
               </option>
             ))}
           </select>
-          <svg
-            className={styles.chevron}
-            width="16"
-            height="10"
-            viewBox="0 0 16 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M3 0 L8 10 L13 0" stroke="#134dd1" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          </svg>
+          <ChevronDown className={styles.chevron} size={24} />
         </div>
       </div>
       <div className={styles.searchContainer}>
         <Search className={styles.searchIcon} size={20} />
         <input
           type="text"
+          name="search"
           placeholder="Search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
