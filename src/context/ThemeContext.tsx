@@ -1391,6 +1391,88 @@ const builtInPresets: Preset[] = [
       shadowSubtle: 'rgba(184, 92, 42, 0.2)', // Subtle orange shadows
     },
   },
+  {
+    id: 'companion',
+    name: 'Companion',
+    theme: {
+      ...defaultTheme,
+      bg: '#F5E6D3', // Warm cream/beige (highway, desert road)
+      surface: '#E8D4C0', // Light tan surface (weathered road)
+      surfaceDark: '#4A3A2A', // Dark brown (road shadows, asphalt)
+      marqueeBg: '#3A2A1A', // Darker brown (deep road shadows)
+      text: '#2A1A0A', // Dark brown text (readable on light)
+      textDark: '#1A0F05', // Very dark brown (headings)
+      muted: '#8B7355', // Medium brown (muted accent, aged signs)
+      border: 'rgba(74, 58, 42, 0.3)', // Brown borders
+      codeBg: '#E8D4C0', // Light tan for code blocks
+      codeText: '#2A1A0A', // Dark brown code text
+      primary: '#8B5A3C', // Warm brown (road, desert) for better contrast with white text (meets 4.5:1 WCAG AA)
+      primaryHover: '#A67C52', // Lighter brown on hover
+      primaryContrast: '#FFFFFF', // White text on brown buttons (meets 4.5:1 WCAG AA)
+      link: '#5A3A2A', // Dark brown links for better contrast on light background (meets 4.5:1 WCAG AA)
+      blogLink: '#4A2A1A', // Very dark brown for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
+      focus: '#8B5A3C', // Warm brown focus ring
+      accent: '#87CEEB', // Sky blue accent (highway sky)
+      accentAlt: '#FF8C42', // Bright orange accent (sunset, desert sun) for better contrast on dark footer (meets 4.5:1 WCAG AA)
+      footerBg: '#3A2A1A', // Dark brown footer (road shadows)
+      footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text
+      footerTextSubtle: 'rgba(255, 255, 255, 0.65)', // Subtle white text
+      footerSocialBg: 'rgba(255, 255, 255, 0.12)', // Subtle white social bg
+      footerBorder: 'rgba(255, 255, 255, 0.15)', // White borders
+      heroStart: '#6B5A4A', // Medium brown start (road, desert)
+      heroEnd: '#4A3A2A', // Dark brown end (road shadows)
+      heroRadial: 'rgba(184, 92, 42, 0.15)', // Orange glow (sunset)
+      campaignStart: '#8B5A3C', // Warm brown (road)
+      campaignEnd: '#6B4A3A', // Darker brown
+      authorBoxStart: 'rgba(232, 212, 192, 0.9)', // Light tan
+      authorBoxEnd: 'rgba(245, 230, 211, 0.9)', // Warm cream
+      relatedSectionStart: 'rgba(232, 212, 192, 0.6)', // Light tan section
+      relatedSectionEnd: 'rgba(245, 230, 211, 0.6)', // Warm cream section
+      shadow: 'rgba(74, 58, 42, 0.25)', // Brown shadows
+      shadowSubtle: 'rgba(74, 58, 42, 0.12)', // Subtle brown shadows
+    },
+  },
+  {
+    id: 'gusto',
+    name: 'Gusto',
+    theme: {
+      ...defaultTheme,
+      bg: '#1A0A1A', // Deep dark magenta-black (bold artistic background)
+      surface: '#2A1A2A', // Dark magenta surface (abstract background base)
+      surfaceDark: '#0F050F', // Very dark magenta-black (deep shadows)
+      marqueeBg: '#0A050A', // Deepest dark (artistic depth)
+      text: '#FFE8F0', // Light pink-white text (readable on dark, matches white hair)
+      textDark: '#FFFFFF', // Pure white (hair, highlights)
+      muted: '#C8A0B8', // Muted magenta (grayscale face tones)
+      border: 'rgba(255, 140, 0, 0.4)', // Bright orange borders (background orange)
+      codeBg: '#2A1A2A', // Dark magenta for code blocks
+      codeText: '#FFE8F0', // Light pink-white code text
+      primary: '#8B008B', // Deep magenta/fuchsia (background left) for better contrast with white text (meets 4.5:1 WCAG AA)
+      primaryHover: '#A020A0', // Brighter magenta on hover
+      primaryContrast: '#FFFFFF', // White text on magenta buttons (meets 4.5:1 WCAG AA)
+      link: '#FF8C00', // Bright orange links (background orange) for better contrast on dark background (meets 4.5:1 WCAG AA)
+      blogLink: '#FFA500', // Lighter orange for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
+      focus: '#FF8C00', // Bright orange focus ring
+      accent: '#32CD32', // Vibrant green accent (leaf shape) for better contrast on dark background (meets 4.5:1 WCAG AA)
+      accentAlt: '#FFD700', // Bright yellow/orange accent (yellow streaks) for better contrast on dark footer (meets 4.5:1 WCAG AA)
+      footerBg: '#0A050A', // Deepest dark magenta-black footer
+      footerTextMuted: 'rgba(255, 232, 240, 0.75)', // Muted light pink text
+      footerTextSubtle: 'rgba(255, 232, 240, 0.70)', // Brighter subtle light pink text (meets 4.5:1 WCAG AA)
+      footerSocialBg: 'rgba(255, 140, 0, 0.2)', // Subtle orange social bg
+      footerBorder: 'rgba(255, 140, 0, 0.3)', // Orange borders
+      heroStart: '#8B008B', // Deep magenta start (background left)
+      heroEnd: '#4B0082', // Deep purple end (top background hints)
+      heroRadial: 'rgba(255, 140, 0, 0.25)', // Orange glow (bright orange area)
+      campaignStart: '#FF8C00', // Bright orange (background orange)
+      campaignEnd: '#8B008B', // Deep magenta (background left)
+      authorBoxStart: 'rgba(42, 26, 42, 0.9)', // Dark magenta
+      authorBoxEnd: 'rgba(26, 10, 26, 0.9)', // Darker magenta-black
+      relatedSectionStart: 'rgba(26, 10, 26, 0.7)', // Dark magenta-black section
+      relatedSectionEnd: 'rgba(42, 26, 42, 0.7)', // Lighter dark magenta section
+      shadow: 'rgba(139, 0, 139, 0.4)', // Deep magenta shadows
+      shadowSubtle: 'rgba(255, 140, 0, 0.2)', // Subtle orange shadows
+    },
+  },
 ];
 
 export function ThemeProvider({ children }: { children: ReactNode }) {

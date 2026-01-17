@@ -434,7 +434,9 @@ export function ThemePicker() {
                     preset.id.startsWith('reeses') ||
                     preset.id.startsWith('fallout') ||
                     preset.id.startsWith('berge') ||
-                    preset.id.startsWith('samson');
+                    preset.id.startsWith('samson') ||
+                    preset.id.startsWith('companion') ||
+                    preset.id.startsWith('gusto');
                   return (
                     <div key={preset.id} className={styles.presetButtonWrapper}>
                       <button

@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import parse from "html-react-parser";
 import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 import { Header } from "../sections/Header";
@@ -12,6 +13,38 @@ import styles from "./BlogPost.module.css";
 
 export function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
+  const post = slug ? getBlogPostBySlug(slug) : null;
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Preload the hero image for faster LCP (must be called before early returns)
+  useEffect(() => {
+    if (!post?.image) return;
+
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = post.image;
+    link.fetchPriority = "high";
+    document.head.appendChild(link);
+
+    // Detect when the background image is loaded
+    const img = new Image();
+    img.onload = () => {
+      // Small delay to ensure CSS background is applied
+      setTimeout(() => setImageLoaded(true), 100);
+    };
+    img.onerror = () => {
+      // Show content even if image fails to load
+      setImageLoaded(true);
+    };
+    img.src = post.image;
+
+    return () => {
+      if (document.head.contains(link)) {
+        document.head.removeChild(link);
+      }
+    };
+  }, [post?.image]);
 
   if (!slug) {
     return (
@@ -24,8 +57,6 @@ export function BlogPost() {
       </main>
     );
   }
-
-  const post = getBlogPostBySlug(slug);
 
   if (!post) {
     return (
@@ -59,6 +90,14 @@ export function BlogPost() {
         className={styles.heroSection}
         style={{ '--hero-bg-image': `url(${post.image})` } as React.CSSProperties}
       >
+        {/* Loading Skeleton with Shimmer Animation */}
+        <div 
+          className={styles.heroSkeleton} 
+          data-loaded={imageLoaded}
+          style={{ display: imageLoaded ? 'none' : 'block' }}
+        >
+          <div className={styles.skeletonShimmer}></div>
+        </div>
         <div className={styles.heroContainer}>
           <div className={styles.heroContent}>
             <h1 className={styles.entryTitle}>{post.title}</h1>
@@ -85,7 +124,7 @@ export function BlogPost() {
                   src={post.image} 
                   alt={post.title}
                   className={styles.featuredImage}
-                  loading="lazy"
+                  fetchPriority="high"
                   decoding="async"
                 />
               </div>
