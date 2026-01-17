@@ -34,6 +34,22 @@ export function Blog() {
     setFilteredPosts(blogPosts);
   }, [blogPosts]);
 
+  // Preload the featured image for faster LCP
+  useEffect(() => {
+    if (!featuredPost?.image) return;
+
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = featuredPost.image;
+    link.fetchPriority = "high";
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, [featuredPost?.image]);
+
   // Get grid posts (filtered results, excluding the featured post)
   const gridPosts = useMemo(() => {
     if (!featuredPost) return filteredPosts;
