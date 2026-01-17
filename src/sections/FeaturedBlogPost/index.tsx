@@ -39,7 +39,12 @@ export function FeaturedBlogPost({ post }: FeaturedBlogPostProps) {
         )}
       </div>
       <div className={styles.imageContainer}>
-        <img src={displayPost.image} alt={displayPost.title} className={styles.image} />
+        <img 
+          src={displayPost.image} 
+          alt={displayPost.title} 
+          className={styles.image}
+          fetchPriority="high"
+        />
       </div>
     </article>
   );

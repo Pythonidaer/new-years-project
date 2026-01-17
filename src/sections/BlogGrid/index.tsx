@@ -38,6 +38,8 @@ export function BlogGrid({ posts }: Props) {
                     src={post.image}
                     alt={post.title}
                     className={styles.image}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </Link>
               </div>
