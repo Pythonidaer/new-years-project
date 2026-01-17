@@ -1,0 +1,20 @@
+/* Archivo Variable Font - Normal */
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/Archivo-VariableFont_wdth,wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Archivo Variable Font - Italic */
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/Archivo-Italic-VariableFont_wdth,wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: italic;
+  font-display: swap;
+}
+

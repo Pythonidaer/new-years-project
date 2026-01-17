@@ -1,3 +1,6 @@
+/* Import fonts first (before tokens) */
+@import "./fonts.css";
+
 /* Global base styles */
 @import "./tokens.css";
 
