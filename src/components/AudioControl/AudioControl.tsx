@@ -8,13 +8,33 @@ export function AudioControl() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Only show when noname theme is active
-  const isNonameActive = currentPresetId === 'noname';
+  // Show when noname or samson theme is active
+  const isThemeWithAudio = currentPresetId === 'noname' || currentPresetId === 'samson';
 
   useEffect(() => {
-    if (isNonameActive && !audioRef.current) {
+    // Determine audio file based on theme
+    let audioFile: string | null = null;
+    if (currentPresetId === 'samson') {
+      audioFile = '/samson.mp3';
+    } else if (currentPresetId === 'noname') {
+      audioFile = '/noname.mp3';
+    }
+
+    // Clean up existing audio if theme changed or theme no longer has audio
+    if (audioRef.current) {
+      const currentAudio = audioRef.current;
+      currentAudio.pause();
+      currentAudio.removeEventListener('play', () => setIsPlaying(true));
+      currentAudio.removeEventListener('pause', () => setIsPlaying(false));
+      currentAudio.removeEventListener('ended', () => setIsPlaying(false));
+      audioRef.current = null;
+      setIsPlaying(false);
+    }
+
+    // Create new audio if theme has audio
+    if (isThemeWithAudio && audioFile) {
       // Create audio element
-      const audio = new Audio('/noname.mp3');
+      const audio = new Audio(audioFile);
       audio.loop = true; // Loop the audio
       audioRef.current = audio;
 
@@ -31,7 +51,7 @@ export function AudioControl() {
       // Don't autoplay - user must click Play button
       setIsPlaying(false);
 
-      // Store cleanup function
+      // Cleanup function
       return () => {
         audio.pause();
         audio.removeEventListener('play', handlePlay);
@@ -40,13 +60,8 @@ export function AudioControl() {
         audioRef.current = null;
         setIsPlaying(false);
       };
-    } else if (!isNonameActive && audioRef.current) {
-      // Clean up audio when theme changes away from noname
-      audioRef.current.pause();
-      audioRef.current = null;
-      setIsPlaying(false);
     }
-  }, [isNonameActive]);
+  }, [isThemeWithAudio, currentPresetId]);
 
   const togglePlayPause = async () => {
     if (!audioRef.current) return;
@@ -67,7 +82,7 @@ export function AudioControl() {
     }
   };
 
-  if (!isNonameActive) {
+  if (!isThemeWithAudio) {
     return null;
   }
 
