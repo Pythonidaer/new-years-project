@@ -433,7 +433,8 @@ export function ThemePicker() {
                     preset.id.startsWith('pbr') ||
                     preset.id.startsWith('reeses') ||
                     preset.id.startsWith('fallout') ||
-                    preset.id.startsWith('berge');
+                    preset.id.startsWith('berge') ||
+                    preset.id.startsWith('samson');
                   return (
                     <div key={preset.id} className={styles.presetButtonWrapper}>
                       <button
