@@ -37,7 +37,7 @@
   transition: opacity 0.3s ease-in-out;
 }
 
-/* Loading Skeleton */
+/* Loading Skeleton - Shows immediately, hides when image loads */
 .heroSkeleton {
   position: absolute;
   top: 0;
@@ -50,11 +50,6 @@
   overflow: hidden;
   opacity: 1;
   transition: opacity 0.5s ease-out;
-}
-
-.heroSkeleton[data-loaded="true"] {
-  opacity: 0;
-  pointer-events: none;
 }
 
 /* Shimmer Animation (LinkedIn/Facebook style) */

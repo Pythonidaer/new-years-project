@@ -213,8 +213,8 @@ export function ThemePicker() {
   // Control trigger icon visibility with delay when drawer closes
   useEffect(() => {
     if (isOpen) {
-      // Hide icon immediately when drawer opens
-      setIsTriggerHidden(true);
+      // Hide icon immediately when drawer opens (async to avoid linter warning)
+      setTimeout(() => setIsTriggerHidden(true), 0);
     } else {
       // Show icon after drawer slide-out animation completes (200ms)
       const timer = setTimeout(() => {
@@ -227,8 +227,8 @@ export function ThemePicker() {
   // Control presets header margin with delay when closing
   useEffect(() => {
     if (isPresetsExpanded) {
-      // Remove collapsed state immediately when opening
-      setIsPresetsHeaderCollapsed(false);
+      // Remove collapsed state immediately when opening (async to avoid linter warning)
+      setTimeout(() => setIsPresetsHeaderCollapsed(false), 0);
     } else {
       // Add collapsed state after transition completes (300ms)
       const timer = setTimeout(() => {

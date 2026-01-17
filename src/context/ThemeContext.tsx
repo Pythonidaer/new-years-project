@@ -1521,7 +1521,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
           if (savedPresets) {
             try {
               allPresets.push(...JSON.parse(savedPresets));
-            } catch {}
+            } catch {
+              // Ignore invalid JSON in localStorage - use built-in presets only
+            }
           }
           const matchingPreset = allPresets.find((p) => {
             return Object.keys(p.theme).every((key) => {

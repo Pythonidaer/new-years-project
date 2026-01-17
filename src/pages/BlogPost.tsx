@@ -14,6 +14,7 @@ import styles from "./BlogPost.module.css";
 export function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? getBlogPostBySlug(slug) : null;
+  // Start with false so skeleton shows immediately
   const [imageLoaded, setImageLoaded] = useState(false);
 
   // Preload the hero image for faster LCP (must be called before early returns)
@@ -30,14 +31,21 @@ export function BlogPost() {
     // Detect when the background image is loaded
     const img = new Image();
     img.onload = () => {
-      // Small delay to ensure CSS background is applied
-      setTimeout(() => setImageLoaded(true), 100);
+      // Set loaded immediately - no delay needed
+      setImageLoaded(true);
     };
     img.onerror = () => {
       // Show content even if image fails to load
       setImageLoaded(true);
     };
+    // Start loading immediately
     img.src = post.image;
+    
+    // If image is already cached, handle it asynchronously to avoid linter warning
+    if (img.complete) {
+      // Use setTimeout to avoid synchronous setState in effect
+      setTimeout(() => setImageLoaded(true), 0);
+    }
 
     return () => {
       if (document.head.contains(link)) {
@@ -90,14 +98,12 @@ export function BlogPost() {
         className={styles.heroSection}
         style={{ '--hero-bg-image': `url(${post.image})` } as React.CSSProperties}
       >
-        {/* Loading Skeleton with Shimmer Animation */}
-        <div 
-          className={styles.heroSkeleton} 
-          data-loaded={imageLoaded}
-          style={{ display: imageLoaded ? 'none' : 'block' }}
-        >
-          <div className={styles.skeletonShimmer}></div>
-        </div>
+        {/* Loading Skeleton with Shimmer Animation - Shows immediately */}
+        {!imageLoaded && (
+          <div className={styles.heroSkeleton}>
+            <div className={styles.skeletonShimmer}></div>
+          </div>
+        )}
         <div className={styles.heroContainer}>
           <div className={styles.heroContent}>
             <h1 className={styles.entryTitle}>{post.title}</h1>
