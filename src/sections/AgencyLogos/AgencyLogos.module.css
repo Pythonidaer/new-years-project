@@ -113,7 +113,7 @@
 .dots {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
   margin-top: 32px;
   flex-wrap: wrap;
 }
@@ -125,15 +125,17 @@
   border: 0;
   background: transparent;
   cursor: pointer;
-  padding: 7px;
-  /* Touch target: 10px visual + 7px padding on each side = 24px total */
-  margin: -7px;
+  padding: 17px;
+  /* Touch target: 10px visual + 17px padding on each side = 44px total (WCAG minimum) */
+  margin: -17px;
   box-sizing: content-box;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease;
   position: relative;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 /* Visual dot - 10px, centered within the 24px touch target */
@@ -192,6 +194,7 @@
   /* Dots visible on tablet */
   .dots {
     display: flex;
+    gap: 8px; /* Reduced gap for iPad Mini to prevent container break */
   }
 }
 
