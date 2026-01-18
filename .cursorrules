@@ -305,7 +305,7 @@ Documentation is organized into subfolders:
 2. `docs/theming/THEME_PICKER_NPM_PACKAGE_PLAN.md` - For extraction/package development work
 3. `docs/theming/COLOR_PICKER_INTEGRATION.md` - For integration patterns and file structure
 
-**Built-in Preset Themes (29 total):**
+**Built-in Preset Themes (30 total):**
 1. **Default** - Dark theme with blue accents (Midnight Blue)
 2. **Cedar Oak** - Warm earth tones (browns/greens)
 3. **Mark43** - Original Mark43-inspired theme (orange/blue) - *Commented out in UI but code preserved*
@@ -335,6 +335,13 @@ Documentation is organized into subfolders:
 27. **Reeses** - Reese's Pieces candy inspired theme (bright orange #B34D00, yellow accents, light orange-tinted backgrounds, dark brown-black footer)
 28. **Fallout** - Vault-Tec inspired theme (Vault-Tec blue #0066CC, gold accents #FFD700, light blue-tinted backgrounds, dark blue footer, purple-blue hero radial #434fad)
 29. **Bergé** - Vibrant fashion-inspired theme (forest green #1F7A1F primary, hot pink #FF1493 accents, light green-tinted backgrounds, dark green footer)
+30. **Pink** - Soft pink gerbera daisy inspired theme (soft peach-pink background, vibrant rose accents #ff66a3, WCAG AA compliant)
+
+**Important Theme Picker Rules:**
+- **Built-in themes MUST NOT have trash/delete icons** - Only custom user-created presets can be deleted
+- When adding new built-in themes, ensure they are added to the `isBuiltIn` check in `ThemePicker.tsx` (around line 406)
+- Do NOT add delete/trash functionality for built-in themes unless explicitly requested by the user
+- The trash icon is conditionally rendered based on `!isBuiltIn` check - built-in themes should never show delete buttons
 
 **Important Implementation Notes:**
 - **CSS variables are the styling layer**: All color styling happens via CSS variables (`var(--color-*)`)
