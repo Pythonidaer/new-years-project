@@ -340,6 +340,20 @@
   width: 100%;
 }
 
+.presetButton:hover {
+  background: #f6f7f9; /* Fixed surface color */
+  border-color: rgba(36, 54, 78, 0.25);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.presetButton:active {
+  transform: translateY(1px);
+}
+
+.presetName {
+  text-align: left;
+}
+
 .presetIconContainer {
   display: flex;
   align-items: center;
@@ -356,20 +370,6 @@
 
 .presetIcon[fill] {
   opacity: 1;
-}
-
-.presetButton:hover {
-  background: #f6f7f9; /* Fixed surface color */
-  border-color: rgba(36, 54, 78, 0.25);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.presetButton:active {
-  transform: translateY(1px);
-}
-
-.presetName {
-  text-align: left;
 }
 
 .deletePresetBtn {

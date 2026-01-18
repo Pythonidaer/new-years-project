@@ -442,7 +442,8 @@ export function ThemePicker() {
                     preset.id.startsWith('samson') ||
                     preset.id.startsWith('companion') ||
                     preset.id.startsWith('gusto') ||
-                    preset.id === 'pink'; // Pink theme is built-in (no trash icon)
+                    preset.id === 'pink' || // Pink theme is built-in (no trash icon)
+                    preset.id === 'dayglow'; // Dayglow theme is built-in (no trash icon)
                   const showEasterEgg = hasAudioEasterEgg(preset.id);
                   const isSelected = preset.id === currentPresetId;
                   return (
