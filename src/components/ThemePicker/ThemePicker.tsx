@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useTheme } from '../../context/useTheme';
 import { checkContrastIssues } from '../../utils/contrast';
-import { RotateCcw, Save, X, Palette, Bookmark, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { RotateCcw, Save, X, Palette, Bookmark, Trash2, ChevronDown, ChevronUp, Music } from 'lucide-react';
 import Color from 'color';
 import styles from './ThemePicker.module.css';
 
@@ -292,6 +292,11 @@ export function ThemePicker() {
     return `linear-gradient(${start}, ${end} 115%)`;
   };
 
+  // Check if theme has audio easter egg
+  const hasAudioEasterEgg = (presetId: string): boolean => {
+    return presetId === 'noname' || presetId === 'samson' || presetId === 'vapor-wave';
+  };
+
   return (
     <>
       <button
@@ -438,6 +443,7 @@ export function ThemePicker() {
                     preset.id.startsWith('companion') ||
                     preset.id.startsWith('gusto') ||
                     preset.id === 'pink'; // Pink theme is built-in (no trash icon)
+                  const showEasterEgg = hasAudioEasterEgg(preset.id);
                   return (
                     <div key={preset.id} className={styles.presetButtonWrapper}>
                       <button
@@ -445,6 +451,7 @@ export function ThemePicker() {
                         onClick={() => handleLoadPreset(preset.id)}
                       >
                         <span className={styles.presetName}>{preset.name}</span>
+                        {showEasterEgg && <Music size={16} className={styles.presetIcon} />}
                       </button>
                       {!isBuiltIn && (
                         <button

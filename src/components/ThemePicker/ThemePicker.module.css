@@ -328,7 +328,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  padding-right: 40px; /* Make room for delete button */
   background: #ffffff; /* Fixed white background */
   border: 1px solid rgba(36, 54, 78, 0.15); /* Fixed border */
   border-radius: 8px;
@@ -339,6 +338,13 @@
   color: #24364e; /* Fixed text color */
   min-height: 40px;
   width: 100%;
+}
+
+.presetIcon {
+  flex-shrink: 0;
+  color: #24364e; /* Fixed text color */
+  opacity: 0.8;
+  margin-left: auto;
 }
 
 .presetButton:hover {
@@ -352,9 +358,7 @@
 }
 
 .presetName {
-  flex: 1;
   text-align: left;
-  padding-right: 8px;
 }
 
 .deletePresetBtn {
