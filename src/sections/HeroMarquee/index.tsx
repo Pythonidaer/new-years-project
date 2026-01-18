@@ -1,3 +1,5 @@
+import { useTheme } from "../../context/useTheme";
+import { getGrayscaleImageUrl } from "../../utils/imageGrayscale";
 import styles from "./HeroMarquee.module.css";
 
 const images = Array.from({ length: 8 }, (_, i) => ({
@@ -7,6 +9,9 @@ const images = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export function HeroMarquee() {
+  const { currentPresetId } = useTheme();
+  const isNoirTheme = currentPresetId === 'noir';
+
   // Duplicate items for seamless loop
   const items = [...images, ...images];
 
@@ -16,7 +21,7 @@ export function HeroMarquee() {
         {items.map((item, index) => (
           <div key={`${item.id}-${index}`} className={styles.item}>
             <img
-              src={item.url}
+              src={getGrayscaleImageUrl(item.url, isNoirTheme)}
               alt={item.alt}
               className={styles.image}
               loading="lazy"

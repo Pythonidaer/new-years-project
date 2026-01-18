@@ -1,9 +1,14 @@
 import { Container } from "../../layout/Container";
 import { Section } from "../../layout/Section";
+import { useTheme } from "../../context/useTheme";
+import { getGrayscaleFilter } from "../../utils/imageGrayscale";
 import styles from "./CampaignBanner.module.css";
 import buttonStyles from "../../components/Button.module.css";
 
 export function CampaignBanner() {
+  const { currentPresetId } = useTheme();
+  const isNoirTheme = currentPresetId === 'noir';
+
   return (
     <Section className={styles.banner} id="contact">
       <Container className={styles.contactContainer}>
@@ -44,6 +49,7 @@ export function CampaignBanner() {
               src="/Jonathan_Hammond.PNG" 
               alt="Jonathan Hammond"
               className={styles.imageContent}
+              style={{ filter: getGrayscaleFilter(isNoirTheme) }}
             />
           </div>
         </div>

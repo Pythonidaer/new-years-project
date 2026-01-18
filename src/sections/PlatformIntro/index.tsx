@@ -1,5 +1,7 @@
 import { Container } from "../../layout/Container";
 import { Section } from "../../layout/Section";
+import { useTheme } from "../../context/useTheme";
+import { getGrayscaleFilter } from "../../utils/imageGrayscale";
 import containerStyles from "../../layout/Container.module.css";
 import styles from "./PlatformIntro.module.css";
 import cardStyles from "../PlatformCards/PlatformCards.module.css";
@@ -36,6 +38,9 @@ const cards = [
 ];
 
 export function PlatformIntro() {
+  const { currentPresetId } = useTheme();
+  const isNoirTheme = currentPresetId === 'noir';
+
   return (
     <Section id="experience">
       <Container className={containerStyles.experience}>
@@ -61,6 +66,7 @@ export function PlatformIntro() {
                     src={card.image} 
                     alt={card.alt}
                     className={cardStyles.imageContent}
+                    style={{ filter: getGrayscaleFilter(isNoirTheme) }}
                   />
                 </div>
                 <h3 className={cardStyles.cardTitle}>{card.title}</h3>

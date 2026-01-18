@@ -7,9 +7,9 @@ import styles from "./CustomerSpotlight.module.css";
 const testimonials = [
   {
     id: 1,
-    quote: "Jonathan built a clear, reliablee and accessible campaign website that fit our needs perfectly. He explained every option and delivered thoughtful solutions on time.",
+    quote: "Jonathan built a clear, reliable and accessible campaign website that fit our needs perfectly. He explained every option and delivered thoughtful solutions on time.",
     author: "Bil Legault",
-    role: "Former Salem City Counselor At-Large",
+    role: "Former Salem City Councilor At-Large",
     image: "/bil_legault.png",
     alt: "Bil Legault",
   },
@@ -25,7 +25,7 @@ const testimonials = [
     id: 3,
     quote: "Johnny brings strong frontend instincts and communicates complex ideas clearly. I have seen his projects evolve with solid architecture and careful attention.",
     author: "John Bauer",
-    role: "Principal Software Engines",
+    role: "Principal Software Engineer",
     image: "/john_bauer.png",
     alt: "John Bauer",
   },

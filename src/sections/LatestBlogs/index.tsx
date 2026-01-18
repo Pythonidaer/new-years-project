@@ -3,9 +3,14 @@ import { Link } from "react-router-dom";
 import { Container } from "../../layout/Container";
 import { Section } from "../../layout/Section";
 import { getAllBlogPosts, getBlogPostSlug } from "../../data/blog";
+import { useTheme } from "../../context/useTheme";
+import { getGrayscaleImageUrl, getGrayscaleFilter } from "../../utils/imageGrayscale";
 import styles from "./LatestBlogs.module.css";
 
 export function LatestBlogs() {
+  const { currentPresetId } = useTheme();
+  const isNoirTheme = currentPresetId === 'noir';
+
   // Get 3 most recent blog posts, sorted by date (most recent first)
   const recentPosts = useMemo(() => {
     const allPosts = getAllBlogPosts();
@@ -33,9 +38,10 @@ export function LatestBlogs() {
                   aria-label={`Read ${post.title}`}
                 >
                   <img
-                    src={post.image}
+                    src={getGrayscaleImageUrl(post.image, isNoirTheme)}
                     alt={post.title}
                     className={styles.cardImageContent}
+                    style={{ filter: getGrayscaleFilter(isNoirTheme) }}
                   />
                 </Link>
               </div>

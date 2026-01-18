@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import type { BlogPost } from "../../data/blog/types";
 import { getBlogPostSlug } from "../../data/blog";
 import { slugify } from "../../utils/slug";
+import { useTheme } from "../../context/useTheme";
+import { getGrayscaleImageUrl, getGrayscaleFilter } from "../../utils/imageGrayscale";
 import { Button } from "../../components/Button";
 import styles from "./BlogGrid.module.css";
 
@@ -13,6 +15,8 @@ type Props = {
 const POSTS_PER_PAGE = 9;
 
 export function BlogGrid({ posts }: Props) {
+  const { currentPresetId } = useTheme();
+  const isNoirTheme = currentPresetId === 'noir';
   const [visibleCount, setVisibleCount] = useState(POSTS_PER_PAGE);
 
   const visiblePosts = useMemo(
@@ -35,11 +39,12 @@ export function BlogGrid({ posts }: Props) {
               <div className={styles.imageWrapper}>
                 <Link to={`/resources/blog/${getBlogPostSlug(post)}`} className={styles.imageLink}>
                   <img
-                    src={post.image}
+                    src={getGrayscaleImageUrl(post.image, isNoirTheme)}
                     alt={post.title}
                     className={styles.image}
                     loading="lazy"
                     decoding="async"
+                    style={{ filter: getGrayscaleFilter(isNoirTheme) }}
                   />
                 </Link>
               </div>

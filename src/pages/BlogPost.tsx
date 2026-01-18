@@ -8,12 +8,16 @@ import { MetaTags } from "../components/MetaTags";
 import { getBlogPostBySlug, getRelatedPosts, getBlogPostSlug } from "../data/blog";
 import { Button } from "../components/Button";
 import { BlogGrid } from "../sections/BlogGrid";
+import { useTheme } from "../context/useTheme";
+import { getGrayscaleImageUrl, getGrayscaleFilter } from "../utils/imageGrayscale";
 import { slugify } from "../utils/slug";
 import styles from "./BlogPost.module.css";
 
 export function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const post = slug ? getBlogPostBySlug(slug) : null;
+  const { currentPresetId } = useTheme();
+  const isNoirTheme = currentPresetId === 'noir';
   // Start with false so skeleton shows immediately
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -21,10 +25,12 @@ export function BlogPost() {
   useEffect(() => {
     if (!post?.image) return;
 
+    const imageUrl = getGrayscaleImageUrl(post.image, isNoirTheme);
+
     const link = document.createElement("link");
     link.rel = "preload";
     link.as = "image";
-    link.href = post.image;
+    link.href = imageUrl;
     link.fetchPriority = "high";
     document.head.appendChild(link);
 
@@ -39,7 +45,7 @@ export function BlogPost() {
       setImageLoaded(true);
     };
     // Start loading immediately
-    img.src = post.image;
+    img.src = imageUrl;
     
     // If image is already cached, handle it asynchronously to avoid linter warning
     if (img.complete) {
@@ -52,7 +58,7 @@ export function BlogPost() {
         document.head.removeChild(link);
       }
     };
-  }, [post?.image]);
+  }, [post?.image, isNoirTheme]);
 
   if (!slug) {
     return (
@@ -96,7 +102,10 @@ export function BlogPost() {
       {/* Hero Section */}
       <section 
         className={styles.heroSection}
-        style={{ '--hero-bg-image': `url(${post.image})` } as React.CSSProperties}
+        style={{ 
+          '--hero-bg-image': `url(${getGrayscaleImageUrl(post.image, isNoirTheme)})`,
+          filter: getGrayscaleFilter(isNoirTheme)
+        } as React.CSSProperties}
       >
         {/* Loading Skeleton with Shimmer Animation - Shows immediately */}
         {!imageLoaded && (
@@ -127,11 +136,12 @@ export function BlogPost() {
               {/* Featured Image - overlaps hero section */}
               <div className={styles.postThumbnail}>
                 <img 
-                  src={post.image} 
+                  src={getGrayscaleImageUrl(post.image, isNoirTheme)} 
                   alt={post.title}
                   className={styles.featuredImage}
                   fetchPriority="high"
                   decoding="async"
+                  style={{ filter: getGrayscaleFilter(isNoirTheme) }}
                 />
               </div>
               

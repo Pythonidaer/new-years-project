@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Container } from "../../layout/Container";
 import { Section } from "../../layout/Section";
 import { Icon } from "../../components/Icon";
+import { useTheme } from "../../context/useTheme";
+import { getGrayscaleFilter } from "../../utils/imageGrayscale";
 import styles from "./FeatureAccordion.module.css";
 import buttonStyles from "../../components/Button.module.css";
 
@@ -89,6 +91,8 @@ const items: FeatureItem[] = [
 ];
 
 export function FeatureAccordion() {
+  const { currentPresetId } = useTheme();
+  const isNoirTheme = currentPresetId === 'noir';
 
   // Accordion behavior: one item open at all times
   // Initialize with first item's ID, defaulting to 1 if items array is empty
@@ -220,6 +224,7 @@ export function FeatureAccordion() {
                               src={item.image}
                               alt={item.imageLabel}
                               className={styles.imageContent}
+                              style={{ filter: getGrayscaleFilter(isNoirTheme) }}
                             />
                           ) : (
                             <span className={styles.placeholderText}>{item.imageLabel}</span>
