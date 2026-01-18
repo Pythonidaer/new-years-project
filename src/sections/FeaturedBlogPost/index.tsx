@@ -14,7 +14,7 @@ const PLACEHOLDER_POST: BlogPost = {
   date: "Coming Soon",
   excerpt: "Stay tuned for our latest insights and updates.",
   category: "Blog",
-  image: "https://picsum.photos/400/300?random=featured",
+  image: "/johnny_hammond.png",
   link: "/resources/blog",
 };
 
