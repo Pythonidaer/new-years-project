@@ -340,11 +340,22 @@
   width: 100%;
 }
 
+.presetIconContainer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
 .presetIcon {
   flex-shrink: 0;
   color: #24364e; /* Fixed text color */
   opacity: 0.8;
-  margin-left: auto;
+}
+
+.presetIcon[fill] {
+  opacity: 1;
 }
 
 .presetButton:hover {

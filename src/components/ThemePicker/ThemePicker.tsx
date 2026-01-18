@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { useTheme } from '../../context/useTheme';
 import { checkContrastIssues } from '../../utils/contrast';
-import { RotateCcw, Save, X, Palette, Bookmark, Trash2, ChevronDown, ChevronUp, Music } from 'lucide-react';
+import { RotateCcw, Save, X, Palette, Bookmark, Trash2, ChevronDown, ChevronUp, Music, Pin } from 'lucide-react';
 import Color from 'color';
 import styles from './ThemePicker.module.css';
 
@@ -73,7 +73,7 @@ const categoryLabels: Record<ColorToken['category'], string> = {
 };
 
 export function ThemePicker() {
-  const { theme, updateTheme, resetTheme, presets, savePreset, loadPreset, deletePreset } = useTheme();
+  const { theme, updateTheme, resetTheme, presets, savePreset, loadPreset, deletePreset, currentPresetId } = useTheme();
   const [localChanges, setLocalChanges] = useState<Partial<typeof theme>>({});
   const [isOpen, setIsOpen] = useState(false);
   const [presetName, setPresetName] = useState('');
@@ -444,6 +444,7 @@ export function ThemePicker() {
                     preset.id.startsWith('gusto') ||
                     preset.id === 'pink'; // Pink theme is built-in (no trash icon)
                   const showEasterEgg = hasAudioEasterEgg(preset.id);
+                  const isSelected = preset.id === currentPresetId;
                   return (
                     <div key={preset.id} className={styles.presetButtonWrapper}>
                       <button
@@ -451,7 +452,10 @@ export function ThemePicker() {
                         onClick={() => handleLoadPreset(preset.id)}
                       >
                         <span className={styles.presetName}>{preset.name}</span>
-                        {showEasterEgg && <Music size={16} className={styles.presetIcon} />}
+                        <div className={styles.presetIconContainer}>
+                          {showEasterEgg && <Music size={16} className={styles.presetIcon} />}
+                          {isSelected && <Pin size={16} className={styles.presetIcon} fill="currentColor" />}
+                        </div>
                       </button>
                       {!isBuiltIn && (
                         <button

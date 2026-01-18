@@ -153,7 +153,7 @@ function applyThemeToDom(theme: Theme) {
 const builtInPresets: Preset[] = [
   {
     id: 'default',
-    name: 'Default',
+    name: 'Midnight Blue',
     theme: defaultTheme,
   },
   {
@@ -1577,7 +1577,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         }
       }
     }
-    return null;
+    // Default to 'default' theme if no saved theme found
+    return 'default';
   });
 
   // Apply theme to DOM whenever it changes
