@@ -485,7 +485,7 @@
   box-sizing: border-box;
   display: block;
   font-size: 22px;
-  line-height: 35.2px;
+  line-height: 1.18;
   color: var(--color-text);
 }
 
