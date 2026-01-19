@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.johnnyhammond.com/sitemap.xml
+Sitemap: https://floatingpla.net/sitemap.xml
 

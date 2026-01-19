@@ -419,6 +419,15 @@ Before merging or publishing:
 
 ---
 
+## Website Domain Information
+
+**Production Domain:** `floatingpla.net`
+- All meta tags, sitemaps, and external URLs should use `https://floatingpla.net`
+- When updating robots.txt, Open Graph tags, or canonical URLs, use this domain
+- The website is deployed at: `https://floatingpla.net`
+
+---
+
 ## Agent Session Checklist
 
 **Before starting work, ensure you have:**
