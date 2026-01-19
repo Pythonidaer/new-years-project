@@ -306,8 +306,7 @@
   font-style: italic;
   font-weight: 700;
   text-decoration: underline;
-  font-size: 22px;
-  /* line-height: 35.2px; */
+  font-size: inherit;
   cursor: pointer;
   transition: color 0.2s ease-in-out;
 }
@@ -955,6 +954,7 @@
 
   .postContent a {
     font-size: 18px; /* Match paragraph and list font size on mobile */
+    line-height: 28.8px; /* Match paragraph line-height on mobile */
   }
 
   .relatedContainer {

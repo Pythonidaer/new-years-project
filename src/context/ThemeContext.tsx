@@ -79,7 +79,7 @@ export type Theme = {
 // };
 
 // Default theme (Midnight Blue)
-const defaultTheme: Theme = {
+export const defaultTheme: Theme = {
   bg: '#0a0e1a',
   surface: '#141b2d',
   surfaceDark: '#1a2332',
