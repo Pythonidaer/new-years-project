@@ -23,6 +23,7 @@ export function Home() {
         description="Portfolio of Johnny Hammond - Software Engineer specializing in React, TypeScript, and modern web development. View projects, experience, and technical blog posts."
         url="/"
         type="website"
+        image="/og-image.png"
       />
       <TopBanner />
       <Header />
