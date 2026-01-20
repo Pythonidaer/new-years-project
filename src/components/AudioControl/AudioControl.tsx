@@ -8,8 +8,8 @@ export function AudioControl() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Show when noname, samson, or vapor-wave theme is active
-  const isThemeWithAudio = currentPresetId === 'noname' || currentPresetId === 'samson' || currentPresetId === 'vapor-wave';
+  // Show when noname, samson, vapor-wave, or king theme is active
+  const isThemeWithAudio = currentPresetId === 'noname' || currentPresetId === 'samson' || currentPresetId === 'vapor-wave' || currentPresetId === 'king';
 
   useEffect(() => {
     // Determine audio file based on theme
@@ -20,6 +20,8 @@ export function AudioControl() {
       audioFile = '/noname.mp3';
     } else if (currentPresetId === 'vapor-wave') {
       audioFile = 'http://radio.plaza.one/mp3';
+    } else if (currentPresetId === 'king') {
+      audioFile = '/i_have_a_dream_speech.mp3';
     }
 
     // Clean up existing audio if theme changed or theme no longer has audio

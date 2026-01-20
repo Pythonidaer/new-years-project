@@ -294,7 +294,7 @@ export function ThemePicker() {
 
   // Check if theme has audio easter egg
   const hasAudioEasterEgg = (presetId: string): boolean => {
-    return presetId === 'noname' || presetId === 'samson' || presetId === 'vapor-wave';
+    return presetId === 'noname' || presetId === 'samson' || presetId === 'vapor-wave' || presetId === 'king';
   };
 
   return (
@@ -443,7 +443,8 @@ export function ThemePicker() {
                     preset.id.startsWith('companion') ||
                     preset.id.startsWith('gusto') ||
                     preset.id === 'pink' || // Pink theme is built-in (no trash icon)
-                    preset.id === 'dayglow'; // Dayglow theme is built-in (no trash icon)
+                    preset.id === 'dayglow' || // Dayglow theme is built-in (no trash icon)
+                    preset.id === 'king'; // King theme is built-in (no trash icon)
                   const showEasterEgg = hasAudioEasterEgg(preset.id);
                   const isSelected = preset.id === currentPresetId;
                   return (
@@ -456,18 +457,21 @@ export function ThemePicker() {
                         <div className={styles.presetIconContainer}>
                           {showEasterEgg && <Music size={16} className={styles.presetIcon} />}
                           {isSelected && <Pin size={16} className={styles.presetIcon} fill="currentColor" />}
+                          {!isBuiltIn && (
+                            <button
+                              className={styles.deletePresetBtn}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeletePreset(preset.id, e);
+                              }}
+                              aria-label={`Delete ${preset.name} preset`}
+                              title="Delete preset"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          )}
                         </div>
                       </button>
-                      {!isBuiltIn && (
-                        <button
-                          className={styles.deletePresetBtn}
-                          onClick={(e) => handleDeletePreset(preset.id, e)}
-                          aria-label={`Delete ${preset.name} preset`}
-                          title="Delete preset"
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      )}
                     </div>
                   );
                 })}
