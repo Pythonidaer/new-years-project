@@ -39,12 +39,27 @@ export function FeaturedBlogPost({ post }: FeaturedBlogPostProps) {
         )}
       </div>
       <div className={styles.imageContainer}>
-        <img 
-          src={displayPost.image} 
-          alt={displayPost.title} 
-          className={styles.image}
-          fetchPriority="high"
-        />
+        {post ? (
+          <Link 
+            to={`/resources/blog/${getBlogPostSlug(displayPost)}`}
+            className={styles.imageLink}
+            aria-label={`Read ${displayPost.title}`}
+          >
+            <img 
+              src={displayPost.image} 
+              alt={displayPost.title} 
+              className={styles.image}
+              fetchPriority="high"
+            />
+          </Link>
+        ) : (
+          <img 
+            src={displayPost.image} 
+            alt={displayPost.title} 
+            className={styles.image}
+            fetchPriority="high"
+          />
+        )}
       </div>
     </article>
   );
