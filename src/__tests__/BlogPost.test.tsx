@@ -2,13 +2,16 @@ import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { BlogPost } from "@/pages/BlogPost";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 describe("BlogPost Component - Code Block Styling", () => {
   it("BlogPost component renders without crashing", () => {
     // Basic smoke test - verify component renders
     render(
       <MemoryRouter initialEntries={["/resources/blog/reusable-vs-feature-specific-components-a-practical-decision-framework"]}>
-        <BlogPost />
+        <ThemeProvider>
+          <BlogPost />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -21,7 +24,9 @@ describe("BlogPost Component - Code Block Styling", () => {
     // Test with invalid slug to verify error handling
     render(
       <MemoryRouter initialEntries={["/resources/blog/nonexistent-post"]}>
-        <BlogPost />
+        <ThemeProvider>
+          <BlogPost />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -30,4 +35,3 @@ describe("BlogPost Component - Code Block Styling", () => {
     expect(notFoundMessage).toBeTruthy();
   });
 });
-

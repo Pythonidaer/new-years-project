@@ -450,3 +450,174 @@ Before merging or publishing:
 - [ ] Understood the current priority (check README.md "🎯 Next Priority" section)
 - [ ] Located relevant documentation for your task type
 - [ ] Familiarized yourself with key code files mentioned in PROJECT_SUMMARY.md
+
+---
+
+## Test Driven Development (TDD) Environment
+
+### 12. TDD Workflow & Testing Standards
+
+**This project operates in a Test Driven Development (TDD) environment.**
+
+**Core TDD Principles:**
+- **Write tests first** - Tests should be written before or alongside implementation
+- **Red-Green-Refactor cycle** - Write failing test → Make it pass → Refactor
+- **Test coverage is important** - Aim for high coverage of business logic and critical paths
+- **Tests document behavior** - Tests serve as living documentation of expected behavior
+
+**Testing Stack:**
+- **Vitest** - Test runner and framework
+- **@testing-library/react** - React component testing utilities
+- **@testing-library/jest-dom** - Custom DOM matchers
+- **@vitest/coverage-v8** - Code coverage reporting (v8 provider)
+
+**Test Commands:**
+- `npm test` - Run tests in watch mode (development)
+- `npm run test:coverage` - Run tests once with coverage report
+- `npm run test:ui` - Open Vitest UI for interactive test running and debugging
+
+**Useful Terminal Commands for Testing & Coverage Analysis:**
+
+1. **Run specific test file:**
+   ```bash
+   npm test -- src/__tests__/ComponentName.test.tsx --run
+   ```
+
+2. **Check coverage for specific file:**
+   ```bash
+   npm run test:coverage -- src/__tests__/ComponentName.test.tsx
+   ```
+
+3. **Get test summary (pass/fail counts):**
+   ```bash
+   npm test -- src/__tests__/ComponentName.test.tsx --run 2>&1 | grep -E "(Test Files|Tests )" | head -2
+   ```
+
+4. **Get coverage stats for specific source file:**
+   ```bash
+   npm run test:coverage -- src/__tests__/ComponentName.test.tsx 2>&1 | grep -E "SourceFile\.tsx.*\|" | head -1
+   ```
+
+5. **View detailed test output (last 30 lines):**
+   ```bash
+   npm test -- src/__tests__/ComponentName.test.tsx --run 2>&1 | tail -30
+   ```
+
+6. **Check for specific test failures:**
+   ```bash
+   npm test -- src/__tests__/ComponentName.test.tsx --run 2>&1 | grep -A 10 "FAIL"
+   ```
+
+7. **Get coverage percentage for a specific file:**
+   ```bash
+   npm run test:coverage -- src/__tests__/ComponentName.test.tsx 2>&1 | grep -E "SourceFile\.tsx.*\|" | grep -oE "[0-9]+\.[0-9]+"
+   ```
+
+8. **Check linting errors for test file:**
+   ```bash
+   # Use read_lints tool in Cursor, or:
+   npm run lint -- src/__tests__/ComponentName.test.tsx
+   ```
+
+**Identifying Coverage Gaps:**
+- After running coverage, check `coverage/index.html` for line-by-line coverage
+- Look for red/yellow lines indicating uncovered code
+- Use the grep commands above to quickly check coverage percentages
+- Focus on uncovered branches (if statements, ternary operators, etc.)
+
+**When Writing or Modifying Code:**
+
+1. **Before implementing a feature:**
+   - Consider what tests are needed
+   - Write test cases that describe the expected behavior
+   - Run tests to see them fail (Red)
+
+2. **During implementation:**
+   - Write minimal code to make tests pass (Green)
+   - Refactor while keeping tests green (Refactor)
+
+3. **After implementation:**
+   - **ALWAYS run test coverage** to verify coverage:
+     ```bash
+     npm run test:coverage
+     ```
+   - Review coverage report in `coverage/index.html` or terminal output
+   - Identify any uncovered code paths
+   - Add tests for edge cases and error handling
+
+**Test Coverage Expectations:**
+- **Aim for high coverage** on business logic, utilities, and components
+- **Focus on behavior**, not implementation details
+- **Test user interactions** - What users see and do, not internal state
+- **Exclude from coverage** (already configured in `vitest.config.ts`):
+  - Type definition files (`src/**/types.ts`)
+  - Pure constant data files (`src/data/blog/categories.ts`)
+  - Context instance files (`src/context/ThemeContextInstance.ts`)
+  - Test files themselves
+  - Setup files
+
+**Test File Structure:**
+- Test files live in `src/__tests__/` directory
+- Naming: `ComponentName.test.tsx` or `feature.test.tsx`
+- Use `describe` blocks to group related tests
+- Use `it` or `test` for individual test cases
+- Follow AAA pattern: Arrange, Act, Assert
+
+**Example Test Structure:**
+```typescript
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { Component } from "@/components/Component";
+import { ThemeProvider } from "@/context/ThemeContext";
+
+describe("Component", () => {
+  it("renders correctly", () => {
+    render(
+      <ThemeProvider>
+        <Component />
+      </ThemeProvider>
+    );
+    expect(screen.getByText("Expected Text")).toBeTruthy();
+  });
+});
+```
+
+**When AI Assistant Should Suggest Running Coverage:**
+
+The AI assistant should **automatically suggest running test coverage** in these scenarios:
+
+1. **After creating new test files:**
+   - "I've created tests for ComponentX. Run `npm run test:coverage` to see the coverage improvement."
+
+2. **After implementing new features:**
+   - "Feature implementation complete. Run `npm run test:coverage` to verify test coverage."
+
+3. **After modifying existing code:**
+   - "Code changes complete. Run `npm run test:coverage` to ensure existing tests still pass and coverage is maintained."
+
+4. **When user asks about test coverage:**
+   - "To check current test coverage, run: `npm run test:coverage`"
+   - "The coverage report will show in the terminal and be saved to `coverage/index.html` for detailed analysis."
+
+5. **When identifying low coverage areas:**
+   - "I notice ComponentX has low coverage. After adding tests, run `npm run test:coverage` to verify improvement."
+
+**Coverage Report Locations:**
+- **Terminal output** - Summary statistics (statements, branches, functions, lines)
+- **`coverage/index.html`** - Interactive HTML report with line-by-line coverage
+- **`coverage/coverage-summary.json`** - Machine-readable JSON report
+
+**Best Practices:**
+- Run `npm run test:coverage` **before committing** significant changes
+- Review coverage reports to identify untested code paths
+- Focus on testing **user-facing behavior** rather than implementation details
+- Use `ThemeProvider` wrapper in tests for components that use `useTheme()`
+- Use `BrowserRouter` wrapper for components that use React Router
+- Mock external dependencies (APIs, browser APIs like Audio) appropriately
+- Clean up after tests (clear localStorage, restore mocks, etc.)
+
+**Test Coverage Configuration:**
+- Coverage provider: `v8` (fast, modern)
+- Reporters: `text` (terminal), `json` (machine-readable), `html` (browsable)
+- Coverage includes: `src/**/*.{ts,tsx}`
+- Exclusions configured in `vitest.config.ts` for non-testable files

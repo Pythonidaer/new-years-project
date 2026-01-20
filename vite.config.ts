@@ -20,6 +20,11 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  css: {
+    // Enable CSS sourcemaps in development for better debugging with CSS Modules
+    // This helps DevTools show original file/line references instead of generated class names
+    devSourcemap: true,
+  },
   build: {
     // Disable sourcemaps in production for smaller bundles (30-50% reduction)
     // Sourcemaps are still available in development mode

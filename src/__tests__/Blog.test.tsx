@@ -2,12 +2,15 @@ import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { Blog } from "@/pages/Blog";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 describe("Blog Page", () => {
   it("renders the blog page with header and blog grid", () => {
     render(
       <BrowserRouter>
-        <Blog />
+        <ThemeProvider>
+          <Blog />
+        </ThemeProvider>
       </BrowserRouter>
     );
 
@@ -26,7 +29,9 @@ describe("Blog Page", () => {
   it("renders Footer component", () => {
     render(
       <BrowserRouter>
-        <Blog />
+        <ThemeProvider>
+          <Blog />
+        </ThemeProvider>
       </BrowserRouter>
     );
 
@@ -34,4 +39,3 @@ describe("Blog Page", () => {
     expect(footer).toBeTruthy();
   });
 });
-

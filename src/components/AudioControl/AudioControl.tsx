@@ -7,6 +7,12 @@ export function AudioControl() {
   const { currentPresetId } = useTheme();
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  // Store handlers so we can remove them properly
+  const handlersRef = useRef<{
+    handlePlay: () => void;
+    handlePause: () => void;
+    handleEnded: () => void;
+  } | null>(null);
 
   // Show when noname, samson, vapor-wave, or king theme is active
   const isThemeWithAudio = currentPresetId === 'noname' || currentPresetId === 'samson' || currentPresetId === 'vapor-wave' || currentPresetId === 'king';
@@ -24,17 +30,6 @@ export function AudioControl() {
       audioFile = '/i_have_a_dream_speech.mp3';
     }
 
-    // Clean up existing audio if theme changed or theme no longer has audio
-    if (audioRef.current) {
-      const currentAudio = audioRef.current;
-      currentAudio.pause();
-      currentAudio.removeEventListener('play', () => setIsPlaying(true));
-      currentAudio.removeEventListener('pause', () => setIsPlaying(false));
-      currentAudio.removeEventListener('ended', () => setIsPlaying(false));
-      audioRef.current = null;
-      setIsPlaying(false);
-    }
-
     // Create new audio if theme has audio
     if (isThemeWithAudio && audioFile) {
       // Create audio element
@@ -47,13 +42,17 @@ export function AudioControl() {
       const handlePause = () => setIsPlaying(false);
       const handleEnded = () => setIsPlaying(false);
 
+      // Store handlers in ref so we can remove them later
+      handlersRef.current = { handlePlay, handlePause, handleEnded };
+
       // Listen for play/pause events to update state
       audio.addEventListener('play', handlePlay);
       audio.addEventListener('pause', handlePause);
       audio.addEventListener('ended', handleEnded);
 
       // Don't autoplay - user must click Play button
-      setIsPlaying(false);
+      // Defer state update to avoid synchronous setState in effect
+      queueMicrotask(() => setIsPlaying(false));
 
       // Cleanup function
       return () => {
@@ -62,8 +61,13 @@ export function AudioControl() {
         audio.removeEventListener('pause', handlePause);
         audio.removeEventListener('ended', handleEnded);
         audioRef.current = null;
+        handlersRef.current = null;
         setIsPlaying(false);
       };
+    } else {
+      // Explicitly clear refs when theme doesn't have audio
+      audioRef.current = null;
+      handlersRef.current = null;
     }
   }, [isThemeWithAudio, currentPresetId]);
 

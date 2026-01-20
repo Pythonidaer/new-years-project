@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { BlogGrid } from "@/sections/BlogGrid";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 // Mock blog data
 const mockBlogPosts = [
@@ -29,7 +30,9 @@ describe("BlogGrid Component", () => {
   it("renders blog posts from provided data", () => {
     render(
       <BrowserRouter>
-        <BlogGrid posts={mockBlogPosts} />
+        <ThemeProvider>
+          <BlogGrid posts={mockBlogPosts} />
+        </ThemeProvider>
       </BrowserRouter>
     );
 
@@ -40,7 +43,9 @@ describe("BlogGrid Component", () => {
   it("displays blog post dates", () => {
     render(
       <BrowserRouter>
-        <BlogGrid posts={mockBlogPosts} />
+        <ThemeProvider>
+          <BlogGrid posts={mockBlogPosts} />
+        </ThemeProvider>
       </BrowserRouter>
     );
 
@@ -65,7 +70,9 @@ describe("BlogGrid Component", () => {
   it("displays category tags", () => {
     render(
       <BrowserRouter>
-        <BlogGrid posts={mockBlogPosts} />
+        <ThemeProvider>
+          <BlogGrid posts={mockBlogPosts} />
+        </ThemeProvider>
       </BrowserRouter>
     );
 
@@ -86,7 +93,9 @@ describe("BlogGrid Component", () => {
 
     render(
       <BrowserRouter>
-        <BlogGrid posts={manyPosts} />
+        <ThemeProvider>
+          <BlogGrid posts={manyPosts} />
+        </ThemeProvider>
       </BrowserRouter>
     );
 
@@ -110,7 +119,9 @@ describe("BlogGrid Component", () => {
 
     render(
       <BrowserRouter>
-        <BlogGrid posts={manyPosts} />
+        <ThemeProvider>
+          <BlogGrid posts={manyPosts} />
+        </ThemeProvider>
       </BrowserRouter>
     );
 
@@ -119,4 +130,3 @@ describe("BlogGrid Component", () => {
     expect(postTitles.length).toBe(9);
   });
 });
-
