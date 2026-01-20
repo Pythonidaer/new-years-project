@@ -21,7 +21,7 @@ import interviewWhatAGoodReactTestingLibraryTestLooksLikePosts from "./interview
 import interviewTestingAsyncBehaviorLoadingStatesAndErrorStatesInReactPosts from "./interview_testing_async_behavior_loading_states_and_error_states_in_react.json";
 import interviewPreventingBrittleFrontendTestsWhenTheUiChangesFrequentlyPosts from "./interview_preventing_brittle_frontend_tests_when_the_ui_changes_frequently.json";
 import interviewHowFrontendTestsFitIntoCicdQualityGatesPosts from "./interview_how_frontend_tests_fit_into_cicd_quality_gates.json";
-import { slugify } from "../../utils/slug";
+import { slugify } from "@/utils/slug";
 
 export const blogPostsByTopic: Record<string, BlogPosts> = {
   default: defaultPosts as BlogPosts,

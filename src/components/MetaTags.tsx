@@ -1,4 +1,4 @@
-import { useMetaTags, type MetaTagsConfig } from '../hooks/useMetaTags';
+import { useMetaTags, type MetaTagsConfig } from '@/hooks/useMetaTags';
 
 /**
  * Declarative component for managing meta tags

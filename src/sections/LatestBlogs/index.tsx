@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Container } from "../../layout/Container";
-import { Section } from "../../layout/Section";
-import { getAllBlogPosts, getBlogPostSlug } from "../../data/blog";
-import { useTheme } from "../../context/useTheme";
-import { getGrayscaleImageUrl, getGrayscaleFilter } from "../../utils/imageGrayscale";
+import { Container } from "@/layout/Container";
+import { Section } from "@/layout/Section";
+import { getAllBlogPosts, getBlogPostSlug } from "@/data/blog";
+import { useTheme } from "@/context/useTheme";
+import { getGrayscaleImageUrl, getGrayscaleFilter } from "@/utils/imageGrayscale";
 import styles from "./LatestBlogs.module.css";
 
 export function LatestBlogs() {

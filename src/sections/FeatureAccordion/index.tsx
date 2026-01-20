@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { Container } from "../../layout/Container";
-import { Section } from "../../layout/Section";
-import { Icon } from "../../components/Icon";
-import { useTheme } from "../../context/useTheme";
-import { getGrayscaleFilter } from "../../utils/imageGrayscale";
+import { Container } from "@/layout/Container";
+import { Section } from "@/layout/Section";
+import { Icon } from "@/components/Icon";
+import { useTheme } from "@/context/useTheme";
+import { getGrayscaleFilter } from "@/utils/imageGrayscale";
 import styles from "./FeatureAccordion.module.css";
-import buttonStyles from "../../components/Button.module.css";
+import buttonStyles from "@/components/Button.module.css";
 
 import {
   FileText,

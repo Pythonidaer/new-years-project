@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
-import { Container } from "../../layout/Container";
+import { Container } from "@/layout/Container";
 import styles from "./Hero.module.css";
-import buttonStyles from "../../components/Button.module.css";
+import buttonStyles from "@/components/Button.module.css";
 
 export function Hero() {
   const location = useLocation();

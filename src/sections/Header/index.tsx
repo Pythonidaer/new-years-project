@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { FaCaretRight } from "react-icons/fa";
 import styles from "./Header.module.css";
-import buttonStyles from "../../components/Button.module.css";
+import buttonStyles from "@/components/Button.module.css";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);

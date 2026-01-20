@@ -47,6 +47,17 @@
 - **`src/pages/`** - Page components (Home, Blog, BlogPost)
 - **`src/sections/`** - Reusable section components
 
+### 5a. Path Aliases
+- **Path alias `@/` is configured** - Maps to `src/` directory
+- **Configuration:**
+  - `vite.config.ts` - Vite resolve alias: `"@": path.resolve(__dirname, "./src")`
+  - `tsconfig.app.json` - TypeScript path mapping: `"@/*": ["./src/*"]`
+- **Usage:** Always use `@/` prefix for imports from `src/` directory
+  - ✅ `import { Header } from "@/sections/Header";`
+  - ✅ `import { useTheme } from "@/context/useTheme";`
+  - ❌ `import { Header } from "../sections/Header";` (avoid relative paths)
+- **Benefits:** Cleaner imports, easier refactoring, better maintainability
+
 ### 6. Mobile Responsiveness - ✅ COMPLETED
 **Status:** Mobile responsiveness has been fully implemented across all components.
 

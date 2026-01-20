@@ -1,5 +1,5 @@
-import { useTheme } from "../../context/useTheme";
-import { getGrayscaleImageUrl } from "../../utils/imageGrayscale";
+import { useTheme } from "@/context/useTheme";
+import { getGrayscaleImageUrl } from "@/utils/imageGrayscale";
 import styles from "./HeroMarquee.module.css";
 
 const images = Array.from({ length: 8 }, (_, i) => ({

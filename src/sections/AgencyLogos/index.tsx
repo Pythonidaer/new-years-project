@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { Container } from "../../layout/Container";
-import { Section } from "../../layout/Section";
+import { Container } from "@/layout/Container";
+import { Section } from "@/layout/Section";
 import styles from "./AgencyLogos.module.css";
 
 const technologies = [

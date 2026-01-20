@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
-import type { BlogPost } from "../../data/blog/types";
-import { getAllUniqueTags } from "../../data/blog";
+import type { BlogPost } from "@/data/blog/types";
+import { getAllUniqueTags } from "@/data/blog";
 import { Search, ChevronDown } from "lucide-react";
 import styles from "./BlogFilters.module.css";
 

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { BlogPost } from "../pages/BlogPost";
+import { BlogPost } from "@/pages/BlogPost";
 
 describe("BlogPost Component - Code Block Styling", () => {
   it("BlogPost component renders without crashing", () => {

@@ -1,10 +1,10 @@
-import { Container } from "../../layout/Container";
-import { Section } from "../../layout/Section";
-import { useTheme } from "../../context/useTheme";
-import { getGrayscaleFilter } from "../../utils/imageGrayscale";
-import containerStyles from "../../layout/Container.module.css";
+import { Container } from "@/layout/Container";
+import { Section } from "@/layout/Section";
+import { useTheme } from "@/context/useTheme";
+import { getGrayscaleFilter } from "@/utils/imageGrayscale";
+import containerStyles from "@/layout/Container.module.css";
 import styles from "./PlatformIntro.module.css";
-import cardStyles from "../PlatformCards/PlatformCards.module.css";
+import cardStyles from "@/sections/PlatformCards/PlatformCards.module.css";
 
 const cards = [
   {

@@ -2,15 +2,15 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import parse from "html-react-parser";
 import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
-import { Header } from "../sections/Header";
-import { Footer } from "../sections/Footer";
-import { MetaTags } from "../components/MetaTags";
-import { getBlogPostBySlug, getRelatedPosts, getBlogPostSlug } from "../data/blog";
-import { Button } from "../components/Button";
-import { BlogGrid } from "../sections/BlogGrid";
-import { useTheme } from "../context/useTheme";
-import { getGrayscaleImageUrl, getGrayscaleFilter } from "../utils/imageGrayscale";
-import { slugify } from "../utils/slug";
+import { Header } from "@/sections/Header";
+import { Footer } from "@/sections/Footer";
+import { MetaTags } from "@/components/MetaTags";
+import { getBlogPostBySlug, getRelatedPosts, getBlogPostSlug } from "@/data/blog";
+import { Button } from "@/components/Button";
+import { BlogGrid } from "@/sections/BlogGrid";
+import { useTheme } from "@/context/useTheme";
+import { getGrayscaleImageUrl, getGrayscaleFilter } from "@/utils/imageGrayscale";
+import { slugify } from "@/utils/slug";
 import styles from "./BlogPost.module.css";
 
 export function BlogPost() {

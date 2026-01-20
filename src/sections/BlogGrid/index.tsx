@@ -1,11 +1,11 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import type { BlogPost } from "../../data/blog/types";
-import { getBlogPostSlug } from "../../data/blog";
-import { slugify } from "../../utils/slug";
-import { useTheme } from "../../context/useTheme";
-import { getGrayscaleImageUrl, getGrayscaleFilter } from "../../utils/imageGrayscale";
-import { Button } from "../../components/Button";
+import type { BlogPost } from "@/data/blog/types";
+import { getBlogPostSlug } from "@/data/blog";
+import { slugify } from "@/utils/slug";
+import { useTheme } from "@/context/useTheme";
+import { getGrayscaleImageUrl, getGrayscaleFilter } from "@/utils/imageGrayscale";
+import { Button } from "@/components/Button";
 import styles from "./BlogGrid.module.css";
 
 type Props = {

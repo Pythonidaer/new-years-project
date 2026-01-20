@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Container } from "../../layout/Container";
-import { Section } from "../../layout/Section";
-import { getAllBlogPosts, getBlogPostSlug } from "../../data/blog";
+import { Container } from "@/layout/Container";
+import { Section } from "@/layout/Section";
+import { getAllBlogPosts, getBlogPostSlug } from "@/data/blog";
 import styles from "./LatestNews.module.css";
 
 export function LatestNews() {

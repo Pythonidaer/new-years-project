@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaCaretRight } from "react-icons/fa";
-import type { BlogPost } from "../../data/blog/types";
-import { getBlogPostSlug } from "../../data/blog";
+import type { BlogPost } from "@/data/blog/types";
+import { getBlogPostSlug } from "@/data/blog";
 import styles from "./FeaturedBlogPost.module.css";
 
 interface FeaturedBlogPostProps {

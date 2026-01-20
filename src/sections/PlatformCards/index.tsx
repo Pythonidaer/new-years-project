@@ -1,7 +1,7 @@
-import { Container } from "../../layout/Container";
-import { Section } from "../../layout/Section";
-import { useTheme } from "../../context/useTheme";
-import { getGrayscaleFilter } from "../../utils/imageGrayscale";
+import { Container } from "@/layout/Container";
+import { Section } from "@/layout/Section";
+import { useTheme } from "@/context/useTheme";
+import { getGrayscaleFilter } from "@/utils/imageGrayscale";
 import styles from "./PlatformCards.module.css";
 
 const cards = [

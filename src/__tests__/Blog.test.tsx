@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import { Blog } from "../pages/Blog";
+import { Blog } from "@/pages/Blog";
 
 describe("Blog Page", () => {
   it("renders the blog page with header and blog grid", () => {

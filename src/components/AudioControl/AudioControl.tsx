@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useTheme } from '../../context/useTheme';
+import { useTheme } from '@/context/useTheme';
 import { Play, Pause } from 'lucide-react';
 import styles from './AudioControl.module.css';
 

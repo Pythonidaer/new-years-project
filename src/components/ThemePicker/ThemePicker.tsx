@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useTheme } from '../../context/useTheme';
-import { checkContrastIssues } from '../../utils/contrast';
+import { useTheme } from '@/context/useTheme';
+import { checkContrastIssues } from '@/utils/contrast';
 import { RotateCcw, Save, X, Palette, Bookmark, Trash2, ChevronDown, ChevronUp, Music, Pin } from 'lucide-react';
 import Color from 'color';
 import styles from './ThemePicker.module.css';

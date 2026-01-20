@@ -1,16 +1,16 @@
 import { useParams, Link } from "react-router-dom";
 import { useMemo } from "react";
-import { Header } from "../sections/Header";
-import { BlogGrid } from "../sections/BlogGrid";
-import { Footer } from "../sections/Footer";
-import { MetaTags } from "../components/MetaTags";
-import { getAllBlogPosts, getAllUniqueTags } from "../data/blog";
-import { ALL_CATEGORIES } from "../data/blog/categories";
-import { slugify } from "../utils/slug";
+import { Header } from "@/sections/Header";
+import { BlogGrid } from "@/sections/BlogGrid";
+import { Footer } from "@/sections/Footer";
+import { MetaTags } from "@/components/MetaTags";
+import { getAllBlogPosts, getAllUniqueTags } from "@/data/blog";
+import { ALL_CATEGORIES } from "@/data/blog/categories";
+import { slugify } from "@/utils/slug";
 import { ChevronRight } from "lucide-react";
 import styles from "./Blog.module.css";
 import tagStyles from "./Tag.module.css";
-import headingStyles from "../sections/BlogHeading/BlogHeading.module.css";
+import headingStyles from "@/sections/BlogHeading/BlogHeading.module.css";
 
 export function Tag() {
   const { categoryName } = useParams<{ categoryName: string }>();

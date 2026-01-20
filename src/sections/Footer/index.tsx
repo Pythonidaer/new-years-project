@@ -1,6 +1,6 @@
-import { Container } from "../../layout/Container";
+import { Container } from "@/layout/Container";
 import { Facebook, Twitter, Linkedin, Github } from "lucide-react";
-import { slugify } from "../../utils/slug";
+import { slugify } from "@/utils/slug";
 import styles from "./Footer.module.css";
 
 const aboutMeLinks = [

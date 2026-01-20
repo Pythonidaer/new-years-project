@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Container } from "../../layout/Container";
-import { Section } from "../../layout/Section";
+import { Container } from "@/layout/Container";
+import { Section } from "@/layout/Section";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "./CustomerSpotlight.module.css";
 

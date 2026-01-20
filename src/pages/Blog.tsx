@@ -1,13 +1,13 @@
 import { useMemo, useState, useEffect, useCallback } from "react";
-import { Header } from "../sections/Header";
-import { BlogHeading } from "../sections/BlogHeading";
-import { FeaturedBlogPost } from "../sections/FeaturedBlogPost";
-import { BlogFilters } from "../sections/BlogFilters";
-import { BlogGrid } from "../sections/BlogGrid";
-import { Footer } from "../sections/Footer";
-import { MetaTags } from "../components/MetaTags";
-import { getAllBlogPosts, getBlogPostSlug } from "../data/blog";
-import type { BlogPost } from "../data/blog/types";
+import { Header } from "@/sections/Header";
+import { BlogHeading } from "@/sections/BlogHeading";
+import { FeaturedBlogPost } from "@/sections/FeaturedBlogPost";
+import { BlogFilters } from "@/sections/BlogFilters";
+import { BlogGrid } from "@/sections/BlogGrid";
+import { Footer } from "@/sections/Footer";
+import { MetaTags } from "@/components/MetaTags";
+import { getAllBlogPosts, getBlogPostSlug } from "@/data/blog";
+import type { BlogPost } from "@/data/blog/types";
 import styles from "./Blog.module.css";
 
 export function Blog() {

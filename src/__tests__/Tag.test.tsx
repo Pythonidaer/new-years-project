@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { Tag } from "../pages/Tag";
+import { Tag } from "@/pages/Tag";
 
 describe("Tag Component", () => {
   it("Tag component renders without crashing with valid category", () => {
