@@ -6,6 +6,9 @@ reference/
 dist/
 dist-ssr/
 *.local
+complexity-report.html
+complexity-report.json
+.complexity_report/
 
 # Editor directories and files
 .vscode/*

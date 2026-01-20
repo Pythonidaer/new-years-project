@@ -40,6 +40,14 @@ export default defineConfig({
         "src/data/blog/categories.ts", // Pure constant data file (no logic to test)
         "src/context/ThemeContextInstance.ts", // Type exports and createContext only
       ],
+      // Coverage thresholds - professional baseline for frontend React project
+      // See .cursorrules section 12 for coverage standards and guidelines
+      thresholds: {
+        statements: 80,
+        lines: 80,
+        functions: 80,
+        branches: 65,
+      },
     },
   },
 });

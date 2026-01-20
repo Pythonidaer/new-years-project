@@ -545,16 +545,46 @@ Before merging or publishing:
    - Identify any uncovered code paths
    - Add tests for edge cases and error handling
 
-**Test Coverage Expectations:**
-- **Aim for high coverage** on business logic, utilities, and components
-- **Focus on behavior**, not implementation details
-- **Test user interactions** - What users see and do, not internal state
-- **Exclude from coverage** (already configured in `vitest.config.ts`):
-  - Type definition files (`src/**/types.ts`)
-  - Pure constant data files (`src/data/blog/categories.ts`)
-  - Context instance files (`src/context/ThemeContextInstance.ts`)
-  - Test files themselves
-  - Setup files
+**Code Coverage Standards:**
+
+**Minimum Coverage Targets:**
+- **Statements: 80%**
+- **Lines: 80%**
+- **Functions: 80%**
+- **Branches: 65%**
+
+These thresholds represent a practical, professional baseline for a frontend React project.
+
+**Coverage Guidelines:**
+- Coverage should reflect **meaningful, behavior-focused tests**—not artificially inflated metrics
+- **Prioritize testing:**
+  - Core utilities and business logic
+  - Critical user flows
+  - Error and edge cases that can realistically occur
+- **Avoid writing contrived tests** solely to reach 100% coverage
+
+**Acceptable Exceptions:**
+Some branches may remain uncovered when they:
+- Represent defensive guards unlikely to occur in real usage
+- Depend on browser or third-party behaviors difficult to simulate
+- Require unnatural hacks that reduce test quality
+
+**Target Philosophy:**
+- **Utilities:** strive for 90%+ coverage
+- **Components:** 75–85% is acceptable
+- **Branch coverage** will naturally be lower than statements
+
+**When Reviewing Code:**
+- New features should maintain or improve existing coverage
+- Large logic changes must include updated tests
+- Refactors should not reduce overall coverage without justification
+
+**Exclude from coverage** (already configured in `vitest.config.ts`):
+- Type definition files (`src/**/types.ts`)
+- Pure constant data files (`src/data/blog/categories.ts`)
+- Context instance files (`src/context/ThemeContextInstance.ts`)
+- Test files themselves
+- Setup files
 
 **Test File Structure:**
 - Test files live in `src/__tests__/` directory
@@ -621,3 +651,148 @@ The AI assistant should **automatically suggest running test coverage** in these
 - Reporters: `text` (terminal), `json` (machine-readable), `html` (browsable)
 - Coverage includes: `src/**/*.{ts,tsx}`
 - Exclusions configured in `vitest.config.ts` for non-testable files
+
+---
+
+### 13. Cyclomatic Complexity Standards
+
+**This project enforces cyclomatic complexity limits to maintain code quality and testability.**
+
+**Complexity Targets:**
+- **Default:** Keep cyclomatic complexity ≤ 10 per function/method
+- **UI Components, Hooks, Event Handlers:** Prefer ≤ 6
+- **Exceptions:** Any function expected to exceed 10 must be intentionally refactored or split unless there is a strong reason (documented inline)
+
+**What Counts as Complexity:**
+Cyclomatic complexity is 1 (base path) plus +1 for each decision/branch point. These count as decision points:
+- `if`, each `else if`
+- Conditional (ternary): `cond ? a : b`
+- Loops: `for`, `for...of`, `for...in`, `while`, `do...while`
+- `switch`: treat each `case`/`default` as a branch (tool-dependent; assume strict counting unless configured otherwise)
+- `catch` blocks (`try` itself does not add a branch)
+- Short-circuit boolean logic that changes flow: `&&`, `||` (especially in conditions and JSX)
+
+**What Does NOT Count:**
+These do not add cyclomatic complexity:
+- Sequential statements (assignments, calls, logging, object/array literals, destructuring, arithmetic/string ops, unconditional return)
+- JSX structure/layout without conditional logic
+- Hook calls (e.g., `useState`, `useEffect`) as calls; only branching inside their callbacks/components counts
+- TypeScript types/interfaces/generics (compile-time only)
+- React itself does not change the rules; conditional rendering (`&&`, ternary) does add branches
+
+**Design Constraints to Keep Complexity Low:**
+
+When generating code, prefer patterns that naturally reduce branching:
+
+1. **Early returns / guard clauses** to avoid deep nesting
+2. **Extract helpers** when logic branches: move a branchy block into a named function with a focused purpose
+3. **Replace long if/else chains** with:
+   - A lookup map/object of handlers (`const handlers = { ... }`)
+   - Strategy functions
+   - Small pure functions that return a value (then render/use the value)
+4. **Split "do everything" functions** into:
+   - Parsing/validation (pure)
+   - Decision logic (pure)
+   - Side effects (isolated)
+5. **Keep callbacks small** (`map`, `filter`, `reduce`, event handlers); if branching appears, extract to a named function
+6. **Prefer data-driven configuration** over branching (e.g., arrays of rules, tables of constants)
+
+**Testing / Maintainability Requirements:**
+- Keep decision logic in pure functions (easy to unit test)
+- Components should mostly compose UI; non-trivial conditional logic belongs in helpers/hooks
+- Limit nesting depth (aim ≤ 2) and avoid combining multiple concerns in one function
+
+**Exceptions:**
+If complexity > 10 is unavoidable:
+- Add an inline comment explaining why (domain complexity, performance constraints, etc.)
+- Ensure the function is well-covered by tests
+- Split internal logic into clearly named helpers where possible
+
+**ESLint Enforcement:**
+- Complexity rule is configured in `eslint.config.js`
+- Current threshold: `max: 10` with `variant: "classic"` (warn level)
+- Use `npm run lint` to check for complexity violations
+- Use `npm run lint:complexity` to generate an HTML complexity report
+
+**Complexity Report Generation:**
+
+The project includes a custom complexity report generator that creates an interactive HTML report of functions exceeding the complexity threshold.
+
+**Script Location:**
+- `scripts/generate-complexity-report.js` - Custom Node.js script that generates HTML complexity reports
+
+**How It Works:**
+
+1. **ESLint Integration:**
+   - Uses ESLint's built-in `complexity` rule (configured in `eslint.config.js`)
+   - Executes ESLint with JSON output format: `npx eslint . --format=json --output-file=complexity-report.json`
+   - Parses the JSON output to extract complexity warnings (severity 1)
+
+2. **Report Generation:**
+   - Filters messages for `ruleId === 'complexity'` and `severity === 1`
+   - Extracts complexity values from warning messages using regex pattern matching
+   - Sorts functions by complexity (highest first)
+   - Calculates visual progress bars based on complexity percentage (complexity 10 = 0%, complexity 30+ = 100%)
+   - Color-codes functions by complexity level:
+     - **Low (≥20)**: Dark red background (`#C21F39`)
+     - **Medium (≥15)**: Yellow/gold background (`#f9cd0b`)
+     - **High (11-14)**: Dark green background (`rgb(77,146,33)`)
+
+3. **HTML Report Output:**
+   - Generates `complexity-report.html` in project root
+   - Uses CSS styling based on Istanbul/NYC coverage report design (familiar color scheme)
+   - Displays table with columns: File, Complexity, Level (progress bar), Line number
+   - Includes summary statistics (count, max, average complexity)
+   - Shows success message if no complexity issues found
+
+4. **Dependencies & Packages:**
+   - **ESLint** - Core linting engine (already in devDependencies)
+   - **complexity-report-html** (v0.0.3) - Listed in devDependencies but **not actively used** in our custom script (evaluated for potential use but custom solution was preferred)
+   - **eslintcc** (v0.8.3) - Listed in devDependencies but **not actively used** (alternative complexity analysis tool, kept for potential future use)
+
+**Command:**
+```bash
+npm run lint:complexity
+```
+
+**Output Files:**
+- `complexity-report.html` - HTML report (gitignored, regenerated each run)
+- `complexity-report.json` - Intermediate ESLint JSON output (gitignored, cleaned up after parsing)
+
+**Report Features:**
+- Visual progress bars showing complexity levels (horizontal bars with filled/empty segments)
+- Color-coded rows matching complexity severity
+- Clickable file links (currently placeholder `#` hrefs)
+- Line number references to locate complex functions
+- Summary statistics (function count, max complexity, average complexity)
+
+**CSS Styling:**
+- Matches Istanbul/NYC coverage report color scheme for familiarity
+- Fixed bar alignment issue: white (unfilled) segments now appear on same line as colored (filled) segments
+- Uses `inline-block` with `vertical-align: top` and `font-size: 0` on container to prevent vertical stacking
+
+**Future Enhancements (TODOs):**
+
+1. **Function Source Code Viewing:**
+   - Enable clicking into each function to view the entire function source code
+   - Display full function implementation with syntax highlighting
+   - Highlight complexity decision paths (if/else, loops, switch statements, ternary operators)
+   - Show visual indicators for each branch point that contributes to complexity
+
+2. **Comprehensive Function Listing:**
+   - Include **all function files being tested**, not just ones exceeding complexity threshold
+   - Show complexity metrics for all functions (even those under threshold)
+   - Allow filtering/sorting by complexity level (all functions, high, medium, low)
+   - Provide baseline metrics showing project-wide complexity distribution
+
+3. **Enhanced Interactivity:**
+   - Make file links functional (navigate to source code, possibly with line highlighting)
+   - Add expandable/collapsible function details
+   - Show complexity breakdown (which specific constructs contribute most to complexity)
+   - Add search/filter functionality
+
+4. **Integration Improvements:**
+   - Consider integrating with test coverage reports (show complexity alongside coverage)
+   - Add CI/CD integration (fail builds if complexity exceeds thresholds)
+   - Generate historical trends (track complexity over time)
+   - Export to various formats (JSON, CSV) for further analysis

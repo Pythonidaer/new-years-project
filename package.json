@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "lint:complexity": "node scripts/generate-complexity-report.js"
   },
   "dependencies": {
     "color": "^5.0.3",
@@ -32,9 +33,11 @@
     "@vitejs/plugin-react": "^5.1.1",
     "@vitest/coverage-v8": "^4.0.17",
     "@vitest/ui": "^4.0.17",
+    "complexity-report-html": "^0.0.3",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
+    "eslintcc": "^0.8.3",
     "globals": "^16.5.0",
     "jsdom": "^27.4.0",
     "rollup-plugin-visualizer": "^6.0.5",

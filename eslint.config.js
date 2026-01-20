@@ -19,5 +19,11 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // Cyclomatic complexity enforcement
+      // Target: ≤ 10 for most functions, ≤ 6 for UI components/hooks/event handlers
+      // See .cursorrules section 13 for detailed complexity guidelines
+      complexity: ["warn", { max: 10, variant: "classic" }],
+    },
   },
 ])
