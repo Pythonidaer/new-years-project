@@ -1,5 +1,4 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import parse from "html-react-parser";
 import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 import { Header } from "@/sections/Header";
@@ -11,6 +10,9 @@ import { BlogGrid } from "@/sections/BlogGrid";
 import { useTheme } from "@/context/useTheme";
 import { getGrayscaleImageUrl, getGrayscaleFilter } from "@/utils/imageGrayscale";
 import { slugify } from "@/utils/slug";
+import { useImagePreload } from "@/hooks/useImagePreload";
+import { BlogPostNotFound } from "./BlogPostNotFound";
+import { getAuthorName, getMetaDescription, hasTags, hasContent } from "./BlogPost.helpers";
 import styles from "./BlogPost.module.css";
 
 export function BlogPost() {
@@ -18,81 +20,31 @@ export function BlogPost() {
   const post = slug ? getBlogPostBySlug(slug) : null;
   const { currentPresetId } = useTheme();
   const isNoirTheme = currentPresetId === 'noir';
-  // Start with false so skeleton shows immediately
-  const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // Preload image and track loading state (hook must be called before early returns)
+  // Extract imageUrl to ensure hook dependency is stable
+  const imageUrl = post?.image;
+  const imageLoaded = useImagePreload(imageUrl, isNoirTheme);
 
-  // Preload the hero image for faster LCP (must be called before early returns)
-  useEffect(() => {
-    if (!post?.image) return;
-
-    const imageUrl = getGrayscaleImageUrl(post.image, isNoirTheme);
-
-    const link = document.createElement("link");
-    link.rel = "preload";
-    link.as = "image";
-    link.href = imageUrl;
-    link.fetchPriority = "high";
-    document.head.appendChild(link);
-
-    // Detect when the background image is loaded
-    const img = new Image();
-    img.onload = () => {
-      // Set loaded immediately - no delay needed
-      setImageLoaded(true);
-    };
-    img.onerror = () => {
-      // Show content even if image fails to load
-      setImageLoaded(true);
-    };
-    // Start loading immediately
-    img.src = imageUrl;
-    
-    // If image is already cached, handle it asynchronously to avoid linter warning
-    if (img.complete) {
-      // Use setTimeout to avoid synchronous setState in effect
-      setTimeout(() => setImageLoaded(true), 0);
-    }
-
-    return () => {
-      if (document.head.contains(link)) {
-        document.head.removeChild(link);
-      }
-    };
-  }, [post?.image, isNoirTheme]);
-
-  if (!slug) {
-    return (
-      <main>
-        <Header />
-        <div className={styles.content}>
-          <h1>Post not found</h1>
-        </div>
-        <Footer />
-      </main>
-    );
+  if (!slug || !post) {
+    return <BlogPostNotFound />;
   }
-
-  if (!post) {
-    return (
-      <main>
-        <Header />
-        <div className={styles.content}>
-          <h1>Post not found</h1>
-        </div>
-        <Footer />
-      </main>
-    );
-  }
+  
+  // At this point, post is guaranteed to exist, so imageUrl should be defined
+  // The hook will re-run if imageUrl changes from undefined to a string
 
   const relatedPosts = getRelatedPosts(post, 3);
   const postSlug = getBlogPostSlug(post);
   const postUrl = `/resources/blog/${postSlug}`;
+  const authorName = getAuthorName(post);
+  const metaDescription = getMetaDescription(post);
+  const heroImageUrl = getGrayscaleImageUrl(post.image, isNoirTheme);
 
   return (
     <main className={styles.main}>
       <MetaTags
         title={`${post.title} | Johnny H.`}
-        description={post.excerpt || `Read about ${post.title} on Johnny H.'s technical blog.`}
+        description={metaDescription}
         image={post.image}
         url={postUrl}
         type="article"
@@ -103,7 +55,7 @@ export function BlogPost() {
       <section 
         className={styles.heroSection}
         style={{ 
-          '--hero-bg-image': `url(${getGrayscaleImageUrl(post.image, isNoirTheme)})`,
+          '--hero-bg-image': `url(${heroImageUrl})`,
           filter: getGrayscaleFilter(isNoirTheme)
         } as React.CSSProperties}
       >
@@ -118,7 +70,7 @@ export function BlogPost() {
             <h1 className={styles.entryTitle}>{post.title}</h1>
             <div className={styles.postMeta}>
               <div className={styles.postAuthors}>
-                <span>By: <a href="#author" className={styles.heroAuthorLink}>{post.author || "LLM Writer"}</a></span>
+                <span>By: <a href="#author" className={styles.heroAuthorLink}>{authorName}</a></span>
               </div>
               <div className={styles.postDate}>
                 {post.date}
@@ -136,7 +88,7 @@ export function BlogPost() {
               {/* Featured Image - overlaps hero section */}
               <div className={styles.postThumbnail}>
                 <img 
-                  src={getGrayscaleImageUrl(post.image, isNoirTheme)} 
+                  src={heroImageUrl} 
                   alt={post.title}
                   className={styles.featuredImage}
                   fetchPriority="high"
@@ -145,7 +97,7 @@ export function BlogPost() {
                 />
               </div>
               
-              {post.content && (
+              {hasContent(post) && (
                 <div className={styles.postContent}>
                   {parse(post.content)}
                 </div>
@@ -154,9 +106,9 @@ export function BlogPost() {
             
             {/* Footer: Tags, Author, Back Button */}
             <div className={styles.postFooter}>
-              {post.tags && post.tags.length > 0 && (
+              {hasTags(post) && (
                 <div className={styles.postTerms}>
-                  {post.tags.map((tag, index) => (
+                  {post.tags!.map((tag, index) => (
                     <Link 
                       key={index}
                       to={`/resources/tag/${slugify(tag)}`}
@@ -175,7 +127,7 @@ export function BlogPost() {
                   <div className={styles.authorContent}>
                     <div className={styles.authorHeader}>
                       <div className={styles.authorTitles}>
-                        <div className={styles.authorName}>{post.author || "LLM Writer"}</div>
+                        <div className={styles.authorName}>{authorName}</div>
                       </div>
                     </div>
                     <a 

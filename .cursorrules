@@ -646,6 +646,63 @@ The AI assistant should **automatically suggest running test coverage** in these
 - Mock external dependencies (APIs, browser APIs like Audio) appropriately
 - Clean up after tests (clear localStorage, restore mocks, etc.)
 
+**Common Testing Patterns & Gotchas:**
+
+1. **Testing Components with `useParams` (React Router):**
+   - **Problem:** `useParams()` returns `undefined` if the component isn't rendered within a matching route
+   - **Solution:** Wrap component in `<Routes><Route>` to match the route pattern:
+     ```tsx
+     render(
+       <MemoryRouter initialEntries={['/resources/blog/my-slug']}>
+         <Routes>
+           <Route path="/resources/blog/:slug" element={<BlogPost />} />
+         </Routes>
+       </MemoryRouter>
+     );
+     ```
+   - **Don't:** Just use `<MemoryRouter>` with the path - this won't match the route and `useParams` will be undefined
+
+2. **Testing Components with ThemeProvider:**
+   - **Problem:** `currentPresetId` is derived by matching the saved theme object to presets, not read directly from localStorage
+   - **Solution:** Set the actual theme object in localStorage (not just a preset ID):
+     ```tsx
+     import { builtInPresets } from "@/context/themeData";
+     const noirPreset = builtInPresets.find(p => p.id === 'noir');
+     if (noirPreset) {
+       localStorage.setItem('user-theme', JSON.stringify(noirPreset.theme));
+     }
+     ```
+   - **Why:** ThemeProvider matches the saved theme to find the preset ID, so the theme object must match exactly
+
+3. **Mocking Browser APIs (Image, Audio, etc.):**
+   - **Problem:** Constructor mocks need to return the same object instance for property assignments to work
+   - **Solution:** Use a consistent mock object with getter/setter for properties:
+     ```tsx
+     let mockImage = {
+       onload: null,
+       onerror: null,
+       get src() { return this._src || ''; },
+       set src(value) { this._src = value; },
+       complete: false,
+     };
+     global.Image = vi.fn(() => mockImage) as any;
+     ```
+   - **Why:** When code does `img.src = url`, it needs to set the property on the returned mock object
+
+4. **Debugging Test Failures - Systematic Approach:**
+   - **Start with simpler tests:** Fix basic rendering tests before complex hook/effect tests
+   - **Identify root cause:** If many tests fail, find the common issue (e.g., route matching, context initialization)
+   - **Verify assumptions:** Check if mocks are set up correctly, if context providers are initialized, if routes match
+   - **Use human-in-the-loop:** After 2-3 attempts, ask for guidance rather than continuing to guess
+
+5. **Testing Custom Hooks:**
+   - **Isolation tests:** Test hooks with `renderHook` to verify they work in isolation
+   - **Component integration:** If hook works in isolation but fails in component, check:
+     - Is the hook receiving correct parameters?
+     - Is the component's context/provider initialized?
+     - Are effects running (may need `act()` or `waitFor()`)?
+   - **Common issue:** Hook works standalone but fails in component = context/initialization problem, not hook problem
+
 **Test Coverage Configuration:**
 - Coverage provider: `v8` (fast, modern)
 - Reporters: `text` (terminal), `json` (machine-readable), `html` (browsable)
@@ -716,83 +773,126 @@ If complexity > 10 is unavoidable:
 
 **Complexity Report Generation:**
 
-The project includes a custom complexity report generator that creates an interactive HTML report of functions exceeding the complexity threshold.
+The project includes a custom complexity report generator that creates an interactive HTML report mimicking Vitest's coverage UI. The report displays all functions (not just those exceeding the threshold) with comprehensive metrics and folder-based navigation.
 
 **Script Location:**
 - `scripts/generate-complexity-report.js` - Custom Node.js script that generates HTML complexity reports
 
+**Current Status: ✅ Core Features Complete**
+
+**Completed Features:**
+- ✅ **Folder-based navigation** - Hierarchical structure matching Vitest (`complexity/index.html` → `complexity/src/components/index.html`)
+- ✅ **All functions displayed** - Shows all functions, not just those exceeding threshold (configurable via `--show-all` flag)
+- ✅ **Vitest-style UI** - Matches Vitest coverage report visual design:
+  - Progress bars with color-coded levels (high/medium/low)
+  - Table styling with `rgb(230, 245, 208)` background
+  - Sortable columns with toggle icons (↕, ↑, ↓)
+  - Right-aligned sort icons for progress bar and percentage columns
+  - Borderless headers matching Vitest design
+- ✅ **Comprehensive sorting** - Sortable by File, Function, Complexity, Line, and Functions (ratio)
+  - Functions column sorts by ratio first, then by total count (denominator) when ratios are equal
+  - Default sort direction: descending for functions/percentage columns (most to least)
+- ✅ **Filtering** - Checkbox to toggle between all functions and only those exceeding threshold
+- ✅ **Function name extraction** - Extracts function names from source code using regex patterns
+- ✅ **Deduplication** - Prevents duplicate function entries (keeps highest complexity)
+- ✅ **Test file exclusion** - Automatically excludes `__tests__` directories from analysis
+
 **How It Works:**
 
 1. **ESLint Integration:**
-   - Uses ESLint's built-in `complexity` rule (configured in `eslint.config.js`)
-   - Executes ESLint with JSON output format: `npx eslint . --format=json --output-file=complexity-report.json`
-   - Parses the JSON output to extract complexity warnings (severity 1)
+   - Creates temporary `eslint.config.temp.js` with `complexity: ["warn", { max: 0, variant: "classic" }]` to capture all functions
+   - Sets `globalIgnores` to exclude `__tests__` directories
+   - Executes ESLint with JSON output format
+   - Cleans up temporary config file after execution
 
 2. **Report Generation:**
-   - Filters messages for `ruleId === 'complexity'` and `severity === 1`
-   - Extracts complexity values from warning messages using regex pattern matching
-   - Sorts functions by complexity (highest first)
-   - Calculates visual progress bars based on complexity percentage (complexity 10 = 0%, complexity 30+ = 100%)
-   - Color-codes functions by complexity level:
-     - **Low (≥20)**: Dark red background (`#C21F39`)
-     - **Medium (≥15)**: Yellow/gold background (`#f9cd0b`)
-     - **High (11-14)**: Dark green background (`rgb(77,146,33)`)
+   - Parses ESLint JSON output to extract all function complexity data
+   - Extracts function names from source files using regex patterns
+   - Deduplicates functions based on `filePath:functionName` (keeps highest complexity)
+   - Organizes functions by folder/directory structure
+   - Calculates folder-level statistics (total functions, within threshold, percentage)
+   - Generates separate HTML files for each folder (folder-based navigation)
 
 3. **HTML Report Output:**
-   - Generates `complexity-report.html` in project root
-   - Uses CSS styling based on Istanbul/NYC coverage report design (familiar color scheme)
-   - Displays table with columns: File, Complexity, Level (progress bar), Line number
-   - Includes summary statistics (count, max, average complexity)
-   - Shows success message if no complexity issues found
+   - **Main report**: `complexity/index.html` - Shows folder-level summary with:
+     - File column (clickable links to folder pages)
+     - Progress bar column (sortable, right-aligned sort icon)
+     - Functions percentage column (sortable, left-aligned with "Functions" label)
+     - Functions fraction column (sortable, right-aligned sort icon)
+   - **Folder pages**: `complexity/<folder_path>/index.html` - Shows function-level details with:
+     - File, Function, Complexity, Line columns
+     - Progress bar column (sortable by complexity)
+     - Checkbox filter to show all functions or only those exceeding threshold
+   - Uses CSS styling matching Vitest's coverage report design
+   - Color-coded progress bars:
+     - **High (≥80%)**: Dark green (`rgb(77,146,33)`)
+     - **Medium (≥40%)**: Yellow/gold (`#f9cd0b`)
+     - **Low (<40%)**: Dark red (`#C21F39`)
 
 4. **Dependencies & Packages:**
    - **ESLint** - Core linting engine (already in devDependencies)
-   - **complexity-report-html** (v0.0.3) - Listed in devDependencies but **not actively used** in our custom script (evaluated for potential use but custom solution was preferred)
-   - **eslintcc** (v0.8.3) - Listed in devDependencies but **not actively used** (alternative complexity analysis tool, kept for potential future use)
+   - **complexity-report-html** (v0.0.3) - Listed in devDependencies but **not actively used** (evaluated but custom solution preferred)
+   - **eslintcc** (v0.8.3) - Listed in devDependencies but **not actively used** (alternative tool, kept for potential future use)
 
 **Command:**
 ```bash
-npm run lint:complexity
+npm run lint:complexity          # Generate report (default: show only functions > 10)
+npm run lint:complexity:all      # Generate report with all functions visible by default
 ```
 
 **Output Files:**
-- `complexity-report.html` - HTML report (gitignored, regenerated each run)
+- `complexity/index.html` - Main report (folder-level summary)
+- `complexity/<folder_path>/index.html` - Folder-specific reports (function-level details)
 - `complexity-report.json` - Intermediate ESLint JSON output (gitignored, cleaned up after parsing)
 
 **Report Features:**
-- Visual progress bars showing complexity levels (horizontal bars with filled/empty segments)
-- Color-coded rows matching complexity severity
-- Clickable file links (currently placeholder `#` hrefs)
-- Line number references to locate complex functions
-- Summary statistics (function count, max complexity, average complexity)
+- ✅ Visual progress bars showing complexity levels (horizontal bars with filled/empty segments on single line)
+- ✅ Color-coded rows matching complexity severity
+- ✅ Clickable folder links (navigate to folder-specific pages)
+- ✅ Line number references to locate functions in source code
+- ✅ Summary statistics (function count, max complexity, average complexity)
+- ✅ Sortable columns with visual indicators (↕ inactive, ↑/↓ active)
+- ✅ Filter checkbox to toggle function visibility
+- ✅ Right-aligned percentage values and sort icons
+- ✅ Borderless table headers matching Vitest design
 
 **CSS Styling:**
-- Matches Istanbul/NYC coverage report color scheme for familiarity
-- Fixed bar alignment issue: white (unfilled) segments now appear on same line as colored (filled) segments
-- Uses `inline-block` with `vertical-align: top` and `font-size: 0` on container to prevent vertical stacking
+- Matches Vitest coverage report color scheme and layout
+- Progress bars render on single line using `font-size: 0`, `white-space: nowrap`, and `vertical-align: top`
+- Table cell padding: `10px` (standardized)
+- Progress bar column: `min-width: 120px`
+- Table row background: `rgb(230, 245, 208)`
+- Headers: `border: none !important` (borderless design)
 
 **Future Enhancements (TODOs):**
 
 1. **Function Source Code Viewing:**
-   - Enable clicking into each function to view the entire function source code
-   - Display full function implementation with syntax highlighting
-   - Highlight complexity decision paths (if/else, loops, switch statements, ternary operators)
-   - Show visual indicators for each branch point that contributes to complexity
+   - [ ] Enable clicking into each function to view the entire function source code
+   - [ ] Display full function implementation with syntax highlighting
+   - [ ] Highlight complexity decision paths (if/else, loops, switch statements, ternary operators)
+   - [ ] Show visual indicators for each branch point that contributes to complexity
+   - [ ] Generate separate HTML files for each source file (similar to Vitest's `.tsx.html` files)
+   - [ ] Add a click-in feature for each individual file to show the code for each file
 
-2. **Comprehensive Function Listing:**
-   - Include **all function files being tested**, not just ones exceeding complexity threshold
-   - Show complexity metrics for all functions (even those under threshold)
-   - Allow filtering/sorting by complexity level (all functions, high, medium, low)
-   - Provide baseline metrics showing project-wide complexity distribution
+2. **Enhanced Interactivity:**
+   - [ ] Add expandable/collapsible function details
+   - [ ] Show detailed complexity breakdown (which specific constructs contribute most to complexity)
+   - [ ] Add search/filter functionality (beyond current checkbox)
+   - [ ] Add filter by complexity range (e.g., show only functions with complexity 15-20)
 
-3. **Enhanced Interactivity:**
-   - Make file links functional (navigate to source code, possibly with line highlighting)
-   - Add expandable/collapsible function details
-   - Show complexity breakdown (which specific constructs contribute most to complexity)
-   - Add search/filter functionality
+3. **Integration Improvements:**
+   - [ ] Consider integrating with test coverage reports (show complexity alongside coverage)
+   - [ ] Add CI/CD integration (fail builds if complexity exceeds thresholds)
+   - [ ] Generate historical trends (track complexity over time)
+   - [ ] Export to various formats (JSON, CSV) for further analysis
+   - [ ] Add comparison view (compare complexity between commits/branches)
+   - [ ] Consider packaging (extract complexity report generator as npm package)
 
-4. **Integration Improvements:**
-   - Consider integrating with test coverage reports (show complexity alongside coverage)
-   - Add CI/CD integration (fail builds if complexity exceeds thresholds)
-   - Generate historical trends (track complexity over time)
-   - Export to various formats (JSON, CSV) for further analysis
+4. **UI/UX Enhancements:**
+   - [ ] Add keyboard navigation support
+   - [ ] Improve mobile responsiveness of report UI
+   - [ ] Add tooltips explaining complexity metrics
+   - [ ] Add export functionality (download report as HTML/PDF)
+   - [ ] Adjust styles to mirror coverage styles from Vitest more closely
+   - [ ] Adjust headers more (refine header styling and layout)
+   - [ ] Begin identifying way to color code decision paths but need to decide first what to do and how, for example, hints or something similar to what Vitest coverage does

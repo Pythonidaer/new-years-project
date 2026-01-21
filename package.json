@@ -11,7 +11,8 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "lint:complexity": "node scripts/generate-complexity-report.js"
+    "lint:complexity": "node scripts/generate-complexity-report.js",
+    "lint:complexity:all": "node scripts/generate-complexity-report.js --show-all"
   },
   "dependencies": {
     "color": "^5.0.3",

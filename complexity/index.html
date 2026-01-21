@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complexity Report</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    body {
+      font-family: Helvetica Neue, Helvetica, Arial;
+      font-size: 14px;
+      color: #333;
+    }
+    *, *:after, *:before {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+    h2 {
+      font-size: 14px;
+    }
+    a {
+      color: #0074D9;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .strong {
+      font-weight: bold;
+    }
+    .pad2 {
+      padding: 20px;
+    }
+    .pad2x {
+      padding: 0 20px;
+    }
+    .pad2y {
+      padding: 20px 0;
+    }
+    .pad1 {
+      padding: 10px;
+    }
+    .pad1y {
+      padding: 10px 0;
+    }
+    .quiet {
+      color: #7f7f7f;
+      color: rgba(0,0,0,0.5);
+    }
+    .quiet a {
+      opacity: 0.7;
+    }
+    .fraction {
+      font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      font-size: 10px;
+      color: #555;
+      background: #E8E8E8;
+      padding: 4px 5px;
+      border-radius: 3px;
+      vertical-align: middle;
+    }
+    .coverage-summary {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    .coverage-summary tr {
+      border-bottom: 1px solid #bbb;
+    }
+    .keyline-all {
+      border: 1px solid #ddd;
+    }
+    .coverage-summary td,
+    .coverage-summary th {
+      padding: 10px;
+    }
+    .coverage-summary tbody tr {
+      background-color: rgb(230, 245, 208);
+    }
+    .coverage-summary tbody {
+      border: 1px solid #bbb;
+    }
+    .coverage-summary td {
+      border-right: 1px solid #bbb;
+    }
+    .coverage-summary td:last-child {
+      border-right: none;
+    }
+    .coverage-summary th {
+      text-align: left;
+      font-weight: normal;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      border: none !important;
+    }
+    .coverage-summary th:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    .coverage-summary th.file {
+      border-right: none !important;
+    }
+    .coverage-summary th.pct {
+    }
+    .coverage-summary th.pic,
+    .coverage-summary th.abs,
+    .coverage-summary td.pct,
+    .coverage-summary td.abs {
+      text-align: right;
+    }
+    .coverage-summary td.file {
+      white-space: nowrap;
+    }
+    .coverage-summary td.pic {
+      min-width: 120px !important;
+      text-align: right;
+    }
+    .sort-icon {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-left: 5px;
+      color: #999;
+      opacity: 0.5;
+    }
+    .sort-icon.active {
+      color: #000;
+      opacity: 1;
+    }
+    .coverage-summary td.bar {
+      padding: 10px;
+      min-width: 120px !important;
+    }
+    /* Color scheme matching coverage report */
+    /* Dark red */
+    .red.solid,
+    .status-line.low,
+    .low .cover-fill {
+      background: #C21F39;
+    }
+    .low .chart {
+      border: 1px solid #C21F39;
+    }
+    /* Medium red */
+    .cstat-no,
+    .fstat-no,
+    .cbranch-no {
+      background: #F6C6CE;
+    }
+    /* Light red */
+    .cline-no {
+      background: #FCE1E5;
+    }
+    /* Light green */
+    .cline-yes {
+      background: rgb(230,245,208);
+    }
+    /* Medium green */
+    .cstat-yes {
+      background: rgb(161,215,106);
+    }
+    /* Dark green */
+    .status-line.high,
+    .high .cover-fill {
+      background: rgb(77,146,33);
+    }
+    .high .chart {
+      border: 1px solid rgb(77,146,33);
+    }
+    /* Dark yellow (gold) */
+    .status-line.medium,
+    .medium .cover-fill {
+      background: #f9cd0b;
+    }
+    .medium .chart {
+      border: 1px solid #f9cd0b;
+    }
+    .cover-fill,
+    .cover-empty {
+      display: inline-block;
+      height: 12px;
+      vertical-align: top;
+    }
+    .chart {
+      line-height: 0;
+      font-size: 0;
+      white-space: nowrap;
+    }
+    .cover-empty {
+      background: white;
+    }
+    .cover-full {
+      border-right: none !important;
+    }
+    .status-line {
+      height: 10px;
+    }
+    .complexity-value {
+      font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    }
+    .complexity-value.low {
+      color: #C21F39;
+    }
+    .complexity-value.medium {
+      color: #f9cd0b;
+    }
+    .complexity-value.high {
+      color: rgb(77,146,33);
+    }
+    .complexity-value.acceptable {
+      color: rgb(100,150,50);
+    }
+    .complexity-value.good {
+      color: rgb(120,160,70);
+    }
+    .acceptable {
+      background: rgb(240,250,230);
+    }
+    .good {
+      background: rgb(245,252,240);
+    }
+    .acceptable .cover-fill {
+      background: rgb(100,150,50);
+    }
+    .good .cover-fill {
+      background: rgb(120,160,70);
+    }
+    .acceptable .chart {
+      border: 1px solid rgb(100,150,50);
+    }
+    .good .chart {
+      border: 1px solid rgb(120,160,70);
+    }
+    .controls {
+      margin: 20px 0;
+      padding: 15px;
+      background: #f5f5f5;
+      border-radius: 4px;
+    }
+    .controls label {
+      margin-right: 15px;
+      font-weight: normal;
+    }
+    .controls select,
+    .controls input {
+      margin-left: 5px;
+      padding: 5px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="pad2">
+    <h1>All files</h1>
+    <div class="pad1y quiet">
+      All Functions (129 total)
+       / 2 with complexity > 10
+    </div>
+    <div class="pad2y">
+      <div class="strong">
+        129 Functions
+         / Max: 27 / Avg: 3
+      </div>
+    </div>
+            <div class="folder-view" id="folderView">
+          <table class="coverage-summary">
+            <thead>
+              <tr class="keyline-all">
+                <th class="file" data-sort="file">File <span class="sort-icon">↕</span></th>
+                <th class="bar" data-sort="percentage" style="text-align: right;"><span class="sort-icon">↕</span></th>
+                <th class="pic" data-sort="percentage" style="text-align: left;">Functions <span class="sort-icon">↕</span></th>
+                <th class="pct" data-sort="functions" style="text-align: right;"><span class="sort-icon">↕</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                  <tr data-file="src" data-functions="6/6" data-percentage="100">
+                    <td class="file">
+                      <a href="src/index.html">src</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">6/6</td>
+                  </tr>
+                
+                  <tr data-file="src/components" data-functions="9/9" data-percentage="100">
+                    <td class="file">
+                      <a href="src/components/index.html">src/components</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">9/9</td>
+                  </tr>
+                
+                  <tr data-file="src/components/AudioControl" data-functions="5/5" data-percentage="100">
+                    <td class="file">
+                      <a href="src/components/AudioControl/index.html">src/components/AudioControl</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">5/5</td>
+                  </tr>
+                
+                  <tr data-file="src/components/ThemePicker" data-functions="18/19" data-percentage="95">
+                    <td class="file">
+                      <a href="src/components/ThemePicker/index.html">src/components/ThemePicker</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high " style="width: 95%"></div><div class="cover-empty" style="width: 5%"></div></div>
+                    </td>
+                    <td class="pic">95%</td>
+                    <td class="pct">18/19</td>
+                  </tr>
+                
+                  <tr data-file="src/context" data-functions="12/12" data-percentage="100">
+                    <td class="file">
+                      <a href="src/context/index.html">src/context</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">12/12</td>
+                  </tr>
+                
+                  <tr data-file="src/data/blog" data-functions="8/8" data-percentage="100">
+                    <td class="file">
+                      <a href="src/data/blog/index.html">src/data/blog</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">8/8</td>
+                  </tr>
+                
+                  <tr data-file="src/hooks" data-functions="11/11" data-percentage="100">
+                    <td class="file">
+                      <a href="src/hooks/index.html">src/hooks</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">11/11</td>
+                  </tr>
+                
+                  <tr data-file="src/layout" data-functions="2/2" data-percentage="100">
+                    <td class="file">
+                      <a href="src/layout/index.html">src/layout</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">2/2</td>
+                  </tr>
+                
+                  <tr data-file="src/pages" data-functions="11/11" data-percentage="100">
+                    <td class="file">
+                      <a href="src/pages/index.html">src/pages</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">11/11</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/AgencyLogos" data-functions="4/4" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/AgencyLogos/index.html">src/sections/AgencyLogos</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">4/4</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/BlogFilters" data-functions="2/2" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/BlogFilters/index.html">src/sections/BlogFilters</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">2/2</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/BlogGrid" data-functions="2/2" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/BlogGrid/index.html">src/sections/BlogGrid</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">2/2</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/BlogHeading" data-functions="1/1" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/BlogHeading/index.html">src/sections/BlogHeading</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">1/1</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/CampaignBanner" data-functions="1/1" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/CampaignBanner/index.html">src/sections/CampaignBanner</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">1/1</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/CustomerSpotlight" data-functions="3/3" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/CustomerSpotlight/index.html">src/sections/CustomerSpotlight</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">3/3</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/FeatureAccordion" data-functions="3/3" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/FeatureAccordion/index.html">src/sections/FeatureAccordion</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">3/3</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/FeaturedBlogPost" data-functions="1/1" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/FeaturedBlogPost/index.html">src/sections/FeaturedBlogPost</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">1/1</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/Footer" data-functions="2/2" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/Footer/index.html">src/sections/Footer</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">2/2</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/Header" data-functions="9/9" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/Header/index.html">src/sections/Header</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">9/9</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/Hero" data-functions="2/2" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/Hero/index.html">src/sections/Hero</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">2/2</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/HeroMarquee" data-functions="2/2" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/HeroMarquee/index.html">src/sections/HeroMarquee</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">2/2</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/LatestBlogs" data-functions="1/1" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/LatestBlogs/index.html">src/sections/LatestBlogs</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">1/1</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/LatestNews" data-functions="1/1" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/LatestNews/index.html">src/sections/LatestNews</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">1/1</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/PlatformCards" data-functions="1/1" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/PlatformCards/index.html">src/sections/PlatformCards</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">1/1</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/PlatformIntro" data-functions="1/1" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/PlatformIntro/index.html">src/sections/PlatformIntro</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">1/1</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/TopBanner" data-functions="3/3" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/TopBanner/index.html">src/sections/TopBanner</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">3/3</td>
+                  </tr>
+                
+                  <tr data-file="src/utils" data-functions="6/7" data-percentage="86">
+                    <td class="file">
+                      <a href="src/utils/index.html">src/utils</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high " style="width: 86%"></div><div class="cover-empty" style="width: 14%"></div></div>
+                    </td>
+                    <td class="pic">86%</td>
+                    <td class="pct">6/7</td>
+                  </tr>
+                
+            </tbody>
+          </table>
+        </div>
+  </div>
+  <script>
+    (function() {
+      // Sorting functionality
+      const headers = document.querySelectorAll('.coverage-summary th[data-sort]');
+      let currentSort = { column: null, direction: 'asc' };
+      
+      headers.forEach(header => {
+        header.addEventListener('click', function() {
+          const column = this.getAttribute('data-sort');
+          const tbody = this.closest('table').querySelector('tbody');
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+          
+          // Set sort column and direction
+          if (currentSort.column === column) {
+            // Same column clicked - toggle direction
+            currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+          } else {
+            // Different column or first click - set column and default direction
+            currentSort.column = column;
+            // Default to descending for 'functions' and 'percentage' (most to least) in main index
+            currentSort.direction = (column === 'functions' || column === 'percentage') ? 'desc' : 'asc';
+          }
+          
+          // Update sort icons
+          headers.forEach(h => {
+            const icon = h.querySelector('.sort-icon');
+            if (h === this) {
+              icon.textContent = currentSort.direction === 'asc' ? '↑' : '↓';
+              icon.classList.add('active');
+            } else {
+              icon.textContent = '↕';
+              icon.classList.remove('active');
+            }
+          });
+          
+          // Sort rows (always sort, even on first click)
+          rows.sort((a, b) => {
+            let aVal, bVal;
+            if (column === 'file') {
+              aVal = a.getAttribute('data-file') || '';
+              bVal = b.getAttribute('data-file') || '';
+              const comparison = aVal.localeCompare(bVal);
+              return currentSort.direction === 'asc' ? comparison : -comparison;
+            } else if (column === 'functions') {
+              // Special handling for functions column - sort by total functions (denominator)
+              const aParts = (a.getAttribute('data-functions') || '0/0').split('/');
+              const bParts = (b.getAttribute('data-functions') || '0/0').split('/');
+              const aDen = parseInt(aParts[1] || 1);
+              const bDen = parseInt(bParts[1] || 1);
+              
+              // Sort by denominator (total functions count)
+              // When descending (most to least): higher denominators first (18/19, 8/8, 6/7, 6/6)
+              // When ascending (least to most): lower denominators first (6/6, 6/7, 8/8, 18/19)
+              if (currentSort.direction === 'desc') {
+                return bDen > aDen ? 1 : bDen < aDen ? -1 : 0;
+              } else {
+                return aDen > bDen ? 1 : aDen < bDen ? -1 : 0;
+              }
+            } else if (column === 'percentage') {
+              aVal = parseFloat(a.getAttribute('data-percentage') || 0);
+              bVal = parseFloat(b.getAttribute('data-percentage') || 0);
+            }
+            
+            if (currentSort.direction === 'asc') {
+              return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+            } else {
+              return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+            }
+          });
+          
+          // Re-append sorted rows (clear first to ensure proper reordering)
+          tbody.innerHTML = '';
+          rows.forEach(row => tbody.appendChild(row));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

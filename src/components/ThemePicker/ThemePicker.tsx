@@ -72,6 +72,212 @@ const categoryLabels: Record<ColorToken['category'], string> = {
   shadows: 'Shadows',
 };
 
+// Helper component for rendering a single color item
+type ColorItemProps = {
+  token: ColorToken;
+  currentValue: string;
+  hasChange: boolean;
+  onColorChange: (key: keyof ReturnType<typeof useTheme>['theme'], value: string) => void;
+  onCancel: (key: keyof ReturnType<typeof useTheme>['theme']) => void;
+  colorToHex: (color: string) => string;
+  styles: typeof styles;
+};
+
+function ColorItem({ token, currentValue, hasChange, onColorChange, onCancel, colorToHex, styles }: ColorItemProps) {
+  return (
+    <div className={styles.colorItem}>
+      <div
+        className={styles.colorSwatch}
+        style={{ backgroundColor: currentValue, borderRadius: '8px' }}
+      />
+      <div className={styles.colorInfo}>
+        <label htmlFor={`color-input-${token.key}`} className={styles.colorLabel}>{token.label}</label>
+        {token.usage && (
+          <div className={styles.colorUsage}>{token.usage}</div>
+        )}
+        <div className={styles.colorValue}>{currentValue}</div>
+      </div>
+      <input
+        id={`color-input-${token.key}`}
+        type="color"
+        value={colorToHex(currentValue)}
+        onChange={(e) => onColorChange(token.key, e.target.value)}
+        className={styles.colorInput}
+      />
+      {hasChange && (
+        <button
+          onClick={() => onCancel(token.key)}
+          className={styles.cancelBtn}
+          aria-label={`Cancel ${token.label} change`}
+        >
+          Cancel
+        </button>
+      )}
+    </div>
+  );
+}
+
+// Helper component for rendering a gradient group
+type GradientGroupProps = {
+  gradientTokens: ColorToken[];
+  gradientPreview: string;
+  localChanges: Partial<ReturnType<typeof useTheme>['theme']>;
+  theme: ReturnType<typeof useTheme>['theme'];
+  onColorChange: (key: keyof ReturnType<typeof useTheme>['theme'], value: string) => void;
+  onCancel: (key: keyof ReturnType<typeof useTheme>['theme']) => void;
+  colorToHex: (color: string) => string;
+  styles: typeof styles;
+};
+
+function GradientGroup({ gradientTokens, gradientPreview, localChanges, theme, onColorChange, onCancel, colorToHex, styles }: GradientGroupProps) {
+  if (gradientTokens.length === 0) {
+    return null;
+  }
+
+  return (
+    <>
+      <div className={styles.gradientPreview} style={{ background: gradientPreview }} />
+      <div className={styles.gradientControls}>
+        {gradientTokens.map((token) => {
+          const currentValue = localChanges[token.key] ?? theme[token.key];
+          const hasChange = token.key in localChanges;
+          return (
+            <ColorItem
+              key={token.key}
+              token={token}
+              currentValue={currentValue}
+              hasChange={hasChange}
+              onColorChange={onColorChange}
+              onCancel={onCancel}
+              colorToHex={colorToHex}
+              styles={styles}
+            />
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
+// Helper component for rendering color categories
+type ColorCategoriesProps = {
+  colorTokens: ColorToken[];
+  categoryLabels: Record<ColorToken['category'], string>;
+  localChanges: Partial<ReturnType<typeof useTheme>['theme']>;
+  theme: ReturnType<typeof useTheme>['theme'];
+  onColorChange: (key: keyof ReturnType<typeof useTheme>['theme'], value: string) => void;
+  onCancel: (key: keyof ReturnType<typeof useTheme>['theme']) => void;
+  colorToHex: (color: string) => string;
+  getGradientPreview: () => string;
+  getCampaignGradientPreview: () => string;
+  getAuthorBoxGradientPreview: () => string;
+  getRelatedSectionGradientPreview: () => string;
+  styles: typeof styles;
+};
+
+function ColorCategories({
+  colorTokens,
+  categoryLabels,
+  localChanges,
+  theme,
+  onColorChange,
+  onCancel,
+  colorToHex,
+  getGradientPreview,
+  getCampaignGradientPreview,
+  getAuthorBoxGradientPreview,
+  getRelatedSectionGradientPreview,
+  styles,
+}: ColorCategoriesProps) {
+  return (
+    <div className={styles.colorsScrollArea}>
+      {(['core', 'primary', 'accent', 'gradient', 'footer', 'shadows'] as const).map((category) => {
+        const categoryTokens = colorTokens.filter((token) => token.category === category);
+        if (categoryTokens.length === 0) return null;
+
+        const gradientTokens = categoryTokens.filter((token) => token.isGradient);
+
+        if (category === 'gradient' && gradientTokens.length > 0) {
+          const heroGradient = gradientTokens.filter(t => t.gradientPartner === 'heroEnd' || t.key === 'heroEnd');
+          const campaignGradient = gradientTokens.filter(t => t.gradientPartner === 'campaignEnd' || t.key === 'campaignEnd');
+          const authorBoxGradient = gradientTokens.filter(t => t.gradientPartner === 'authorBoxEnd' || t.key === 'authorBoxEnd');
+          const relatedSectionGradient = gradientTokens.filter(t => t.gradientPartner === 'relatedSectionEnd' || t.key === 'relatedSectionEnd');
+
+          return (
+            <div key={category} className={styles.colorCategory}>
+              <h4 className={styles.sectionTitle}>{categoryLabels[category]}</h4>
+              <GradientGroup
+                gradientTokens={heroGradient}
+                gradientPreview={getGradientPreview()}
+                localChanges={localChanges}
+                theme={theme}
+                onColorChange={onColorChange}
+                onCancel={onCancel}
+                colorToHex={colorToHex}
+                styles={styles}
+              />
+              <GradientGroup
+                gradientTokens={campaignGradient}
+                gradientPreview={getCampaignGradientPreview()}
+                localChanges={localChanges}
+                theme={theme}
+                onColorChange={onColorChange}
+                onCancel={onCancel}
+                colorToHex={colorToHex}
+                styles={styles}
+              />
+              <GradientGroup
+                gradientTokens={authorBoxGradient}
+                gradientPreview={getAuthorBoxGradientPreview()}
+                localChanges={localChanges}
+                theme={theme}
+                onColorChange={onColorChange}
+                onCancel={onCancel}
+                colorToHex={colorToHex}
+                styles={styles}
+              />
+              <GradientGroup
+                gradientTokens={relatedSectionGradient}
+                gradientPreview={getRelatedSectionGradientPreview()}
+                localChanges={localChanges}
+                theme={theme}
+                onColorChange={onColorChange}
+                onCancel={onCancel}
+                colorToHex={colorToHex}
+                styles={styles}
+              />
+            </div>
+          );
+        }
+
+        return (
+          <div key={category} className={styles.colorCategory}>
+            <h4 className={styles.sectionTitle}>{categoryLabels[category]}</h4>
+            <div className={styles.colors}>
+              {categoryTokens.map((token) => {
+                const currentValue = localChanges[token.key] ?? theme[token.key];
+                const hasChange = token.key in localChanges;
+                return (
+                  <ColorItem
+                    key={token.key}
+                    token={token}
+                    currentValue={currentValue}
+                    hasChange={hasChange}
+                    onColorChange={onColorChange}
+                    onCancel={onCancel}
+                    colorToHex={colorToHex}
+                    styles={styles}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export function ThemePicker() {
   const { theme, updateTheme, resetTheme, presets, savePreset, loadPreset, deletePreset, currentPresetId } = useTheme();
   const [localChanges, setLocalChanges] = useState<Partial<typeof theme>>({});
@@ -297,6 +503,79 @@ export function ThemePicker() {
     return presetId === 'noname' || presetId === 'samson' || presetId === 'vapor-wave' || presetId === 'king' || presetId === 'planet';
   };
 
+  // Handle keyboard navigation for presets header
+  const handlePresetsHeaderKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setIsPresetsExpanded(!isPresetsExpanded);
+    }
+  };
+
+  // Handle keyboard navigation for save preset input
+  const handleSavePresetKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSavePreset();
+    } else if (e.key === 'Escape') {
+      setShowSavePreset(false);
+      setPresetName('');
+    }
+  };
+
+  // Check if preset is built-in (not deletable)
+  const isBuiltInPreset = (presetId: string): boolean => {
+    const builtInIds = [
+      'default',
+      'pink',
+      'dayglow',
+      'king',
+    ];
+    
+    const builtInPrefixes = [
+      'cedar',
+      'sage',
+      'crimson',
+      'vapor',
+      'gothic',
+      'pastel',
+      'horror',
+      'pride',
+      'yuko',
+      'hokusai',
+      'noname',
+      'sadikovic',
+      'afb',
+      'tuf',
+      'royboy',
+      'dalmatian',
+      'querida',
+      'ris',
+      'gulu',
+      'maxine',
+      'sunrise',
+      'noir',
+      'hatsune',
+      'trippie',
+      'scotland',
+      'pbr',
+      'reeses',
+      'fallout',
+      'berge',
+      'samson',
+      'companion',
+      'gusto',
+      'facecrusher',
+      'planet',
+      'visser',
+      'yolandi',
+    ];
+
+    if (builtInIds.includes(presetId)) {
+      return true;
+    }
+
+    return builtInPrefixes.some(prefix => presetId.startsWith(prefix));
+  };
+
   return (
     <>
       <button
@@ -384,12 +663,7 @@ export function ThemePicker() {
                 onClick={() => setIsPresetsExpanded(!isPresetsExpanded)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setIsPresetsExpanded(!isPresetsExpanded);
-                  }
-                }}
+                onKeyDown={handlePresetsHeaderKeyDown}
                 aria-label={isPresetsExpanded ? 'Collapse presets' : 'Expand presets'}
                 aria-expanded={isPresetsExpanded}
               >
@@ -408,47 +682,7 @@ export function ThemePicker() {
               </div>
               <div className={`${styles.presetsGrid} ${!isPresetsExpanded ? styles.presetsGridCollapsed : ''}`}>
                 {presets.map((preset) => {
-                  const isBuiltIn = preset.id === 'default' || 
-                    preset.id.startsWith('cedar') || 
-                    // preset.id.startsWith('mark43') || // Commented out - Mark43 theme hidden 
-                    preset.id.startsWith('sage') ||
-                    preset.id.startsWith('crimson') ||
-                    preset.id.startsWith('vapor') ||
-                    preset.id.startsWith('gothic') ||
-                    preset.id.startsWith('pastel') ||
-                    preset.id.startsWith('horror') ||
-                    preset.id.startsWith('pride') ||
-                    preset.id.startsWith('yuko') ||
-                    preset.id.startsWith('hokusai') ||
-                    preset.id.startsWith('noname') ||
-                    preset.id.startsWith('sadikovic') ||
-                    preset.id.startsWith('afb') ||
-                    preset.id.startsWith('tuf') ||
-                    preset.id.startsWith('royboy') ||
-                    preset.id.startsWith('dalmatian') ||
-                    preset.id.startsWith('querida') ||
-                    preset.id.startsWith('ris') ||
-                    preset.id.startsWith('gulu') ||
-                    preset.id.startsWith('maxine') ||
-                    preset.id.startsWith('sunrise') ||
-                    preset.id.startsWith('noir') ||
-                    preset.id.startsWith('hatsune') ||
-                    preset.id.startsWith('trippie') ||
-                    preset.id.startsWith('scotland') ||
-                    preset.id.startsWith('pbr') ||
-                    preset.id.startsWith('reeses') ||
-                    preset.id.startsWith('fallout') ||
-                    preset.id.startsWith('berge') ||
-                    preset.id.startsWith('samson') ||
-                    preset.id.startsWith('companion') ||
-                    preset.id.startsWith('gusto') ||
-                    preset.id.startsWith('facecrusher') ||
-                    preset.id.startsWith('planet') ||
-                    preset.id.startsWith('visser') ||
-                    preset.id.startsWith('yolandi') ||
-                    preset.id === 'pink' || // Pink theme is built-in (no trash icon)
-                    preset.id === 'dayglow' || // Dayglow theme is built-in (no trash icon)
-                    preset.id === 'king'; // King theme is built-in (no trash icon)
+                  const isBuiltIn = isBuiltInPreset(preset.id);
                   const showEasterEgg = hasAudioEasterEgg(preset.id);
                   const isSelected = preset.id === currentPresetId;
                   return (
@@ -495,14 +729,7 @@ export function ThemePicker() {
                         placeholder="Preset name..."
                         value={presetName}
                         onChange={(e) => setPresetName(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            handleSavePreset();
-                          } else if (e.key === 'Escape') {
-                            setShowSavePreset(false);
-                            setPresetName('');
-                          }
-                        }}
+                        onKeyDown={handleSavePresetKeyDown}
                         className={styles.presetNameInput}
                         autoFocus
                       />
@@ -528,250 +755,20 @@ export function ThemePicker() {
               </div>
             </div>
 
-            <div className={styles.colorsScrollArea}>
-              {/* Render colors by category */}
-            {(['core', 'primary', 'accent', 'gradient', 'footer', 'shadows'] as const).map((category) => {
-              const categoryTokens = colorTokens.filter((token) => token.category === category);
-              if (categoryTokens.length === 0) return null;
-
-              const gradientTokens = categoryTokens.filter((token) => token.isGradient);
-
-              // Special handling for gradient category with multiple gradient pairs
-              if (category === 'gradient' && gradientTokens.length > 0) {
-                // Group gradients by their partner pairs
-                const heroGradient = gradientTokens.filter(t => t.gradientPartner === 'heroEnd' || t.key === 'heroEnd');
-                const campaignGradient = gradientTokens.filter(t => t.gradientPartner === 'campaignEnd' || t.key === 'campaignEnd');
-                const authorBoxGradient = gradientTokens.filter(t => t.gradientPartner === 'authorBoxEnd' || t.key === 'authorBoxEnd');
-                const relatedSectionGradient = gradientTokens.filter(t => t.gradientPartner === 'relatedSectionEnd' || t.key === 'relatedSectionEnd');
-
-                return (
-                  <div key={category} className={styles.colorCategory}>
-                    <h4 className={styles.sectionTitle}>{categoryLabels[category]}</h4>
-                    
-                    {/* Homepage Hero Gradient */}
-                    {heroGradient.length > 0 && (
-                      <>
-                        <div className={styles.gradientPreview} style={{ background: getGradientPreview() }} />
-                        <div className={styles.gradientControls}>
-                          {heroGradient.map((token) => {
-                            const currentValue = localChanges[token.key] ?? theme[token.key];
-                            const hasChange = token.key in localChanges;
-                            return (
-                              <div key={token.key} className={styles.colorItem}>
-                                <div
-                                  className={styles.colorSwatch}
-                                  style={{ backgroundColor: currentValue, borderRadius: '8px' }}
-                                />
-                                <div className={styles.colorInfo}>
-                                  <label htmlFor={`color-input-${token.key}`} className={styles.colorLabel}>{token.label}</label>
-                                  {token.usage && (
-                                    <div className={styles.colorUsage}>{token.usage}</div>
-                                  )}
-                                  <div className={styles.colorValue}>{currentValue}</div>
-                                </div>
-                                <input
-                                  id={`color-input-${token.key}`}
-                                  type="color"
-                                  value={colorToHex(currentValue)}
-                                  onChange={(e) => handleColorChange(token.key, e.target.value)}
-                                  className={styles.colorInput}
-                                />
-                                {hasChange && (
-                                  <button
-                                    onClick={() => handleCancel(token.key)}
-                                    className={styles.cancelBtn}
-                                    aria-label={`Cancel ${token.label} change`}
-                                  >
-                                    Cancel
-                                  </button>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </>
-                    )}
-
-                    {/* Campaign Gradient */}
-                    {campaignGradient.length > 0 && (
-                      <>
-                        <div className={styles.gradientPreview} style={{ background: getCampaignGradientPreview() }} />
-                        <div className={styles.gradientControls}>
-                          {campaignGradient.map((token) => {
-                            const currentValue = localChanges[token.key] ?? theme[token.key];
-                            const hasChange = token.key in localChanges;
-                            return (
-                              <div key={token.key} className={styles.colorItem}>
-                                <div
-                                  className={styles.colorSwatch}
-                                  style={{ backgroundColor: currentValue, borderRadius: '8px' }}
-                                />
-                                <div className={styles.colorInfo}>
-                                  <label htmlFor={`color-input-${token.key}`} className={styles.colorLabel}>{token.label}</label>
-                                  {token.usage && (
-                                    <div className={styles.colorUsage}>{token.usage}</div>
-                                  )}
-                                  <div className={styles.colorValue}>{currentValue}</div>
-                                </div>
-                                <input
-                                  id={`color-input-${token.key}`}
-                                  type="color"
-                                  value={colorToHex(currentValue)}
-                                  onChange={(e) => handleColorChange(token.key, e.target.value)}
-                                  className={styles.colorInput}
-                                />
-                                {hasChange && (
-                                  <button
-                                    onClick={() => handleCancel(token.key)}
-                                    className={styles.cancelBtn}
-                                    aria-label={`Cancel ${token.label} change`}
-                                  >
-                                    Cancel
-                                  </button>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </>
-                    )}
-
-                    {/* Author Box Gradient */}
-                    {authorBoxGradient.length > 0 && (
-                      <>
-                        <div className={styles.gradientPreview} style={{ background: getAuthorBoxGradientPreview() }} />
-                        <div className={styles.gradientControls}>
-                          {authorBoxGradient.map((token) => {
-                            const currentValue = localChanges[token.key] ?? theme[token.key];
-                            const hasChange = token.key in localChanges;
-                            return (
-                              <div key={token.key} className={styles.colorItem}>
-                                <div
-                                  className={styles.colorSwatch}
-                                  style={{ backgroundColor: currentValue, borderRadius: '8px' }}
-                                />
-                                <div className={styles.colorInfo}>
-                                  <label htmlFor={`color-input-${token.key}`} className={styles.colorLabel}>{token.label}</label>
-                                  {token.usage && (
-                                    <div className={styles.colorUsage}>{token.usage}</div>
-                                  )}
-                                  <div className={styles.colorValue}>{currentValue}</div>
-                                </div>
-                                <input
-                                  id={`color-input-${token.key}`}
-                                  type="color"
-                                  value={colorToHex(currentValue)}
-                                  onChange={(e) => handleColorChange(token.key, e.target.value)}
-                                  className={styles.colorInput}
-                                />
-                                {hasChange && (
-                                  <button
-                                    onClick={() => handleCancel(token.key)}
-                                    className={styles.cancelBtn}
-                                    aria-label={`Cancel ${token.label} change`}
-                                  >
-                                    Cancel
-                                  </button>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </>
-                    )}
-
-                    {/* Related Section Gradient */}
-                    {relatedSectionGradient.length > 0 && (
-                      <>
-                        <div className={styles.gradientPreview} style={{ background: getRelatedSectionGradientPreview() }} />
-                        <div className={styles.gradientControls}>
-                          {relatedSectionGradient.map((token) => {
-                            const currentValue = localChanges[token.key] ?? theme[token.key];
-                            const hasChange = token.key in localChanges;
-                            return (
-                              <div key={token.key} className={styles.colorItem}>
-                                <div
-                                  className={styles.colorSwatch}
-                                  style={{ backgroundColor: currentValue, borderRadius: '8px' }}
-                                />
-                                <div className={styles.colorInfo}>
-                                  <label htmlFor={`color-input-${token.key}`} className={styles.colorLabel}>{token.label}</label>
-                                  {token.usage && (
-                                    <div className={styles.colorUsage}>{token.usage}</div>
-                                  )}
-                                  <div className={styles.colorValue}>{currentValue}</div>
-                                </div>
-                                <input
-                                  id={`color-input-${token.key}`}
-                                  type="color"
-                                  value={colorToHex(currentValue)}
-                                  onChange={(e) => handleColorChange(token.key, e.target.value)}
-                                  className={styles.colorInput}
-                                />
-                                {hasChange && (
-                                  <button
-                                    onClick={() => handleCancel(token.key)}
-                                    className={styles.cancelBtn}
-                                    aria-label={`Cancel ${token.label} change`}
-                                  >
-                                    Cancel
-                                  </button>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                );
-              }
-
-              // Regular category rendering (non-gradient categories)
-              return (
-                <div key={category} className={styles.colorCategory}>
-                  <h4 className={styles.sectionTitle}>{categoryLabels[category]}</h4>
-                  <div className={styles.colors}>
-                    {categoryTokens.map((token) => {
-                      const currentValue = localChanges[token.key] ?? theme[token.key];
-                      const hasChange = token.key in localChanges;
-                      return (
-                        <div key={token.key} className={styles.colorItem}>
-                          <div
-                            className={styles.colorSwatch}
-                            style={{ backgroundColor: currentValue, borderRadius: '8px' }}
-                          />
-                          <div className={styles.colorInfo}>
-                            <label htmlFor={`color-input-${token.key}`} className={styles.colorLabel}>{token.label}</label>
-                            {token.usage && (
-                              <div className={styles.colorUsage}>{token.usage}</div>
-                            )}
-                            <div className={styles.colorValue}>{currentValue}</div>
-                          </div>
-                          <input
-                            id={`color-input-${token.key}`}
-                            type="color"
-                            value={colorToHex(currentValue)}
-                            onChange={(e) => handleColorChange(token.key, e.target.value)}
-                            className={styles.colorInput}
-                          />
-                          {hasChange && (
-                            <button
-                              onClick={() => handleCancel(token.key)}
-                              className={styles.cancelBtn}
-                              aria-label={`Cancel ${token.label} change`}
-                            >
-                              Cancel
-                            </button>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-            </div>
+            <ColorCategories
+              colorTokens={colorTokens}
+              categoryLabels={categoryLabels}
+              localChanges={localChanges}
+              theme={theme}
+              onColorChange={handleColorChange}
+              onCancel={handleCancel}
+              colorToHex={colorToHex}
+              getGradientPreview={getGradientPreview}
+              getCampaignGradientPreview={getCampaignGradientPreview}
+              getAuthorBoxGradientPreview={getAuthorBoxGradientPreview}
+              getRelatedSectionGradientPreview={getRelatedSectionGradientPreview}
+              styles={styles}
+            />
           </div>
         </div>
       </>

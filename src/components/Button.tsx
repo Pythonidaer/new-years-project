@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, ReactElement } from "react";
 import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 import styles from "./Button.module.css";
 
@@ -8,6 +8,40 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   chevronPosition?: "left" | "right";
 };
 
+function getVariantClass(variant: Props["variant"]): string {
+  if (variant === "secondary") {
+    return styles.secondary;
+  }
+  if (variant === "secondary-orange") {
+    return styles.secondaryOrange;
+  }
+  return styles.primary;
+}
+
+function shouldDisplayChevron(
+  showChevron: boolean,
+  variant: Props["variant"]
+): boolean {
+  if (!showChevron) {
+    return false;
+  }
+  return variant === "primary" || variant === "secondary-orange";
+}
+
+function renderLeftChevron(shouldShow: boolean): ReactElement | null {
+  if (!shouldShow) {
+    return null;
+  }
+  return <FaCaretLeft className={styles.chevronLeft} size={16} />;
+}
+
+function renderRightChevron(shouldShow: boolean): ReactElement | null {
+  if (!shouldShow) {
+    return null;
+  }
+  return <FaCaretRight className={styles.chevron} size={16} />;
+}
+
 export function Button({ 
   variant = "primary", 
   className, 
@@ -16,18 +50,16 @@ export function Button({
   children, 
   ...props 
 }: Props) {
-  const v = variant === "secondary" ? styles.secondary : variant === "secondary-orange" ? styles.secondaryOrange : styles.primary;
-  const shouldShowChevron = showChevron && (variant === "primary" || variant === "secondary-orange");
+  const variantClass = getVariantClass(variant);
+  const shouldShowChevron = shouldDisplayChevron(showChevron, variant);
+  const showLeftChevron = shouldShowChevron && chevronPosition === "left";
+  const showRightChevron = shouldShowChevron && chevronPosition === "right";
   
   return (
-    <button className={[v, className].filter(Boolean).join(" ")} {...props}>
-      {shouldShowChevron && chevronPosition === "left" && (
-        <FaCaretLeft className={styles.chevronLeft} size={16} />
-      )}
+    <button className={[variantClass, className].filter(Boolean).join(" ")} {...props}>
+      {renderLeftChevron(showLeftChevron)}
       {children}
-      {shouldShowChevron && chevronPosition === "right" && (
-        <FaCaretRight className={styles.chevron} size={16} />
-      )}
+      {renderRightChevron(showRightChevron)}
     </button>
   );
 }
