@@ -14,8 +14,8 @@ export function AudioControl() {
     handleEnded: () => void;
   } | null>(null);
 
-  // Show when noname, samson, vapor-wave, or king theme is active
-  const isThemeWithAudio = currentPresetId === 'noname' || currentPresetId === 'samson' || currentPresetId === 'vapor-wave' || currentPresetId === 'king';
+  // Show when noname, samson, vapor-wave, king, or planet theme is active
+  const isThemeWithAudio = currentPresetId === 'noname' || currentPresetId === 'samson' || currentPresetId === 'vapor-wave' || currentPresetId === 'king' || currentPresetId === 'planet';
 
   useEffect(() => {
     // Determine audio file based on theme
@@ -28,6 +28,8 @@ export function AudioControl() {
       audioFile = 'http://radio.plaza.one/mp3';
     } else if (currentPresetId === 'king') {
       audioFile = '/i_have_a_dream_speech.mp3';
+    } else if (currentPresetId === 'planet') {
+      audioFile = '/earth_song.mp3';
     }
 
     // Create new audio if theme has audio

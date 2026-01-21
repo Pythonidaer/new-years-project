@@ -287,6 +287,7 @@ describe("AudioControl", () => {
       { id: "noname", file: "/noname.mp3" },
       { id: "vapor-wave", file: "http://radio.plaza.one/mp3" },
       { id: "king", file: "/i_have_a_dream_speech.mp3" },
+      { id: "planet", file: "/earth_song.mp3" },
     ];
 
     for (const theme of themes) {

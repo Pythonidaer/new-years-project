@@ -264,7 +264,7 @@ describe("ThemePicker Component", () => {
       expect(screen.getByText("Theme Colors")).toBeTruthy();
     });
 
-    // Find presets with audio (noname, samson, vapor-wave, king)
+    // Find presets with audio (noname, samson, vapor-wave, king, planet)
     const nonamePreset = screen.getByText("Noname").closest("button");
     if (nonamePreset) {
       // Should have music icon
