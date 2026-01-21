@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
-import { ThemeProvider, defaultTheme } from './context/ThemeContext'
+import { ThemeProvider } from './context/ThemeContext'
+import { defaultTheme } from './context/themeData'
 
 // Handle chunk load errors - automatically reload when dynamic imports fail
 // This happens when build filenames change and browser has cached old chunks

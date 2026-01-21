@@ -444,6 +444,8 @@ export function ThemePicker() {
                     preset.id.startsWith('gusto') ||
                     preset.id.startsWith('facecrusher') ||
                     preset.id.startsWith('planet') ||
+                    preset.id.startsWith('visser') ||
+                    preset.id.startsWith('yolandi') ||
                     preset.id === 'pink' || // Pink theme is built-in (no trash icon)
                     preset.id === 'dayglow' || // Dayglow theme is built-in (no trash icon)
                     preset.id === 'king'; // King theme is built-in (no trash icon)

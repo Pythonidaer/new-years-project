@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import type { Theme, Preset } from './ThemeContext';
+import type { Theme, Preset } from './themeData';
 
 export type ThemeContextType = {
   theme: Theme;
