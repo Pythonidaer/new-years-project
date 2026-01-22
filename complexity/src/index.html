@@ -169,18 +169,46 @@
       border: 1px solid #ddd;
       border-radius: 3px;
     }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .header-row h1 {
+      margin: 0;
+    }
+    .about-link {
+      color: #0074D9;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: normal;
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid #0074D9;
+      border-radius: 3px;
+      background: white;
+      white-space: nowrap;
+    }
+    .about-link:hover {
+      background: #f0f0f0;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="pad2">
-    <h1><a href="../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src</span></h1>
+    <div class="header-row">
+      <h1><a href="../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src</span></h1>
+      <a href="../about.html" class="about-link">About Cyclomatic Complexity</a>
+    </div>
     <div class="pad1y quiet">
-      6 Functions / 6 within threshold (100%)
+      25 Functions / 25 within threshold (100%)
     </div>
     <div class="controls">
       <label>
         <input type="checkbox" id="showAllFunctions" checked>
-        Display all functions (6 total)
+        Display all functions (25 total)
       </label>
       <span class="quiet" style="margin-left: 15px;">
         Uncheck to show only functions with complexity > 10
@@ -198,90 +226,132 @@
       </thead>
       <tbody>
         
-            <tr data-over-threshold="false" data-file="src/main.tsx" data-function="anonymous" data-complexity="10" data-line="34" >
-              <td class="file">src/main.tsx</td>
-              <td class="bar acceptable">
-                <div class="chart"><div class="cover-fill acceptable " style="width: 33.33333333333333%"></div><div class="cover-empty" style="width: 66.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">anonymous</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value acceptable">10</span>
-              </td>
-              <td class="abs">34</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/main.tsx" data-function="applyThemeToDom" data-complexity="3" data-line="63" >
-              <td class="file">src/main.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">applyThemeToDom</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">63</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/App.tsx" data-function="anonymous" data-complexity="1" data-line="13" >
-              <td class="file">src/App.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">anonymous</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">13</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/App.tsx" data-function="AppContent" data-complexity="1" data-line="17" >
-              <td class="file">src/App.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">AppContent</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">17</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/App.tsx" data-function="App" data-complexity="1" data-line="35" >
-              <td class="file">src/App.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">App</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">35</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/setupTests.ts" data-function="anonymous" data-complexity="1" data-line="6" >
-              <td class="file">src/setupTests.ts</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">anonymous</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">6</td>
-            </tr>
-          
+                <tr data-over-threshold="false" data-file="src/main.tsx" data-function="addEventListener callback" data-complexity="10" data-line="34" >
+                  <td class="file"><a href="main.tsx.html">src/main.tsx</a></td>
+                  <td class="bar acceptable">
+                    <div class="chart"><div class="cover-fill acceptable " style="width: 33.33333333333333%"></div><div class="cover-empty" style="width: 66.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">addEventListener callback</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value acceptable">10</span>
+                  </td>
+                  <td class="abs">34</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/main.tsx" data-function="applyThemeToDom" data-complexity="3" data-line="63" >
+                  <td class="file"><a href="main.tsx.html">src/main.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">applyThemeToDom</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">63</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/App.tsx" data-function="lazy callback" data-complexity="1" data-line="13" >
+                  <td class="file"><a href="App.tsx.html">src/App.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">lazy callback</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">13</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/App.tsx" data-function="AppContent" data-complexity="1" data-line="17" >
+                  <td class="file"><a href="App.tsx.html">src/App.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">AppContent</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">17</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/App.tsx" data-function="App" data-complexity="1" data-line="35" >
+                  <td class="file"><a href="App.tsx.html">src/App.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">App</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">35</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/main.tsx" data-function="anonymous arrow function" data-complexity="1" data-line="57" >
+                  <td class="file"><a href="main.tsx.html">src/main.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">anonymous arrow function</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">57</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/main.tsx" data-function="forEach callback" data-complexity="1" data-line="67" >
+                  <td class="file"><a href="main.tsx.html">src/main.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">forEach callback</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">67</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/setupTests.ts" data-function="anonymous arrow function" data-complexity="1" data-line="6" >
+                  <td class="file"><a href="setupTests.ts.html">src/setupTests.ts</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">anonymous arrow function</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">6</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/setupTests.ts" data-function="anonymous" data-complexity="1" data-line="20" >
+                  <td class="file"><a href="setupTests.ts.html">src/setupTests.ts</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">anonymous</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">20</td>
+                </tr>
+              
       </tbody>
     </table>
   </div>

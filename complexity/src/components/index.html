@@ -169,18 +169,46 @@
       border: 1px solid #ddd;
       border-radius: 3px;
     }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .header-row h1 {
+      margin: 0;
+    }
+    .about-link {
+      color: #0074D9;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: normal;
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid #0074D9;
+      border-radius: 3px;
+      background: white;
+      white-space: nowrap;
+    }
+    .about-link:hover {
+      background: #f0f0f0;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="pad2">
-    <h1><a href="../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/components</span></h1>
+    <div class="header-row">
+      <h1><a href="../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/components</span></h1>
+      <a href="../../about.html" class="about-link">About Cyclomatic Complexity</a>
+    </div>
     <div class="pad1y quiet">
-      9 Functions / 9 within threshold (100%)
+      12 Functions / 12 within threshold (100%)
     </div>
     <div class="controls">
       <label>
         <input type="checkbox" id="showAllFunctions" checked>
-        Display all functions (9 total)
+        Display all functions (12 total)
       </label>
       <span class="quiet" style="margin-left: 15px;">
         Uncheck to show only functions with complexity > 10
@@ -198,132 +226,146 @@
       </thead>
       <tbody>
         
-            <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="Button" data-complexity="6" data-line="45" >
-              <td class="file">src/components/Button.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 20%"></div><div class="cover-empty" style="width: 80%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">Button</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">6</span>
-              </td>
-              <td class="abs">45</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="getVariantClass" data-complexity="3" data-line="11" >
-              <td class="file">src/components/Button.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getVariantClass</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">11</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="shouldDisplayChevron" data-complexity="3" data-line="21" >
-              <td class="file">src/components/Button.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">shouldDisplayChevron</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">21</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/Icon.tsx" data-function="Icon" data-complexity="3" data-line="10" >
-              <td class="file">src/components/Icon.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">Icon</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">10</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="renderLeftChevron" data-complexity="2" data-line="31" >
-              <td class="file">src/components/Button.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">renderLeftChevron</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">31</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="renderRightChevron" data-complexity="2" data-line="38" >
-              <td class="file">src/components/Button.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">renderRightChevron</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">38</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ScrollToTop.tsx" data-function="ScrollToTop" data-complexity="2" data-line="11" >
-              <td class="file">src/components/ScrollToTop.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ScrollToTop</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">11</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/BlogSkeleton.tsx" data-function="BlogSkeleton" data-complexity="1" data-line="8" >
-              <td class="file">src/components/BlogSkeleton.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">BlogSkeleton</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">8</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/MetaTags.tsx" data-function="MetaTags" data-complexity="1" data-line="7" >
-              <td class="file">src/components/MetaTags.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">MetaTags</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">7</td>
-            </tr>
-          
+                <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="Button" data-complexity="6" data-line="45" >
+                  <td class="file"><a href="Button.tsx.html">src/components/Button.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 20%"></div><div class="cover-empty" style="width: 80%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">Button</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">6</span>
+                  </td>
+                  <td class="abs">45</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="getVariantClass" data-complexity="3" data-line="11" >
+                  <td class="file"><a href="Button.tsx.html">src/components/Button.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getVariantClass</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">11</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="shouldDisplayChevron" data-complexity="3" data-line="21" >
+                  <td class="file"><a href="Button.tsx.html">src/components/Button.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">shouldDisplayChevron</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">21</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/Icon.tsx" data-function="Icon" data-complexity="3" data-line="10" >
+                  <td class="file"><a href="Icon.tsx.html">src/components/Icon.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">Icon</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">10</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="renderLeftChevron" data-complexity="2" data-line="31" >
+                  <td class="file"><a href="Button.tsx.html">src/components/Button.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">renderLeftChevron</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">31</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="renderRightChevron" data-complexity="2" data-line="38" >
+                  <td class="file"><a href="Button.tsx.html">src/components/Button.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">renderRightChevron</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">38</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ScrollToTop.tsx" data-function="useEffect callback" data-complexity="2" data-line="11" >
+                  <td class="file"><a href="ScrollToTop.tsx.html">src/components/ScrollToTop.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">useEffect callback</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">11</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ScrollToTop.tsx" data-function="ScrollToTop" data-complexity="2" data-line="14" >
+                  <td class="file"><a href="ScrollToTop.tsx.html">src/components/ScrollToTop.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ScrollToTop</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">14</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/BlogSkeleton.tsx" data-function="BlogSkeleton" data-complexity="1" data-line="8" >
+                  <td class="file"><a href="BlogSkeleton.tsx.html">src/components/BlogSkeleton.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">BlogSkeleton</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">8</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/MetaTags.tsx" data-function="MetaTags" data-complexity="1" data-line="7" >
+                  <td class="file"><a href="MetaTags.tsx.html">src/components/MetaTags.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">MetaTags</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">7</td>
+                </tr>
+              
       </tbody>
     </table>
   </div>

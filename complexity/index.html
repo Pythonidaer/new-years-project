@@ -256,19 +256,47 @@
       border: 1px solid #ddd;
       border-radius: 3px;
     }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .header-row h1 {
+      margin: 0;
+    }
+    .about-link {
+      color: #0074D9;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: normal;
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid #0074D9;
+      border-radius: 3px;
+      background: white;
+      white-space: nowrap;
+    }
+    .about-link:hover {
+      background: #f0f0f0;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="pad2">
-    <h1>All files</h1>
+    <div class="header-row">
+      <h1>All files</h1>
+      <a href="about.html" class="about-link">About Cyclomatic Complexity</a>
+    </div>
     <div class="pad1y quiet">
-      All Functions (129 total)
+      All Functions (303 total)
        / 2 with complexity > 10
     </div>
     <div class="pad2y">
       <div class="strong">
-        129 Functions
-         / Max: 27 / Avg: 3
+        303 Functions
+         / Max: 27 / Avg: 2
       </div>
     </div>
             <div class="folder-view" id="folderView">
@@ -283,7 +311,7 @@
             </thead>
             <tbody>
               
-                  <tr data-file="src" data-functions="6/6" data-percentage="100">
+                  <tr data-file="src" data-functions="25/25" data-percentage="100">
                     <td class="file">
                       <a href="src/index.html">src</a>
                     </td>
@@ -291,45 +319,12 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">6/6</td>
+                    <td class="pct">25/25</td>
                   </tr>
                 
-                  <tr data-file="src/components" data-functions="9/9" data-percentage="100">
+                  <tr data-file="src/components" data-functions="12/12" data-percentage="100">
                     <td class="file">
                       <a href="src/components/index.html">src/components</a>
-                    </td>
-                    <td class="bar high">
-                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
-                    </td>
-                    <td class="pic">100%</td>
-                    <td class="pct">9/9</td>
-                  </tr>
-                
-                  <tr data-file="src/components/AudioControl" data-functions="5/5" data-percentage="100">
-                    <td class="file">
-                      <a href="src/components/AudioControl/index.html">src/components/AudioControl</a>
-                    </td>
-                    <td class="bar high">
-                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
-                    </td>
-                    <td class="pic">100%</td>
-                    <td class="pct">5/5</td>
-                  </tr>
-                
-                  <tr data-file="src/components/ThemePicker" data-functions="18/19" data-percentage="95">
-                    <td class="file">
-                      <a href="src/components/ThemePicker/index.html">src/components/ThemePicker</a>
-                    </td>
-                    <td class="bar high">
-                      <div class="chart"><div class="cover-fill high " style="width: 95%"></div><div class="cover-empty" style="width: 5%"></div></div>
-                    </td>
-                    <td class="pic">95%</td>
-                    <td class="pct">18/19</td>
-                  </tr>
-                
-                  <tr data-file="src/context" data-functions="12/12" data-percentage="100">
-                    <td class="file">
-                      <a href="src/context/index.html">src/context</a>
                     </td>
                     <td class="bar high">
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
@@ -338,9 +333,9 @@
                     <td class="pct">12/12</td>
                   </tr>
                 
-                  <tr data-file="src/data/blog" data-functions="8/8" data-percentage="100">
+                  <tr data-file="src/components/AudioControl" data-functions="8/8" data-percentage="100">
                     <td class="file">
-                      <a href="src/data/blog/index.html">src/data/blog</a>
+                      <a href="src/components/AudioControl/index.html">src/components/AudioControl</a>
                     </td>
                     <td class="bar high">
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
@@ -349,7 +344,40 @@
                     <td class="pct">8/8</td>
                   </tr>
                 
-                  <tr data-file="src/hooks" data-functions="11/11" data-percentage="100">
+                  <tr data-file="src/components/ThemePicker" data-functions="59/60" data-percentage="98">
+                    <td class="file">
+                      <a href="src/components/ThemePicker/index.html">src/components/ThemePicker</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high " style="width: 98%"></div><div class="cover-empty" style="width: 2%"></div></div>
+                    </td>
+                    <td class="pic">98%</td>
+                    <td class="pct">59/60</td>
+                  </tr>
+                
+                  <tr data-file="src/context" data-functions="23/23" data-percentage="100">
+                    <td class="file">
+                      <a href="src/context/index.html">src/context</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">23/23</td>
+                  </tr>
+                
+                  <tr data-file="src/data/blog" data-functions="22/22" data-percentage="100">
+                    <td class="file">
+                      <a href="src/data/blog/index.html">src/data/blog</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">22/22</td>
+                  </tr>
+                
+                  <tr data-file="src/hooks" data-functions="18/18" data-percentage="100">
                     <td class="file">
                       <a href="src/hooks/index.html">src/hooks</a>
                     </td>
@@ -357,7 +385,7 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">11/11</td>
+                    <td class="pct">18/18</td>
                   </tr>
                 
                   <tr data-file="src/layout" data-functions="2/2" data-percentage="100">
@@ -371,7 +399,7 @@
                     <td class="pct">2/2</td>
                   </tr>
                 
-                  <tr data-file="src/pages" data-functions="11/11" data-percentage="100">
+                  <tr data-file="src/pages" data-functions="23/23" data-percentage="100">
                     <td class="file">
                       <a href="src/pages/index.html">src/pages</a>
                     </td>
@@ -379,10 +407,10 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">11/11</td>
+                    <td class="pct">23/23</td>
                   </tr>
                 
-                  <tr data-file="src/sections/AgencyLogos" data-functions="4/4" data-percentage="100">
+                  <tr data-file="src/sections/AgencyLogos" data-functions="14/14" data-percentage="100">
                     <td class="file">
                       <a href="src/sections/AgencyLogos/index.html">src/sections/AgencyLogos</a>
                     </td>
@@ -390,10 +418,10 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">4/4</td>
+                    <td class="pct">14/14</td>
                   </tr>
                 
-                  <tr data-file="src/sections/BlogFilters" data-functions="2/2" data-percentage="100">
+                  <tr data-file="src/sections/BlogFilters" data-functions="9/9" data-percentage="100">
                     <td class="file">
                       <a href="src/sections/BlogFilters/index.html">src/sections/BlogFilters</a>
                     </td>
@@ -401,10 +429,10 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">2/2</td>
+                    <td class="pct">9/9</td>
                   </tr>
                 
-                  <tr data-file="src/sections/BlogGrid" data-functions="2/2" data-percentage="100">
+                  <tr data-file="src/sections/BlogGrid" data-functions="5/5" data-percentage="100">
                     <td class="file">
                       <a href="src/sections/BlogGrid/index.html">src/sections/BlogGrid</a>
                     </td>
@@ -412,7 +440,7 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">2/2</td>
+                    <td class="pct">5/5</td>
                   </tr>
                 
                   <tr data-file="src/sections/BlogHeading" data-functions="1/1" data-percentage="100">
@@ -437,7 +465,7 @@
                     <td class="pct">1/1</td>
                   </tr>
                 
-                  <tr data-file="src/sections/CustomerSpotlight" data-functions="3/3" data-percentage="100">
+                  <tr data-file="src/sections/CustomerSpotlight" data-functions="7/7" data-percentage="100">
                     <td class="file">
                       <a href="src/sections/CustomerSpotlight/index.html">src/sections/CustomerSpotlight</a>
                     </td>
@@ -445,10 +473,10 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">3/3</td>
+                    <td class="pct">7/7</td>
                   </tr>
                 
-                  <tr data-file="src/sections/FeatureAccordion" data-functions="3/3" data-percentage="100">
+                  <tr data-file="src/sections/FeatureAccordion" data-functions="8/8" data-percentage="100">
                     <td class="file">
                       <a href="src/sections/FeatureAccordion/index.html">src/sections/FeatureAccordion</a>
                     </td>
@@ -456,7 +484,7 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">3/3</td>
+                    <td class="pct">8/8</td>
                   </tr>
                 
                   <tr data-file="src/sections/FeaturedBlogPost" data-functions="1/1" data-percentage="100">
@@ -470,7 +498,7 @@
                     <td class="pct">1/1</td>
                   </tr>
                 
-                  <tr data-file="src/sections/Footer" data-functions="2/2" data-percentage="100">
+                  <tr data-file="src/sections/Footer" data-functions="6/6" data-percentage="100">
                     <td class="file">
                       <a href="src/sections/Footer/index.html">src/sections/Footer</a>
                     </td>
@@ -478,10 +506,10 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">2/2</td>
+                    <td class="pct">6/6</td>
                   </tr>
                 
-                  <tr data-file="src/sections/Header" data-functions="9/9" data-percentage="100">
+                  <tr data-file="src/sections/Header" data-functions="25/25" data-percentage="100">
                     <td class="file">
                       <a href="src/sections/Header/index.html">src/sections/Header</a>
                     </td>
@@ -489,7 +517,7 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">9/9</td>
+                    <td class="pct">25/25</td>
                   </tr>
                 
                   <tr data-file="src/sections/Hero" data-functions="2/2" data-percentage="100">
@@ -503,9 +531,42 @@
                     <td class="pct">2/2</td>
                   </tr>
                 
-                  <tr data-file="src/sections/HeroMarquee" data-functions="2/2" data-percentage="100">
+                  <tr data-file="src/sections/HeroMarquee" data-functions="3/3" data-percentage="100">
                     <td class="file">
                       <a href="src/sections/HeroMarquee/index.html">src/sections/HeroMarquee</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">3/3</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/LatestBlogs" data-functions="4/4" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/LatestBlogs/index.html">src/sections/LatestBlogs</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">4/4</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/LatestNews" data-functions="4/4" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/LatestNews/index.html">src/sections/LatestNews</a>
+                    </td>
+                    <td class="bar high">
+                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+                    </td>
+                    <td class="pic">100%</td>
+                    <td class="pct">4/4</td>
+                  </tr>
+                
+                  <tr data-file="src/sections/PlatformCards" data-functions="2/2" data-percentage="100">
+                    <td class="file">
+                      <a href="src/sections/PlatformCards/index.html">src/sections/PlatformCards</a>
                     </td>
                     <td class="bar high">
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
@@ -514,40 +575,7 @@
                     <td class="pct">2/2</td>
                   </tr>
                 
-                  <tr data-file="src/sections/LatestBlogs" data-functions="1/1" data-percentage="100">
-                    <td class="file">
-                      <a href="src/sections/LatestBlogs/index.html">src/sections/LatestBlogs</a>
-                    </td>
-                    <td class="bar high">
-                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
-                    </td>
-                    <td class="pic">100%</td>
-                    <td class="pct">1/1</td>
-                  </tr>
-                
-                  <tr data-file="src/sections/LatestNews" data-functions="1/1" data-percentage="100">
-                    <td class="file">
-                      <a href="src/sections/LatestNews/index.html">src/sections/LatestNews</a>
-                    </td>
-                    <td class="bar high">
-                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
-                    </td>
-                    <td class="pic">100%</td>
-                    <td class="pct">1/1</td>
-                  </tr>
-                
-                  <tr data-file="src/sections/PlatformCards" data-functions="1/1" data-percentage="100">
-                    <td class="file">
-                      <a href="src/sections/PlatformCards/index.html">src/sections/PlatformCards</a>
-                    </td>
-                    <td class="bar high">
-                      <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
-                    </td>
-                    <td class="pic">100%</td>
-                    <td class="pct">1/1</td>
-                  </tr>
-                
-                  <tr data-file="src/sections/PlatformIntro" data-functions="1/1" data-percentage="100">
+                  <tr data-file="src/sections/PlatformIntro" data-functions="2/2" data-percentage="100">
                     <td class="file">
                       <a href="src/sections/PlatformIntro/index.html">src/sections/PlatformIntro</a>
                     </td>
@@ -555,10 +583,10 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">1/1</td>
+                    <td class="pct">2/2</td>
                   </tr>
                 
-                  <tr data-file="src/sections/TopBanner" data-functions="3/3" data-percentage="100">
+                  <tr data-file="src/sections/TopBanner" data-functions="9/9" data-percentage="100">
                     <td class="file">
                       <a href="src/sections/TopBanner/index.html">src/sections/TopBanner</a>
                     </td>
@@ -566,7 +594,7 @@
                       <div class="chart"><div class="cover-fill high cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
                     </td>
                     <td class="pic">100%</td>
-                    <td class="pct">3/3</td>
+                    <td class="pct">9/9</td>
                   </tr>
                 
                   <tr data-file="src/utils" data-functions="6/7" data-percentage="86">

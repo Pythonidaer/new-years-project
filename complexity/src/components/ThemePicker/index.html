@@ -169,18 +169,46 @@
       border: 1px solid #ddd;
       border-radius: 3px;
     }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .header-row h1 {
+      margin: 0;
+    }
+    .about-link {
+      color: #0074D9;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: normal;
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid #0074D9;
+      border-radius: 3px;
+      background: white;
+      white-space: nowrap;
+    }
+    .about-link:hover {
+      background: #f0f0f0;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="pad2">
-    <h1><a href="../../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/components/ThemePicker</span></h1>
+    <div class="header-row">
+      <h1><a href="../../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/components/ThemePicker</span></h1>
+      <a href="../../../about.html" class="about-link">About Cyclomatic Complexity</a>
+    </div>
     <div class="pad1y quiet">
-      19 Functions / 18 within threshold (95%)
+      60 Functions / 59 within threshold (98%)
     </div>
     <div class="controls">
       <label>
         <input type="checkbox" id="showAllFunctions" checked>
-        Display all functions (19 total)
+        Display all functions (60 total)
       </label>
       <span class="quiet" style="margin-left: 15px;">
         Uncheck to show only functions with complexity > 10
@@ -198,272 +226,314 @@
       </thead>
       <tbody>
         
-            <tr data-over-threshold="true" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="ThemePicker" data-complexity="12" data-line="281" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar high">
-                <div class="chart"><div class="cover-fill high " style="width: 40%"></div><div class="cover-empty" style="width: 60%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ThemePicker</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value high">12</span>
-              </td>
-              <td class="abs">281</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="anonymous" data-complexity="6" data-line="448" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 20%"></div><div class="cover-empty" style="width: 80%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">anonymous</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">6</span>
-              </td>
-              <td class="abs">448</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="getRelatedSectionGradientPreview" data-complexity="5" data-line="502" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 16.666666666666664%"></div><div class="cover-empty" style="width: 83.33333333333334%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getRelatedSectionGradientPreview</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">5</span>
-              </td>
-              <td class="abs">502</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="ColorCategories" data-complexity="4" data-line="194" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 13.333333333333334%"></div><div class="cover-empty" style="width: 86.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ColorCategories</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">4</span>
-              </td>
-              <td class="abs">194</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleBackdropClick" data-complexity="4" data-line="392" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 13.333333333333334%"></div><div class="cover-empty" style="width: 86.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleBackdropClick</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">4</span>
-              </td>
-              <td class="abs">392</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="ColorItem" data-complexity="3" data-line="86" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ColorItem</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">86</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="getGradientPreview" data-complexity="3" data-line="474" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getGradientPreview</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">474</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="getCampaignGradientPreview" data-complexity="3" data-line="481" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getCampaignGradientPreview</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">481</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="getAuthorBoxGradientPreview" data-complexity="3" data-line="488" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getAuthorBoxGradientPreview</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">488</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handlePresetsHeaderKeyDown" data-complexity="3" data-line="507" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handlePresetsHeaderKeyDown</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">507</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleSavePresetKeyDown" data-complexity="3" data-line="515" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleSavePresetKeyDown</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">515</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="GradientGroup" data-complexity="2" data-line="132" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">GradientGroup</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">132</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleColorChange" data-complexity="2" data-line="322" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleColorChange</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">322</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleCancel" data-complexity="2" data-line="333" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleCancel</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">333</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleSave" data-complexity="2" data-line="348" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleSave</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">348</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleSavePreset" data-complexity="2" data-line="370" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleSavePreset</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">370</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleDeletePreset" data-complexity="2" data-line="383" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleDeletePreset</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">383</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleReset" data-complexity="1" data-line="357" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleReset</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">357</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleLoadPreset" data-complexity="1" data-line="364" >
-              <td class="file">src/components/ThemePicker/ThemePicker.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleLoadPreset</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">364</td>
-            </tr>
-          
+                <tr data-over-threshold="true" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="ThemePicker" data-complexity="12" data-line="281" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar high">
+                    <div class="chart"><div class="cover-fill high " style="width: 40%"></div><div class="cover-empty" style="width: 60%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ThemePicker</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value high">12</span>
+                  </td>
+                  <td class="abs">281</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="anonymous arrow function" data-complexity="6" data-line="448" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 20%"></div><div class="cover-empty" style="width: 80%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">anonymous arrow function</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">6</span>
+                  </td>
+                  <td class="abs">448</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="getRelatedSectionGradientPreview" data-complexity="5" data-line="502" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 16.666666666666664%"></div><div class="cover-empty" style="width: 83.33333333333334%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getRelatedSectionGradientPreview</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">5</span>
+                  </td>
+                  <td class="abs">502</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="ColorCategories" data-complexity="4" data-line="194" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 13.333333333333334%"></div><div class="cover-empty" style="width: 86.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ColorCategories</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">4</span>
+                  </td>
+                  <td class="abs">194</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleBackdropClick" data-complexity="4" data-line="392" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 13.333333333333334%"></div><div class="cover-empty" style="width: 86.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleBackdropClick</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">4</span>
+                  </td>
+                  <td class="abs">392</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="map callback" data-complexity="4" data-line="684" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 13.333333333333334%"></div><div class="cover-empty" style="width: 86.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">map callback</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">4</span>
+                  </td>
+                  <td class="abs">684</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="ColorItem" data-complexity="3" data-line="86" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ColorItem</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">86</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="getGradientPreview" data-complexity="3" data-line="474" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getGradientPreview</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">474</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="getCampaignGradientPreview" data-complexity="3" data-line="481" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getCampaignGradientPreview</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">481</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="getAuthorBoxGradientPreview" data-complexity="3" data-line="488" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getAuthorBoxGradientPreview</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">488</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handlePresetsHeaderKeyDown" data-complexity="3" data-line="507" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handlePresetsHeaderKeyDown</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">507</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleSavePresetKeyDown" data-complexity="3" data-line="515" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleSavePresetKeyDown</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">515</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="GradientGroup" data-complexity="2" data-line="132" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">GradientGroup</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">132</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleColorChange" data-complexity="2" data-line="322" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleColorChange</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">322</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleCancel" data-complexity="2" data-line="333" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleCancel</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">333</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleSave" data-complexity="2" data-line="348" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleSave</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">348</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleSavePreset" data-complexity="2" data-line="370" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleSavePreset</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">370</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleDeletePreset" data-complexity="2" data-line="383" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleDeletePreset</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">383</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="ThemePicker (useMemo callback)" data-complexity="1" data-line="295" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ThemePicker (useMemo callback)</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">295</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleReset" data-complexity="1" data-line="357" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleReset</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">357</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="handleLoadPreset" data-complexity="1" data-line="364" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleLoadPreset</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">364</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/ThemePicker/ThemePicker.tsx" data-function="some callback" data-complexity="1" data-line="576" >
+                  <td class="file"><a href="ThemePicker.tsx.html">src/components/ThemePicker/ThemePicker.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">some callback</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">576</td>
+                </tr>
+              
       </tbody>
     </table>
   </div>

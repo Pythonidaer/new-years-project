@@ -169,18 +169,46 @@
       border: 1px solid #ddd;
       border-radius: 3px;
     }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .header-row h1 {
+      margin: 0;
+    }
+    .about-link {
+      color: #0074D9;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: normal;
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid #0074D9;
+      border-radius: 3px;
+      background: white;
+      white-space: nowrap;
+    }
+    .about-link:hover {
+      background: #f0f0f0;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="pad2">
-    <h1><a href="../../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/sections/AgencyLogos</span></h1>
+    <div class="header-row">
+      <h1><a href="../../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/sections/AgencyLogos</span></h1>
+      <a href="../../../about.html" class="about-link">About Cyclomatic Complexity</a>
+    </div>
     <div class="pad1y quiet">
-      4 Functions / 4 within threshold (100%)
+      14 Functions / 14 within threshold (100%)
     </div>
     <div class="controls">
       <label>
         <input type="checkbox" id="showAllFunctions" checked>
-        Display all functions (4 total)
+        Display all functions (14 total)
       </label>
       <span class="quiet" style="margin-left: 15px;">
         Uncheck to show only functions with complexity > 10
@@ -198,62 +226,104 @@
       </thead>
       <tbody>
         
-            <tr data-over-threshold="false" data-file="src/sections/AgencyLogos/index.tsx" data-function="handlePointerDown" data-complexity="3" data-line="81" >
-              <td class="file">src/sections/AgencyLogos/index.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handlePointerDown</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">81</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/sections/AgencyLogos/index.tsx" data-function="AgencyLogos" data-complexity="2" data-line="37" >
-              <td class="file">src/sections/AgencyLogos/index.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">AgencyLogos</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">37</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/sections/AgencyLogos/index.tsx" data-function="anonymous" data-complexity="2" data-line="126" >
-              <td class="file">src/sections/AgencyLogos/index.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">anonymous</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">126</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/sections/AgencyLogos/index.tsx" data-function="handleReInit" data-complexity="1" data-line="54" >
-              <td class="file">src/sections/AgencyLogos/index.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleReInit</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">54</td>
-            </tr>
-          
+                <tr data-over-threshold="false" data-file="src/sections/AgencyLogos/index.tsx" data-function="handlePointerDown" data-complexity="3" data-line="81" >
+                  <td class="file"><a href="index.tsx.html">src/sections/AgencyLogos/index.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handlePointerDown</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">81</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/sections/AgencyLogos/index.tsx" data-function="handlePointerDown (setInterval callback)" data-complexity="3" data-line="84" >
+                  <td class="file"><a href="index.tsx.html">src/sections/AgencyLogos/index.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handlePointerDown (setInterval callback)</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">84</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/sections/AgencyLogos/index.tsx" data-function="AgencyLogos (useCallback callback)" data-complexity="2" data-line="37" >
+                  <td class="file"><a href="index.tsx.html">src/sections/AgencyLogos/index.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">AgencyLogos (useCallback callback)</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">37</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/sections/AgencyLogos/index.tsx" data-function="AgencyLogos" data-complexity="2" data-line="51" >
+                  <td class="file"><a href="index.tsx.html">src/sections/AgencyLogos/index.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">AgencyLogos</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">51</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/sections/AgencyLogos/index.tsx" data-function="map callback" data-complexity="2" data-line="126" >
+                  <td class="file"><a href="index.tsx.html">src/sections/AgencyLogos/index.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">map callback</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">126</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/sections/AgencyLogos/index.tsx" data-function="handleReInit" data-complexity="1" data-line="54" >
+                  <td class="file"><a href="index.tsx.html">src/sections/AgencyLogos/index.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleReInit</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">54</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/sections/AgencyLogos/index.tsx" data-function="anonymous arrow function" data-complexity="1" data-line="132" >
+                  <td class="file"><a href="index.tsx.html">src/sections/AgencyLogos/index.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">anonymous arrow function</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">132</td>
+                </tr>
+              
       </tbody>
     </table>
   </div>

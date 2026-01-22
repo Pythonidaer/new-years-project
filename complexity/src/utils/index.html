@@ -169,11 +169,39 @@
       border: 1px solid #ddd;
       border-radius: 3px;
     }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .header-row h1 {
+      margin: 0;
+    }
+    .about-link {
+      color: #0074D9;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: normal;
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid #0074D9;
+      border-radius: 3px;
+      background: white;
+      white-space: nowrap;
+    }
+    .about-link:hover {
+      background: #f0f0f0;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="pad2">
-    <h1><a href="../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/utils</span></h1>
+    <div class="header-row">
+      <h1><a href="../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/utils</span></h1>
+      <a href="../../about.html" class="about-link">About Cyclomatic Complexity</a>
+    </div>
     <div class="pad1y quiet">
       7 Functions / 6 within threshold (86%)
     </div>
@@ -198,104 +226,104 @@
       </thead>
       <tbody>
         
-            <tr data-over-threshold="true" data-file="src/utils/contrast.ts" data-function="checkContrastIssues" data-complexity="27" data-line="70" >
-              <td class="file">src/utils/contrast.ts</td>
-              <td class="bar low">
-                <div class="chart"><div class="cover-fill low " style="width: 90%"></div><div class="cover-empty" style="width: 10%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">checkContrastIssues</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value low">27</span>
-              </td>
-              <td class="abs">70</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/utils/imageGrayscale.ts" data-function="getGrayscaleImageUrl" data-complexity="4" data-line="11" >
-              <td class="file">src/utils/imageGrayscale.ts</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 13.333333333333334%"></div><div class="cover-empty" style="width: 86.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getGrayscaleImageUrl</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">4</span>
-              </td>
-              <td class="abs">11</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/utils/contrast.ts" data-function="blendColor" data-complexity="3" data-line="7" >
-              <td class="file">src/utils/contrast.ts</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">blendColor</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">7</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/utils/contrast.ts" data-function="getContrastLevel" data-complexity="3" data-line="51" >
-              <td class="file">src/utils/contrast.ts</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getContrastLevel</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">3</span>
-              </td>
-              <td class="abs">51</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/utils/contrast.ts" data-function="getContrastRatio" data-complexity="2" data-line="36" >
-              <td class="file">src/utils/contrast.ts</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getContrastRatio</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">36</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/utils/imageGrayscale.ts" data-function="getGrayscaleFilter" data-complexity="2" data-line="35" >
-              <td class="file">src/utils/imageGrayscale.ts</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getGrayscaleFilter</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">35</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/utils/slug.ts" data-function="slugify" data-complexity="1" data-line="6" >
-              <td class="file">src/utils/slug.ts</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">slugify</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">6</td>
-            </tr>
-          
+                <tr data-over-threshold="true" data-file="src/utils/contrast.ts" data-function="checkContrastIssues" data-complexity="27" data-line="70" >
+                  <td class="file"><a href="contrast.ts.html">src/utils/contrast.ts</a></td>
+                  <td class="bar low">
+                    <div class="chart"><div class="cover-fill low " style="width: 90%"></div><div class="cover-empty" style="width: 10%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">checkContrastIssues</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value low">27</span>
+                  </td>
+                  <td class="abs">70</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/utils/imageGrayscale.ts" data-function="getGrayscaleImageUrl" data-complexity="4" data-line="11" >
+                  <td class="file"><a href="imageGrayscale.ts.html">src/utils/imageGrayscale.ts</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 13.333333333333334%"></div><div class="cover-empty" style="width: 86.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getGrayscaleImageUrl</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">4</span>
+                  </td>
+                  <td class="abs">11</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/utils/contrast.ts" data-function="blendColor" data-complexity="3" data-line="7" >
+                  <td class="file"><a href="contrast.ts.html">src/utils/contrast.ts</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">blendColor</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">7</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/utils/contrast.ts" data-function="getContrastLevel" data-complexity="3" data-line="51" >
+                  <td class="file"><a href="contrast.ts.html">src/utils/contrast.ts</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getContrastLevel</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">3</span>
+                  </td>
+                  <td class="abs">51</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/utils/contrast.ts" data-function="getContrastRatio" data-complexity="2" data-line="36" >
+                  <td class="file"><a href="contrast.ts.html">src/utils/contrast.ts</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getContrastRatio</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">36</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/utils/imageGrayscale.ts" data-function="getGrayscaleFilter" data-complexity="2" data-line="35" >
+                  <td class="file"><a href="imageGrayscale.ts.html">src/utils/imageGrayscale.ts</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">getGrayscaleFilter</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">35</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/utils/slug.ts" data-function="slugify" data-complexity="1" data-line="6" >
+                  <td class="file"><a href="slug.ts.html">src/utils/slug.ts</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">slugify</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">6</td>
+                </tr>
+              
       </tbody>
     </table>
   </div>

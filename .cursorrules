@@ -713,29 +713,57 @@ The AI assistant should **automatically suggest running test coverage** in these
 
 ### 13. Cyclomatic Complexity Standards
 
-**This project enforces cyclomatic complexity limits to maintain code quality and testability.**
+**This project uses JS-Friendly Cyclomatic Complexity rules for JavaScript/TypeScript.**
+
+**You are writing JavaScript/TypeScript using JS-friendly cyclomatic complexity rules. Follow these rules strictly:**
+
+**Base Rule:**
+- Every function starts with complexity = 1 (base).
+- Base values do NOT stack across function boundaries.
+
+**What Increases Complexity (+1 each):**
+
+**Control Flow:**
+- `if`, `else if`
+- `for`, `while`, `do...while`
+- `switch` → each `case`
+- `catch`
+- Early return guarded by a condition
+
+**Expressions:**
+- Ternary operator: `cond ? a : b`
+- Logical operators: `&&`, `||`, `??`
+
+**Important:** Each logical operator counts independently:
+- `a && b && c` → +2 complexity (two `&&` operators)
+- `a || b` → +1 complexity (one `||` operator)
+
+**What Does NOT Increase Complexity:**
+- Function calls (including `setTimeout`, `requestAnimationFrame`)
+- `async` / `await`
+- JSX rendering
+- `.map`, `.forEach`, `.filter` (unless they contain decision points)
+- Boolean comparisons passed as arguments: `setState(x > 10)` does NOT add complexity
+- Sequential statements (assignments, calls, logging, object/array literals, destructuring, arithmetic/string ops, unconditional return)
+- TypeScript types/interfaces/generics (compile-time only)
+
+**Per-Function Accounting (Critical Rule):**
+- Cyclomatic complexity is **per function**, not per file or component.
+- **Correct:** Parent function: 3, Nested callback: 4 (each measured independently)
+- **Incorrect:** Parent function: 7 ❌ (do NOT auto-sum children)
+- If rollups are shown, they must be explicitly labeled (e.g., "tree sum").
+
+**JSX-Specific Rules:**
+- JSX volume ≠ complexity
+- Skeleton / layout components are usually complexity = 1
+- Inline callbacks (`onClick={() => ...}`) are:
+  - complexity = 1 (base)
+  - optional to include in reports
 
 **Complexity Targets:**
 - **Default:** Keep cyclomatic complexity ≤ 10 per function/method
 - **UI Components, Hooks, Event Handlers:** Prefer ≤ 6
 - **Exceptions:** Any function expected to exceed 10 must be intentionally refactored or split unless there is a strong reason (documented inline)
-
-**What Counts as Complexity:**
-Cyclomatic complexity is 1 (base path) plus +1 for each decision/branch point. These count as decision points:
-- `if`, each `else if`
-- Conditional (ternary): `cond ? a : b`
-- Loops: `for`, `for...of`, `for...in`, `while`, `do...while`
-- `switch`: treat each `case`/`default` as a branch (tool-dependent; assume strict counting unless configured otherwise)
-- `catch` blocks (`try` itself does not add a branch)
-- Short-circuit boolean logic that changes flow: `&&`, `||` (especially in conditions and JSX)
-
-**What Does NOT Count:**
-These do not add cyclomatic complexity:
-- Sequential statements (assignments, calls, logging, object/array literals, destructuring, arithmetic/string ops, unconditional return)
-- JSX structure/layout without conditional logic
-- Hook calls (e.g., `useState`, `useEffect`) as calls; only branching inside their callbacks/components counts
-- TypeScript types/interfaces/generics (compile-time only)
-- React itself does not change the rules; conditional rendering (`&&`, ternary) does add branches
 
 **Design Constraints to Keep Complexity Low:**
 
@@ -753,17 +781,21 @@ When generating code, prefer patterns that naturally reduce branching:
    - Side effects (isolated)
 5. **Keep callbacks small** (`map`, `filter`, `reduce`, event handlers); if branching appears, extract to a named function
 6. **Prefer data-driven configuration** over branching (e.g., arrays of rules, tables of constants)
+7. **Prefer early returns and simple expressions** to reduce decision density
+8. **Avoid chaining multiple `&&` / `||`** in a single expression when clarity suffers
+9. **When complexity exceeds 5, consider refactoring** into smaller functions
 
 **Testing / Maintainability Requirements:**
 - Keep decision logic in pure functions (easy to unit test)
 - Components should mostly compose UI; non-trivial conditional logic belongs in helpers/hooks
 - Limit nesting depth (aim ≤ 2) and avoid combining multiple concerns in one function
 
-**Exceptions:**
-If complexity > 10 is unavoidable:
-- Add an inline comment explaining why (domain complexity, performance constraints, etc.)
-- Ensure the function is well-covered by tests
-- Split internal logic into clearly named helpers where possible
+**Recommended Report Fields (for clarity):**
+For each function:
+- **CC (self)** – complexity of the function itself
+- **Decision sources** – `if`, `?:`, `&&`, `||`
+- **Nested max CC** – highest child complexity (optional)
+- **Tree sum CC** – sum of all nested functions (optional, custom)
 
 **ESLint Enforcement:**
 - Complexity rule is configured in `eslint.config.js`
@@ -886,7 +918,7 @@ npm run lint:complexity:all      # Generate report with all functions visible by
    - [ ] Generate historical trends (track complexity over time)
    - [ ] Export to various formats (JSON, CSV) for further analysis
    - [ ] Add comparison view (compare complexity between commits/branches)
-   - [ ] Consider packaging (extract complexity report generator as npm package)
+   - [ ] **Package complexity report generator as npm package** - Extract the complexity report generator into a reusable npm package for use in other projects
 
 4. **UI/UX Enhancements:**
    - [ ] Add keyboard navigation support
@@ -896,3 +928,36 @@ npm run lint:complexity:all      # Generate report with all functions visible by
    - [ ] Adjust styles to mirror coverage styles from Vitest more closely
    - [ ] Adjust headers more (refine header styling and layout)
    - [ ] Begin identifying way to color code decision paths but need to decide first what to do and how, for example, hints or something similar to what Vitest coverage does
+
+5. **Styling & Highlighting Improvements:**
+   - [ ] Continue fixing areas that aren't properly highlighted in the complexity report
+   - [ ] Ensure all decision points are correctly identified and visually highlighted
+   - [ ] Improve visual consistency of highlighting across different decision point types
+
+6. **Decision Path Tracking:**
+   - [ ] Add features to numerically track decision paths per file (e.g., count of if statements, else statements, ternaries, loops, etc.)
+   - [ ] Decide on categorization: track individually (if, else, ternary, etc.) or chunked into groups (statements, loops, ternaries, etc.)
+   - [ ] Display decision path statistics at file and folder levels
+
+7. **Complexity Calculation Investigation:**
+   - [x] Investigate why `ScrollToTop.tsx.html` seems to mis-track complexity - the breakdown shows `(1 base + 2 if)` which equals 3, but the reported complexity is 2
+     - **Fixed**: Decision points are now assigned to the innermost function that contains them, and arrow function boundaries are detected correctly
+   - [x] Understand why `if` statements within `useEffect` hooks are being counted in the breakdown, but the base function declaration containing them doesn't seem to be included in the total correctly
+     - **Fixed**: Decision points within nested functions (like useEffect callbacks) are now correctly assigned to those nested functions, not the outer function
+   - [x] Verify ESLint's complexity calculation matches our breakdown calculation for edge cases (nested functions, hooks, callbacks)
+     - **Fixed**: Breakdowns now match ESLint's complexity scores for nested functions
+
+8. **Documentation Updates:**
+   - [ ] Update `complexity/about.html` to clarify why some constructs that seem like decision paths are not counted (e.g., `try` blocks don't add complexity, only `catch` blocks do; `else` blocks don't add complexity independently, they're part of the `if` statement's complexity)
+
+9. **Code Refactoring - Complexity Report Generator:**
+   - [ ] **PRIORITY: Split `scripts/generate-complexity-report.js` into smaller, focused modules**
+     - **Problem:** File has grown to 3,000+ lines, causing hallucinations, Cursor struggling, worse refactors, and making mistakes
+     - **Goal:** Split into appropriate files closer to 1,000 lines each
+     - **Approach:**
+       - Extract decision point parsing functions into separate module
+       - Extract HTML generation functions into separate module
+       - Extract function boundary detection into separate module
+       - Extract complexity breakdown calculation into separate module
+       - Keep main orchestration logic in primary file
+     - **Benefits:** Better maintainability, easier to understand, reduces AI confusion, improves refactoring quality

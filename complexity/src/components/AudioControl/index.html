@@ -169,18 +169,46 @@
       border: 1px solid #ddd;
       border-radius: 3px;
     }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .header-row h1 {
+      margin: 0;
+    }
+    .about-link {
+      color: #0074D9;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: normal;
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid #0074D9;
+      border-radius: 3px;
+      background: white;
+      white-space: nowrap;
+    }
+    .about-link:hover {
+      background: #f0f0f0;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="pad2">
-    <h1><a href="../../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/components/AudioControl</span></h1>
+    <div class="header-row">
+      <h1><a href="../../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/components/AudioControl</span></h1>
+      <a href="../../../about.html" class="about-link">About Cyclomatic Complexity</a>
+    </div>
     <div class="pad1y quiet">
-      5 Functions / 5 within threshold (100%)
+      8 Functions / 8 within threshold (100%)
     </div>
     <div class="controls">
       <label>
         <input type="checkbox" id="showAllFunctions" checked>
-        Display all functions (5 total)
+        Display all functions (8 total)
       </label>
       <span class="quiet" style="margin-left: 15px;">
         Uncheck to show only functions with complexity > 10
@@ -198,76 +226,90 @@
       </thead>
       <tbody>
         
-            <tr data-over-threshold="false" data-file="src/components/AudioControl/AudioControl.tsx" data-function="AudioControl" data-complexity="9" data-line="6" >
-              <td class="file">src/components/AudioControl/AudioControl.tsx</td>
-              <td class="bar acceptable">
-                <div class="chart"><div class="cover-fill acceptable " style="width: 30%"></div><div class="cover-empty" style="width: 70%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">AudioControl</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value acceptable">9</span>
-              </td>
-              <td class="abs">6</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/AudioControl/AudioControl.tsx" data-function="return" data-complexity="4" data-line="76" >
-              <td class="file">src/components/AudioControl/AudioControl.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 13.333333333333334%"></div><div class="cover-empty" style="width: 86.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">return</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">4</span>
-              </td>
-              <td class="abs">76</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/AudioControl/AudioControl.tsx" data-function="handlePlay" data-complexity="1" data-line="43" >
-              <td class="file">src/components/AudioControl/AudioControl.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handlePlay</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">43</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/AudioControl/AudioControl.tsx" data-function="handlePause" data-complexity="1" data-line="44" >
-              <td class="file">src/components/AudioControl/AudioControl.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handlePause</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">44</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/components/AudioControl/AudioControl.tsx" data-function="handleEnded" data-complexity="1" data-line="45" >
-              <td class="file">src/components/AudioControl/AudioControl.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleEnded</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">45</td>
-            </tr>
-          
+                <tr data-over-threshold="false" data-file="src/components/AudioControl/AudioControl.tsx" data-function="AudioControl" data-complexity="9" data-line="6" >
+                  <td class="file"><a href="AudioControl.tsx.html">src/components/AudioControl/AudioControl.tsx</a></td>
+                  <td class="bar acceptable">
+                    <div class="chart"><div class="cover-fill acceptable " style="width: 30%"></div><div class="cover-empty" style="width: 70%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">AudioControl</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value acceptable">9</span>
+                  </td>
+                  <td class="abs">6</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/AudioControl/AudioControl.tsx" data-function="return (async callback)" data-complexity="4" data-line="76" >
+                  <td class="file"><a href="AudioControl.tsx.html">src/components/AudioControl/AudioControl.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 13.333333333333334%"></div><div class="cover-empty" style="width: 86.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">return (async callback)</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">4</span>
+                  </td>
+                  <td class="abs">76</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/AudioControl/AudioControl.tsx" data-function="handlePlay" data-complexity="1" data-line="43" >
+                  <td class="file"><a href="AudioControl.tsx.html">src/components/AudioControl/AudioControl.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handlePlay</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">43</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/AudioControl/AudioControl.tsx" data-function="handlePause" data-complexity="1" data-line="45" >
+                  <td class="file"><a href="AudioControl.tsx.html">src/components/AudioControl/AudioControl.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handlePause</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">45</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/AudioControl/AudioControl.tsx" data-function="handleEnded (queueMicrotask callback)" data-complexity="1" data-line="57" >
+                  <td class="file"><a href="AudioControl.tsx.html">src/components/AudioControl/AudioControl.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleEnded (queueMicrotask callback)</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">57</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/components/AudioControl/AudioControl.tsx" data-function="handleEnded" data-complexity="1" data-line="60" >
+                  <td class="file"><a href="AudioControl.tsx.html">src/components/AudioControl/AudioControl.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">handleEnded</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">60</td>
+                </tr>
+              
       </tbody>
     </table>
   </div>

@@ -169,18 +169,46 @@
       border: 1px solid #ddd;
       border-radius: 3px;
     }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .header-row h1 {
+      margin: 0;
+    }
+    .about-link {
+      color: #0074D9;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: normal;
+      cursor: pointer;
+      padding: 5px 10px;
+      border: 1px solid #0074D9;
+      border-radius: 3px;
+      background: white;
+      white-space: nowrap;
+    }
+    .about-link:hover {
+      background: #f0f0f0;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
   <div class="pad2">
-    <h1><a href="../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/context</span></h1>
+    <div class="header-row">
+      <h1><a href="../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/context</span></h1>
+      <a href="../../about.html" class="about-link">About Cyclomatic Complexity</a>
+    </div>
     <div class="pad1y quiet">
-      12 Functions / 12 within threshold (100%)
+      23 Functions / 23 within threshold (100%)
     </div>
     <div class="controls">
       <label>
         <input type="checkbox" id="showAllFunctions" checked>
-        Display all functions (12 total)
+        Display all functions (23 total)
       </label>
       <span class="quiet" style="margin-left: 15px;">
         Uncheck to show only functions with complexity > 10
@@ -198,174 +226,216 @@
       </thead>
       <tbody>
         
-            <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="ThemeProvider" data-complexity="8" data-line="68" >
-              <td class="file">src/context/ThemeContext.tsx</td>
-              <td class="bar acceptable">
-                <div class="chart"><div class="cover-fill acceptable " style="width: 26.666666666666668%"></div><div class="cover-empty" style="width: 73.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ThemeProvider</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value acceptable">8</span>
-              </td>
-              <td class="abs">68</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="applyThemeToDom" data-complexity="2" data-line="20" >
-              <td class="file">src/context/ThemeContext.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">applyThemeToDom</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">20</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="importTheme" data-complexity="2" data-line="126" >
-              <td class="file">src/context/ThemeContext.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">importTheme</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">126</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="savePreset" data-complexity="2" data-line="138" >
-              <td class="file">src/context/ThemeContext.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">savePreset</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">138</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="loadPreset" data-complexity="2" data-line="151" >
-              <td class="file">src/context/ThemeContext.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">loadPreset</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">151</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="deletePreset" data-complexity="2" data-line="161" >
-              <td class="file">src/context/ThemeContext.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">deletePreset</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">161</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/context/useTheme.ts" data-function="useTheme" data-complexity="2" data-line="4" >
-              <td class="file">src/context/useTheme.ts</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">useTheme</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">2</span>
-              </td>
-              <td class="abs">4</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="themeKeyToCssVar" data-complexity="1" data-line="14" >
-              <td class="file">src/context/ThemeContext.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">themeKeyToCssVar</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">14</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="anonymous" data-complexity="1" data-line="85" >
-              <td class="file">src/context/ThemeContext.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">anonymous</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">85</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="updateTheme" data-complexity="1" data-line="105" >
-              <td class="file">src/context/ThemeContext.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">updateTheme</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">105</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="resetTheme" data-complexity="1" data-line="114" >
-              <td class="file">src/context/ThemeContext.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">resetTheme</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">114</td>
-            </tr>
-          
-            <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="exportTheme" data-complexity="1" data-line="122" >
-              <td class="file">src/context/ThemeContext.tsx</td>
-              <td class="bar good">
-                <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-              </td>
-              <td class="file">
-                <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">exportTheme</span>
-              </td>
-              <td class="pct">
-                <span class="complexity-value good">1</span>
-              </td>
-              <td class="abs">122</td>
-            </tr>
-          
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="ThemeProvider" data-complexity="8" data-line="68" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar acceptable">
+                    <div class="chart"><div class="cover-fill acceptable " style="width: 26.666666666666668%"></div><div class="cover-empty" style="width: 73.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ThemeProvider</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value acceptable">8</span>
+                  </td>
+                  <td class="abs">68</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="applyThemeToDom" data-complexity="4" data-line="36" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 13.333333333333334%"></div><div class="cover-empty" style="width: 86.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">applyThemeToDom</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">4</span>
+                  </td>
+                  <td class="abs">36</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="importTheme" data-complexity="2" data-line="126" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">importTheme</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">126</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="savePreset" data-complexity="2" data-line="138" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">savePreset</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">138</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="loadPreset" data-complexity="2" data-line="151" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">loadPreset</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">151</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="deletePreset" data-complexity="2" data-line="161" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">deletePreset</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">161</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/useTheme.ts" data-function="useTheme" data-complexity="2" data-line="4" >
+                  <td class="file"><a href="useTheme.ts.html">src/context/useTheme.ts</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">useTheme</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">2</span>
+                  </td>
+                  <td class="abs">4</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="themeKeyToCssVar" data-complexity="1" data-line="14" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">themeKeyToCssVar</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">14</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="themeKeyToCssVar (forEach callback)" data-complexity="1" data-line="24" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">themeKeyToCssVar (forEach callback)</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">24</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="ThemeProvider (find callback)" data-complexity="1" data-line="85" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">ThemeProvider (find callback)</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">85</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="useEffect callback" data-complexity="1" data-line="101" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">useEffect callback</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">101</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="updateTheme" data-complexity="1" data-line="105" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">updateTheme</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">105</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="resetTheme" data-complexity="1" data-line="114" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">resetTheme</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">114</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="exportTheme" data-complexity="1" data-line="122" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">exportTheme</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">122</td>
+                </tr>
+              
+                <tr data-over-threshold="false" data-file="src/context/ThemeContext.tsx" data-function="loadPreset (if callback)" data-complexity="1" data-line="163" >
+                  <td class="file"><a href="ThemeContext.tsx.html">src/context/ThemeContext.tsx</a></td>
+                  <td class="bar good">
+                    <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
+                  </td>
+                  <td class="file">
+                    <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">loadPreset (if callback)</span>
+                  </td>
+                  <td class="pct">
+                    <span class="complexity-value good">1</span>
+                  </td>
+                  <td class="abs">163</td>
+                </tr>
+              
       </tbody>
     </table>
   </div>
