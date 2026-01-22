@@ -223,17 +223,38 @@ After implementation:
 
 ## Current Work & Future TODOs
 
-### Styling & Highlighting Fixes
-- [ ] Continue fixing areas that aren't properly highlighted in the complexity report
-- [ ] Ensure all decision points are correctly identified and visually highlighted
-- [ ] Improve visual consistency of highlighting across different decision point types
+### ✅ Completed Implementation (2024-2025)
 
-### Decision Path Tracking
-- [ ] Add features to numerically track decision paths per file (e.g., count of if statements, else statements, ternaries, loops, etc.)
-- [ ] Decide on categorization: track individually (if, else, ternary, etc.) or chunked into groups (statements, loops, ternaries, etc.)
-- [ ] Display decision path statistics at file and folder levels
+#### Modularization (Completed)
+- [x] Split monolithic `generate-complexity-report.js` (3,103 lines) into focused modules
+  - **Modules created:**
+    - `eslint-integration.js` (71 lines) - ESLint execution and result parsing
+    - `function-extraction.js` (207 lines) - Function name extraction and processing
+    - `function-boundaries.js` (254 lines) - Function boundary detection
+    - `decision-points.js` (454 lines) - Decision point parsing
+    - `complexity-breakdown.js` (140 lines) - Complexity calculation and formatting
+    - `function-hierarchy.js` (405 lines) - Function hierarchy building
+    - `html-generators.js` (1,475 lines) - HTML generation (⚠️ exceeds 1000 line guideline)
+    - `generate-complexity-report.js` (161 lines) - Main orchestration
+  - **Benefits:** Better maintainability, reduced AI hallucinations, easier troubleshooting
 
-### Complexity Calculation Investigation
+#### Decision Point Detection Improvements (Completed)
+- [x] **Nullish Coalescing Operator (`??`)** - Added detection for `??` operator
+  - ESLint counts `??` as a decision point (similar to `&&` and `||`)
+  - Added to breakdown calculation and formatting functions
+  - **Result:** Functions like `getGradientPreview` now show correct breakdowns: `base 1 | ?? 2`
+
+- [x] **JSX Logical Operators** - Improved detection of `&&` and `||` in JSX expressions
+  - Handles multi-line JSX expressions: `{condition && (`
+  - Detects continuation of JSX expressions across lines
+  - **Result:** Functions like `ColorItem` now show breakdowns with JSX operators
+
+- [x] **Decision Point Assignment** - Fixed assignment logic for nested functions
+  - Updated `getInnermostFunction` to prefer parent functions when decision points appear before nested function starts
+  - Ensures decision points in parent function bodies aren't assigned to nested callbacks
+  - **Result:** Functions like `handleBackdropClick` now show correct breakdowns
+
+#### Complexity Calculation Investigation (Completed)
 - [x] Investigate why `ScrollToTop.tsx.html` seems to mis-track complexity - the breakdown shows `(1 base + 2 if)` which equals 3, but the reported complexity is 2
   - **Root Cause**: ESLint reports complexity separately for nested arrow functions (useEffect callback, setTimeout callback), but the code was finding boundaries for the outer function and counting all decision points within it
   - **Fix**: 
@@ -249,6 +270,30 @@ After implementation:
   - **Status**: Fixed - decision points are now correctly assigned to the innermost function (the useEffect callback), not the outer function
 - [x] Verify ESLint's complexity calculation matches our breakdown calculation for edge cases (nested functions, hooks, callbacks)
   - **Status**: Fixed for basic nested function cases - decision points are assigned to innermost functions, and breakdowns match ESLint's complexity scores
+
+### 🔄 In Progress / Known Issues
+
+#### Decision Point Assignment for Complex Functions
+- [ ] **GradientGroup** (line 132, complexity 2) - `if` on line 133 may be assigned to map callback instead
+- [ ] **handleColorChange** (line 322, complexity 2) - `if` on line 326 may be assigned to nested arrow function
+- [ ] **ThemePicker** (line 281, complexity 12) - Many decision points likely assigned to nested callbacks instead of main function
+- [ ] **Root Cause**: Arrow function boundaries in `.map()`, `.filter()`, etc. may be calculated incorrectly
+- [ ] **Next Steps**: 
+  1. Fix boundary detection for arrow functions in array methods
+  2. Verify decision point assignment for functions with complex JSX return statements
+  3. Improve JSX `&&` detection for multi-line expressions
+
+### Future TODOs
+
+### Styling & Highlighting Fixes
+- [ ] Continue fixing areas that aren't properly highlighted in the complexity report
+- [ ] Ensure all decision points are correctly identified and visually highlighted
+- [ ] Improve visual consistency of highlighting across different decision point types
+
+### Decision Path Tracking
+- [ ] Add features to numerically track decision paths per file (e.g., count of if statements, else statements, ternaries, loops, etc.)
+- [ ] Decide on categorization: track individually (if, else, ternary, etc.) or chunked into groups (statements, loops, ternaries, etc.)
+- [ ] Display decision path statistics at file and folder levels
 
 ### Documentation Updates
 - [ ] Update `complexity/about.html` to clarify why some constructs that seem like decision paths are not counted:

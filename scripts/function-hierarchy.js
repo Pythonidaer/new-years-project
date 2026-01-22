@@ -371,11 +371,13 @@ export function formatFunctionHierarchy(functions, functionBoundaries, functionB
     const breakdown = functionBreakdowns.get(func.line);
     const calculatedTotal = breakdown ? breakdown.calculatedTotal : complexity;
     
-    // Show breakdown if we have one and it matches ESLint's complexity
+    // Show breakdown if we have one and it matches ESLint's complexity (or is close)
+    // Allow showing breakdown if calculated is within 1 of actual (handles edge cases)
     const hasBreakdown = breakdown && breakdown.breakdown;
     const hasDecisionPoints = breakdown && breakdown.decisionPoints && breakdown.decisionPoints.length > 0;
     const exactMatch = breakdown && calculatedTotal === complexity;
-    const showBreakdown = hasBreakdown && exactMatch && hasDecisionPoints;
+    const closeMatch = breakdown && hasDecisionPoints && Math.abs(calculatedTotal - complexity) <= 1;
+    const showBreakdown = hasBreakdown && (exactMatch || closeMatch) && hasDecisionPoints;
     
     let breakdownHTML = '';
     if (showBreakdown && complexity > 1) {

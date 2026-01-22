@@ -27,7 +27,32 @@ export function parseDecisionPoints(sourceCode, functionBoundaries, functions = 
     if (containingFunctions.length === 0) return null;
     if (containingFunctions.length === 1) return containingFunctions[0].functionLine;
     
+    // When a line is inside multiple functions (parent and nested):
+    // 1. If the line is before a nested function's start, it belongs to the parent
+    // 2. Otherwise, prefer the function with the smallest boundary (innermost)
+    // This ensures decision points in parent function bodies aren't assigned to nested callbacks
+    
+    // Find functions that start before or at this line (parent functions)
+    const parentFunctions = containingFunctions.filter(f => f.boundary.start <= lineNum);
+    // Find functions that start after this line (nested functions that haven't started yet)
+    const nestedFunctionsStartingAfter = containingFunctions.filter(f => f.boundary.start > lineNum);
+    
+    // If there are nested functions starting after this line, this line belongs to a parent
+    // Find the parent function that starts earliest (the direct parent)
+    if (nestedFunctionsStartingAfter.length > 0 && parentFunctions.length > 0) {
+      let earliest = parentFunctions[0];
+      for (let i = 1; i < parentFunctions.length; i++) {
+        const current = parentFunctions[i];
+        if (current.boundary.start < earliest.boundary.start) {
+          earliest = current;
+        }
+      }
+      return earliest.functionLine;
+    }
+    
+    // Otherwise, all functions start before or at this line
     // Find the function with the smallest boundary (innermost)
+    // This handles cases where the line is actually inside the nested function
     let innermost = containingFunctions[0];
     for (let i = 1; i < containingFunctions.length; i++) {
       const current = containingFunctions[i];
@@ -337,36 +362,90 @@ export function parseDecisionPoints(sourceCode, functionBoundaries, functions = 
       if (orMatches) orMatches.forEach(() => decisionPoints.push({ line: lineNum, type: '||', name: 'logical OR', functionLine }));
     }
     
+    // Parse nullish coalescing operator (??)
+    // ESLint counts ?? as a decision point (similar to && and ||)
+    // Check each ?? to ensure it's not inside a string literal
+    let searchIndex = 0;
+    while ((searchIndex = lineWithoutComments.indexOf('??', searchIndex)) !== -1) {
+      if (!isInsideStringLiteral(lineWithoutComments, searchIndex)) {
+        decisionPoints.push({ line: lineNum, type: '??', name: 'nullish coalescing', functionLine });
+      }
+      searchIndex += 2; // Move past this ??
+    }
+    
     // Parse short-circuit logical operators (&&, ||) in boolean expressions
     // These create decision points in:
     // 1. Return statements with boolean expressions
     // 2. Variable assignments with boolean expressions
     // 3. Function arguments with boolean expressions
+    // 4. JSX expressions: {condition && ...} or {condition || ...} (can span multiple lines)
     // Note: && and || inside if/while/for conditions are handled above
+    
+    // Check for JSX expressions: lines with { followed by && or || (JSX conditional rendering)
+    // JSX pattern: {condition && <Component />} or {condition || <Component />}
+    // The { can be on this line or previous line, &&/|| can be on this line
     const isReturnStatement = /^\s*return\s+/.test(lineWithoutComments);
+    const hasJSXOpeningBrace = lineWithoutComments.includes('{') && !lineWithoutComments.match(/^\s*\{/); // JSX: {condition && ...} (not at start of line)
+    const hasLogicalOp = /[&|]{2}/.test(lineWithoutComments);
+    const isJSXExpression = hasJSXOpeningBrace && hasLogicalOp; // JSX with && or || on same line
+    
+    // Check if previous line started a JSX expression and this line continues it
+    // Pattern: Previous line has {, this line has && or ||
+    let isContinuationOfJSXExpression = false;
+    if (index > 0 && !isIfStatement && !isElseIfStatement && !isForLoop && !isWhileLoop) {
+      const prevLine = lines[index - 1].replace(/\/\/.*$|\/\*[\s\S]*?\*\//g, '').trim();
+      const prevLineHasJSXOpening = prevLine.includes('{') && !prevLine.match(/^\s*\{/);
+      isContinuationOfJSXExpression = prevLineHasJSXOpening && hasLogicalOp;
+    }
+    
+    // Also check if this line has &&/|| and is inside JSX (has { somewhere before it in the function)
+    // This handles cases like: {condition && ( where { and && are on same line
     const isBooleanExpression = isReturnStatement || 
                                  /^\s*(const|let|var)\s+\w+\s*=\s*[^=]*[&|]{2}/.test(lineWithoutComments) ||
-                                 /\([^)]*[&|]{2}[^)]*\)/.test(lineWithoutComments);
+                                 /\([^)]*[&|]{2}[^)]*\)/.test(lineWithoutComments) ||
+                                 isJSXExpression ||
+                                 isContinuationOfJSXExpression;
     
-    if (isBooleanExpression && !isIfStatement && !isElseIfStatement && !isForLoop && !isWhileLoop && !isSwitchStatement && !isCatchBlock && !ternaryMatches) {
+    if (isBooleanExpression && !isIfStatement && !isElseIfStatement && !isForLoop && !isWhileLoop && !isSwitchStatement && !isCatchBlock && ternaryMatches.length === 0) {
       // Count && and || operators in boolean expressions
       // Each operator creates a decision point
       // Exclude if/else if since we already handled them above
-      const andMatches = lineWithoutComments.match(/&&/g);
-      const orMatches = lineWithoutComments.match(/\|\|/g);
+      // For JSX expressions, we need to check each &&/|| to ensure it's not inside a string
+      let searchIndex = 0;
       
-      if (andMatches && andMatches.length > 0) {
-        // Count all && operators (each adds complexity)
-        andMatches.forEach(() => {
+      // Count all && operators (each adds complexity)
+      while ((searchIndex = lineWithoutComments.indexOf('&&', searchIndex)) !== -1) {
+        if (!isInsideStringLiteral(lineWithoutComments, searchIndex)) {
           decisionPoints.push({ line: lineNum, type: '&&', name: 'logical AND', functionLine });
-        });
+        }
+        searchIndex += 2; // Move past this &&
       }
       
-      if (orMatches && orMatches.length > 0) {
-        // Count all || operators (each adds complexity)
-        orMatches.forEach(() => {
+      // Count all || operators (each adds complexity)
+      searchIndex = 0;
+      while ((searchIndex = lineWithoutComments.indexOf('||', searchIndex)) !== -1) {
+        if (!isInsideStringLiteral(lineWithoutComments, searchIndex)) {
           decisionPoints.push({ line: lineNum, type: '||', name: 'logical OR', functionLine });
-        });
+        }
+        searchIndex += 2; // Move past this ||
+      }
+    }
+    
+    // Handle multi-line conditions (conditions split across multiple lines)
+    // Check if previous line has &&/|| and this line continues the condition
+    if (index > 0 && !isIfStatement && !isElseIfStatement) {
+      const prevLine = lines[index - 1].replace(/\/\/.*$|\/\*[\s\S]*?\*\//g, '').trim();
+      const prevLineHasLogicalOp = /[&|]{2}/.test(prevLine);
+      const currentLineHasLogicalOp = /[&|]{2}/.test(lineWithoutComments);
+      const prevLineIsCondition = /^\s*if\s*\(/.test(prevLine) || /^\s*else\s+if\s*\(/.test(prevLine) || 
+                                   /^\s*while\s*\(/.test(prevLine) || /^\s*for\s*\(/.test(prevLine);
+      
+      // If previous line starts a condition and this line continues it with &&/||
+      if (prevLineIsCondition && currentLineHasLogicalOp && !isIfStatement && !isElseIfStatement && !isForLoop && !isWhileLoop) {
+        const andMatches = lineWithoutComments.match(/&&/g);
+        const orMatches = lineWithoutComments.match(/\|\|/g);
+        if (andMatches) andMatches.forEach(() => decisionPoints.push({ line: lineNum, type: '&&', name: 'logical AND', functionLine }));
+        if (orMatches) orMatches.forEach(() => decisionPoints.push({ line: lineNum, type: '||', name: 'logical OR', functionLine }));
       }
     }
   });

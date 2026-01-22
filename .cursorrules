@@ -951,13 +951,33 @@ npm run lint:complexity:all      # Generate report with all functions visible by
    - [ ] Update `complexity/about.html` to clarify why some constructs that seem like decision paths are not counted (e.g., `try` blocks don't add complexity, only `catch` blocks do; `else` blocks don't add complexity independently, they're part of the `if` statement's complexity)
 
 9. **Code Refactoring - Complexity Report Generator:**
-   - [ ] **PRIORITY: Split `scripts/generate-complexity-report.js` into smaller, focused modules**
-     - **Problem:** File has grown to 3,000+ lines, causing hallucinations, Cursor struggling, worse refactors, and making mistakes
-     - **Goal:** Split into appropriate files closer to 1,000 lines each
-     - **Approach:**
-       - Extract decision point parsing functions into separate module
-       - Extract HTML generation functions into separate module
-       - Extract function boundary detection into separate module
-       - Extract complexity breakdown calculation into separate module
-       - Keep main orchestration logic in primary file
+   - [x] **COMPLETED: Split `scripts/generate-complexity-report.js` into smaller, focused modules**
+     - **Problem:** File had grown to 3,103 lines, causing hallucinations, Cursor struggling, worse refactors, and making mistakes
+     - **Solution:** Successfully split into 8 focused modules:
+       - `eslint-integration.js` (71 lines)
+       - `function-extraction.js` (207 lines)
+       - `function-boundaries.js` (254 lines)
+       - `decision-points.js` (454 lines)
+       - `complexity-breakdown.js` (140 lines)
+       - `function-hierarchy.js` (405 lines)
+       - `html-generators.js` (1,475 lines) ⚠️ exceeds 1000 line guideline
+       - `generate-complexity-report.js` (161 lines) - Main orchestration
+     - **Result:** 95% reduction in main file size (3,103 → 161 lines)
      - **Benefits:** Better maintainability, easier to understand, reduces AI confusion, improves refactoring quality
+     - **Status:** All modules complete and tested
+     - **Note:** `html-generators.js` exceeds 1000 line guideline; consider splitting if it approaches 2,000 lines
+
+10. **File Length Guidelines:**
+    - **Target:** Keep files under 1,000 lines to reduce AI hallucinations and improve maintainability
+    - **When approaching limit:** If a file exceeds 800 lines, consider refactoring or splitting
+    - **When exceeding limit:** If a file exceeds 1,000 lines, the AI assistant should:
+      1. **Inform the user** that the file is approaching or exceeding the guideline
+      2. **Suggest splitting** the file into smaller, focused modules
+      3. **Propose a refactoring plan** if the file is significantly over the limit
+    - **Rationale:** Files over 1,000 lines can cause:
+      - Increased AI hallucinations
+      - Reduced code understanding
+      - Worse refactoring quality
+      - Difficulty maintaining and debugging
+    - **Current files to monitor:**
+      - `scripts/html-generators.js` (1,475 lines) ⚠️ - Consider splitting if it grows further

@@ -23,6 +23,7 @@ export function calculateComplexityBreakdown(functionLine, decisionPoints, baseC
     'ternary': 0,
     '&&': 0,
     '||': 0,
+    '??': 0,
     'default parameter': 0,
   };
   
@@ -56,7 +57,7 @@ export function formatComplexityBreakdown(breakdown, actualComplexity) {
   }
   
   // Order decision point types consistently
-  const typeOrder = ['if', 'else if', 'for', 'for...of', 'for...in', 'while', 'do...while', 'switch', 'case', 'catch', 'ternary', '&&', '||', 'default parameter'];
+  const typeOrder = ['if', 'else if', 'for', 'for...of', 'for...in', 'while', 'do...while', 'switch', 'case', 'catch', 'ternary', '&&', '||', '??', 'default parameter'];
   
   typeOrder.forEach(type => {
     if (breakdown[type] > 0) {
@@ -83,13 +84,13 @@ export function formatComplexityBreakdownInline(breakdown, actualComplexity) {
   }
   
   // Order decision point types consistently (matching ESLint's counting)
-  const typeOrder = ['if', 'else if', 'for', 'for...of', 'for...in', 'while', 'do...while', 'switch', 'case', 'catch', 'ternary', '&&', '||', 'default parameter'];
+  const typeOrder = ['if', 'else if', 'for', 'for...of', 'for...in', 'while', 'do...while', 'switch', 'case', 'catch', 'ternary', '&&', '||', '??', 'default parameter'];
   
   typeOrder.forEach(type => {
     const count = breakdown[type] || 0;
     if (count > 0) {
-      // Use ESLint symbols: ?: for ternary, && for AND, || for OR
-      const symbol = type === 'ternary' ? '?:' : type === '&&' ? '&&' : type === '||' ? '||' : type;
+      // Use ESLint symbols: ?: for ternary, && for AND, || for OR, ?? for nullish coalescing
+      const symbol = type === 'ternary' ? '?:' : type === '&&' ? '&&' : type === '||' ? '||' : type === '??' ? '??' : type;
       parts.push(`+${count} ${symbol}`);
     }
   });
@@ -113,13 +114,13 @@ export function formatComplexityBreakdownStyled(breakdown, actualComplexity) {
   }
   
   // Order decision point types consistently (matching ESLint's counting)
-  const typeOrder = ['if', 'else if', 'for', 'for...of', 'for...in', 'while', 'do...while', 'switch', 'case', 'catch', 'ternary', '&&', '||', 'default parameter'];
+  const typeOrder = ['if', 'else if', 'for', 'for...of', 'for...in', 'while', 'do...while', 'switch', 'case', 'catch', 'ternary', '&&', '||', '??', 'default parameter'];
   
   typeOrder.forEach(type => {
     const count = breakdown[type] || 0;
     if (count > 0) {
-      // Use ESLint symbols: ?: for ternary, && for AND, || for OR
-      const symbol = type === 'ternary' ? '?:' : type === '&&' ? '&&' : type === '||' ? '||' : type;
+      // Use ESLint symbols: ?: for ternary, && for AND, || for OR, ?? for nullish coalescing
+      const symbol = type === 'ternary' ? '?:' : type === '&&' ? '&&' : type === '||' ? '||' : type === '??' ? '??' : type;
       parts.push(`${symbol} <span class="complexity-number">${count}</span>`);
     }
   });
