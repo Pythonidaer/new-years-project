@@ -84,71 +84,71 @@ describe("AudioControl", () => {
     await waitFor(() => {
       expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
     });
+    // Audio should NOT be created until user clicks play (lazy loading)
+    expect(instances.length).toBe(0);
   });
 
-  it("covers early return when audioRef.current is null", async () => {
-    // Test the early return branch: if (!audioRef.current) return;
-    // This is a defensive check that's difficult to test because:
-    // 1. Effects run synchronously in tests, so audioRef is set before we can click
-    // 2. If Audio creation fails, the component crashes before this check
-    // 3. The check exists as a safety guard for edge cases
-    //
-    // We attempt to cover it by clicking immediately after render, but this is
-    // timing-dependent and may not always hit the branch.
+  it("does not create audio until user clicks play (lazy loading)", async () => {
     presetId = "samson";
     render(<AudioControl />);
+    
+    // Wait for button to render
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
+    });
 
-    // Try to click as quickly as possible
-    const button = screen.queryByRole("button", { name: /play audio/i });
-    if (button) {
-      await act(async () => {
-        fireEvent.click(button);
-      });
-    }
+    // Audio should NOT be created yet (lazy loading)
+    expect(instances.length).toBe(0);
 
-    // Note: This branch may not be fully covered due to React's synchronous effect execution.
-    // The branch is a defensive guard that would prevent errors if audioRef.current is
-    // somehow null when togglePlayPause is called. In practice, this is unlikely to occur
-    // with the current implementation, but it's good defensive programming.
-    expect(true).toBe(true);
+    // Click play to trigger lazy loading
+    const button = screen.getByRole("button", { name: /play audio/i });
+    fireEvent.click(button);
+
+    // Now audio should be created
+    await waitFor(() => {
+      expect(instances.length).toBe(1);
+      expect(instances[0].src).toBe("/samson.mp3");
+    });
   });
 
   it("plays then switches UI to Pause (play success path)", async () => {
     presetId = "samson";
     render(<AudioControl />);
 
-    // Wait until effect created the audio instance
+    // Wait for button to render
     await waitFor(() => {
-      expect(instances.length).toBeGreaterThan(0);
       expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
     });
+
+    // Audio should not exist yet (lazy loading)
+    expect(instances.length).toBe(0);
 
     const button = screen.getByRole("button", { name: /play audio/i });
     fireEvent.click(button);
 
-    // UI flips when setIsPlaying(true) runs after play() resolves
+    // Wait for audio to be created and play to be called
     await waitFor(() => {
+      expect(instances.length).toBe(1);
+      expect(instances[0].play).toHaveBeenCalled();
       expect(screen.getByRole("button", { name: /pause audio/i })).toBeInTheDocument();
     });
-
-    // Verify play was called
-    expect(instances[0].play).toHaveBeenCalled();
   });
 
   it("pauses when already playing (pause branch)", async () => {
     presetId = "samson";
     render(<AudioControl />);
 
-    // Wait for audio to be created
+    // Wait for button to render
     await waitFor(() => {
-      expect(instances.length).toBeGreaterThan(0);
+      expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
     });
 
-    // Click play
+    // Click play to create audio and start playing
     const playButton = screen.getByRole("button", { name: /play audio/i });
     fireEvent.click(playButton);
 
     await waitFor(() => {
+      expect(instances.length).toBe(1);
       expect(screen.getByRole("button", { name: /pause audio/i })).toBeInTheDocument();
     });
 
@@ -168,16 +168,25 @@ describe("AudioControl", () => {
     presetId = "samson";
     render(<AudioControl />);
 
+    // Wait for button to render
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
+    });
+
+    // Click play to create audio
+    const button = screen.getByRole("button", { name: /play audio/i });
+    fireEvent.click(button);
+
     // Wait for audio to be created
     await waitFor(() => {
-      expect(instances.length).toBeGreaterThan(0);
+      expect(instances.length).toBe(1);
     });
 
     // Make the created FakeAudio instance reject play()
     const originalPlay = instances[0].play;
     instances[0].play = vi.fn(() => Promise.reject(new Error("nope")));
 
-    const button = screen.getByRole("button", { name: /play audio/i });
+    // Click play again (audio already exists, so it will try to play)
     fireEvent.click(button);
 
     await waitFor(() => {
@@ -193,23 +202,23 @@ describe("AudioControl", () => {
     presetId = "samson";
     const { rerender } = render(<AudioControl />);
 
-    // Let effect run and create audio
+    // Wait for button to render
     await waitFor(() => {
       expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
-      expect(instances.length).toBeGreaterThan(0);
+    });
+
+    // Click play to create audio
+    const playButton = screen.getByRole("button", { name: /play audio/i });
+    fireEvent.click(playButton);
+
+    // Wait for audio to be created
+    await waitFor(() => {
+      expect(instances.length).toBe(1);
+      expect(screen.getByRole("button", { name: /pause audio/i })).toBeInTheDocument();
     });
 
     const firstInstance = instances[0];
     expect(firstInstance).toBeTruthy();
-
-    // Play the audio to set isPlaying to true, so we cover the isPlaying check in cleanup
-    const playButton = screen.getByRole("button", { name: /play audio/i });
-    fireEvent.click(playButton);
-
-    // Wait for playing state to update
-    await waitFor(() => {
-      expect(screen.getByRole("button", { name: /pause audio/i })).toBeInTheDocument();
-    });
 
     // Clear mocks to track cleanup calls
     firstInstance.pause.mockClear();
@@ -226,9 +235,6 @@ describe("AudioControl", () => {
       expect(screen.queryByRole("button")).toBeNull();
     });
 
-    // Wait for microtasks to complete (queueMicrotask in cleanup)
-    await new Promise<void>((resolve) => queueMicrotask(() => resolve()));
-
     // Verify cleanup was called on the first audio instance
     expect(firstInstance.pause).toHaveBeenCalled();
     // removeEventListener should be called 3 times (play, pause, ended)
@@ -239,23 +245,23 @@ describe("AudioControl", () => {
     presetId = "samson";
     const { rerender } = render(<AudioControl />);
 
-    // Let effect run and create audio
+    // Wait for button to render
     await waitFor(() => {
       expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
-      expect(instances.length).toBeGreaterThan(0);
+    });
+
+    // Click play to create audio
+    const playButton = screen.getByRole("button", { name: /play audio/i });
+    fireEvent.click(playButton);
+
+    // Wait for audio to be created
+    await waitFor(() => {
+      expect(instances.length).toBe(1);
+      expect(screen.getByRole("button", { name: /pause audio/i })).toBeInTheDocument();
     });
 
     const firstInstance = instances[0];
     expect(firstInstance).toBeTruthy();
-
-    // Play the audio to set isPlaying to true, so we cover the isPlaying check in cleanup
-    const playButton = screen.getByRole("button", { name: /play audio/i });
-    fireEvent.click(playButton);
-
-    // Wait for playing state to update
-    await waitFor(() => {
-      expect(screen.getByRole("button", { name: /pause audio/i })).toBeInTheDocument();
-    });
 
     // Clear mocks to track cleanup calls
     firstInstance.pause.mockClear();
@@ -267,13 +273,19 @@ describe("AudioControl", () => {
       rerender(<AudioControl />);
     });
 
-    // Wait for new audio to be created
+    // Wait for button to render with new theme
     await waitFor(() => {
-      expect(instances.length).toBeGreaterThan(1);
+      expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
     });
 
-    // Wait for microtasks to complete (queueMicrotask in cleanup)
-    await new Promise<void>((resolve) => queueMicrotask(() => resolve()));
+    // Click play to create new audio instance
+    const newPlayButton = screen.getByRole("button", { name: /play audio/i });
+    fireEvent.click(newPlayButton);
+
+    // Wait for new audio to be created
+    await waitFor(() => {
+      expect(instances.length).toBe(2);
+    });
 
     // Verify cleanup was called on the first audio instance
     expect(firstInstance.pause).toHaveBeenCalled();
@@ -295,8 +307,21 @@ describe("AudioControl", () => {
       presetId = theme.id;
       const { rerender } = render(<AudioControl />);
 
+      // Wait for button to render
       await waitFor(() => {
-        expect(instances.length).toBeGreaterThan(0);
+        expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
+      });
+
+      // Audio should not exist yet (lazy loading)
+      expect(instances.length).toBe(0);
+
+      // Click play to create audio
+      const button = screen.getByRole("button", { name: /play audio/i });
+      fireEvent.click(button);
+
+      // Wait for audio to be created with correct file
+      await waitFor(() => {
+        expect(instances.length).toBe(1);
         expect(instances[0].src).toBe(theme.file);
       });
 
@@ -308,8 +333,18 @@ describe("AudioControl", () => {
     presetId = "samson";
     render(<AudioControl />);
 
+    // Wait for button to render
     await waitFor(() => {
-      expect(instances.length).toBeGreaterThan(0);
+      expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
+    });
+
+    // Click play to create audio
+    const button = screen.getByRole("button", { name: /play audio/i });
+    fireEvent.click(button);
+
+    // Wait for audio to be created
+    await waitFor(() => {
+      expect(instances.length).toBe(1);
     });
 
     expect(instances[0].loop).toBe(true);
