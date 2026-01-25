@@ -1,61 +1,69 @@
 import type { BlogPosts, BlogPost } from "./types";
 
 export type { BlogPost, BlogPosts };
-import defaultPosts from "./default.json";
-import interviewReusableVsFeatureSpecificComponentsPosts from "./interview_reusable_vs_feature_specific_components.json";
-import interviewStructuringAComplexReactAppPosts from "./interview_structuring_a_complex_react_app_for_long_term_maintainability.json";
-import interviewManagingComponentBoundariesPosts from "./interview_managing_component_boundaries_in_a_multi_team_frontend_codebase.json";
-import interviewAvoidingPropDrillingPosts from "./interview_avoiding_prop_drilling_in_large_react_applications.json";
-import interviewBalancingFlexibilityAndConsistencyPosts from "./interview_balancing_flexibility_and_consistency_in_a_shared_component_library.json";
-import interviewRefactoringAReactCodebasePosts from "./interview_refactoring_a_react_codebase_for_scalability_and_developer_experience.json";
-import interviewChoosingBetweenLocalStateContextAndExternalStateManagementPosts from "./interview_choosing_between_local_state_context_and_external_state_management.json";
-import interviewAsyncDataFetchingCachingAndInvalidationInReactPosts from "./interview_async_data_fetching_caching_and_invalidation_in_react.json";
-import interviewPreventingRaceConditionsAndStaleDataInAsyncReactWorkflowsPosts from "./interview_preventing_race_conditions_and_stale_data_in_async_react_workflows.json";
-import interviewStructuringFrontendLogicForUnreliableOrDelayedApisPosts from "./interview_structuring_frontend_logic_for_unreliable_or_delayed_apis.json";
-import interviewFormStateVsServerStateTradeoffsInReactApplicationDesignPosts from "./interview_form_state_vs_server_state_tradeoffs_in_react_application_design.json";
-import interviewUsingTypeScriptToPreventRuntimeBugsInReactPosts from "./interview_using_typescript_to_prevent_runtime_bugs_in_react.json";
-import interviewWhenStrictTypingChangesTheFeatureDesignPosts from "./interview_when_strict_typing_changes_the_feature_design.json";
-import interviewModelingComplexApiResponsesSafelyInTypeScriptPosts from "./interview_modeling_complex_api_responses_safely_in_typescript.json";
-import interviewWhenToUseAnyOrTypeAssertionsAndHowToControlTheRiskPosts from "./interview_when_to_use_any_or_type_assertions_and_how_to_control_the_risk.json";
-import interviewBalancingTypeSafetyAndDevelopmentVelocityInTypeScriptPosts from "./interview_balancing_type_safety_and_development_velocity_in_typescript.json";
-import interviewUnitTestsVsIntegrationTestsOnTheFrontendWhatGoesWherePosts from "./interview_unit_tests_vs_integration_tests_on_the_frontend_what_goes_where_.json";
-import interviewWhatAGoodReactTestingLibraryTestLooksLikePosts from "./interview_what_a_good_react_testing_library_test_looks_like.json";
-import interviewTestingAsyncBehaviorLoadingStatesAndErrorStatesInReactPosts from "./interview_testing_async_behavior_loading_states_and_error_states_in_react.json";
-import interviewPreventingBrittleFrontendTestsWhenTheUiChangesFrequentlyPosts from "./interview_preventing_brittle_frontend_tests_when_the_ui_changes_frequently.json";
-import interviewHowFrontendTestsFitIntoCicdQualityGatesPosts from "./interview_how_frontend_tests_fit_into_cicd_quality_gates.json";
 import { slugify } from "@/utils/slug";
 
-export const blogPostsByTopic: Record<string, BlogPosts> = {
-  default: defaultPosts as BlogPosts,
-  interview_reusable_vs_feature_specific_components: interviewReusableVsFeatureSpecificComponentsPosts as BlogPosts,
-  interview_structuring_a_complex_react_app_for_long_term_maintainability: interviewStructuringAComplexReactAppPosts as BlogPosts,
-  interview_managing_component_boundaries_in_a_multi_team_frontend_codebase: interviewManagingComponentBoundariesPosts as BlogPosts,
-  interview_avoiding_prop_drilling_in_large_react_applications: interviewAvoidingPropDrillingPosts as BlogPosts,
-  interview_balancing_flexibility_and_consistency_in_a_shared_component_library: interviewBalancingFlexibilityAndConsistencyPosts as BlogPosts,
-  interview_refactoring_a_react_codebase_for_scalability_and_developer_experience: interviewRefactoringAReactCodebasePosts as BlogPosts,
-  interview_choosing_between_local_state_context_and_external_state_management: interviewChoosingBetweenLocalStateContextAndExternalStateManagementPosts as BlogPosts,
-  interview_async_data_fetching_caching_and_invalidation_in_react: interviewAsyncDataFetchingCachingAndInvalidationInReactPosts as BlogPosts,
-  interview_preventing_race_conditions_and_stale_data_in_async_react_workflows: interviewPreventingRaceConditionsAndStaleDataInAsyncReactWorkflowsPosts as BlogPosts,
-  interview_structuring_frontend_logic_for_unreliable_or_delayed_apis: interviewStructuringFrontendLogicForUnreliableOrDelayedApisPosts as BlogPosts,
-  interview_form_state_vs_server_state_tradeoffs_in_react_application_design: interviewFormStateVsServerStateTradeoffsInReactApplicationDesignPosts as BlogPosts,
-  interview_using_typescript_to_prevent_runtime_bugs_in_react: interviewUsingTypeScriptToPreventRuntimeBugsInReactPosts as BlogPosts,
-  interview_when_strict_typing_changes_the_feature_design: interviewWhenStrictTypingChangesTheFeatureDesignPosts as BlogPosts,
-  interview_modeling_complex_api_responses_safely_in_typescript: interviewModelingComplexApiResponsesSafelyInTypeScriptPosts as BlogPosts,
-  interview_when_to_use_any_or_type_assertions_and_how_to_control_the_risk: interviewWhenToUseAnyOrTypeAssertionsAndHowToControlTheRiskPosts as BlogPosts,
-  interview_balancing_type_safety_and_development_velocity_in_typescript: interviewBalancingTypeSafetyAndDevelopmentVelocityInTypeScriptPosts as BlogPosts,
-  interview_unit_tests_vs_integration_tests_on_the_frontend_what_goes_where_: interviewUnitTestsVsIntegrationTestsOnTheFrontendWhatGoesWherePosts as BlogPosts,
-  interview_what_a_good_react_testing_library_test_looks_like: interviewWhatAGoodReactTestingLibraryTestLooksLikePosts as BlogPosts,
-  interview_testing_async_behavior_loading_states_and_error_states_in_react: interviewTestingAsyncBehaviorLoadingStatesAndErrorStatesInReactPosts as BlogPosts,
-  interview_preventing_brittle_frontend_tests_when_the_ui_changes_frequently: interviewPreventingBrittleFrontendTestsWhenTheUiChangesFrequentlyPosts as BlogPosts,
-  interview_how_frontend_tests_fit_into_cicd_quality_gates: interviewHowFrontendTestsFitIntoCicdQualityGatesPosts as BlogPosts,
-};
+/**
+ * Dynamic loader for blog posts using import.meta.glob
+ * This ensures blog JSON files are loaded on-demand and create separate chunks
+ * Each JSON file becomes its own chunk, loaded only when needed
+ * 
+ * Performance benefit: Blog data is NOT in the initial bundle, reducing initial JS payload
+ */
+const postModules = import.meta.glob<{ default: BlogPosts }>("./*.json", {
+  eager: false, // Lazy load - creates separate chunks for each JSON file
+});
 
+// Cache for loaded posts by topic ID
+let blogPostsByTopic: Record<string, BlogPosts> = {};
+let loadPromise: Promise<void> | null = null;
+
+/**
+ * Extract topic ID from file path
+ * Example: "./default.json" -> "default"
+ * Example: "./interview_*.json" -> "interview_*"
+ */
+function getTopicIdFromPath(path: string): string {
+  const filename = path.replace(/^\.\//, "").replace(/\.json$/, "");
+  return filename;
+}
+
+/**
+ * Load all blog posts on-demand and cache them
+ * Returns a promise that resolves when all posts are loaded
+ * This is called automatically when blog data is first accessed
+ */
+export function loadAllBlogPosts(): Promise<void> {
+  if (loadPromise) {
+    return loadPromise;
+  }
+
+  loadPromise = Promise.all(
+    Object.entries(postModules).map(async ([path, loader]) => {
+      const topicId = getTopicIdFromPath(path);
+      const module = await loader();
+      blogPostsByTopic[topicId] = module.default;
+    })
+  ).then(() => {
+    // All posts loaded and cached
+  });
+
+  return loadPromise;
+}
+
+/**
+ * Get blog posts for a specific topic
+ * Note: This will return empty array if posts haven't loaded yet
+ * Components should call loadAllBlogPosts() first
+ */
 export function getBlogPostsForTopic(topicId: string): BlogPosts {
-  return blogPostsByTopic[topicId] || blogPostsByTopic.default;
+  return blogPostsByTopic[topicId] || blogPostsByTopic.default || [];
 }
 
 /**
  * Get all blog posts from all topics combined
+ * Note: This will return empty array if posts haven't loaded yet
+ * Components should call loadAllBlogPosts() first
  */
 export function getAllBlogPosts(): BlogPosts {
   const allPosts: BlogPosts = [];
@@ -67,6 +75,8 @@ export function getAllBlogPosts(): BlogPosts {
 
 /**
  * Get a blog post by slug (searches across all topics)
+ * Note: This will return null if posts haven't loaded yet
+ * Components should call loadAllBlogPosts() first
  */
 export function getBlogPostBySlug(slug: string): BlogPost | null {
   const allPosts = getAllBlogPosts();
@@ -204,4 +214,3 @@ export function getAllUniqueTags(): string[] {
   
   return Array.from(tagSet).sort();
 }
-

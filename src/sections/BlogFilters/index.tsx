@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import type { BlogPost } from "@/data/blog/types";
-import { getAllUniqueTags } from "@/data/blog";
+import { getAllUniqueTags, loadAllBlogPosts } from "@/data/blog";
 import { Search, ChevronDown } from "lucide-react";
 import styles from "./BlogFilters.module.css";
 
@@ -12,12 +12,14 @@ interface BlogFiltersProps {
 export function BlogFilters({ posts, onFilterChange }: BlogFiltersProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [allFilterOptions, setAllFilterOptions] = useState<string[]>([]);
 
-  // Get all unique tags from posts (includes both categories and tags from post arrays)
-  // This ensures the dropdown only shows categories/tags that actually have posts
-  const allFilterOptions = useMemo(() => {
-    const uniqueTags = getAllUniqueTags();
-    return uniqueTags.sort();
+  // Load blog posts and get unique tags asynchronously
+  useEffect(() => {
+    loadAllBlogPosts().then(() => {
+      const uniqueTags = getAllUniqueTags();
+      setAllFilterOptions(uniqueTags.sort());
+    });
   }, []);
 
   // Filter posts based on search and category/tag
@@ -62,7 +64,7 @@ export function BlogFilters({ posts, onFilterChange }: BlogFiltersProps) {
             className={styles.select}
           >
             <option value="all">Type</option>
-            {allFilterOptions.map((option) => (
+            {allFilterOptions.length > 0 && allFilterOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>

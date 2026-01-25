@@ -6,17 +6,22 @@ import { BlogFilters } from "@/sections/BlogFilters";
 import { BlogGrid } from "@/sections/BlogGrid";
 import { Footer } from "@/sections/Footer";
 import { MetaTags } from "@/components/MetaTags";
-import { getAllBlogPosts, getBlogPostSlug } from "@/data/blog";
+import { getAllBlogPosts, getBlogPostSlug, loadAllBlogPosts } from "@/data/blog";
 import type { BlogPost } from "@/data/blog/types";
 import styles from "./Blog.module.css";
 
 export function Blog() {
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
 
-  const blogPosts = useMemo(
-    () => getAllBlogPosts(),
-    []
-  );
+  // Load blog posts asynchronously
+  useEffect(() => {
+    loadAllBlogPosts().then(() => {
+      const allPosts = getAllBlogPosts();
+      setBlogPosts(allPosts);
+      setFilteredPosts(allPosts);
+    });
+  }, []);
 
   // Stable callback for filter changes
   const handleFilterChange = useCallback((filtered: BlogPost[]) => {
@@ -26,12 +31,6 @@ export function Blog() {
   // Get featured post (always the first post, agnostic to filters)
   const featuredPost = useMemo(() => {
     return blogPosts[0] || null;
-  }, [blogPosts]);
-
-  // Initialize filtered posts when blogPosts change
-  // This ensures we always start with all posts, then BlogFilters will apply filters
-  useEffect(() => {
-    setFilteredPosts(blogPosts);
   }, [blogPosts]);
 
   // Get grid posts (filtered results, excluding the featured post)

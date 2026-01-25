@@ -1,8 +1,9 @@
-import { useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "@/layout/Container";
 import { Section } from "@/layout/Section";
-import { getAllBlogPosts, getBlogPostSlug } from "@/data/blog";
+import { getAllBlogPosts, getBlogPostSlug, loadAllBlogPosts } from "@/data/blog";
+import type { BlogPost } from "@/data/blog/types";
 import { useTheme } from "@/context/useTheme";
 import { getGrayscaleImageUrl, getGrayscaleFilter } from "@/utils/imageGrayscale";
 import styles from "./LatestBlogs.module.css";
@@ -10,19 +11,22 @@ import styles from "./LatestBlogs.module.css";
 export function LatestBlogs() {
   const { currentPresetId } = useTheme();
   const isNoirTheme = currentPresetId === 'noir';
+  const [recentPosts, setRecentPosts] = useState<BlogPost[]>([]);
 
-  // Get 3 most recent blog posts, sorted by date (most recent first)
-  const recentPosts = useMemo(() => {
-    const allPosts = getAllBlogPosts();
-    
-    // Sort by date (parse date strings to Date objects for proper sorting)
-    const sorted = [...allPosts].sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateB - dateA; // Most recent first
+  useEffect(() => {
+    // Load blog posts asynchronously
+    loadAllBlogPosts().then(() => {
+      const allPosts = getAllBlogPosts();
+      
+      // Sort by date (parse date strings to Date objects for proper sorting)
+      const sorted = [...allPosts].sort((a, b) => {
+        const dateA = new Date(a.date).getTime();
+        const dateB = new Date(b.date).getTime();
+        return dateB - dateA; // Most recent first
+      });
+      
+      setRecentPosts(sorted.slice(0, 3));
     });
-    
-    return sorted.slice(0, 3);
   }, []);
 
   return (

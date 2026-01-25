@@ -1,10 +1,11 @@
+import { useState, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useMemo } from "react";
 import { Header } from "@/sections/Header";
 import { BlogGrid } from "@/sections/BlogGrid";
 import { Footer } from "@/sections/Footer";
 import { MetaTags } from "@/components/MetaTags";
-import { getAllBlogPosts, getAllUniqueTags } from "@/data/blog";
+import { getAllBlogPosts, getAllUniqueTags, loadAllBlogPosts } from "@/data/blog";
+import type { BlogPost } from "@/data/blog/types";
 import { ALL_CATEGORIES } from "@/data/blog/categories";
 import { slugify } from "@/utils/slug";
 import { ChevronRight } from "lucide-react";
@@ -14,10 +15,16 @@ import headingStyles from "@/sections/BlogHeading/BlogHeading.module.css";
 
 export function Tag() {
   const { categoryName } = useParams<{ categoryName: string }>();
+  const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
+  const [allTags, setAllTags] = useState<string[]>([]);
   
-  // Get all posts and all unique tags (includes both categories and tags)
-  const allPosts = getAllBlogPosts();
-  const allTags = useMemo(() => getAllUniqueTags(), []);
+  // Load blog posts asynchronously
+  useEffect(() => {
+    loadAllBlogPosts().then(() => {
+      setAllPosts(getAllBlogPosts());
+      setAllTags(getAllUniqueTags());
+    });
+  }, []);
   
   // Find the actual tag/category name from the URL slug (case-insensitive)
   // Check both ALL_CATEGORIES and all unique tags from posts

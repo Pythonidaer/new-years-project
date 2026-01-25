@@ -1,10 +1,12 @@
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import parse from "html-react-parser";
 import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
 import { MetaTags } from "@/components/MetaTags";
-import { getBlogPostBySlug, getRelatedPosts, getBlogPostSlug } from "@/data/blog";
+import { getBlogPostBySlug, getRelatedPosts, getBlogPostSlug, loadAllBlogPosts } from "@/data/blog";
+import type { BlogPost } from "@/data/blog/types";
 import { Button } from "@/components/Button";
 import { BlogGrid } from "@/sections/BlogGrid";
 import { useTheme } from "@/context/useTheme";
@@ -17,9 +19,23 @@ import styles from "./BlogPost.module.css";
 
 export function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
-  const post = slug ? getBlogPostBySlug(slug) : null;
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
   const { currentPresetId } = useTheme();
   const isNoirTheme = currentPresetId === 'noir';
+  
+  // Load blog posts asynchronously
+  useEffect(() => {
+    if (slug) {
+      loadAllBlogPosts().then(() => {
+        const foundPost = getBlogPostBySlug(slug);
+        if (foundPost) {
+          setPost(foundPost);
+          setRelatedPosts(getRelatedPosts(foundPost, 3));
+        }
+      });
+    }
+  }, [slug]);
   
   // Preload image and track loading state (hook must be called before early returns)
   // Extract imageUrl to ensure hook dependency is stable
@@ -32,8 +48,6 @@ export function BlogPost() {
   
   // At this point, post is guaranteed to exist, so imageUrl should be defined
   // The hook will re-run if imageUrl changes from undefined to a string
-
-  const relatedPosts = getRelatedPosts(post, 3);
   const postSlug = getBlogPostSlug(post);
   const postUrl = `/resources/blog/${postSlug}`;
   const authorName = getAuthorName(post);

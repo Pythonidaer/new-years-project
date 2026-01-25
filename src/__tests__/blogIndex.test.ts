@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, beforeAll, vi } from "vitest";
 import {
   getBlogPostsForTopic,
   getBlogPostBySlug,
@@ -7,11 +7,17 @@ import {
   getAllBlogPosts,
   getBlogPostSlug,
   getAllUniqueTags,
+  loadAllBlogPosts,
 } from "@/data/blog/index";
 import type { BlogPost } from "@/data/blog/types";
 import { slugify } from "@/utils/slug";
 
 describe("Blog Index Functions", () => {
+  // Load all blog posts before running tests
+  beforeAll(async () => {
+    await loadAllBlogPosts();
+  });
+
   beforeEach(() => {
     // Restore original function before each test
     vi.restoreAllMocks();

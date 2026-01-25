@@ -223,7 +223,7 @@ Make the website fully mobile responsive based on Mark43's CSS and design patter
 - [x] **FeaturedBlogPost** - Mobile/iPad layout (image on top, then title, then content), padding adjustments (25px 0 mobile), font sizes (20px mobile, 23px iPad), margin adjustments
 - [x] **BlogFilters** - Full-width select and search containers on mobile/iPad, ChevronDown icon replacement, accessibility improvements (name attribute)
 - [x] **BlogGrid** - iPad landscape single-column layout (1024px), responsive gap adjustments
-- [x] **LatestBlogs/LatestNews** - Mobile card layout improvements, date positioning, removed "Read More" links, hidden excerpts, descriptive link text (aria-label)
+- [x] **LatestBlogs** - Mobile card layout improvements, date positioning, removed "Read More" links, hidden excerpts, descriptive link text (aria-label)
 
 #### Other Components
 - [x] **FeatureAccordion** - Mobile responsive styling and layout adjustments
@@ -238,7 +238,7 @@ Make the website fully mobile responsive based on Mark43's CSS and design patter
 
 ### Accessibility & SEO Improvements
 - [x] Touch targets meet minimum 44px size (AgencyLogos carousel dots)
-- [x] Descriptive link text with aria-labels (LatestBlogs/LatestNews)
+- [x] Descriptive link text with aria-labels (LatestBlogs)
 - [x] Form field name attributes (BlogFilters search input)
 - [x] Valid robots.txt file created
 

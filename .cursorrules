@@ -63,7 +63,7 @@
 
 **Completed Work:**
 - All core layout components (Header, Hero, Footer)
-- Complete blog system (BlogPost, Blog listing, FeaturedBlogPost, BlogFilters, BlogGrid, LatestBlogs/LatestNews)
+- Complete blog system (BlogPost, Blog listing, FeaturedBlogPost, BlogFilters, BlogGrid, LatestBlogs)
 - Responsive breakpoints implemented: Mobile (< 768px), Tablet (768px-990px), iPad Landscape (768px-1024px), Desktop (> 990px)
 - Accessibility improvements (touch targets, descriptive links, form attributes)
 - SEO improvements (valid robots.txt)
