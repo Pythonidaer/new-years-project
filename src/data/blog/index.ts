@@ -64,12 +64,24 @@ export function getBlogPostsForTopic(topicId: string): BlogPosts {
  * Get all blog posts from all topics combined
  * Note: This will return empty array if posts haven't loaded yet
  * Components should call loadAllBlogPosts() first
+ * 
+ * Posts from "default" topic are always first (for FeaturedCard)
  */
 export function getAllBlogPosts(): BlogPosts {
   const allPosts: BlogPosts = [];
-  Object.values(blogPostsByTopic).forEach((posts) => {
-    allPosts.push(...posts);
+  
+  // Always put default posts first (for FeaturedCard)
+  if (blogPostsByTopic.default) {
+    allPosts.push(...blogPostsByTopic.default);
+  }
+  
+  // Then add all other topics
+  Object.entries(blogPostsByTopic).forEach(([topicId, posts]) => {
+    if (topicId !== 'default') {
+      allPosts.push(...posts);
+    }
   });
+  
   return allPosts;
 }
 
