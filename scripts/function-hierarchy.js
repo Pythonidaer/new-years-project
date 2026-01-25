@@ -95,6 +95,138 @@ export function findMaxComplexityInSubtree(node) {
 }
 
 /**
+ * Detects callback type from function name
+ * @param {string} functionName - Full function name
+ * @param {number} depth - Current depth in tree
+ * @returns {Object} Object with displayName and callbackType
+ */
+function detectCallbackType(functionName, depth) {
+  let displayName = functionName;
+  let callbackType = null;
+  
+  if (functionName.includes('(useEffect callback)')) {
+    displayName = functionName.replace(' (useEffect callback)', '');
+    callbackType = 'useEffect';
+  } else if (functionName.includes('(setTimeout callback)')) {
+    displayName = functionName.replace(' (setTimeout callback)', '');
+    callbackType = 'setTimeout';
+  } else if (functionName.includes('(requestAnimationFrame callback)')) {
+    displayName = functionName.replace(' (requestAnimationFrame callback)', '');
+    callbackType = 'animation frame';
+  } else if (functionName.includes('(return callback)')) {
+    displayName = functionName.replace(' (return callback)', '');
+    callbackType = 'cleanup';
+  } else if (functionName.includes('(arrow function)')) {
+    displayName = functionName.replace(' (arrow function)', '');
+    if (displayName.match(/^on[A-Z]/)) {
+      callbackType = 'event handler';
+    } else if (depth > 0) {
+      callbackType = 'inline JSX callback';
+    }
+  }
+  
+  return { displayName, callbackType };
+}
+
+/**
+ * Formats complexity display string
+ * @param {number} actualComplexity - Actual complexity value
+ * @param {boolean} showBreakdown - Whether to show breakdown
+ * @param {Object|null} breakdown - Breakdown object
+ * @returns {string} Formatted complexity display
+ */
+function formatComplexityDisplay(actualComplexity, showBreakdown, breakdown) {
+  if (actualComplexity === 1) {
+    return 'base';
+  }
+  if (showBreakdown && breakdown) {
+    const concise = formatComplexityConcise(breakdown.breakdown, actualComplexity);
+    return `CC: ${actualComplexity} (${concise})`;
+  }
+  return `CC: ${actualComplexity}`;
+}
+
+/**
+ * Determines if this function has the highest complexity in its group
+ * @param {number} actualComplexity - Function's complexity
+ * @param {number|null} maxComplexityInGroup - Maximum complexity in group
+ * @returns {boolean} Whether this is the highest complexity
+ */
+function isHighestComplexityInGroup(actualComplexity, maxComplexityInGroup) {
+  if (maxComplexityInGroup === null) {
+    return false;
+  }
+  const currentGroupMax = Math.max(maxComplexityInGroup, actualComplexity);
+  return actualComplexity === currentGroupMax;
+}
+
+/**
+ * Builds the formatted line string for a function node
+ * @param {string} displayName - Display name of function
+ * @param {string} complexityDisplay - Formatted complexity string
+ * @param {string|null} callbackType - Callback type or null
+ * @param {number} depth - Current depth
+ * @param {boolean} isLast - Whether this is last child
+ * @param {string} prefix - Tree prefix
+ * @param {number} actualComplexity - Actual complexity value
+ * @param {boolean} isHighestComplexity - Whether this is highest complexity
+ * @returns {string} Formatted line string
+ */
+function buildFunctionLine(displayName, complexityDisplay, callbackType, depth, isLast, prefix, actualComplexity, isHighestComplexity) {
+  const escapedName = escapeHtml(displayName);
+  const escapedComplexity = escapeHtml(complexityDisplay);
+  
+  if (depth === 0) {
+    // Top-level function
+    if (isHighestComplexity) {
+      return `<span class="function-highlight">${escapedName} — ${escapedComplexity}</span>`;
+    }
+    return `${escapedName} — ${escapedComplexity}`;
+  }
+  
+  // Nested function
+  const connector = isLast ? '└─' : '├─';
+  const callbackLabel = callbackType ? ` (${callbackType})` : '';
+  
+  if (actualComplexity === 1) {
+    return `${prefix}${connector} ${escapedName}${callbackLabel} (base)`;
+  }
+  
+  if (isHighestComplexity) {
+    return `${prefix}${connector} <span class="function-highlight">${escapedName}${callbackLabel} — ${escapedComplexity}</span>`;
+  }
+  
+  return `${prefix}${connector} ${escapedName}${callbackLabel} — ${escapedComplexity}`;
+}
+
+/**
+ * Processes children of a function node
+ * @param {Array} children - Array of child nodes
+ * @param {Map} functionBreakdowns - Map of functionLine -> breakdown
+ * @param {number} depth - Current depth
+ * @param {boolean} isLast - Whether parent is last child
+ * @param {string} prefix - Tree prefix
+ * @param {number} actualComplexity - Parent's complexity
+ * @returns {Array} Array of formatted child lines
+ */
+function processChildren(children, functionBreakdowns, depth, isLast, prefix, actualComplexity) {
+  if (children.length === 0) {
+    return [];
+  }
+  
+  const childPrefix = depth === 0 ? '' : (isLast ? prefix + '   ' : prefix + '│  ');
+  const groupMaxComplexity = Math.max(
+    actualComplexity,
+    ...children.map(c => findMaxComplexityInSubtree(c))
+  );
+  
+  return children.map((child, index) => {
+    const isChildLast = index === children.length - 1;
+    return formatFunctionNode(child, functionBreakdowns, depth + 1, isChildLast, childPrefix, groupMaxComplexity);
+  });
+}
+
+/**
  * Formats a function node for hierarchical display
  * @param {Object} node - Function node with children
  * @param {Map} functionBreakdowns - Map of functionLine -> breakdown
@@ -120,93 +252,180 @@ export function formatFunctionNode(node, functionBreakdowns, depth = 0, isLast =
   );
   
   // Extract function name and callback type
-  const functionName = node.functionName;
-  let displayName = functionName;
-  let callbackType = null;
-  
-  // Detect callback types from function name
-  if (functionName.includes('(useEffect callback)')) {
-    displayName = functionName.replace(' (useEffect callback)', '');
-    callbackType = 'useEffect';
-  } else if (functionName.includes('(setTimeout callback)')) {
-    displayName = functionName.replace(' (setTimeout callback)', '');
-    callbackType = 'setTimeout';
-  } else if (functionName.includes('(requestAnimationFrame callback)')) {
-    displayName = functionName.replace(' (requestAnimationFrame callback)', '');
-    callbackType = 'animation frame';
-  } else if (functionName.includes('(return callback)')) {
-    displayName = functionName.replace(' (return callback)', '');
-    callbackType = 'cleanup';
-  } else if (functionName.includes('(arrow function)')) {
-    displayName = functionName.replace(' (arrow function)', '');
-    // Try to infer callback type from context
-    if (displayName.match(/^on[A-Z]/)) {
-      callbackType = 'event handler';
-    } else if (depth > 0) {
-      // If nested and no specific type, it's likely an inline JSX callback
-      callbackType = 'inline JSX callback';
-    }
-  }
+  const { displayName, callbackType } = detectCallbackType(node.functionName, depth);
   
   // Format complexity display
-  let complexityDisplay = '';
-  if (actualComplexity === 1) {
-    complexityDisplay = 'base';
-  } else if (showBreakdown) {
-    const concise = formatComplexityConcise(breakdown.breakdown, actualComplexity);
-    complexityDisplay = `CC: ${actualComplexity} (${concise})`;
-  } else {
-    complexityDisplay = `CC: ${actualComplexity}`;
-  }
+  const complexityDisplay = formatComplexityDisplay(actualComplexity, showBreakdown, breakdown);
   
   // Determine if this is the highest complexity function in its group
-  // maxComplexityInGroup should include this node's complexity
-  const currentGroupMax = maxComplexityInGroup !== null ? Math.max(maxComplexityInGroup, actualComplexity) : actualComplexity;
-  const isHighestComplexity = maxComplexityInGroup !== null && actualComplexity === currentGroupMax;
+  const isHighestComplexity = isHighestComplexityInGroup(actualComplexity, maxComplexityInGroup);
   
-  // Build the line (escape HTML for text content, but allow HTML tags)
-  let line = '';
-  const escapedName = escapeHtml(displayName);
-  const escapedComplexity = escapeHtml(complexityDisplay);
+  // Build the line
+  const line = buildFunctionLine(
+    displayName,
+    complexityDisplay,
+    callbackType,
+    depth,
+    isLast,
+    prefix,
+    actualComplexity,
+    isHighestComplexity
+  );
   
-  if (depth === 0) {
-    // Top-level function
-    if (isHighestComplexity) {
-      line = `<span class="function-highlight">${escapedName} — ${escapedComplexity}</span>`;
-    } else {
-      line = `${escapedName} — ${escapedComplexity}`;
-    }
-  } else {
-    // Nested function
-    const connector = isLast ? '└─' : '├─';
-    const callbackLabel = callbackType ? ` (${callbackType})` : '';
-    if (actualComplexity === 1) {
-      line = `${prefix}${connector} ${escapedName}${callbackLabel} (base)`;
-    } else {
-      if (isHighestComplexity) {
-        line = `${prefix}${connector} <span class="function-highlight">${escapedName}${callbackLabel} — ${escapedComplexity}</span>`;
-      } else {
-        line = `${prefix}${connector} ${escapedName}${callbackLabel} — ${escapedComplexity}`;
-      }
-    }
-  }
-  
-  // Add children
+  // Process children
   const lines = [line];
-  if (node.children.length > 0) {
-    const childPrefix = depth === 0 ? '' : (isLast ? prefix + '   ' : prefix + '│  ');
-    // Find max complexity in this group (including current node and all children) for highlighting
-    const groupMaxComplexity = Math.max(
-      actualComplexity,
-      ...node.children.map(c => findMaxComplexityInSubtree(c))
-    );
-    node.children.forEach((child, index) => {
-      const isChildLast = index === node.children.length - 1;
-      lines.push(formatFunctionNode(child, functionBreakdowns, depth + 1, isChildLast, childPrefix, groupMaxComplexity));
-    });
-  }
+  const childLines = processChildren(node.children, functionBreakdowns, depth, isLast, prefix, actualComplexity);
+  lines.push(...childLines);
   
   return lines.join('\n');
+}
+
+/**
+ * Gets context around a line number
+ * @param {string} fullSourceCode - Full source code
+ * @param {number} nodeLine - Line number (1-based)
+ * @param {number} contextLines - Number of lines before/after to include
+ * @returns {string} Context string
+ */
+function getContextAroundLine(fullSourceCode, nodeLine, contextLines = 10) {
+  const lines = fullSourceCode.split('\n');
+  const startLine = Math.max(0, nodeLine - contextLines);
+  const endLine = Math.min(lines.length, nodeLine + contextLines);
+  return lines.slice(startLine, endLine).join('\n');
+}
+
+/**
+ * Checks if this is a cleanup callback
+ * @param {string} functionName - Function name
+ * @param {string} context - Context around the function
+ * @param {Object|null} parentNode - Parent node
+ * @param {Map} siblingCallbacks - Map tracking callback counts
+ * @param {string} fullSourceCode - Full source code
+ * @returns {string|null} Cleanup label or null
+ */
+function checkCleanupCallback(functionName, context, parentNode, siblingCallbacks, fullSourceCode) {
+  if (!functionName.includes('(return callback)') && 
+      !functionName.includes('cleanup') && 
+      !context.includes('return ()')) {
+    return null;
+  }
+  
+  if (parentNode) {
+    const parentLabel = extractCallbackLabel(parentNode, null, siblingCallbacks, fullSourceCode, parentNode.line);
+    if (parentLabel.startsWith('useEffect#')) {
+      return `${parentLabel} cleanup`;
+    }
+  }
+  
+  return 'cleanup';
+}
+
+/**
+ * Checks if this is a useEffect callback
+ * @param {string} functionName - Function name
+ * @param {string} context - Context around the function
+ * @param {Object|null} parentNode - Parent node
+ * @param {Map} siblingCallbacks - Map tracking callback counts
+ * @returns {string|null} useEffect label or null
+ */
+function checkUseEffectCallback(functionName, context, parentNode, siblingCallbacks) {
+  if (!functionName.includes('(useEffect callback)') && !context.includes('useEffect(')) {
+    return null;
+  }
+  
+  const parentName = parentNode ? parentNode.functionName : '';
+  const key = `${parentName}_useEffect`;
+  const count = (siblingCallbacks.get(key) || 0) + 1;
+  siblingCallbacks.set(key, count);
+  return `useEffect#${count}`;
+}
+
+/**
+ * Checks if this is a requestAnimationFrame callback
+ * @param {string} functionName - Function name
+ * @param {string} context - Context around the function
+ * @returns {string|null} rAF label or null
+ */
+function checkRequestAnimationFrameCallback(functionName, context) {
+  if (functionName.includes('(requestAnimationFrame callback)') || context.includes('requestAnimationFrame(')) {
+    return 'rAF callback';
+  }
+  return null;
+}
+
+/**
+ * Checks if this is a setTimeout callback
+ * @param {string} functionName - Function name
+ * @param {string} context - Context around the function
+ * @returns {string|null} setTimeout label or null
+ */
+function checkSetTimeoutCallback(functionName, context) {
+  if (functionName.includes('(setTimeout callback)') || context.includes('setTimeout(')) {
+    return 'setTimeout callback';
+  }
+  return null;
+}
+
+/**
+ * Checks if this is an event handler from function name
+ * @param {string} functionName - Function name
+ * @returns {string|null} Event handler label or null
+ */
+function checkEventHandlerFromName(functionName) {
+  const handlerMatch = functionName.match(/^on([A-Z]\w+)/);
+  if (handlerMatch) {
+    return `${handlerMatch[0]} handler`;
+  }
+  return null;
+}
+
+/**
+ * Checks if this is a JSX inline callback
+ * @param {string} context - Context around the function
+ * @returns {string|null} JSX handler label or null
+ */
+function checkJSXInlineCallback(context) {
+  const jsxHandlerMatch = context.match(/(on[A-Z]\w+)\s*=\s*\{/);
+  if (jsxHandlerMatch) {
+    return `JSX ${jsxHandlerMatch[1]}`;
+  }
+  return null;
+}
+
+/**
+ * Checks if this is an event handler from context
+ * @param {string} context - Context around the function
+ * @returns {string|null} Event handler label or null
+ */
+function checkEventHandlerFromContext(context) {
+  if (context.includes('onScroll') && !context.includes('onScroll=')) {
+    return 'onScroll handler';
+  }
+  if (context.includes('onClick') && !context.includes('onClick=')) {
+    return 'onClick handler';
+  }
+  return null;
+}
+
+/**
+ * Gets default callback label from function name
+ * @param {string} functionName - Function name
+ * @param {Object|null} parentNode - Parent node
+ * @returns {string} Default callback label
+ */
+function getDefaultCallbackLabel(functionName, parentNode) {
+  if (!functionName.includes('(arrow function)')) {
+    return 'callback';
+  }
+  
+  const parentName = parentNode ? parentNode.functionName : '';
+  if (parentName && parentName !== 'unknown' && parentName !== 'anonymous') {
+    if (!functionName.includes(parentName)) {
+      return `${parentName} callback`;
+    }
+  }
+  
+  return 'callback';
 }
 
 /**
@@ -220,78 +439,174 @@ export function formatFunctionNode(node, functionBreakdowns, depth = 0, isLast =
  */
 export function extractCallbackLabel(node, parentNode, siblingCallbacks, fullSourceCode = '', nodeLine = 0) {
   const functionName = node.functionName;
+  const context = getContextAroundLine(fullSourceCode, nodeLine);
   
-  // Get context around the function line (10 lines before and after)
-  const lines = fullSourceCode.split('\n');
-  const startLine = Math.max(0, nodeLine - 10);
-  const endLine = Math.min(lines.length, nodeLine + 10);
-  const context = lines.slice(startLine, endLine).join('\n');
+  // Check each callback type in order of specificity
+  const cleanupLabel = checkCleanupCallback(functionName, context, parentNode, siblingCallbacks, fullSourceCode);
+  if (cleanupLabel) return cleanupLabel;
   
-  // Check for cleanup callbacks (return statements in useEffect)
-  if (functionName.includes('(return callback)') || functionName.includes('cleanup') || context.includes('return ()')) {
-    // Find which useEffect this belongs to by looking at parent
-    if (parentNode) {
-      const parentLabel = extractCallbackLabel(parentNode, null, siblingCallbacks, fullSourceCode, parentNode.line);
-      if (parentLabel.startsWith('useEffect#')) {
-        return `${parentLabel} cleanup`;
-      }
+  const useEffectLabel = checkUseEffectCallback(functionName, context, parentNode, siblingCallbacks);
+  if (useEffectLabel) return useEffectLabel;
+  
+  const rafLabel = checkRequestAnimationFrameCallback(functionName, context);
+  if (rafLabel) return rafLabel;
+  
+  const setTimeoutLabel = checkSetTimeoutCallback(functionName, context);
+  if (setTimeoutLabel) return setTimeoutLabel;
+  
+  const eventHandlerFromName = checkEventHandlerFromName(functionName);
+  if (eventHandlerFromName) return eventHandlerFromName;
+  
+  const jsxLabel = checkJSXInlineCallback(context);
+  if (jsxLabel) return jsxLabel;
+  
+  const eventHandlerFromContext = checkEventHandlerFromContext(context);
+  if (eventHandlerFromContext) return eventHandlerFromContext;
+  
+  return getDefaultCallbackLabel(functionName, parentNode);
+}
+
+/**
+ * Checks if breakdown has decision points
+ * @param {Object} breakdown - Breakdown object
+ * @returns {boolean} Whether breakdown has decision points
+ */
+function hasDecisionPoints(breakdown) {
+  return breakdown.decisionPoints && breakdown.decisionPoints.length > 0;
+}
+
+/**
+ * Determines if breakdown should be shown
+ * @param {Object} breakdown - Breakdown object
+ * @param {number} complexity - Function complexity
+ * @returns {boolean} Whether to show breakdown
+ */
+function shouldShowBreakdown(breakdown, complexity) {
+  if (!breakdown || !breakdown.breakdown) {
+    return false;
+  }
+  
+  const calculatedTotal = breakdown.calculatedTotal;
+  const hasDP = hasDecisionPoints(breakdown);
+  const exactMatch = calculatedTotal === complexity;
+  const closeMatch = hasDP && Math.abs(calculatedTotal - complexity) <= 1;
+  
+  return hasDP && (exactMatch || closeMatch || hasDP);
+}
+
+/**
+ * Generates HTML for base complexity (complexity === 1)
+ * @returns {string} HTML string for base complexity
+ */
+function generateBaseComplexityHTML() {
+  return `base <span class="complexity-number">1</span>`;
+}
+
+/**
+ * Generates HTML for missing breakdown
+ * @returns {string} HTML string for missing breakdown
+ */
+function generateMissingBreakdownHTML() {
+  return `<span class="quiet">—</span>`;
+}
+
+/**
+ * Generates breakdown HTML for a function
+ * @param {number} complexity - Function complexity
+ * @param {Object|null} breakdown - Breakdown object
+ * @returns {string} HTML string for breakdown
+ */
+function generateBreakdownHTML(complexity, breakdown) {
+  if (!breakdown) {
+    return complexity === 1 
+      ? generateBaseComplexityHTML()
+      : generateMissingBreakdownHTML();
+  }
+  
+  if (complexity === 1) {
+    return generateBaseComplexityHTML();
+  }
+  
+  if (shouldShowBreakdown(breakdown, complexity)) {
+    return formatComplexityBreakdownStyled(breakdown.breakdown, complexity);
+  }
+  
+  return generateMissingBreakdownHTML();
+}
+
+/**
+ * Finds the immediate parent function for a callback
+ * @param {Object} func - Function object
+ * @param {Map} functionBoundaries - Map of function boundaries
+ * @param {Array} sortedFunctions - Sorted array of all functions
+ * @returns {Object|null} Parent function or null
+ */
+function findImmediateParentFunction(func, functionBoundaries, sortedFunctions) {
+  const funcBoundary = functionBoundaries.get(func.line);
+  if (!funcBoundary) {
+    return null;
+  }
+  
+  const containingFunctions = Array.from(functionBoundaries.entries())
+    .filter(([fl, boundary]) => 
+      fl !== func.line && 
+      boundary.start < funcBoundary.start && 
+      boundary.end >= funcBoundary.end
+    )
+    .sort((a, b) => b[1].start - a[1].start);
+  
+  if (containingFunctions.length === 0) {
+    return null;
+  }
+  
+  const immediateParentLine = containingFunctions[0][0];
+  return sortedFunctions.find(f => f.line === immediateParentLine) || null;
+}
+
+/**
+ * Fixes function name for callbacks using function boundaries
+ * @param {Object} func - Function object
+ * @param {Map} functionBoundaries - Map of function boundaries
+ * @param {Array} sortedFunctions - Sorted array of all functions
+ * @returns {string} Fixed display name
+ */
+function fixFunctionNameForCallback(func, functionBoundaries, sortedFunctions) {
+  let displayName = func.functionName || 'unknown';
+  const callbackMatch = displayName.match(/^(.+?)\s+\((.+?)\s+callback\)$/);
+  
+  if (!callbackMatch || !functionBoundaries) {
+    return displayName;
+  }
+  
+  const [, parentName, callbackType] = callbackMatch;
+  const immediateParentFunc = findImmediateParentFunction(func, functionBoundaries, sortedFunctions);
+  
+  if (immediateParentFunc) {
+    const correctParentName = getBaseFunctionName(immediateParentFunc.functionName);
+    if (correctParentName && 
+        correctParentName !== parentName && 
+        correctParentName !== 'unknown' && 
+        correctParentName !== 'anonymous') {
+      displayName = `${correctParentName} (${callbackType} callback)`;
     }
-    return 'cleanup';
   }
   
-  // Check for useEffect callbacks - need to number them sequentially
-  if (functionName.includes('(useEffect callback)') || context.includes('useEffect(')) {
-    const parentName = parentNode ? parentNode.functionName : '';
-    const key = `${parentName}_useEffect`;
-    const count = (siblingCallbacks.get(key) || 0) + 1;
-    siblingCallbacks.set(key, count);
-    return `useEffect#${count}`;
-  }
-  
-  // Check for requestAnimationFrame
-  if (functionName.includes('(requestAnimationFrame callback)') || context.includes('requestAnimationFrame(')) {
-    return 'rAF callback';
-  }
-  
-  // Check for setTimeout
-  if (functionName.includes('(setTimeout callback)') || context.includes('setTimeout(')) {
-    return 'setTimeout callback';
-  }
-  
-  // Check for event handlers (onClick, onScroll, etc.) - check function name first
-  if (functionName.match(/^on[A-Z]/)) {
-    const handlerMatch = functionName.match(/on([A-Z]\w+)/);
-    if (handlerMatch) {
-      return `${handlerMatch[0]} handler`;
-    }
-  }
-  
-  // Check for JSX inline callbacks (onClick in JSX) - look for onClick={, onChange={, etc.
-  const jsxHandlerMatch = context.match(/(on[A-Z]\w+)\s*=\s*\{/);
-  if (jsxHandlerMatch) {
-    return `JSX ${jsxHandlerMatch[1]}`;
-  }
-  
-  // Check for event handlers in context (onScroll, onClick as function names)
-  if (context.includes('onScroll') && !context.includes('onScroll=')) {
-    return 'onScroll handler';
-  }
-  if (context.includes('onClick') && !context.includes('onClick=')) {
-    return 'onClick handler';
-  }
-  
-  // Default: try to extract from function name
-  if (functionName.includes('(arrow function)')) {
-    const parentName = parentNode ? parentNode.functionName : '';
-    if (parentName && parentName !== 'unknown' && parentName !== 'anonymous') {
-      // Don't repeat parent name if it's the same
-      if (!functionName.includes(parentName)) {
-        return `${parentName} callback`;
-      }
-    }
-  }
-  
-  return 'callback';
+  return displayName;
+}
+
+/**
+ * Generates HTML for a function table row
+ * @param {string} displayName - Function display name
+ * @param {number} complexity - Function complexity
+ * @param {string} breakdownHTML - Breakdown HTML
+ * @returns {string} HTML string for table row
+ */
+function generateFunctionRowHTML(displayName, complexity, breakdownHTML) {
+  return `        <tr>
+          <td class="breakdown-function"><span class="strong">${escapeHtml(displayName)}</span></td>
+          <td class="breakdown-complexity"><span class="complexity-number">${complexity}</span></td>
+          <td class="breakdown-details">${breakdownHTML}</td>
+        </tr>`;
 }
 
 /**
@@ -326,36 +641,24 @@ export function formatFunctionHierarchy(functions, functionBoundaries, functionB
     }
   });
   
-  // Filter to show only main function declarations (not nested callbacks)
+  // Show each function separately, but group functions with the same name and line number
+  // This ensures functions with the same name but different line numbers are shown separately
   // This matches what users see in the code view annotations
-  // Group by base name and keep only the main function (exact name match)
   const functionGroups = new Map();
   
   Array.from(lineToFunction.values()).forEach(func => {
-    const baseName = getBaseFunctionName(func.functionName);
-    const key = `${func.file}:${baseName}`;
-    const isExactMatch = func.functionName === baseName;
+    // Use file + function name + line number as key to ensure uniqueness
+    // This allows multiple functions with the same name (e.g., "addEventListener callback" on different lines)
+    // to be shown separately, each with their own breakdown
+    const key = `${func.file}:${func.functionName}:${func.line}`;
     
     const existing = functionGroups.get(key);
     if (!existing) {
       functionGroups.set(key, func);
     } else {
-      const existingIsExactMatch = existing.functionName === getBaseFunctionName(existing.functionName);
-      // Always prefer exact match (main function) over callback versions
-      if (isExactMatch && !existingIsExactMatch) {
+      // If somehow we have duplicate key, keep the one with higher complexity
+      if (parseInt(func.complexity) > parseInt(existing.complexity)) {
         functionGroups.set(key, func);
-      } else if (!isExactMatch && existingIsExactMatch) {
-        // Keep existing (exact match)
-      } else if (isExactMatch && existingIsExactMatch) {
-        // Both exact - prefer higher complexity
-        if (parseInt(func.complexity) > parseInt(existing.complexity)) {
-          functionGroups.set(key, func);
-        }
-      } else {
-        // Neither exact - prefer higher complexity
-        if (parseInt(func.complexity) > parseInt(existing.complexity)) {
-          functionGroups.set(key, func);
-        }
       }
     }
   });
@@ -369,36 +672,10 @@ export function formatFunctionHierarchy(functions, functionBoundaries, functionB
   sortedFunctions.forEach(func => {
     const complexity = parseInt(func.complexity);
     const breakdown = functionBreakdowns.get(func.line);
-    const calculatedTotal = breakdown ? breakdown.calculatedTotal : complexity;
-    
-    // Show breakdown if we have one and it matches ESLint's complexity (or is close)
-    // Allow showing breakdown if calculated is within 1 of actual (handles edge cases)
-    const hasBreakdown = breakdown && breakdown.breakdown;
-    const hasDecisionPoints = breakdown && breakdown.decisionPoints && breakdown.decisionPoints.length > 0;
-    const exactMatch = breakdown && calculatedTotal === complexity;
-    const closeMatch = breakdown && hasDecisionPoints && Math.abs(calculatedTotal - complexity) <= 1;
-    const showBreakdown = hasBreakdown && (exactMatch || closeMatch) && hasDecisionPoints;
-    
-    let breakdownHTML = '';
-    if (showBreakdown && complexity > 1) {
-      // Show breakdown with styled numbers: "base [1] | if [1] | ?: [1]"
-      breakdownHTML = formatComplexityBreakdownStyled(breakdown.breakdown, complexity);
-    } else if (complexity === 1) {
-      // Base-only functions
-      breakdownHTML = `base <span class="complexity-number">1</span>`;
-    } else {
-      // If breakdown doesn't match or isn't available, show dash
-      breakdownHTML = `<span class="quiet">—</span>`;
-    }
-    
-    // Format as table row: Function | Complexity | Breakdown
-    // Show full function name to distinguish between different versions (callbacks, etc.)
-    const displayName = func.functionName || 'unknown';
-    lines.push(`        <tr>`);
-    lines.push(`          <td class="breakdown-function"><span class="strong">${escapeHtml(displayName)}</span></td>`);
-    lines.push(`          <td class="breakdown-complexity"><span class="complexity-number">${complexity}</span></td>`);
-    lines.push(`          <td class="breakdown-details">${breakdownHTML}</td>`);
-    lines.push(`        </tr>`);
+    const breakdownHTML = generateBreakdownHTML(complexity, breakdown);
+    const displayName = fixFunctionNameForCallback(func, functionBoundaries, sortedFunctions);
+    const rowHTML = generateFunctionRowHTML(displayName, complexity, breakdownHTML);
+    lines.push(rowHTML);
   });
   
   return lines.join('\n');

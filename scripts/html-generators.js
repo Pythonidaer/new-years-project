@@ -45,7 +45,7 @@ export function generateAboutPageHTML() {
     p { margin: 4px 0; }
     ul { margin: 4px 0; padding-left: 20px; }
     li { margin: 2px 0; }
-    code { font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px; }
+    code { font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px; background-color: #f5f5f5; padding: 2px 4px; border-radius: 3px; }
   </style>
 </head>
 <body>
@@ -62,6 +62,8 @@ export function generateAboutPageHTML() {
     <li><code>catch</code></li>
     <li>Ternary <code>? :</code></li>
     <li><code>&&</code> / <code>||</code> in conditions (incl. JSX)</li>
+    <li>Optional chaining <code>?.</code></li>
+    <li>Nullish coalescing <code>??</code></li>
     <li><strong>Default parameters</strong> (some linters, like ESLint's <code>classic</code> variant, count default parameter values as decision points)</li>
   </ul>
   <h3>Not counted</h3>
@@ -985,6 +987,279 @@ export function generateFolderHTML(folder, allFolders, showAllInitially, getComp
  * @param {Function} escapeHtml - Function to escape HTML
  * @returns {string} Full HTML document string
  */
+/**
+ * Finds the boundary for a function, handling cases where multiple functions share the same boundary
+ * @param {number} functionLine - The ESLint-reported line number for the function
+ * @param {Map} functionBoundaries - Map of function lines to boundary objects
+ * @returns {Object|null} The boundary object, or null if not found
+ */
+function findBoundaryForFunction(functionLine, functionBoundaries) {
+  let boundary = functionBoundaries.get(functionLine);
+  
+  if (!boundary) {
+    // Find boundary that contains this function's line OR starts right after it
+    // (e.g., function at line 39, boundary starts at 40)
+    for (const [boundaryLine, b] of functionBoundaries.entries()) {
+      if ((functionLine >= b.start && functionLine <= b.end) || 
+          (functionLine < b.start && b.start === functionLine + 1)) {
+        boundary = b;
+        break;
+      }
+    }
+  }
+  
+  return boundary;
+}
+
+/**
+ * Finds the breakdown line (where decision points are assigned) for a function
+ * @param {number} functionLine - The ESLint-reported line number
+ * @param {Object|null} boundary - The function boundary object
+ * @param {Map} functionBoundaries - Map of function lines to boundary objects
+ * @returns {number} The line number where decision points are assigned
+ */
+function findBreakdownLine(functionLine, boundary, functionBoundaries) {
+  if (!boundary) {
+    return functionLine;
+  }
+  
+  // Find the function line that has this boundary (the key in functionBoundaries)
+  // This is the line where decision points are actually assigned
+  for (const [boundaryLine, b] of functionBoundaries.entries()) {
+    if (b.start === boundary.start && b.end === boundary.end) {
+      return boundaryLine;
+    }
+  }
+  
+  return functionLine;
+}
+
+/**
+ * Logs complexity mismatches for debugging
+ * @param {Object} func - Function object with complexity info
+ * @param {Object} breakdown - Complexity breakdown object
+ * @param {Map} functionBoundaries - Map of function lines to boundary objects
+ */
+function logComplexityMismatch(func, breakdown, functionBoundaries) {
+  const actualComplexity = parseInt(func.complexity);
+  const calculatedTotal = breakdown.calculatedTotal;
+  
+  if (Math.abs(calculatedTotal - actualComplexity) > 1) {
+    console.warn(`Complexity mismatch for ${func.functionName} at line ${func.line}: ESLint reports ${actualComplexity}, calculated ${calculatedTotal}`);
+    if (breakdown.decisionPoints && breakdown.decisionPoints.length > 0) {
+      console.warn(`  Decision points found:`, breakdown.decisionPoints.map(dp => `${dp.type} at line ${dp.line}`).join(', '));
+    } else {
+      console.warn(`  Decision points found: (none)`);
+      // For TopBanner specifically, check what's happening
+      if (func.functionName === 'TopBanner' && func.line === 5) {
+        const boundary = functionBoundaries.get(func.line);
+        console.warn(`  TopBanner boundary: start=${boundary?.start}, end=${boundary?.end}`);
+        // Check if lines 49 and 54 are in any function boundary
+        const line49Funcs = Array.from(functionBoundaries.entries()).filter(([fl, b]) => fl !== func.line && 49 >= b.start && 49 <= b.end);
+        const line54Funcs = Array.from(functionBoundaries.entries()).filter(([fl, b]) => fl !== func.line && 54 >= b.start && 54 <= b.end);
+        if (line49Funcs.length > 0) {
+          console.warn(`  Line 49 is in other function boundaries:`, line49Funcs.map(([fl, b]) => `line ${fl} (${b.start}-${b.end})`).join(', '));
+        }
+        if (line54Funcs.length > 0) {
+          console.warn(`  Line 54 is in other function boundaries:`, line54Funcs.map(([fl, b]) => `line ${fl} (${b.start}-${b.end})`).join(', '));
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Calculates complexity breakdowns for all functions
+ * @param {Array} functions - Array of function objects
+ * @param {Map} functionBoundaries - Map of function lines to boundary objects
+ * @param {Array} decisionPoints - Array of decision point objects
+ * @param {Function} calculateComplexityBreakdown - Function to calculate breakdown
+ * @returns {Map} Map of function lines to breakdown objects
+ */
+function calculateFunctionBreakdowns(functions, functionBoundaries, decisionPoints, calculateComplexityBreakdown) {
+  const functionBreakdowns = new Map();
+  
+  functions.forEach(func => {
+    const boundary = findBoundaryForFunction(func.line, functionBoundaries);
+    const breakdownLine = findBreakdownLine(func.line, boundary, functionBoundaries);
+    
+    const breakdown = calculateComplexityBreakdown(
+      breakdownLine,
+      decisionPoints,
+      1 // base complexity
+    );
+    
+    logComplexityMismatch(func, breakdown, functionBoundaries);
+    functionBreakdowns.set(func.line, breakdown);
+  });
+  
+  return functionBreakdowns;
+}
+
+/**
+ * Calculates file-level statistics
+ * @param {Array} functions - Array of function objects
+ * @returns {Object} Statistics object with totalFunctions, withinThreshold, maxComplexity, avgComplexity, percentage, level
+ */
+function calculateFileStatistics(functions) {
+  const totalFunctions = functions.length;
+  const withinThreshold = functions.filter(f => parseInt(f.complexity) <= 10).length;
+  const maxComplexity = functions.length > 0 ? Math.max(...functions.map(f => parseInt(f.complexity))) : 0;
+  const avgComplexity = functions.length > 0 ? Math.round(functions.reduce((sum, f) => sum + parseInt(f.complexity), 0) / functions.length) : 0;
+  const percentage = totalFunctions > 0 ? Math.round((withinThreshold / totalFunctions) * 100) : 100;
+  const level = percentage >= 80 ? 'high' : percentage >= 60 ? 'high' : percentage >= 40 ? 'medium' : 'low';
+  
+  return { totalFunctions, withinThreshold, maxComplexity, avgComplexity, percentage, level };
+}
+
+/**
+ * Builds sets of function boundary lines for visual separators
+ * @param {Map} functionBoundaries - Map of function lines to boundary objects
+ * @param {number} sourceLinesLength - Total number of source lines
+ * @returns {Object} Object with functionStartLines, functionEndLines, functionClosingLines Sets
+ */
+function buildBoundaryLineSets(functionBoundaries, sourceLinesLength) {
+  const functionStartLines = new Set();
+  const functionEndLines = new Set();
+  const functionClosingLines = new Set();
+  
+  functionBoundaries.forEach((boundary) => {
+    const { start, end } = boundary;
+    functionStartLines.add(start);
+    functionClosingLines.add(end);
+    
+    if (end < sourceLinesLength) {
+      functionEndLines.add(end + 1);
+    } else if (end === sourceLinesLength) {
+      functionEndLines.add(end);
+    }
+  });
+  
+  return { functionStartLines, functionEndLines, functionClosingLines };
+}
+
+/**
+ * Generates complexity annotation HTML for a function
+ * @param {Object|null} func - Function object or null
+ * @param {Function} getComplexityLevel - Function to get complexity level
+ * @param {Function} escapeHtml - Function to escape HTML
+ * @returns {string} HTML string for complexity annotation
+ */
+function generateComplexityAnnotation(func, getComplexityLevel, escapeHtml) {
+  if (!func) {
+    return '<span class="cline-any cline-neutral">&nbsp;</span>';
+  }
+  
+  const complexityNum = parseInt(func.complexity);
+  getComplexityLevel(func.complexity); // Called but result not used (for consistency)
+  return `<span class="cline-any cline-yes" title="Function '${escapeHtml(func.functionName)}' has complexity ${complexityNum}">${complexityNum}</span>`;
+}
+
+/**
+ * Determines CSS classes for a line based on decision points and boundaries
+ * @param {Array} decisionPointsOnLine - Array of decision points on this line
+ * @param {number} lineNum - Line number
+ * @param {Set} functionStartLines - Set of function start line numbers
+ * @param {Set} functionEndLines - Set of function end line numbers
+ * @param {Set} functionClosingLines - Set of function closing line numbers
+ * @returns {Object} Object with classAttr and decisionPointTitle
+ */
+function determineLineClasses(decisionPointsOnLine, lineNum, functionStartLines, functionEndLines, functionClosingLines) {
+  const isDecisionPoint = decisionPointsOnLine.length > 0;
+  const decisionPointTitle = isDecisionPoint 
+    ? ` title="${decisionPointsOnLine.map(dp => dp.name).join(', ')}"`
+    : '';
+  const decisionPointClass = isDecisionPoint ? 'decision-point' : '';
+  
+  const isFunctionStart = functionStartLines.has(lineNum);
+  const isFunctionEnd = functionEndLines.has(lineNum);
+  const isFunctionClosing = functionClosingLines.has(lineNum);
+  
+  const boundaryParts = [];
+  if (isFunctionStart && isFunctionEnd) {
+    boundaryParts.push('function-boundary-single');
+  } else {
+    if (isFunctionStart) boundaryParts.push('function-boundary-start');
+    if (isFunctionEnd) boundaryParts.push('function-boundary-end');
+    if (isFunctionClosing) boundaryParts.push('function-boundary-closing');
+  }
+  
+  const boundaryClass = boundaryParts.join(' ');
+  const allClasses = [decisionPointClass, boundaryClass].filter(Boolean).join(' ');
+  const classAttr = allClasses ? ` class="${allClasses}"` : '';
+  
+  return { classAttr, decisionPointTitle, isDecisionPoint, isFunctionStart, isFunctionClosing };
+}
+
+/**
+ * Builds HTML for a code line with selective highlighting
+ * @param {string} line - The source line
+ * @param {Function} escapeHtml - Function to escape HTML
+ * @param {boolean} isDecisionPoint - Whether this line is a decision point
+ * @param {boolean} isFunctionStart - Whether this line is a function start
+ * @param {boolean} isFunctionClosing - Whether this line is a function closing
+ * @returns {string} HTML string for the code line
+ */
+function buildCodeLineHTML(line, escapeHtml, isDecisionPoint, isFunctionStart, isFunctionClosing) {
+  const lineMatch = line.match(/^(\s*)(.*?)(\s*)$/);
+  const leadingWhitespace = lineMatch ? escapeHtml(lineMatch[1]) : '';
+  const content = lineMatch ? escapeHtml(lineMatch[2]) : escapeHtml(line);
+  const trailingWhitespace = lineMatch ? escapeHtml(lineMatch[3]) : '';
+  
+  if (isDecisionPoint || isFunctionStart || isFunctionClosing) {
+    const codeLineParts = ['code-line'];
+    if (isDecisionPoint) {
+      codeLineParts.push('decision-point-line');
+    } else if (isFunctionStart || isFunctionClosing) {
+      codeLineParts.push('function-boundary-highlight');
+    }
+    const codeLineClass = codeLineParts.join(' ');
+    return `${leadingWhitespace}<span class="${codeLineClass}">${content}</span>${trailingWhitespace}`;
+  }
+  
+  return `<span class="code-line">${leadingWhitespace}${content}${trailingWhitespace}</span>`;
+}
+
+/**
+ * Generates HTML for a single line row
+ * @param {string} line - The source line
+ * @param {number} index - Zero-based index of the line
+ * @param {Map} lineToFunction - Map of line numbers to function objects
+ * @param {Map} lineToDecisionPoint - Map of line numbers to decision point arrays
+ * @param {Set} functionStartLines - Set of function start line numbers
+ * @param {Set} functionEndLines - Set of function end line numbers
+ * @param {Set} functionClosingLines - Set of function closing line numbers
+ * @param {Function} getComplexityLevel - Function to get complexity level
+ * @param {Function} escapeHtml - Function to escape HTML
+ * @returns {string} HTML string for the line row
+ */
+function generateLineRowHTML(
+  line,
+  index,
+  lineToFunction,
+  lineToDecisionPoint,
+  functionStartLines,
+  functionEndLines,
+  functionClosingLines,
+  getComplexityLevel,
+  escapeHtml
+) {
+  const lineNum = index + 1;
+  const func = lineToFunction.get(lineNum);
+  const decisionPointsOnLine = lineToDecisionPoint.get(lineNum) || [];
+  
+  const complexityAnnotation = generateComplexityAnnotation(func, getComplexityLevel, escapeHtml);
+  const { classAttr, decisionPointTitle, isDecisionPoint, isFunctionStart, isFunctionClosing } = 
+    determineLineClasses(decisionPointsOnLine, lineNum, functionStartLines, functionEndLines, functionClosingLines);
+  const codeLineHTML = buildCodeLineHTML(line, escapeHtml, isDecisionPoint, isFunctionStart, isFunctionClosing);
+  
+  return `<tr${classAttr}>
+<td class="line-count quiet"><a name='L${lineNum}'></a><a href='#L${lineNum}'>${lineNum}</a></td>
+<td class="line-coverage quiet">${complexityAnnotation}</td>
+<td class="text"${decisionPointTitle}><pre class="prettyprint lang-js">${codeLineHTML}</pre></td>
+</tr>`;
+}
+
 export function generateFileHTML(
   filePath,
   functions,
@@ -1021,45 +1296,12 @@ export function generateFileHTML(
   const decisionPoints = parseDecisionPoints(sourceCode, functionBoundaries, functions);
   
   // Calculate complexity breakdowns for each function
-  // Decision points are already assigned to the innermost function in parseDecisionPoints
-  const functionBreakdowns = new Map();
-  functions.forEach(func => {
-    const breakdown = calculateComplexityBreakdown(
-      func.line,
-      decisionPoints,
-      1 // base complexity
-    );
-    
-    // Debug: Log mismatches to help identify issues
-    const actualComplexity = parseInt(func.complexity);
-    const calculatedTotal = breakdown.calculatedTotal;
-    if (Math.abs(calculatedTotal - actualComplexity) > 1) {
-      // Significant mismatch - this indicates a parsing issue
-      // The breakdown might be missing decision points or counting wrong ones
-      console.warn(`Complexity mismatch for ${func.functionName} at line ${func.line}: ESLint reports ${actualComplexity}, calculated ${calculatedTotal}`);
-      if (breakdown.decisionPoints && breakdown.decisionPoints.length > 0) {
-        console.warn(`  Decision points found:`, breakdown.decisionPoints.map(dp => `${dp.type} at line ${dp.line}`).join(', '));
-      } else {
-        console.warn(`  Decision points found: (none)`);
-        // For TopBanner specifically, check what's happening
-        if (func.functionName === 'TopBanner' && func.line === 5) {
-          const boundary = functionBoundaries.get(func.line);
-          console.warn(`  TopBanner boundary: start=${boundary?.start}, end=${boundary?.end}`);
-          // Check if lines 49 and 54 are in any function boundary
-          const line49Funcs = Array.from(functionBoundaries.entries()).filter(([fl, b]) => fl !== func.line && 49 >= b.start && 49 <= b.end);
-          const line54Funcs = Array.from(functionBoundaries.entries()).filter(([fl, b]) => fl !== func.line && 54 >= b.start && 54 <= b.end);
-          if (line49Funcs.length > 0) {
-            console.warn(`  Line 49 is in other function boundaries:`, line49Funcs.map(([fl, b]) => `line ${fl} (${b.start}-${b.end})`).join(', '));
-          }
-          if (line54Funcs.length > 0) {
-            console.warn(`  Line 54 is in other function boundaries:`, line54Funcs.map(([fl, b]) => `line ${fl} (${b.start}-${b.end})`).join(', '));
-          }
-        }
-      }
-    }
-    
-    functionBreakdowns.set(func.line, breakdown);
-  });
+  const functionBreakdowns = calculateFunctionBreakdowns(
+    functions,
+    functionBoundaries,
+    decisionPoints,
+    calculateComplexityBreakdown
+  );
   
   // Create decision point line map for highlighting
   const lineToDecisionPoint = new Map();
@@ -1071,22 +1313,16 @@ export function generateFileHTML(
   });
   
   // Calculate file-level statistics
-  const totalFunctions = functions.length;
-  const withinThreshold = functions.filter(f => parseInt(f.complexity) <= 10).length;
-  const maxComplexity = functions.length > 0 ? Math.max(...functions.map(f => parseInt(f.complexity))) : 0;
-  const avgComplexity = functions.length > 0 ? Math.round(functions.reduce((sum, f) => sum + parseInt(f.complexity), 0) / functions.length) : 0;
-  const percentage = totalFunctions > 0 ? Math.round((withinThreshold / totalFunctions) * 100) : 100;
-  const level = percentage >= 80 ? 'high' : percentage >= 60 ? 'high' : percentage >= 40 ? 'medium' : 'low';
+  const { totalFunctions, withinThreshold, maxComplexity, avgComplexity, percentage, level } = 
+    calculateFileStatistics(functions);
   
   // Get directory path for breadcrumb navigation
   const fileDir = getDirectory(filePath);
   const fileName = filePath.split('/').pop();
-  // Folder index is in the same directory as the file HTML, so just use 'index.html'
   const folderIndexPath = 'index.html';
   const backLink = fileDir ? '../'.repeat(fileDir.split('/').length) + 'index.html' : 'index.html';
   
   // Generate hierarchical complexity breakdown display
-  // Group by top-level function, nest callbacks visually under their parent
   const breakdownItems = formatFunctionHierarchy(functions, functionBoundaries, functionBreakdowns, sourceCode);
   
   const breakdownSection = functions.length > 0 ? `
@@ -1106,90 +1342,24 @@ export function generateFileHTML(
     </div>
   ` : '';
   
-  // Collect function boundary lines for visual separators
-  const functionStartLines = new Set();
-  const functionEndLines = new Set();
-  const functionClosingLines = new Set(); // actual } line for yellow highlight
-  functionBoundaries.forEach((boundary, functionLine) => {
-    const { start, end } = boundary;
-    functionStartLines.add(start);
-    // Add the closing brace line for yellow highlight
-    functionClosingLines.add(end);
-    // Closing border goes below the }; use next row so border appears at bottom of brace
-    // Only add if end is within bounds and there's a next line
-    if (end < sourceLines.length) {
-      functionEndLines.add(end + 1);
-    } else if (end === sourceLines.length) {
-      // If end is the last line, add it to functionEndLines for the border
-      functionEndLines.add(end);
-    }
-  });
+  // Build boundary line sets for visual separators
+  const { functionStartLines, functionEndLines, functionClosingLines } = 
+    buildBoundaryLineSets(functionBoundaries, sourceLines.length);
   
   // Generate line-by-line HTML
-  const lineRows = sourceLines.map((line, index) => {
-    const lineNum = index + 1;
-    const func = lineToFunction.get(lineNum);
-    const escapedLine = escapeHtml(line || '');
-    const decisionPointsOnLine = lineToDecisionPoint.get(lineNum) || [];
-    
-    // Determine complexity annotation
-    let complexityAnnotation = '<span class="cline-any cline-neutral">&nbsp;</span>';
-    if (func) {
-      const complexityNum = parseInt(func.complexity);
-      const funcLevel = getComplexityLevel(func.complexity);
-      // Use cline-yes for functions (similar to coverage showing execution count)
-      complexityAnnotation = `<span class="cline-any cline-yes" title="Function '${escapeHtml(func.functionName)}' has complexity ${complexityNum}">${complexityNum}</span>`;
-    }
-    
-    // Determine if this line is a decision point
-    const isDecisionPoint = decisionPointsOnLine.length > 0;
-    const decisionPointTitle = isDecisionPoint 
-      ? ` title="${decisionPointsOnLine.map(dp => dp.name).join(', ')}"`
-      : '';
-    const decisionPointClass = isDecisionPoint ? 'decision-point' : '';
-    
-    // Determine if this line is a function boundary (start/end) for visual separator
-    const isFunctionStart = functionStartLines.has(lineNum);
-    const isFunctionEnd = functionEndLines.has(lineNum);
-    const isFunctionClosing = functionClosingLines.has(lineNum);
-    const boundaryParts = [];
-    if (isFunctionStart && isFunctionEnd) boundaryParts.push('function-boundary-single');
-    else {
-      if (isFunctionStart) boundaryParts.push('function-boundary-start');
-      if (isFunctionEnd) boundaryParts.push('function-boundary-end');
-      if (isFunctionClosing) boundaryParts.push('function-boundary-closing');
-    }
-    const boundaryClass = boundaryParts.join(' ');
-    const allClasses = [decisionPointClass, boundaryClass].filter(Boolean).join(' ');
-    const classAttr = allClasses ? ` class="${allClasses}"` : '';
-    
-    // Split line into leading whitespace, content, and trailing whitespace
-    // Only highlight the content part, not the whitespace
-    const lineMatch = line.match(/^(\s*)(.*?)(\s*)$/);
-    const leadingWhitespace = lineMatch ? escapeHtml(lineMatch[1]) : '';
-    const content = lineMatch ? escapeHtml(lineMatch[2]) : escapedLine;
-    const trailingWhitespace = lineMatch ? escapeHtml(lineMatch[3]) : '';
-    
-    // Build the code line HTML with selective highlighting
-    let codeLineHTML = '';
-    if (isDecisionPoint || isFunctionStart || isFunctionClosing) {
-      // Apply highlighting only to content, not whitespace
-      const codeLineParts = ['code-line'];
-      if (isDecisionPoint) codeLineParts.push('decision-point-line');
-      if (isFunctionStart || isFunctionClosing) codeLineParts.push('function-boundary-highlight');
-      const codeLineClass = codeLineParts.join(' ');
-      codeLineHTML = `${leadingWhitespace}<span class="${codeLineClass}">${content}</span>${trailingWhitespace}`;
-    } else {
-      // No highlighting needed, just wrap in code-line for consistent styling
-      codeLineHTML = `<span class="code-line">${leadingWhitespace}${content}${trailingWhitespace}</span>`;
-    }
-    
-    return `<tr${classAttr}>
-<td class="line-count quiet"><a name='L${lineNum}'></a><a href='#L${lineNum}'>${lineNum}</a></td>
-<td class="line-coverage quiet">${complexityAnnotation}</td>
-<td class="text"${decisionPointTitle}><pre class="prettyprint lang-js">${codeLineHTML}</pre></td>
-</tr>`;
-  }).join('\n');
+  const lineRows = sourceLines.map((line, index) => 
+    generateLineRowHTML(
+      line,
+      index,
+      lineToFunction,
+      lineToDecisionPoint,
+      functionStartLines,
+      functionEndLines,
+      functionClosingLines,
+      getComplexityLevel,
+      escapeHtml
+    )
+  ).join('\n');
   
   // Calculate relative path to about.html
   const aboutPath = fileDir ? '../'.repeat(fileDir.split('/').length) + 'about.html' : 'about.html';
@@ -1334,7 +1504,7 @@ export function generateFileHTML(
       .complexity-breakdown {
         margin: 20px 0;
         padding: 0;
-        max-width: 800px;
+        max-width: 1300px;
       }
       .complexity-breakdown h2 {
         margin: 0 0 10px 0;

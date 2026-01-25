@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState, useRef, memo } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { Container } from "@/layout/Container";
 import { Section } from "@/layout/Section";
@@ -21,7 +21,7 @@ const technologies = [
   { id: 14, name: "Storybook", icon: "storybook" },
 ];
 
-export function AgencyLogos() {
+function AgencyLogosComponent() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "start",
@@ -32,6 +32,7 @@ export function AgencyLogos() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
+  const viewportRef = useRef<HTMLDivElement>(null);
 
   const scrollTo = useCallback(
     (index: number) => {
@@ -48,9 +49,43 @@ export function AgencyLogos() {
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
+  // Store onSelect in ref so effect only depends on emblaApi
+  const onSelectRef = useRef(onSelect);
   useEffect(() => {
-    if (!emblaApi) return;
+    onSelectRef.current = onSelect;
+  }, [onSelect]);
+
+  // Track handlers for each emblaApi instance using a Map
+  const handlersMapRef = useRef<Map<typeof emblaApi, {
+    onSelect: () => void;
+    handleReInit: () => void;
+    handlePointerDown: () => void;
+  }>>(new Map());
+
+  // Track previous emblaApi for cleanup
+  const prevEmblaApiRef = useRef<typeof emblaApi>(null);
+
+  // Cleanup previous emblaApi when it changes (runs synchronously before main effect)
+  useLayoutEffect(() => {
+    const prevApi = prevEmblaApiRef.current;
+    if (prevApi && prevApi !== emblaApi) {
+      const prevHandlers = handlersMapRef.current.get(prevApi);
+      if (prevHandlers) {
+        prevApi.off("select", prevHandlers.onSelect);
+        prevApi.off("reInit", prevHandlers.handleReInit);
+        prevApi.off("pointerDown", prevHandlers.handlePointerDown);
+        handlersMapRef.current.delete(prevApi);
+      }
+    }
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) {
+      prevEmblaApiRef.current = null;
+      return;
+    }
     
+    // Create handlers and capture them in closure for cleanup
     const handleReInit = () => {
       setScrollSnaps(emblaApi.scrollSnapList());
     };
@@ -59,25 +94,68 @@ export function AgencyLogos() {
       setAutoplayEnabled(false); // Stop autoplay on drag/interaction
     };
     
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", handleReInit);
-    emblaApi.on("pointerDown", handlePointerDown);
+    // Use ref to get current onSelect without adding it to dependencies
+    const currentOnSelect = () => {
+      onSelectRef.current();
+    };
+    
+    // Store handlers in Map for this emblaApi instance (before registering)
+    const handlers = {
+      onSelect: currentOnSelect,
+      handleReInit,
+      handlePointerDown,
+    };
+    handlersMapRef.current.set(emblaApi, handlers);
+    
+    // Capture emblaApi and handlers in closure for React's automatic cleanup
+    const apiForCleanup = emblaApi;
+    
+    apiForCleanup.on("select", currentOnSelect);
+    apiForCleanup.on("reInit", handleReInit);
+    apiForCleanup.on("pointerDown", handlePointerDown);
     
     // Initialize scroll snaps and selected index asynchronously
     requestAnimationFrame(() => {
       setScrollSnaps(emblaApi.scrollSnapList());
-      onSelect();
+      currentOnSelect();
     });
 
-    // Cleanup event listeners
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", handleReInit);
-      emblaApi.off("pointerDown", handlePointerDown);
-    };
-  }, [emblaApi, onSelect]);
+    // Update ref for next render
+    prevEmblaApiRef.current = emblaApi;
 
-  // Autoplay: advance carousel every second
+    // Cleanup event listeners - all captured in closure
+    // This will run when emblaApi changes or component unmounts
+    return () => {
+      apiForCleanup.off("select", currentOnSelect);
+      apiForCleanup.off("reInit", handleReInit);
+      apiForCleanup.off("pointerDown", handlePointerDown);
+    };
+  }, [emblaApi]);
+
+  // PERFORMANCE OPTIMIZATION: Pause autoplay when carousel is not visible
+  // Uses IntersectionObserver to detect when carousel enters/leaves viewport
+  useEffect(() => {
+    if (!viewportRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const isVisible = entries[0]?.isIntersecting ?? false;
+        // Only enable autoplay when visible and user hasn't disabled it
+        if (!isVisible) {
+          setAutoplayEnabled(false);
+        }
+      },
+      { threshold: 0.1 } // Trigger when at least 10% visible
+    );
+
+    observer.observe(viewportRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  // Autoplay: advance carousel every 2 seconds (only when visible)
   useEffect(() => {
     if (!emblaApi || !autoplayEnabled) return;
 
@@ -85,7 +163,7 @@ export function AgencyLogos() {
       if (emblaApi && autoplayEnabled) {
         emblaApi.scrollNext();
       }
-    }, 2000); // Advance every 1 second
+    }, 2000); // Advance every 2 seconds
 
     return () => {
       clearInterval(autoplayInterval);
@@ -98,7 +176,16 @@ export function AgencyLogos() {
         <h2 className={styles.heading}>Some of the Tech I Know</h2>
       </Container>
       <div className={styles.carouselWrapper}>
-        <div className={styles.viewport} ref={emblaRef}>
+        <div 
+          className={styles.viewport} 
+          ref={(node) => {
+            // Handle both Embla ref and our viewport ref
+            if (typeof emblaRef === 'function') {
+              emblaRef(node);
+            }
+            viewportRef.current = node;
+          }}
+        >
           <div className={styles.container}>
               {technologies.map((tech) => (
                 <div key={tech.id} className={styles.slide}>
@@ -139,3 +226,6 @@ export function AgencyLogos() {
   );
 }
 
+// PERFORMANCE OPTIMIZATION: Memoize component to prevent unnecessary re-renders
+// AgencyLogos doesn't receive props, so it only re-renders when internal state changes
+export const AgencyLogos = memo(AgencyLogosComponent);

@@ -20,11 +20,10 @@
 
   padding: 13px 15px 12px;
 
-  transition: box-shadow 0.2s ease-in-out,
-    border-radius 0.2s ease-in-out,
-    background-color 0.2s ease-in-out,
-    opacity 0.2s ease-in-out,
-    color 0.2s ease-in-out;
+  /* PERFORMANCE OPTIMIZATION: Only transition properties that don't trigger layout */
+  /* background-color still needed for hover effect, but will-change helps browser optimize */
+  transition: opacity 0.2s ease-in-out;
+  will-change: background-color, opacity;
 }
 
 /* Chevron icon after button text - removed, will use React component instead */
@@ -81,11 +80,9 @@
 
   padding: 16px 15px 15px;
 
-  transition: box-shadow 0.2s ease-in-out,
-    border-radius 0.2s ease-in-out,
-    background-color 0.2s ease-in-out,
-    opacity 0.2s ease-in-out,
-    color 0.2s ease-in-out;
+  /* PERFORMANCE OPTIMIZATION: Only transition opacity (GPU-accelerated) */
+  transition: opacity 0.2s ease-in-out;
+  will-change: opacity;
 }
 
 .secondaryOrange:hover {

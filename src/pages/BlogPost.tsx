@@ -97,7 +97,7 @@ export function BlogPost() {
                 />
               </div>
               
-              {hasContent(post) && (
+              {hasContent(post) && post.content && (
                 <div className={styles.postContent}>
                   {parse(post.content)}
                 </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { ThemeContext } from './ThemeContextInstance';
 import type { Theme, Preset } from './themeData';
@@ -102,28 +102,30 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     applyThemeToDom(theme);
   }, [theme]);
 
-  const updateTheme = (updates: Partial<Theme>) => {
+  // PERFORMANCE OPTIMIZATION: Memoize all context functions to prevent unnecessary re-renders
+  // This prevents all theme consumers from re-rendering when ThemeProvider re-renders
+  const updateTheme = useCallback((updates: Partial<Theme>) => {
     setTheme((prev) => {
       const updated = { ...prev, ...updates };
       // Save to localStorage
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       return updated;
     });
-  };
+  }, []);
 
-  const resetTheme = () => {
+  const resetTheme = useCallback(() => {
     setTheme(defaultTheme);
     setCurrentPresetId('default');
     localStorage.removeItem(STORAGE_KEY);
     // Reapply default theme to DOM
     applyThemeToDom(defaultTheme);
-  };
+  }, []);
 
-  const exportTheme = () => {
+  const exportTheme = useCallback(() => {
     return JSON.stringify(theme, null, 2);
-  };
+  }, [theme]);
 
-  const importTheme = (themeJson: string) => {
+  const importTheme = useCallback((themeJson: string) => {
     try {
       const parsed = JSON.parse(themeJson);
       const updated = { ...defaultTheme, ...parsed };
@@ -133,9 +135,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error('Failed to import theme:', error);
     }
-  };
+  }, []);
 
-  const savePreset = (name: string, themeToSave?: Theme) => {
+  const savePreset = useCallback((name: string, themeToSave?: Theme) => {
     const themeForPreset = themeToSave || theme;
     const newPreset: Preset = {
       id: `custom-${Date.now()}`,
@@ -146,9 +148,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const updated = [...builtInPresets, ...customPresets, newPreset];
     setPresets(updated);
     localStorage.setItem(PRESETS_STORAGE_KEY, JSON.stringify(customPresets.concat(newPreset)));
-  };
+  }, [theme, presets]);
 
-  const loadPreset = (presetId: string) => {
+  const loadPreset = useCallback((presetId: string) => {
     const preset = presets.find((p) => p.id === presetId);
     if (preset) {
       setTheme(preset.theme);
@@ -156,9 +158,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(preset.theme));
       applyThemeToDom(preset.theme);
     }
-  };
+  }, [presets]);
 
-  const deletePreset = (presetId: string) => {
+  const deletePreset = useCallback((presetId: string) => {
     // Don't allow deleting built-in presets
     if (builtInPresets.find((p) => p.id === presetId)) {
       return;
@@ -167,23 +169,29 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const updated = [...builtInPresets, ...customPresets];
     setPresets(updated);
     localStorage.setItem(PRESETS_STORAGE_KEY, JSON.stringify(customPresets));
-  };
+  }, [presets]);
+
+  // PERFORMANCE OPTIMIZATION: Memoize context value to prevent unnecessary re-renders
+  // Only create new value object when dependencies actually change
+  // This is critical - without this, ALL theme consumers re-render on every ThemeProvider render
+  const contextValue = useMemo(
+    () => ({
+      theme,
+      updateTheme,
+      resetTheme,
+      exportTheme,
+      importTheme,
+      presets,
+      savePreset,
+      loadPreset,
+      deletePreset,
+      currentPresetId,
+    }),
+    [theme, updateTheme, resetTheme, exportTheme, importTheme, presets, savePreset, loadPreset, deletePreset, currentPresetId]
+  );
 
   return (
-    <ThemeContext.Provider
-      value={{
-        theme,
-        updateTheme,
-        resetTheme,
-        exportTheme,
-        importTheme,
-        presets,
-        savePreset,
-        loadPreset,
-        deletePreset,
-        currentPresetId,
-      }}
-    >
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );

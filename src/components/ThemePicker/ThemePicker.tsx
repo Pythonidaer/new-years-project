@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useTheme } from '@/context/useTheme';
 import { checkContrastIssues } from '@/utils/contrast';
+import type { ContrastIssue } from '@/utils/contrast';
 import { RotateCcw, Save, X, Palette, Bookmark, Trash2, ChevronDown, ChevronUp, Music, Pin } from 'lucide-react';
 import Color from 'color';
 import styles from './ThemePicker.module.css';
@@ -159,6 +160,241 @@ function GradientGroup({ gradientTokens, gradientPreview, localChanges, theme, o
   );
 }
 
+// Helper functions for preset checks
+function hasAudioEasterEgg(presetId: string): boolean {
+  return presetId === 'noname' || presetId === 'samson' || presetId === 'vapor-wave' || presetId === 'king' || presetId === 'planet';
+}
+
+function isBuiltInPreset(presetId: string): boolean {
+  const builtInIds = [
+    'default',
+    'pink',
+    'dayglow',
+    'king',
+  ];
+  
+  const builtInPrefixes = [
+    'cedar',
+    'sage',
+    'crimson',
+    'vapor',
+    'gothic',
+    'pastel',
+    'horror',
+    'pride',
+    'yuko',
+    'hokusai',
+    'noname',
+    'sadikovic',
+    'afb',
+    'tuf',
+    'royboy',
+    'dalmatian',
+    'querida',
+    'ris',
+    'gulu',
+    'maxine',
+    'sunrise',
+    'noir',
+    'hatsune',
+    'trippie',
+    'scotland',
+    'pbr',
+    'reeses',
+    'fallout',
+    'berge',
+    'samson',
+    'companion',
+    'gusto',
+    'facecrusher',
+    'planet',
+    'visser',
+    'yolandi',
+  ];
+
+  if (builtInIds.includes(presetId)) {
+    return true;
+  }
+
+  return builtInPrefixes.some(prefix => presetId.startsWith(prefix));
+}
+
+// Helper component for contrast warnings
+type ContrastWarningsProps = {
+  contrastIssues: ContrastIssue[];
+  styles: typeof styles;
+};
+
+function ContrastWarnings({ contrastIssues, styles }: ContrastWarningsProps) {
+  if (contrastIssues.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className={styles.warnings}>
+      <h4 className={styles.warningTitle}>Contrast Warnings</h4>
+      {contrastIssues.map((issue, idx) => (
+        <div key={idx} className={styles.warning}>
+          <div className={styles.warningHeader}>
+            <span className={styles.warningPair}>{issue.pair}</span>
+            <span className={styles.warningLevel} data-level={issue.level}>
+              {issue.level}
+            </span>
+          </div>
+          <div className={styles.warningDetails}>
+            <div className={styles.warningUsage}>
+              <strong>Used in:</strong> {issue.usage}
+            </div>
+            <div className={styles.warningExplanation}>
+              WCAG requires at least 4.5:1 for normal text (AA) or 7:1 for AAA. 
+              This combination fails accessibility standards.
+            </div>
+            <div className={styles.warningRatio}>
+              <strong>Contrast Ratio:</strong> {issue.ratio.toFixed(2)}:1 (needs ≥4.5:1)
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Helper component for preset section
+type PresetSectionProps = {
+  presets: Array<{ id: string; name: string }>;
+  currentPresetId: string | null;
+  isPresetsExpanded: boolean;
+  isPresetsHeaderCollapsed: boolean;
+  showSavePreset: boolean;
+  presetName: string;
+  onLoadPreset: (presetId: string) => void;
+  onDeletePreset: (presetId: string, e: React.MouseEvent) => void;
+  onToggleExpanded: () => void;
+  onPresetsHeaderKeyDown: (e: React.KeyboardEvent) => void;
+  onShowSavePreset: () => void;
+  onSavePreset: () => void;
+  onSavePresetKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onPresetNameChange: (value: string) => void;
+  onCancelSavePreset: () => void;
+  styles: typeof styles;
+};
+
+function PresetSection({
+  presets,
+  currentPresetId,
+  isPresetsExpanded,
+  isPresetsHeaderCollapsed,
+  showSavePreset,
+  presetName,
+  onLoadPreset,
+  onDeletePreset,
+  onToggleExpanded,
+  onPresetsHeaderKeyDown,
+  onShowSavePreset,
+  onSavePreset,
+  onSavePresetKeyDown,
+  onPresetNameChange,
+  onCancelSavePreset,
+  styles,
+}: PresetSectionProps) {
+  return (
+    <div className={styles.presetsSection}>
+      <div 
+        className={`${styles.presetsHeader} ${isPresetsHeaderCollapsed ? styles.presetsHeaderCollapsed : ''}`}
+        onClick={onToggleExpanded}
+        role="button"
+        tabIndex={0}
+        onKeyDown={onPresetsHeaderKeyDown}
+        aria-label={isPresetsExpanded ? 'Collapse presets' : 'Expand presets'}
+        aria-expanded={isPresetsExpanded}
+      >
+        <h4 className={styles.presetsTitle}>Choose a theme</h4>
+        <button
+          className={styles.presetsToggle}
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleExpanded();
+          }}
+          aria-label={isPresetsExpanded ? 'Collapse presets' : 'Expand presets'}
+          aria-expanded={isPresetsExpanded}
+        >
+          {isPresetsExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        </button>
+      </div>
+      <div className={`${styles.presetsGrid} ${!isPresetsExpanded ? styles.presetsGridCollapsed : ''}`}>
+        {presets.map((preset) => {
+          const isBuiltIn = isBuiltInPreset(preset.id);
+          const showEasterEgg = hasAudioEasterEgg(preset.id);
+          const isSelected = preset.id === currentPresetId;
+          return (
+            <div key={preset.id} className={styles.presetButtonWrapper}>
+              <button
+                className={styles.presetButton}
+                onClick={() => onLoadPreset(preset.id)}
+              >
+                <span className={styles.presetName}>{preset.name}</span>
+                <div className={styles.presetIconContainer}>
+                  {showEasterEgg && <Music size={16} className={styles.presetIcon} />}
+                  {isSelected && <Pin size={16} className={styles.presetIcon} fill="currentColor" />}
+                  {!isBuiltIn && (
+                    <button
+                      className={styles.deletePresetBtn}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDeletePreset(preset.id, e);
+                      }}
+                      aria-label={`Delete ${preset.name} preset`}
+                      title="Delete preset"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  )}
+                </div>
+              </button>
+            </div>
+          );
+        })}
+        <div className={styles.savePresetContainer}>
+          <button
+            className={styles.savePresetButton}
+            onClick={onShowSavePreset}
+            style={{ display: showSavePreset ? 'none' : 'flex' }}
+          >
+            <Bookmark size={14} />
+            <span>Save as Preset</span>
+          </button>
+          {showSavePreset && (
+            <div className={styles.savePresetInputRow}>
+              <input
+                type="text"
+                placeholder="Preset name..."
+                value={presetName}
+                onChange={(e) => onPresetNameChange(e.target.value)}
+                onKeyDown={onSavePresetKeyDown}
+                className={styles.presetNameInput}
+                autoFocus
+              />
+              <button
+                onClick={onSavePreset}
+                className={styles.savePresetConfirm}
+                disabled={!presetName.trim()}
+              >
+                Save
+              </button>
+              <button
+                onClick={onCancelSavePreset}
+                className={styles.savePresetCancel}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Helper component for rendering color categories
 type ColorCategoriesProps = {
   colorTokens: ColorToken[];
@@ -291,35 +527,39 @@ export function ThemePicker() {
   const backdropRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // Check contrast issues whenever theme or local changes update (useMemo to avoid effect warning)
-        const contrastIssues = useMemo(() => {
-          const currentTheme = { ...theme, ...localChanges };
-          return checkContrastIssues({
-            bg: currentTheme.bg,
-            text: currentTheme.text,
-            primary: currentTheme.primary,
-            primaryContrast: currentTheme.primaryContrast,
-            surface: currentTheme.surface,
-            surfaceDark: currentTheme.surfaceDark,
-            textDark: currentTheme.textDark,
-            link: currentTheme.link,
-            footerBg: currentTheme.footerBg,
-            footerTextMuted: currentTheme.footerTextMuted,
-            footerTextSubtle: currentTheme.footerTextSubtle,
-            footerSocialBg: currentTheme.footerSocialBg,
-            accentAlt: currentTheme.accentAlt,
-            codeBg: currentTheme.codeBg,
-            codeText: currentTheme.codeText,
-            blogLink: currentTheme.blogLink,
-            authorBoxStart: currentTheme.authorBoxStart,
-            authorBoxEnd: currentTheme.authorBoxEnd,
-            relatedSectionStart: currentTheme.relatedSectionStart,
-            relatedSectionEnd: currentTheme.relatedSectionEnd,
-          });
-        }, [theme, localChanges]);
+  // PERFORMANCE OPTIMIZATION: Only check contrast when drawer is open
+  // This prevents expensive contrast calculations when the picker is closed
+  // checkContrastIssues() creates many Color objects and performs ~20+ contrast checks
+  const contrastIssues = useMemo(() => {
+    if (!isOpen) return [];
+    
+    const currentTheme = { ...theme, ...localChanges };
+    return checkContrastIssues({
+      bg: currentTheme.bg,
+      text: currentTheme.text,
+      primary: currentTheme.primary,
+      primaryContrast: currentTheme.primaryContrast,
+      surface: currentTheme.surface,
+      surfaceDark: currentTheme.surfaceDark,
+      textDark: currentTheme.textDark,
+      link: currentTheme.link,
+      footerBg: currentTheme.footerBg,
+      footerTextMuted: currentTheme.footerTextMuted,
+      footerTextSubtle: currentTheme.footerTextSubtle,
+      footerSocialBg: currentTheme.footerSocialBg,
+      accentAlt: currentTheme.accentAlt,
+      codeBg: currentTheme.codeBg,
+      codeText: currentTheme.codeText,
+      blogLink: currentTheme.blogLink,
+      authorBoxStart: currentTheme.authorBoxStart,
+      authorBoxEnd: currentTheme.authorBoxEnd,
+      relatedSectionStart: currentTheme.relatedSectionStart,
+      relatedSectionEnd: currentTheme.relatedSectionEnd,
+    });
+  }, [theme, localChanges, isOpen]);
 
-  // Handle individual color change (not saved yet)
-  const handleColorChange = (key: keyof typeof theme, value: string) => {
+  // Memoize event handlers to prevent unnecessary re-renders
+  const handleColorChange = useCallback((key: keyof typeof theme, value: string) => {
     setLocalChanges((prev) => ({ ...prev, [key]: value }));
     // Apply temporarily for preview
     const root = document.getElementById('root');
@@ -327,10 +567,9 @@ export function ThemePicker() {
       const cssVar = `--color-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
       root.style.setProperty(cssVar, value);
     }
-  };
+  }, []);
 
-  // Cancel individual change
-  const handleCancel = (key: keyof typeof theme) => {
+  const handleCancel = useCallback((key: keyof typeof theme) => {
     setLocalChanges((prev) => {
       const updated = { ...prev };
       delete updated[key];
@@ -342,32 +581,28 @@ export function ThemePicker() {
       const cssVar = `--color-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
       root.style.setProperty(cssVar, theme[key]);
     }
-  };
+  }, [theme]);
 
-  // Save all changes
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     if (Object.keys(localChanges).length > 0) {
       updateTheme(localChanges);
       setLocalChanges({});
     }
     setIsOpen(false);
-  };
+  }, [localChanges, updateTheme]);
 
-  // Reset to defaults
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     resetTheme();
     setLocalChanges({});
     setIsOpen(false);
-  };
+  }, [resetTheme]);
 
-  // Load preset
-  const handleLoadPreset = (presetId: string) => {
+  const handleLoadPreset = useCallback((presetId: string) => {
     loadPreset(presetId);
     setLocalChanges({});
-  };
+  }, [loadPreset]);
 
-  // Save current theme as preset
-  const handleSavePreset = () => {
+  const handleSavePreset = useCallback(() => {
     if (presetName.trim()) {
       // Create theme with current state + local changes
       const themeToSave = { ...theme, ...localChanges };
@@ -377,75 +612,96 @@ export function ThemePicker() {
       setShowSavePreset(false);
       // Note: We don't clear localChanges here - user might want to save then continue editing
     }
-  };
+  }, [presetName, theme, localChanges, savePreset]);
 
-  // Delete preset
-  const handleDeletePreset = (presetId: string, e: React.MouseEvent) => {
+  const handleDeletePreset = useCallback((presetId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     if (confirm('Delete this preset?')) {
       deletePreset(presetId);
     }
-  };
+  }, [deletePreset]);
+
+  const handleToggleOpen = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const handleToggleExpanded = useCallback(() => {
+    setIsPresetsExpanded((prev) => !prev);
+  }, []);
+
+  const handleShowSavePreset = useCallback(() => {
+    setShowSavePreset(true);
+  }, []);
+
+  const handlePresetNameChange = useCallback((value: string) => {
+    setPresetName(value);
+  }, []);
+
+  const handleCancelSavePreset = useCallback(() => {
+    setShowSavePreset(false);
+    setPresetName('');
+  }, []);
 
   // Close on backdrop click (but not when clicking the trigger button or drawer)
   useEffect(() => {
+    if (!isOpen) return;
+    
     const handleBackdropClick = (event: MouseEvent) => {
       const target = event.target as Node;
-      // Close if clicking the backdrop (but not the drawer or trigger)
-      if (
-        backdropRef.current === target &&
-        triggerRef.current &&
-        !triggerRef.current.contains(target)
-      ) {
+      const isBackdropClick = backdropRef.current === target;
+      const isNotTrigger = triggerRef.current && !triggerRef.current.contains(target);
+      
+      if (isBackdropClick && isNotTrigger) {
         setIsOpen(false);
       }
     };
-    if (isOpen) {
-      document.addEventListener('mousedown', handleBackdropClick);
-      return () => document.removeEventListener('mousedown', handleBackdropClick);
-    }
+    
+    document.addEventListener('mousedown', handleBackdropClick);
+    return () => document.removeEventListener('mousedown', handleBackdropClick);
   }, [isOpen]);
 
   // Body scroll lock when drawer is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.body.style.overflow = '';
-      };
-    }
+    if (!isOpen) return;
+    
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   // Control trigger icon visibility with delay when drawer closes
   useEffect(() => {
     if (isOpen) {
-      // Hide icon immediately when drawer opens (async to avoid linter warning)
       setTimeout(() => setIsTriggerHidden(true), 0);
-    } else {
-      // Show icon after drawer slide-out animation completes (200ms)
-      const timer = setTimeout(() => {
-        setIsTriggerHidden(false);
-      }, 200);
-      return () => clearTimeout(timer);
+      return;
     }
+    
+    const timer = setTimeout(() => {
+      setIsTriggerHidden(false);
+    }, 200);
+    return () => clearTimeout(timer);
   }, [isOpen]);
 
   // Control presets header margin with delay when closing
   useEffect(() => {
     if (isPresetsExpanded) {
-      // Remove collapsed state immediately when opening (async to avoid linter warning)
       setTimeout(() => setIsPresetsHeaderCollapsed(false), 0);
-    } else {
-      // Add collapsed state after transition completes (300ms)
-      const timer = setTimeout(() => {
-        setIsPresetsHeaderCollapsed(true);
-      }, 300);
-      return () => clearTimeout(timer);
+      return;
     }
+    
+    const timer = setTimeout(() => {
+      setIsPresetsHeaderCollapsed(true);
+    }, 300);
+    return () => clearTimeout(timer);
   }, [isPresetsExpanded]);
 
-  // Helper to convert color to hex for input
-  const colorToHex = (color: string): string => {
+  // Memoize colorToHex to prevent recreation on every render
+  const colorToHex = useCallback((color: string): string => {
     try {
       // Handle rgba - extract rgb values (color input doesn't support alpha)
       if (color.startsWith('rgba')) {
@@ -468,120 +724,56 @@ export function ThemePicker() {
       // Default fallback
       return '#000000';
     }
-  };
+  }, []);
 
-  // Get gradient preview for hero colors
-  const getGradientPreview = () => {
+  // Memoize gradient preview functions to prevent recalculation on every render
+  const getGradientPreview = useCallback(() => {
     const start = localChanges.heroStart ?? theme.heroStart;
     const end = localChanges.heroEnd ?? theme.heroEnd;
     return `linear-gradient(180deg, ${start}, ${end})`;
-  };
+  }, [localChanges.heroStart, localChanges.heroEnd, theme.heroStart, theme.heroEnd]);
 
-  // Get gradient preview for campaign colors
-  const getCampaignGradientPreview = () => {
+  const getCampaignGradientPreview = useCallback(() => {
     const start = localChanges.campaignStart ?? theme.campaignStart;
     const end = localChanges.campaignEnd ?? theme.campaignEnd;
     return `linear-gradient(135deg, ${start} 0%, ${end} 100%)`;
-  };
+  }, [localChanges.campaignStart, localChanges.campaignEnd, theme.campaignStart, theme.campaignEnd]);
 
-  // Get gradient preview for author box
-  const getAuthorBoxGradientPreview = () => {
+  const getAuthorBoxGradientPreview = useCallback(() => {
     const start = localChanges.authorBoxStart ?? theme.authorBoxStart;
     const end = localChanges.authorBoxEnd ?? theme.authorBoxEnd;
     return `linear-gradient(${start}, ${end})`;
-  };
+  }, [localChanges.authorBoxStart, localChanges.authorBoxEnd, theme.authorBoxStart, theme.authorBoxEnd]);
 
-  // Get gradient preview for related section
-  const getRelatedSectionGradientPreview = () => {
+  const getRelatedSectionGradientPreview = useCallback(() => {
     const start = localChanges.relatedSectionStart ?? theme.relatedSectionStart;
     const end = localChanges.relatedSectionEnd ?? theme.relatedSectionEnd;
     return `linear-gradient(${start}, ${end} 115%)`;
-  };
+  }, [localChanges.relatedSectionStart, localChanges.relatedSectionEnd, theme.relatedSectionStart, theme.relatedSectionEnd]);
 
-  // Check if theme has audio easter egg
-  const hasAudioEasterEgg = (presetId: string): boolean => {
-    return presetId === 'noname' || presetId === 'samson' || presetId === 'vapor-wave' || presetId === 'king' || presetId === 'planet';
-  };
-
-  // Handle keyboard navigation for presets header
-  const handlePresetsHeaderKeyDown = (e: React.KeyboardEvent) => {
+  // Memoize keyboard handlers
+  const handlePresetsHeaderKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      setIsPresetsExpanded(!isPresetsExpanded);
+      setIsPresetsExpanded((prev) => !prev);
     }
-  };
+  }, []);
 
-  // Handle keyboard navigation for save preset input
-  const handleSavePresetKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSavePresetKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSavePreset();
     } else if (e.key === 'Escape') {
       setShowSavePreset(false);
       setPresetName('');
     }
-  };
-
-  // Check if preset is built-in (not deletable)
-  const isBuiltInPreset = (presetId: string): boolean => {
-    const builtInIds = [
-      'default',
-      'pink',
-      'dayglow',
-      'king',
-    ];
-    
-    const builtInPrefixes = [
-      'cedar',
-      'sage',
-      'crimson',
-      'vapor',
-      'gothic',
-      'pastel',
-      'horror',
-      'pride',
-      'yuko',
-      'hokusai',
-      'noname',
-      'sadikovic',
-      'afb',
-      'tuf',
-      'royboy',
-      'dalmatian',
-      'querida',
-      'ris',
-      'gulu',
-      'maxine',
-      'sunrise',
-      'noir',
-      'hatsune',
-      'trippie',
-      'scotland',
-      'pbr',
-      'reeses',
-      'fallout',
-      'berge',
-      'samson',
-      'companion',
-      'gusto',
-      'facecrusher',
-      'planet',
-      'visser',
-      'yolandi',
-    ];
-
-    if (builtInIds.includes(presetId)) {
-      return true;
-    }
-
-    return builtInPrefixes.some(prefix => presetId.startsWith(prefix));
-  };
+  }, [handleSavePreset]);
 
   return (
     <>
       <button
         ref={triggerRef}
         className={`${styles.trigger} ${isTriggerHidden ? styles.triggerHidden : ''}`}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleToggleOpen}
         aria-label="Open theme picker"
         title="Theme Picker"
       >
@@ -617,7 +809,7 @@ export function ThemePicker() {
                 <Save size={16} />
               </button>
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={handleClose}
                 className={styles.closeBtn}
                 aria-label="Close"
                 title="Close"
@@ -628,132 +820,27 @@ export function ThemePicker() {
           </div>
 
           <div className={styles.contentArea}>
-            {contrastIssues.length > 0 && (
-              <div className={styles.warnings}>
-                <h4 className={styles.warningTitle}>Contrast Warnings</h4>
-                {contrastIssues.map((issue, idx) => (
-                  <div key={idx} className={styles.warning}>
-                    <div className={styles.warningHeader}>
-                      <span className={styles.warningPair}>{issue.pair}</span>
-                      <span className={styles.warningLevel} data-level={issue.level}>
-                        {issue.level}
-                      </span>
-                    </div>
-                    <div className={styles.warningDetails}>
-                      <div className={styles.warningUsage}>
-                        <strong>Used in:</strong> {issue.usage}
-                      </div>
-                      <div className={styles.warningExplanation}>
-                        WCAG requires at least 4.5:1 for normal text (AA) or 7:1 for AAA. 
-                        This combination fails accessibility standards.
-                      </div>
-                      <div className={styles.warningRatio}>
-                        <strong>Contrast Ratio:</strong> {issue.ratio.toFixed(2)}:1 (needs ≥4.5:1)
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <ContrastWarnings contrastIssues={contrastIssues} styles={styles} />
             
             {/* Presets Section */}
-            <div className={styles.presetsSection}>
-              <div 
-                className={`${styles.presetsHeader} ${isPresetsHeaderCollapsed ? styles.presetsHeaderCollapsed : ''}`}
-                onClick={() => setIsPresetsExpanded(!isPresetsExpanded)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={handlePresetsHeaderKeyDown}
-                aria-label={isPresetsExpanded ? 'Collapse presets' : 'Expand presets'}
-                aria-expanded={isPresetsExpanded}
-              >
-                <h4 className={styles.presetsTitle}>Choose a theme</h4>
-                <button
-                  className={styles.presetsToggle}
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent double-toggle
-                    setIsPresetsExpanded(!isPresetsExpanded);
-                  }}
-                  aria-label={isPresetsExpanded ? 'Collapse presets' : 'Expand presets'}
-                  aria-expanded={isPresetsExpanded}
-                >
-                  {isPresetsExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                </button>
-              </div>
-              <div className={`${styles.presetsGrid} ${!isPresetsExpanded ? styles.presetsGridCollapsed : ''}`}>
-                {presets.map((preset) => {
-                  const isBuiltIn = isBuiltInPreset(preset.id);
-                  const showEasterEgg = hasAudioEasterEgg(preset.id);
-                  const isSelected = preset.id === currentPresetId;
-                  return (
-                    <div key={preset.id} className={styles.presetButtonWrapper}>
-                      <button
-                        className={styles.presetButton}
-                        onClick={() => handleLoadPreset(preset.id)}
-                      >
-                        <span className={styles.presetName}>{preset.name}</span>
-                        <div className={styles.presetIconContainer}>
-                          {showEasterEgg && <Music size={16} className={styles.presetIcon} />}
-                          {isSelected && <Pin size={16} className={styles.presetIcon} fill="currentColor" />}
-                          {!isBuiltIn && (
-                            <button
-                              className={styles.deletePresetBtn}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDeletePreset(preset.id, e);
-                              }}
-                              aria-label={`Delete ${preset.name} preset`}
-                              title="Delete preset"
-                            >
-                              <Trash2 size={14} />
-                            </button>
-                          )}
-                        </div>
-                      </button>
-                    </div>
-                  );
-                })}
-                <div className={styles.savePresetContainer}>
-                  <button
-                    className={styles.savePresetButton}
-                    onClick={() => setShowSavePreset(true)}
-                    style={{ display: showSavePreset ? 'none' : 'flex' }}
-                  >
-                    <Bookmark size={14} />
-                    <span>Save as Preset</span>
-                  </button>
-                  {showSavePreset && (
-                    <div className={styles.savePresetInputRow}>
-                      <input
-                        type="text"
-                        placeholder="Preset name..."
-                        value={presetName}
-                        onChange={(e) => setPresetName(e.target.value)}
-                        onKeyDown={handleSavePresetKeyDown}
-                        className={styles.presetNameInput}
-                        autoFocus
-                      />
-                      <button
-                        onClick={handleSavePreset}
-                        className={styles.savePresetConfirm}
-                        disabled={!presetName.trim()}
-                      >
-                        Save
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowSavePreset(false);
-                          setPresetName('');
-                        }}
-                        className={styles.savePresetCancel}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
+            <PresetSection
+              presets={presets}
+              currentPresetId={currentPresetId}
+              isPresetsExpanded={isPresetsExpanded}
+              isPresetsHeaderCollapsed={isPresetsHeaderCollapsed}
+              showSavePreset={showSavePreset}
+              presetName={presetName}
+              onLoadPreset={handleLoadPreset}
+              onDeletePreset={handleDeletePreset}
+              onToggleExpanded={handleToggleExpanded}
+              onPresetsHeaderKeyDown={handlePresetsHeaderKeyDown}
+              onShowSavePreset={handleShowSavePreset}
+              onSavePreset={handleSavePreset}
+              onSavePresetKeyDown={handleSavePresetKeyDown}
+              onPresetNameChange={handlePresetNameChange}
+              onCancelSavePreset={handleCancelSavePreset}
+              styles={styles}
+            />
 
             <ColorCategories
               colorTokens={colorTokens}

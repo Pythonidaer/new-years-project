@@ -18,14 +18,35 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px var(--color-shadow-subtle);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* Perf: transform/opacity only to avoid layout/paint on scroll/hover */
+  transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* Perf: Simulate shadow via pseudo-element overlay with opacity + transform */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px var(--color-shadow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: -1;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px var(--color-shadow);
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 .cardImage {

@@ -1,10 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import Color from "color";
+import { describe, it, expect, vi } from "vitest";
 import {
   getContrastRatio,
   getContrastLevel,
   checkContrastIssues,
-  type ContrastIssue,
 } from "@/utils/contrast";
 
 describe("contrast utilities", () => {
@@ -546,9 +544,9 @@ describe("contrast utilities", () => {
         // The blended color should result in a contrast check
         // If contrast is low, we should get an issue
         // If contrast is good, we should get no issue for this pair
-        const footerIssue = issues.find((issue) => issue.pair === "Footer Text Muted on Footer Background");
         // Either we get an issue (if contrast is low) or no issue (if contrast is good)
         // Both are valid outcomes
+        issues.find((issue) => issue.pair === "Footer Text Muted on Footer Background");
       });
     });
 

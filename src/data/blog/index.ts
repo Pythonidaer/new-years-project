@@ -1,4 +1,6 @@
 import type { BlogPosts, BlogPost } from "./types";
+
+export type { BlogPost, BlogPosts };
 import defaultPosts from "./default.json";
 import interviewReusableVsFeatureSpecificComponentsPosts from "./interview_reusable_vs_feature_specific_components.json";
 import interviewStructuringAComplexReactAppPosts from "./interview_structuring_a_complex_react_app_for_long_term_maintainability.json";

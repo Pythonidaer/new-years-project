@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, waitFor, act } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { Home } from "@/pages/Home";
 import { ThemeProvider } from "@/context/ThemeContext";
@@ -66,16 +66,8 @@ vi.mock("@/components/MetaTags", () => ({
 // Mock LatestBlogs with lazy loading simulation
 const mockLatestBlogs = vi.fn(() => <div data-testid="latest-blogs">LatestBlogs</div>);
 
-// Create a factory that returns a new promise for each import
-let resolveLatestBlogsImport: (value: typeof import("@/sections/LatestBlogs")) => void | undefined;
-
 vi.mock("@/sections/LatestBlogs", () => {
   return new Promise<typeof import("@/sections/LatestBlogs")>((resolve) => {
-    resolveLatestBlogsImport = () => {
-      resolve({
-        LatestBlogs: mockLatestBlogs,
-      } as typeof import("@/sections/LatestBlogs"));
-    };
     // Auto-resolve after a delay to allow Suspense fallback to be visible
     setTimeout(() => {
       resolve({
@@ -88,7 +80,6 @@ vi.mock("@/sections/LatestBlogs", () => {
 describe("Home", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    resolveLatestBlogsImport = undefined;
   });
 
   const renderHome = () => {
@@ -211,9 +202,6 @@ describe("Home", () => {
         expect(screen.getByTestId("latest-blogs")).toBeInTheDocument();
       }, { timeout: 1000 });
 
-      const main = screen.getByRole("main");
-      const children = Array.from(main.children);
-
       // Check order: MetaTags, TopBanner, Header, Hero, HeroMarquee, PlatformIntro,
       // AgencyLogos, FeatureAccordion, CustomerSpotlight, Suspense (LatestBlogs), CampaignBanner, Footer
       const expectedOrder = [
@@ -230,19 +218,6 @@ describe("Home", () => {
         "campaign-banner",
         "footer",
       ];
-
-      // Get test IDs from rendered elements
-      const renderedTestIds = children
-        .map((child) => {
-          if (child instanceof HTMLElement) {
-            // Check if it's the Suspense boundary (contains LatestBlogs)
-            const latestBlogs = child.querySelector('[data-testid="latest-blogs"]');
-            if (latestBlogs) return "latest-blogs";
-            return child.getAttribute("data-testid");
-          }
-          return null;
-        })
-        .filter(Boolean);
 
       // Verify all expected components are present
       expectedOrder.forEach((testId) => {

@@ -91,325 +91,180 @@ export function checkContrastIssues(theme: {
 }): ContrastIssue[] {
   const issues: ContrastIssue[] = [];
 
-  // Check text on background (includes headings on Blogs/Categories pages)
-  const textBgRatio = getContrastRatio(theme.text, theme.bg);
-  if (textBgRatio < 4.5) {
-    issues.push({
-      pair: 'Text on Background',
-      foreground: theme.text,
-      background: theme.bg,
-      ratio: textBgRatio,
-      level: getContrastLevel(textBgRatio),
-      usage: 'Body text, headings (Blogs page, Categories page), main content areas',
-    });
-  }
+  // Safe color helper that returns null on error
+  const safeColor = (colorString: string): ReturnType<typeof Color> | null => {
+    try {
+      return Color(colorString);
+    } catch (error) {
+      console.warn(`Failed to parse color "${colorString}":`, error);
+      return null;
+    }
+  };
 
-  // Check primary on contrast (for buttons)
-  const primaryContrastRatio = getContrastRatio(theme.primaryContrast, theme.primary);
-  if (primaryContrastRatio < 4.5) {
-    issues.push({
-      pair: 'Primary Contrast on Primary',
-      foreground: theme.primaryContrast,
-      background: theme.primary,
-      ratio: primaryContrastRatio,
-      level: getContrastLevel(primaryContrastRatio),
-      usage: 'Primary buttons, CTAs',
-    });
-  }
+  // Pre-create Color objects to avoid recreating them multiple times
+  const textColor = safeColor(theme.text);
+  const bgColor = safeColor(theme.bg);
+  const primaryColor = safeColor(theme.primary);
+  const primaryContrastColor = safeColor(theme.primaryContrast);
+  const surfaceColor = safeColor(theme.surface);
+  const surfaceDarkColor = safeColor(theme.surfaceDark);
+  const textDarkColor = safeColor(theme.textDark);
+  const linkColor = safeColor(theme.link);
+  const footerBgColor = safeColor(theme.footerBg);
+  const accentAltColor = safeColor(theme.accentAlt);
+  const codeBgColor = safeColor(theme.codeBg);
+  const codeTextColor = safeColor(theme.codeText);
+  const blogLinkColor = safeColor(theme.blogLink);
 
-  // Check text dark on background (for header scrolled state and blog heading)
-  const textDarkBgRatio = getContrastRatio(theme.textDark, theme.bg);
-  if (textDarkBgRatio < 4.5) {
-    issues.push({
-      pair: 'Text Dark on Background',
-      foreground: theme.textDark,
-      background: theme.bg,
-      ratio: textDarkBgRatio,
-      level: getContrastLevel(textDarkBgRatio),
-      usage: 'Header (scrolled state), Blog heading on white background',
-    });
-  }
+  // Helper function that uses pre-created Color objects (handles nullable colors)
+  const getContrastRatioOptimized = (
+    color1: ReturnType<typeof Color> | null,
+    color2: ReturnType<typeof Color> | null
+  ): number => {
+    if (!color1 || !color2) return 1;
+    try {
+      return color1.contrast(color2);
+    } catch (error) {
+      console.warn('Failed to calculate contrast ratio:', error);
+      return 1;
+    }
+  };
 
-  // Check primary contrast on surface dark (for blog post hero)
-  const primaryContrastSurfaceDarkRatio = getContrastRatio(theme.primaryContrast, theme.surfaceDark);
-  if (primaryContrastSurfaceDarkRatio < 4.5) {
-    issues.push({
-      pair: 'Primary Contrast on Surface Dark',
-      foreground: theme.primaryContrast,
-      background: theme.surfaceDark,
-      ratio: primaryContrastSurfaceDarkRatio,
-      level: getContrastLevel(primaryContrastSurfaceDarkRatio),
-      usage: 'Blog post hero section, Header (dark variant)',
-    });
-  }
+  // Helper: Check simple contrast pair and add issue if needed
+  const checkContrastPair = (
+    pairName: string,
+    foreground: ReturnType<typeof Color> | null,
+    background: ReturnType<typeof Color> | null,
+    foregroundStr: string,
+    backgroundStr: string,
+    usage: string
+  ): void => {
+    const ratio = getContrastRatioOptimized(foreground, background);
+    if (ratio < 4.5) {
+      issues.push({
+        pair: pairName,
+        foreground: foregroundStr,
+        background: backgroundStr,
+        ratio,
+        level: getContrastLevel(ratio),
+        usage,
+      });
+    }
+  };
 
-  // Check text on surface
-  const textSurfaceRatio = getContrastRatio(theme.text, theme.surface);
-  if (textSurfaceRatio < 4.5) {
-    issues.push({
-      pair: 'Text on Surface',
-      foreground: theme.text,
-      background: theme.surface,
-      ratio: textSurfaceRatio,
-      level: getContrastLevel(textSurfaceRatio),
-      usage: 'Cards, elevated surfaces',
-    });
-  }
+  // Helper: Check blended color contrast
+  const checkBlendedContrast = (
+    pairName: string,
+    foregroundColor: string,
+    backgroundColor: string,
+    backgroundColorObj: ReturnType<typeof Color> | null,
+    usage: string
+  ): void => {
+    const blended = blendColor(foregroundColor, backgroundColor);
+    const blendedColorObj = safeColor(blended);
+    const ratio = getContrastRatioOptimized(blendedColorObj, backgroundColorObj);
+    if (ratio < 4.5) {
+      issues.push({
+        pair: pairName,
+        foreground: blended,
+        background: backgroundColor,
+        ratio,
+        level: getContrastLevel(ratio),
+        usage,
+      });
+    }
+  };
 
-  // Check author role text (text at 75% opacity) on surface background
-  // Used in CustomerSpotlight section on homepage
-  const authorRoleTextWithOpacity = Color(theme.text).alpha(0.75).rgb().string();
-  const blendedAuthorRoleText = blendColor(authorRoleTextWithOpacity, theme.surface);
-  const authorRoleTextSurfaceRatio = getContrastRatio(blendedAuthorRoleText, theme.surface);
-  if (authorRoleTextSurfaceRatio < 4.5) {
-    issues.push({
-      pair: 'Author Role Text (75% opacity) on Surface Background',
-      foreground: blendedAuthorRoleText,
-      background: theme.surface,
-      ratio: authorRoleTextSurfaceRatio,
-      level: getContrastLevel(authorRoleTextSurfaceRatio),
-      usage: 'Customer spotlight author role on homepage',
-    });
-  }
+  // Helper: Check opacity-based contrast (text with opacity applied)
+  const checkOpacityContrast = (
+    pairName: string,
+    baseColor: ReturnType<typeof Color> | null,
+    opacity: number,
+    backgroundColor: string,
+    backgroundColorObj: ReturnType<typeof Color> | null,
+    usage: string
+  ): void => {
+    if (!baseColor) return;
+    try {
+      const textWithOpacity = baseColor.alpha(opacity).rgb().string();
+      const blended = blendColor(textWithOpacity, backgroundColor);
+      const blendedColorObj = safeColor(blended);
+      const ratio = getContrastRatioOptimized(blendedColorObj, backgroundColorObj);
+      if (ratio < 4.5) {
+        issues.push({
+          pair: pairName,
+          foreground: blended,
+          background: backgroundColor,
+          ratio,
+          level: getContrastLevel(ratio),
+          usage,
+        });
+      }
+    } catch (error) {
+      console.warn(`Failed to check opacity contrast for ${pairName}:`, error);
+    }
+  };
 
-  // Check code text on code background
-  const codeTextCodeBgRatio = getContrastRatio(theme.codeText, theme.codeBg);
-  if (codeTextCodeBgRatio < 4.5) {
-    issues.push({
-      pair: 'Code Text on Code Background',
-      foreground: theme.codeText,
-      background: theme.codeBg,
-      ratio: codeTextCodeBgRatio,
-      level: getContrastLevel(codeTextCodeBgRatio),
-      usage: 'Code blocks, inline code',
-    });
-  }
+  // Helper: Check gradient contrast (text on gradient background)
+  const checkGradientContrast = (
+    pairName: string,
+    foregroundColor: ReturnType<typeof Color> | null,
+    foregroundStr: string,
+    gradientStart: string,
+    gradientEnd: string,
+    usage: string
+  ): void => {
+    if (!foregroundColor) return;
+    const startSolid = blendColor(gradientStart, '#ffffff');
+    const endSolid = blendColor(gradientEnd, '#ffffff');
+    const startColorObj = safeColor(startSolid);
+    const endColorObj = safeColor(endSolid);
 
-  // Check link on background
-  const linkBgRatio = getContrastRatio(theme.link, theme.bg);
-  if (linkBgRatio < 4.5) {
-    issues.push({
-      pair: 'Link on Background',
-      foreground: theme.link,
-      background: theme.bg,
-      ratio: linkBgRatio,
-      level: getContrastLevel(linkBgRatio),
-      usage: 'Hyperlinks on page background',
-    });
-  }
+    const startRatio = getContrastRatioOptimized(foregroundColor, startColorObj);
+    const endRatio = getContrastRatioOptimized(foregroundColor, endColorObj);
+    if (startRatio < 4.5 || endRatio < 4.5) {
+      const minRatio = Math.min(startRatio, endRatio);
+      issues.push({
+        pair: pairName,
+        foreground: foregroundStr,
+        background: `gradient(${gradientStart} → ${gradientEnd})`,
+        ratio: minRatio,
+        level: getContrastLevel(minRatio),
+        usage,
+      });
+    }
+  };
 
-  // Check blog link on background (for post content links and tag links)
-  const blogLinkBgRatio = getContrastRatio(theme.blogLink, theme.bg);
-  if (blogLinkBgRatio < 4.5) {
-    issues.push({
-      pair: 'Blog Link on Background',
-      foreground: theme.blogLink,
-      background: theme.bg,
-      ratio: blogLinkBgRatio,
-      level: getContrastLevel(blogLinkBgRatio),
-      usage: 'Blog post content links, tag links on page background',
-    });
-  }
+  // Simple contrast checks
+  checkContrastPair('Text on Background', textColor, bgColor, theme.text, theme.bg, 'Body text, headings (Blogs page, Categories page), main content areas');
+  checkContrastPair('Primary Contrast on Primary', primaryContrastColor, primaryColor, theme.primaryContrast, theme.primary, 'Primary buttons, CTAs');
+  checkContrastPair('Text Dark on Background', textDarkColor, bgColor, theme.textDark, theme.bg, 'Header (scrolled state), Blog heading on white background');
+  checkContrastPair('Primary Contrast on Surface Dark', primaryContrastColor, surfaceDarkColor, theme.primaryContrast, theme.surfaceDark, 'Blog post hero section, Header (dark variant)');
+  checkContrastPair('Text on Surface', textColor, surfaceColor, theme.text, theme.surface, 'Cards, elevated surfaces');
+  checkContrastPair('Code Text on Code Background', codeTextColor, codeBgColor, theme.codeText, theme.codeBg, 'Code blocks, inline code');
+  checkContrastPair('Link on Background', linkColor, bgColor, theme.link, theme.bg, 'Hyperlinks on page background');
+  checkContrastPair('Blog Link on Background', blogLinkColor, bgColor, theme.blogLink, theme.bg, 'Blog post content links, tag links on page background');
+  checkContrastPair('Primary Contrast on Footer Background', primaryContrastColor, footerBgColor, theme.primaryContrast, theme.footerBg, 'Footer brand name, default footer text');
+  checkContrastPair('Accent Alt on Footer Background', accentAltColor, footerBgColor, theme.accentAlt, theme.footerBg, 'Footer link column headings');
+  checkContrastPair('Card Link (Link) on Card Background', linkColor, bgColor, theme.link, theme.bg, 'Blog card "Read More" link in Latest Blogs section');
 
-  // Footer contrast checks
-  // Check primary contrast on footer background (brand name, default footer text)
-  const primaryContrastFooterBgRatio = getContrastRatio(theme.primaryContrast, theme.footerBg);
-  if (primaryContrastFooterBgRatio < 4.5) {
-    issues.push({
-      pair: 'Primary Contrast on Footer Background',
-      foreground: theme.primaryContrast,
-      background: theme.footerBg,
-      ratio: primaryContrastFooterBgRatio,
-      level: getContrastLevel(primaryContrastFooterBgRatio),
-      usage: 'Footer brand name, default footer text',
-    });
-  }
+  // Opacity-based contrast checks
+  checkOpacityContrast('Author Role Text (75% opacity) on Surface Background', textColor, 0.75, theme.surface, surfaceColor, 'Customer spotlight author role on homepage');
+  checkOpacityContrast('Date Text (75% opacity) on Card Background', textColor, 0.75, theme.bg, bgColor, 'Blog card date in Latest Blogs section');
+  checkOpacityContrast('Excerpt Text (80% opacity) on Card Background', textColor, 0.8, theme.bg, bgColor, 'Blog card excerpt in Latest Blogs section');
 
-  // Check footer text muted on footer background
-  // Note: footerTextMuted is semi-transparent, so we need to blend it with footerBg first
-  const blendedFooterTextMuted = blendColor(theme.footerTextMuted, theme.footerBg);
-  const footerTextMutedRatio = getContrastRatio(blendedFooterTextMuted, theme.footerBg);
-  if (footerTextMutedRatio < 4.5) {
-    issues.push({
-      pair: 'Footer Text Muted on Footer Background',
-      foreground: blendedFooterTextMuted,
-      background: theme.footerBg,
-      ratio: footerTextMutedRatio,
-      level: getContrastLevel(footerTextMutedRatio),
-      usage: 'Footer brand text, footer links',
-    });
-  }
-
-  // Check footer text subtle on footer background
-  // Note: footerTextSubtle is semi-transparent, so we need to blend it with footerBg first
-  const blendedFooterTextSubtle = blendColor(theme.footerTextSubtle, theme.footerBg);
-  const footerTextSubtleRatio = getContrastRatio(blendedFooterTextSubtle, theme.footerBg);
-  if (footerTextSubtleRatio < 4.5) {
-    issues.push({
-      pair: 'Footer Text Subtle on Footer Background',
-      foreground: blendedFooterTextSubtle,
-      background: theme.footerBg,
-      ratio: footerTextSubtleRatio,
-      level: getContrastLevel(footerTextSubtleRatio),
-      usage: 'Footer copyright, legal links',
-    });
-  }
-
-  // Check primary contrast on footer social background
-  // Note: footerSocialBg is semi-transparent, so we need to blend it with footerBg first
+  // Blended color contrast checks
+  checkBlendedContrast('Footer Text Muted on Footer Background', theme.footerTextMuted, theme.footerBg, footerBgColor, 'Footer brand text, footer links');
+  checkBlendedContrast('Footer Text Subtle on Footer Background', theme.footerTextSubtle, theme.footerBg, footerBgColor, 'Footer copyright, legal links');
   const blendedFooterSocialBg = blendColor(theme.footerSocialBg, theme.footerBg);
-  const primaryContrastFooterSocialRatio = getContrastRatio(theme.primaryContrast, blendedFooterSocialBg);
-  if (primaryContrastFooterSocialRatio < 4.5) {
-    issues.push({
-      pair: 'Primary Contrast on Footer Social Background',
-      foreground: theme.primaryContrast,
-      background: blendedFooterSocialBg,
-      ratio: primaryContrastFooterSocialRatio,
-      level: getContrastLevel(primaryContrastFooterSocialRatio),
-      usage: 'Footer social media icons',
-    });
-  }
+  checkContrastPair('Primary Contrast on Footer Social Background', primaryContrastColor, safeColor(blendedFooterSocialBg), theme.primaryContrast, blendedFooterSocialBg, 'Footer social media icons');
+  checkBlendedContrast('Category Link on Blog Card Background', theme.footerTextMuted, theme.surfaceDark, surfaceDarkColor, 'Blog grid card category links on dark card background');
 
-  // Check accent alt on footer background (link headings)
-  const accentAltFooterBgRatio = getContrastRatio(theme.accentAlt, theme.footerBg);
-  if (accentAltFooterBgRatio < 4.5) {
-    issues.push({
-      pair: 'Accent Alt on Footer Background',
-      foreground: theme.accentAlt,
-      background: theme.footerBg,
-      ratio: accentAltFooterBgRatio,
-      level: getContrastLevel(accentAltFooterBgRatio),
-      usage: 'Footer link column headings',
-    });
-  }
-
-  // Author Box gradient contrast checks
-  // Note: Author box gradient might be semi-transparent, blend with white background first
-  const authorBoxStartSolid = blendColor(theme.authorBoxStart, '#ffffff');
-  const authorBoxEndSolid = blendColor(theme.authorBoxEnd, '#ffffff');
-  
-  // Check text dark on author box gradient (heading, author name)
-  // Check against both gradient start and end, warn if either fails
-  const textDarkAuthorBoxStartRatio = getContrastRatio(theme.textDark, authorBoxStartSolid);
-  const textDarkAuthorBoxEndRatio = getContrastRatio(theme.textDark, authorBoxEndSolid);
-  if (textDarkAuthorBoxStartRatio < 4.5 || textDarkAuthorBoxEndRatio < 4.5) {
-    const minRatio = Math.min(textDarkAuthorBoxStartRatio, textDarkAuthorBoxEndRatio);
-    issues.push({
-      pair: 'Text Dark on Author Box Gradient',
-      foreground: theme.textDark,
-      background: `gradient(${theme.authorBoxStart} → ${theme.authorBoxEnd})`,
-      ratio: minRatio,
-      level: getContrastLevel(minRatio),
-      usage: 'Author box heading, author name',
-    });
-  }
-
-  // Check text on author box gradient (body text)
-  const textAuthorBoxStartRatio = getContrastRatio(theme.text, authorBoxStartSolid);
-  const textAuthorBoxEndRatio = getContrastRatio(theme.text, authorBoxEndSolid);
-  if (textAuthorBoxStartRatio < 4.5 || textAuthorBoxEndRatio < 4.5) {
-    const minRatio = Math.min(textAuthorBoxStartRatio, textAuthorBoxEndRatio);
-    issues.push({
-      pair: 'Text on Author Box Gradient',
-      foreground: theme.text,
-      background: `gradient(${theme.authorBoxStart} → ${theme.authorBoxEnd})`,
-      ratio: minRatio,
-      level: getContrastLevel(minRatio),
-      usage: 'Author box body text',
-    });
-  }
-
-  // Check blog link on author box gradient (author link)
-  const blogLinkAuthorBoxStartRatio = getContrastRatio(theme.blogLink, authorBoxStartSolid);
-  const blogLinkAuthorBoxEndRatio = getContrastRatio(theme.blogLink, authorBoxEndSolid);
-  if (blogLinkAuthorBoxStartRatio < 4.5 || blogLinkAuthorBoxEndRatio < 4.5) {
-    const minRatio = Math.min(blogLinkAuthorBoxStartRatio, blogLinkAuthorBoxEndRatio);
-    issues.push({
-      pair: 'Blog Link on Author Box Gradient',
-      foreground: theme.blogLink,
-      background: `gradient(${theme.authorBoxStart} → ${theme.authorBoxEnd})`,
-      ratio: minRatio,
-      level: getContrastLevel(minRatio),
-      usage: 'Author box link',
-    });
-  }
-
-  // Related Section gradient contrast checks
-  // Check text on related section gradient
-  const textRelatedSectionStartRatio = getContrastRatio(theme.text, theme.relatedSectionStart);
-  const textRelatedSectionEndRatio = getContrastRatio(theme.text, theme.relatedSectionEnd);
-  if (textRelatedSectionStartRatio < 4.5 || textRelatedSectionEndRatio < 4.5) {
-    const minRatio = Math.min(textRelatedSectionStartRatio, textRelatedSectionEndRatio);
-    issues.push({
-      pair: 'Text on Related Section Gradient',
-      foreground: theme.text,
-      background: `gradient(${theme.relatedSectionStart} → ${theme.relatedSectionEnd})`,
-      ratio: minRatio,
-      level: getContrastLevel(minRatio),
-      usage: 'Related content section text',
-    });
-  }
-
-  // Blog card contrast checks (Latest Blogs section)
-  // Check date text (text at 0.75 opacity) on card background
-  // Apply opacity to text color, then blend with background
-  const dateTextWithOpacity = Color(theme.text).alpha(0.75).rgb().string();
-  const blendedDateText = blendColor(dateTextWithOpacity, theme.bg);
-  const dateTextBgRatio = getContrastRatio(blendedDateText, theme.bg);
-  if (dateTextBgRatio < 4.5) {
-    issues.push({
-      pair: 'Date Text (75% opacity) on Card Background',
-      foreground: blendedDateText,
-      background: theme.bg,
-      ratio: dateTextBgRatio,
-      level: getContrastLevel(dateTextBgRatio),
-      usage: 'Blog card date in Latest Blogs section',
-    });
-  }
-
-  // Check excerpt text (text at 0.8 opacity) on card background
-  const excerptTextWithOpacity = Color(theme.text).alpha(0.8).rgb().string();
-  const blendedExcerptText = blendColor(excerptTextWithOpacity, theme.bg);
-  const excerptTextBgRatio = getContrastRatio(blendedExcerptText, theme.bg);
-  if (excerptTextBgRatio < 4.5) {
-    issues.push({
-      pair: 'Excerpt Text (80% opacity) on Card Background',
-      foreground: blendedExcerptText,
-      background: theme.bg,
-      ratio: excerptTextBgRatio,
-      level: getContrastLevel(excerptTextBgRatio),
-      usage: 'Blog card excerpt in Latest Blogs section',
-    });
-  }
-
-  // Check card link (link color) on card background
-  const cardLinkBgRatio = getContrastRatio(theme.link, theme.bg);
-  if (cardLinkBgRatio < 4.5) {
-    issues.push({
-      pair: 'Card Link (Link) on Card Background',
-      foreground: theme.link,
-      background: theme.bg,
-      ratio: cardLinkBgRatio,
-      level: getContrastLevel(cardLinkBgRatio),
-      usage: 'Blog card "Read More" link in Latest Blogs section',
-    });
-  }
-
-  // Blog grid card contrast checks
-  // Check category link (footer text muted) on surface dark background
-  // Note: footerTextMuted is semi-transparent, so we need to blend it with surfaceDark first
-  const blendedCategoryLink = blendColor(theme.footerTextMuted, theme.surfaceDark);
-  const categoryLinkSurfaceDarkRatio = getContrastRatio(blendedCategoryLink, theme.surfaceDark);
-  if (categoryLinkSurfaceDarkRatio < 4.5) {
-    issues.push({
-      pair: 'Category Link on Blog Card Background',
-      foreground: blendedCategoryLink,
-      background: theme.surfaceDark,
-      ratio: categoryLinkSurfaceDarkRatio,
-      level: getContrastLevel(categoryLinkSurfaceDarkRatio),
-      usage: 'Blog grid card category links on dark card background',
-    });
-  }
+  // Gradient contrast checks
+  checkGradientContrast('Text Dark on Author Box Gradient', textDarkColor, theme.textDark, theme.authorBoxStart, theme.authorBoxEnd, 'Author box heading, author name');
+  checkGradientContrast('Text on Author Box Gradient', textColor, theme.text, theme.authorBoxStart, theme.authorBoxEnd, 'Author box body text');
+  checkGradientContrast('Blog Link on Author Box Gradient', blogLinkColor, theme.blogLink, theme.authorBoxStart, theme.authorBoxEnd, 'Author box link');
+  checkGradientContrast('Text on Related Section Gradient', textColor, theme.text, theme.relatedSectionStart, theme.relatedSectionEnd, 'Related content section text');
 
   return issues;
 }

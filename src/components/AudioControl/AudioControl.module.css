@@ -18,7 +18,9 @@
   outline: none;
   opacity: 0.9;
   transform: scale(1);
+  /* PERFORMANCE OPTIMIZATION: transform and opacity are GPU-accelerated */
   transition: transform 100ms linear 0s, opacity 200ms linear 0ms;
+  will-change: transform, opacity;
   visibility: visible;
   z-index: 2147483635; /* Just below ThemePicker */
 }

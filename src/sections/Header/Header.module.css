@@ -8,8 +8,10 @@
   z-index: 13;
   background-color: transparent;
   box-shadow: none;
+  /* Perf: transform/opacity only to avoid layout/paint on scroll */
   transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    height 0.2s ease-in-out, top 0.2s ease-in-out;
+    transform 0.2s ease-in-out;
+  transform: translateY(0);
 }
 
 .header::after {
@@ -34,7 +36,9 @@
   height: 60px;
   background-color: var(--color-bg);
   box-shadow: 0 3px 6px var(--color-shadow);
-  transition: height 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  /* Perf: transform/opacity only to avoid layout/paint on scroll */
+  transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+  transform: translateY(0);
 }
 
 .header.scrolled::after,
@@ -68,7 +72,6 @@
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
-  transition: opacity 0.2s ease-in-out;
   
   /* Converge at corners animated border */
   display: inline-block;
@@ -93,7 +96,11 @@
   background-size: 0% 2px, 0% 2px, 2px 0%, 2px 0%;
   
   background-repeat: no-repeat;
+  
+  /* PERFORMANCE OPTIMIZATION: will-change hints browser to optimize background-size animation */
+  /* Note: background-size is expensive, but will-change helps browser prepare for the animation */
   transition: background-size 0.5s ease-in-out, opacity 0.2s ease-in-out;
+  will-change: background-size, opacity;
 }
 
 .brand:hover {
@@ -124,24 +131,29 @@
 }
 
 /* Orange underline on hover - using ::before */
+/* PERFORMANCE OPTIMIZATION: Use transform: scaleX instead of width for GPU-accelerated animation */
 .navLink::before {
   content: "";
   position: absolute;
   bottom: -5px;
+  left: 0;
   right: 0;
-  width: 0;
   height: 2px;
   background-color: var(--color-accent-alt);
   border-radius: 2px;
   opacity: 0;
   pointer-events: none;
-  transition: width 0.4s ease-in-out 0.3s, opacity 0.2s ease-in-out 0s;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease-in-out 0.3s, opacity 0.2s ease-in-out 0s;
+  will-change: transform, opacity;
 }
 
 .navLink:hover::before {
-  width: 100%;
   opacity: 1;
-  transition: width 0.4s ease-in-out 0.3s, opacity 0.2s ease-in-out 0s;
+  transform: scaleX(1);
+  transform-origin: right;
+  transition: transform 0.4s ease-in-out 0.3s, opacity 0.2s ease-in-out 0s;
 }
 
 /* Chevron icon styling */
@@ -233,8 +245,9 @@
 }
 
 /* Header gets scrolled styles when menu is open and moves to top: 0 */
+/* Perf: Use transform instead of top to avoid layout recalculation */
 .header.menuOpen {
-  top: 0;
+  transform: translateY(calc(var(--banner-height, 0px) * -1));
 }
 
 .cta {

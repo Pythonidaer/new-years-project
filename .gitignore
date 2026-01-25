@@ -6,7 +6,7 @@ reference/
 dist/
 dist-ssr/
 *.local
-# complexity-report.html
+complexity-report.html
 complexity-report.json
 .complexity_report/
 
@@ -38,6 +38,7 @@ lerna-debug.log*
 # Testing
 coverage/
 complexity/
+scripts/
 .nyc_output
 
 # Temporary files

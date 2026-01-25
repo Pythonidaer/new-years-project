@@ -21,14 +21,15 @@ export default defineConfig({
       // - json: machine-readable results (for CI/CD integration)
       // - html: browsable report (opens in browser, shows line-by-line coverage)
       reporter: ["text", "json", "html"],
-      // Only include source files from src directory (TypeScript/TSX files)
-      include: ["src/**/*.{ts,tsx}"],
+      // Include source files from src directory (TypeScript/TSX files) and scripts directory (JavaScript files)
+      include: ["src/**/*.{ts,tsx}", "scripts/**/*.js"],
       // Exclude files that shouldn't be counted in coverage:
       // - Entry points (main.tsx)
       // - Type definitions (vite-env.d.ts, types.ts files)
       // - Test files themselves (they're not production code)
       // - Pure constant/data files (categories.ts - just data, no logic)
       // - Context instance files (ThemeContextInstance.ts - just type exports)
+      // - Debug/test utility scripts in scripts/ directory
       exclude: [
         "src/main.tsx",
         "src/vite-env.d.ts",
@@ -39,6 +40,11 @@ export default defineConfig({
         "src/**/types.ts", // Type definition files (don't execute, 0% coverage expected)
         "src/data/blog/categories.ts", // Pure constant data file (no logic to test)
         "src/context/ThemeContextInstance.ts", // Type exports and createContext only
+        "scripts/**/*.test.js", // Test files in scripts directory
+        "scripts/**/__tests__/**", // Test directories in scripts
+        "scripts/debug-*.js", // Debug utility scripts
+        "scripts/test-*.js", // Test utility scripts
+        "scripts/generate-complexity-report.js", // Main entry point (orchestration only, tested via integration)
       ],
       // Coverage thresholds - professional baseline for frontend React project
       // See .cursorrules section 12 for coverage standards and guidelines

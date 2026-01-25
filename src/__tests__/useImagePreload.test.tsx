@@ -20,7 +20,7 @@ describe("useImagePreload", () => {
     };
 
     // Mock Image constructor - return the mock object when called with 'new'
-    global.Image = vi.fn(function() {
+    globalThis.Image = vi.fn(function() {
       return mockImage;
     }) as any;
   });
@@ -35,7 +35,7 @@ describe("useImagePreload", () => {
   it("should create preload link when imageUrl is provided", async () => {
     const imageUrl = "https://picsum.photos/367/197?random=39";
     
-    const { result } = renderHook(() => useImagePreload(imageUrl, false));
+    renderHook(() => useImagePreload(imageUrl, false));
 
     // Wait for effect to run
     await act(async () => {
@@ -59,7 +59,7 @@ describe("useImagePreload", () => {
   });
 
   it("should not create link when imageUrl is undefined", async () => {
-    const { result } = renderHook(() => useImagePreload(undefined, false));
+    renderHook(() => useImagePreload(undefined, false));
 
     await act(async () => {
       await new Promise(resolve => setTimeout(resolve, 10));

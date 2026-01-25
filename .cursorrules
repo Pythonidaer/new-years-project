@@ -981,3 +981,116 @@ npm run lint:complexity:all      # Generate report with all functions visible by
       - Difficulty maintaining and debugging
     - **Current files to monitor:**
       - `scripts/html-generators.js` (1,475 lines) ⚠️ - Consider splitting if it grows further
+
+---
+
+### 14. Frontend Performance Monitoring + Jank Prevention (Vite + React + TS)
+
+## Goal
+Prevent "choppy" UI (dropped frames) during scroll, hover, and drawer transitions by enforcing GPU-friendly animations, avoiding layout thrash, and using a repeatable profiling workflow.
+
+---
+
+## Core Principles (non-negotiable)
+1) **Prefer compositor-friendly animations**
+   - Only animate: `transform`, `opacity`
+   - Avoid animating layout/paint-heavy properties: `top`, `left`, `right`, `bottom`, `width`, `height`, `margin`, `padding`, `border-width`, `box-shadow`, `filter`, `backdrop-filter`, large-area `background-color`
+
+2) **No layout thrash**
+   - Avoid frequent layout reads/writes in the same tick (e.g. `getBoundingClientRect()` + style/state updates repeatedly)
+   - Avoid running expensive work directly in `scroll`/`mousemove` handlers
+   - If measuring layout is required, do it **once per frame** via `requestAnimationFrame` and batch writes
+
+3) **Avoid repaint storms**
+   - Do not animate `box-shadow` on large containers/cards during scroll/hover
+   - Prefer pseudo-element overlays (`::before`/`::after`) with `opacity` + `transform` to simulate borders/glow/shadow
+
+4) **Minimize global invalidations**
+   - Be cautious when updating many CSS variables on `:root` (can trigger broad style recalculation and repaint)
+   - If theme switching is expensive, reduce the number of vars changed, scope variables to a container, or defer non-critical updates
+
+---
+
+## Animation Patterns (use these)
+### Drawer / Slide panels
+- Animate the panel using `transform: translateX(...)` (or `translateY`)
+- Use `opacity` for fade
+- Optional: `will-change: transform, opacity` only on the animated element (remove when idle if possible)
+
+### Hover effects for cards/buttons
+- Use `transform: translateY(-Npx)` or `scale()`
+- Simulate border/shadow via pseudo-element:
+  - `::before` absolute positioned overlay
+  - animate overlay `opacity` (and optionally `transform: scale()`)
+
+### Smooth scroll / click-to-scroll
+- Avoid doing repeated layout reads during scroll
+- Prefer CSS `scroll-margin-top` for fixed headers
+- Compute target offset once, then scroll once
+
+---
+
+## Anti-Patterns (do NOT generate)
+- Animations that change `top`/`height`/`width` during scroll or hover
+- Animating `box-shadow` on large surfaces or repeated elements
+- Animating `background-color` on large containers during scroll
+- Scroll handlers that call `setState` every event without throttling/rAF
+- Tight loops that measure DOM and write styles repeatedly
+
+---
+
+## Performance Debugging Workflow (required when UI feels choppy)
+### 1) Validate in Production Preview
+- Always reproduce in:
+  - `npm run build && npm run preview`
+- Dev mode can mislead due to extra checks and tooling overhead.
+
+### 2) Chrome Performance Trace (primary tool for jank)
+When recording:
+- Record **one interaction only** (e.g. one drawer open, one scroll segment)
+- Stop within ~2 seconds
+
+When analyzing:
+- Zoom into the red/dropped frame region
+- Check **Animations track**:
+  - If you see `top`, `height`, `box-shadow`, `background-color` → treat as a rendering pipeline issue and refactor CSS.
+- Use **Bottom-up** to identify whether time is dominated by:
+  - Scripting (JS)
+  - Rendering (Layout / Recalculate Style)
+  - Painting (Paint)
+  - Compositing (Composite Layers)
+
+### 3) React Profiler (secondary tool)
+If scripting dominates:
+- Use React Profiler to find unexpected rerender cascades
+- Watch for context provider rerenders and unstable context values
+- Prefer splitting contexts (State vs Actions) and memoizing provider values
+
+---
+
+## Implementation Requirements for Changes
+When refactoring for performance:
+1) Replace layout/paint animations with `transform/opacity` equivalents.
+2) Add a short comment near the animation CSS stating:
+   - "Perf: transform/opacity only to avoid layout/paint on scroll/hover."
+3) If adding DOM measurement:
+   - Use `requestAnimationFrame` batching or `ResizeObserver`/`IntersectionObserver`.
+4) If adding event listeners:
+   - Ensure cleanup
+   - Avoid high-frequency state updates
+   - Use passive scroll listeners where appropriate
+
+---
+
+## Definition of Done (for UI changes)
+Before merging any UI animation or interaction change:
+- [ ] Verified in `build + preview`
+- [ ] Performance trace shows no sustained dropped frames during the interaction
+- [ ] Animations track contains only `transform`/`opacity` for the interaction
+- [ ] No new scroll/mousemove handlers doing per-event heavy work
+- [ ] If context changed, confirm no large rerender cascade in React Profiler
+
+---
+
+## If Unsure
+If you are about to animate anything other than `transform`/`opacity`, stop and propose a compositor-friendly alternative using pseudo-elements or transforms.

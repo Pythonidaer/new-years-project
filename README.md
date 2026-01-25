@@ -248,6 +248,63 @@ Make the website fully mobile responsive based on Mark43's CSS and design patter
 
 ---
 
+## ⚠️ Performance Issues - NEEDS INVESTIGATION
+
+### Current Status
+The application is experiencing significant performance issues, particularly:
+- **Severe lag when hovering over animations**
+- **Lag when opening/closing ThemePicker component**
+- **Very slow initial page load** (FCP: 16.9s, Speed Index: 16.9s)
+- **Large network payloads** (8.3MB total)
+
+### Known Issues from Lighthouse Audit
+
+#### Network Payloads (8.3MB total)
+- `react-icons_fa.js`: **1,379 KiB** - Entire FontAwesome icon set being bundled
+- `lucide-react.js`: **936 KiB** - Large icon library bundle
+- `react-dom_client.js`: **982 KiB**
+- Large unoptimized images: 436 KiB, 263 KiB, 263 KiB PNG files
+
+#### Performance Metrics
+- **First Contentful Paint (FCP):** 16.9s (extremely poor)
+- **Largest Contentful Paint (LCP):** Error! NO_LCP (critical rendering issue)
+- **Total Blocking Time (TBT):** Error! NO_LCP
+- **Speed Index:** 16.9s (extremely poor)
+- **Script Evaluation:** 940ms
+- **Other:** 1,103ms
+
+### Potential Causes
+
+1. **Contrast Check Performance**
+   - `checkContrastIssues()` in `src/utils/contrast.ts` creates many `Color` objects
+   - Currently runs on every render (including hovers)
+   - May need to be optimized or only run when ThemePicker drawer is open
+
+2. **Bundle Size Issues**
+   - Icon libraries (`react-icons`, `lucide-react`) are very large
+   - May need code splitting or tree-shaking improvements
+   - Consider replacing `react-icons` if only a few icons are used
+
+3. **Image Optimization**
+   - Large PNG files (436KB+) need compression/WebP conversion
+   - Images may not be lazy-loaded properly
+
+4. **Build Configuration**
+   - Vite config may need optimization for better code splitting
+   - Visualizer plugin auto-opening may slow dev builds
+
+### Next Steps
+
+- [ ] Profile performance using React DevTools Profiler
+- [ ] Investigate why contrast checks run on every render
+- [ ] Optimize icon library imports (tree-shaking, code splitting)
+- [ ] Compress/convert large images to WebP format
+- [ ] Review and optimize Vite build configuration
+- [ ] Add performance monitoring (e.g., `web-vitals`)
+- [ ] Investigate NO_LCP error (critical rendering issue)
+
+---
+
 ## Notes
 - Meta tags system is fully implemented and React 19 compatible
 - All pages have dynamic meta tags that update based on content

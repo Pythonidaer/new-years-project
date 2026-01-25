@@ -18,7 +18,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', '**/__tests__/**', '**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}']),
+  globalIgnores(['dist', 'complexity', '**/__tests__/**', '**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -30,6 +30,20 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+    rules: {
+      // Set max to 0 to report complexity for ALL functions
+      complexity: ["warn", { max: 0, variant: "classic" }],
+    },
+  },
+  {
+    files: ['**/*.js'],
+    extends: [
+      js.configs.recommended,
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.node,
     },
     rules: {
       // Set max to 0 to report complexity for ALL functions
