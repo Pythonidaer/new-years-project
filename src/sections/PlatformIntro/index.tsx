@@ -18,7 +18,7 @@ const cards = [
     id: 2,
     title: "Boston Children's Hospital",
     description: "Created accessible Drupal themes, deployed to multiple hospital sites via AWS infrastructure.",
-    image: "/Boston-Childrens-Hospital-Logo.png",
+    image: "/Boston-Childrens-Hospital-Logo.webp",
     alt: "Boston Children's Hospital logo",
   },
   {
@@ -32,7 +32,7 @@ const cards = [
     id: 4,
     title: "Carrot",
     description: "Built full-stack features with React, TypeScript, and GraphQL, optimized API caching.",
-    image: "/Carrot-Logo.png",
+    image: "/Carrot-Logo.webp",
     alt: "Carrot logo",
   },
 ];

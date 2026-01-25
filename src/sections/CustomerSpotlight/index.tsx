@@ -10,7 +10,7 @@ const testimonials = [
     quote: "Jonathan built a clear, reliable and accessible campaign website that fit our needs perfectly. He explained every option and delivered thoughtful solutions on time.",
     author: "Bil Legault",
     role: "Former Salem City Councilor At-Large",
-    image: "/bil_legault.png",
+    image: "/bil_legault.webp",
     alt: "Bil Legault",
   },
   {

@@ -46,7 +46,7 @@ export function CampaignBanner() {
           </div>
           <div className={styles.image}>
             <img 
-              src="/Jonathan_Hammond.PNG" 
+              src="/Jonathan_Hammond.webp" 
               alt="Jonathan Hammond"
               className={styles.imageContent}
               style={{ filter: getGrayscaleFilter(isNoirTheme) }}

@@ -36,7 +36,7 @@ const items: FeatureItem[] = [
     url: "https://chromewebstore.google.com/detail/docs-summarizer/cbohkbdgjdpmoffedjbcdagmhpjdbiag?hl=en-US",
     icon: FileText,
     imageLabel: "Docs Summarizer",
-    image: "/Docs_Summarizer_3x4_600x800.png",
+    image: "/Docs_Summarizer_3x4_600x800.webp",
   },
   {
     id: 2,
@@ -56,7 +56,7 @@ const items: FeatureItem[] = [
     url: "https://hammondbytes.netlify.app/",
     icon: Code,
     imageLabel: "Hammond Bytes",
-    image: "/Hammond_Bytes_3x4_600x800.png",
+    image: "/Hammond_Bytes_3x4_600x800.webp",
   },
   {
     id: 4,
@@ -66,7 +66,7 @@ const items: FeatureItem[] = [
     url: "https://movie-friend-watch-list.vercel.app/",
     icon: Film,
     imageLabel: "Movie Watch List",
-    image: "/Movie_Watch_List_3x4_600x800.png",
+    image: "/Movie_Watch_List_3x4_600x800.webp",
   },
   {
     id: 5,
@@ -86,7 +86,7 @@ const items: FeatureItem[] = [
     url: "https://pythonidaer.github.io/vue-pwa-timer/site",
     icon: Timer,
     imageLabel: "PWA Timer",
-    image: "/PWA_Timer_3x4_600x800.png",
+    image: "/PWA_Timer_3x4_600x800.webp",
   },
 ];
 

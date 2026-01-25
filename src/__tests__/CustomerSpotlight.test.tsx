@@ -58,7 +58,7 @@ describe("CustomerSpotlight", () => {
 
       const image = screen.getByAltText("Bil Legault");
       expect(image).toBeTruthy();
-      expect(image).toHaveAttribute("src", "/bil_legault.png");
+      expect(image).toHaveAttribute("src", "/bil_legault.webp");
     });
 
     it("renders placeholder text when image is not provided", () => {
@@ -355,7 +355,7 @@ describe("CustomerSpotlight", () => {
       // First testimonial image
       expect(screen.getByAltText("Bil Legault")).toHaveAttribute(
         "src",
-        "/bil_legault.png"
+        "/bil_legault.webp"
       );
 
       // Navigate to second
