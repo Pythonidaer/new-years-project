@@ -5,8 +5,8 @@ import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
 import { MetaTags } from "@/components/MetaTags";
-import { getBlogPostBySlug, getRelatedPosts, getBlogPostSlug, loadAllBlogPosts } from "@/data/blog";
-import type { BlogPost } from "@/data/blog/types";
+// eslint-disable-next-line no-unused-vars -- BlogPost type is used in type annotations on lines 21-22
+import { getBlogPostBySlug, getRelatedPosts, getBlogPostSlug, loadAllBlogPosts, type BlogPost } from "@/data/blog";
 import { Button } from "@/components/Button";
 import { BlogGrid } from "@/sections/BlogGrid";
 import { useTheme } from "@/context/useTheme";
@@ -122,7 +122,7 @@ export function BlogPost() {
             <div className={styles.postFooter}>
               {hasTags(post) && (
                 <div className={styles.postTerms}>
-                  {post.tags!.map((tag, index) => (
+                  {post.tags!.map((tag: string, index: number) => (
                     <Link 
                       key={index}
                       to={`/resources/tag/${slugify(tag)}`}

@@ -3,7 +3,13 @@ import { renderHook, act, waitFor } from "@testing-library/react";
 import { useImagePreload } from "@/hooks/useImagePreload";
 
 describe("useImagePreload", () => {
-  let mockImage: any;
+  let mockImage: {
+    onload: (() => void) | null;
+    onerror: (() => void) | null;
+    _src?: string;
+    src: string;
+    complete: boolean;
+  } | undefined;
 
   beforeEach(() => {
     // Create a fresh mock image for each test
@@ -21,8 +27,8 @@ describe("useImagePreload", () => {
 
     // Mock Image constructor - return the mock object when called with 'new'
     globalThis.Image = vi.fn(function() {
-      return mockImage;
-    }) as any;
+      return mockImage!;
+    }) as unknown as typeof Image;
   });
 
   afterEach(() => {

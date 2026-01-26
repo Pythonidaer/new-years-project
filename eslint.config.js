@@ -24,6 +24,38 @@ export default defineConfig([
       // Target: ≤ 10 for most functions, ≤ 6 for UI components/hooks/event handlers
       // See .cursorrules section 13 for detailed complexity guidelines
       complexity: ["warn", { max: 10, variant: "classic" }],
+      // File length enforcement
+      // Target: ≤ 1000 lines per file (excluding blank lines and comments)
+      // See .cursorrules section 13 for file length guidelines
+      "max-lines": ["warn", { max: 1000, skipBlankLines: true, skipComments: true }],
+      // Allow underscore-prefixed parameters for unused parameters (API compatibility)
+      "no-unused-vars": ["error", { 
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_"
+      }],
+    },
+  },
+  {
+    files: ['**/*.js'],
+    extends: [
+      js.configs.recommended,
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.node,
+    },
+    rules: {
+      // Cyclomatic complexity enforcement
+      complexity: ["warn", { max: 10, variant: "classic" }],
+      // File length enforcement
+      "max-lines": ["warn", { max: 1000, skipBlankLines: true, skipComments: true }],
+      // Allow underscore-prefixed parameters for unused parameters (API compatibility)
+      "no-unused-vars": ["error", { 
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_"
+      }],
     },
   },
 ])

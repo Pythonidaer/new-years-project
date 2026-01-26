@@ -62,14 +62,14 @@ export default defineConfig([
       cwd: projectRoot,
       stdio: 'inherit',
     });
-  } catch (error) {
+  } catch {
     // ESLint exits with non-zero if there are warnings/errors, which is expected
     console.log('ESLint completed (warnings/errors are expected)');
   } finally {
     // Clean up temp config file
     try {
       unlinkSync(tempConfigPath);
-    } catch (e) {
+    } catch {
       // Ignore cleanup errors
     }
   }

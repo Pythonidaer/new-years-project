@@ -6,7 +6,7 @@ import styles from "./BlogFilters.module.css";
 
 interface BlogFiltersProps {
   posts: BlogPost[];
-  onFilterChange: (filteredPosts: BlogPost[]) => void;
+  onFilterChange: (_filteredPosts: BlogPost[]) => void;
 }
 
 export function BlogFilters({ posts, onFilterChange }: BlogFiltersProps) {

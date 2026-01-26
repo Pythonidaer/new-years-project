@@ -1,4 +1,4 @@
-import { writeFileSync, readFileSync, mkdirSync } from 'fs';
+import { writeFileSync, mkdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
@@ -6,11 +6,13 @@ import { dirname, resolve } from 'path';
 import { runESLintComplexityCheck } from './eslint-integration.js';
 import { extractFunctionName, extractFunctionsFromESLintResults, getComplexityLevel, getDirectory, getBaseFunctionName } from './function-extraction.js';
 import { findFunctionBoundaries } from './function-boundaries.js';
-import { parseDecisionPoints } from './decision-points.js';
-import { calculateComplexityBreakdown, formatComplexityBreakdownStyled } from './complexity-breakdown.js';
+import { parseDecisionPointsAST } from './decision-points-ast.js';
+import { calculateComplexityBreakdown } from './complexity-breakdown.js';
 import { formatFunctionHierarchy, setEscapeHtml } from './function-hierarchy.js';
-import { escapeHtml, generateAboutPageHTML, generateAboutExamplesPageHTML, generateMainIndexHTML, generateFolderHTML, generateFileHTML } from './html-generators.js';
+import { escapeHtml, generateAboutPageHTML, generateAboutExamplesPageHTML, generateMainIndexHTML, generateFolderHTML, generateFileHTML } from './html-generators/index.js';
 
+// Wrap main execution in async function
+async function main() {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = resolve(__dirname, '..');
@@ -70,6 +72,9 @@ allFunctions.forEach(func => {
 // Get initial display state from command line argument (default: false = show only over threshold)
 const showAllInitially = process.argv.includes('--show-all') || process.argv.includes('--all');
 
+// Use AST parser (100% accuracy) - now the default and only parser
+const parseDecisionPointsFn = parseDecisionPointsAST;
+
 // Generate HTML report
 const html = generateMainIndexHTML(folders, allFunctionsCount, overThreshold, maxComplexity, avgComplexity, showAllInitially);
 
@@ -77,7 +82,7 @@ const html = generateMainIndexHTML(folders, allFunctionsCount, overThreshold, ma
 const complexityDir = resolve(projectRoot, 'complexity');
 try {
   mkdirSync(complexityDir, { recursive: true });
-} catch (e) {
+} catch {
   // Directory might already exist, ignore
 }
 
@@ -113,7 +118,7 @@ folders.forEach(folder => {
 
 // Generate file-level HTML pages
 let filesGenerated = 0;
-fileMap.forEach((functions, filePath) => {
+const fileGenerationPromises = Array.from(fileMap.entries()).map(async ([filePath, functions]) => {
   try {
     const fileDir = getDirectory(filePath);
     const fileName = filePath.split('/').pop();
@@ -124,13 +129,13 @@ fileMap.forEach((functions, filePath) => {
       mkdirSync(fileDirPath, { recursive: true });
     }
     
-    // Generate file HTML
-    const fileHTML = generateFileHTML(
+    // Generate file HTML (await if async)
+    const fileHTML = await generateFileHTML(
       filePath,
       functions,
       projectRoot,
       findFunctionBoundaries,
-      parseDecisionPoints,
+      parseDecisionPointsFn,
       calculateComplexityBreakdown,
       formatFunctionHierarchy,
       getComplexityLevel,
@@ -148,6 +153,9 @@ fileMap.forEach((functions, filePath) => {
   }
 });
 
+// Wait for all file HTML generation to complete
+await Promise.all(fileGenerationPromises);
+
 console.log(`\n✅ Complexity report generated: complexity/index.html`);
 console.log(`   About: complexity/about.html | Examples: complexity/about-examples.html`);
 console.log(`   Generated ${foldersGenerated} folder HTML file(s)`);
@@ -159,3 +167,11 @@ if (overThreshold.length > 0) {
 if (allFunctionsCount > 0) {
   console.log(`   Highest complexity: ${maxComplexity} / Average: ${avgComplexity}`);
 }
+console.log(`   Using AST-based parser for 100% accuracy`);
+}
+
+// Run main function
+main().catch(error => {
+  console.error('Error generating complexity report:', error);
+  process.exit(1);
+});

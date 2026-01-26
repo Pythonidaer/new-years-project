@@ -286,7 +286,7 @@ export function extractFunctionName(filePath, lineNumber, nodeType = 'FunctionDe
     }
     
     return handleFunctionDeclaration(lines, lineNumber);
-  } catch (error) {
+  } catch {
     return 'unknown';
   }
 }

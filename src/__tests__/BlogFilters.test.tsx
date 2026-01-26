@@ -102,16 +102,19 @@ describe("BlogFilters", () => {
       expect(select.options[0].value).toBe("all");
     });
 
-    it("renders filter options from getAllUniqueTags", () => {
+    it("renders filter options from getAllUniqueTags", async () => {
       render(
         <ThemeProvider>
           <BlogFilters posts={mockPosts} onFilterChange={mockOnFilterChange} />
         </ThemeProvider>
       );
 
-      const select = screen.getByLabelText("Filter by Type") as HTMLSelectElement;
-      // Should have at least the "all" option plus filter options
-      expect(select.options.length).toBeGreaterThan(1);
+      // Wait for blog posts to load and filter options to populate
+      await waitFor(() => {
+        const select = screen.getByLabelText("Filter by Type") as HTMLSelectElement;
+        // Should have at least the "all" option plus filter options
+        expect(select.options.length).toBeGreaterThan(1);
+      }, { timeout: 3000 });
     });
   });
 

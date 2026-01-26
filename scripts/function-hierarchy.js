@@ -1,5 +1,5 @@
 import { getBaseFunctionName } from './function-extraction.js';
-import { formatComplexityConcise, formatComplexityBreakdownStyled } from './complexity-breakdown.js';
+import { formatComplexityConcise } from './complexity-breakdown.js';
 
 // escapeHtml will be imported from html-generators.js when we create it
 // For now, we'll import it here and it will be available when html-generators is created
@@ -467,74 +467,6 @@ export function extractCallbackLabel(node, parentNode, siblingCallbacks, fullSou
 }
 
 /**
- * Checks if breakdown has decision points
- * @param {Object} breakdown - Breakdown object
- * @returns {boolean} Whether breakdown has decision points
- */
-function hasDecisionPoints(breakdown) {
-  return breakdown.decisionPoints && breakdown.decisionPoints.length > 0;
-}
-
-/**
- * Determines if breakdown should be shown
- * @param {Object} breakdown - Breakdown object
- * @param {number} complexity - Function complexity
- * @returns {boolean} Whether to show breakdown
- */
-function shouldShowBreakdown(breakdown, complexity) {
-  if (!breakdown || !breakdown.breakdown) {
-    return false;
-  }
-  
-  const calculatedTotal = breakdown.calculatedTotal;
-  const hasDP = hasDecisionPoints(breakdown);
-  const exactMatch = calculatedTotal === complexity;
-  const closeMatch = hasDP && Math.abs(calculatedTotal - complexity) <= 1;
-  
-  return hasDP && (exactMatch || closeMatch || hasDP);
-}
-
-/**
- * Generates HTML for base complexity (complexity === 1)
- * @returns {string} HTML string for base complexity
- */
-function generateBaseComplexityHTML() {
-  return `base <span class="complexity-number">1</span>`;
-}
-
-/**
- * Generates HTML for missing breakdown
- * @returns {string} HTML string for missing breakdown
- */
-function generateMissingBreakdownHTML() {
-  return `<span class="quiet">—</span>`;
-}
-
-/**
- * Generates breakdown HTML for a function
- * @param {number} complexity - Function complexity
- * @param {Object|null} breakdown - Breakdown object
- * @returns {string} HTML string for breakdown
- */
-function generateBreakdownHTML(complexity, breakdown) {
-  if (!breakdown) {
-    return complexity === 1 
-      ? generateBaseComplexityHTML()
-      : generateMissingBreakdownHTML();
-  }
-  
-  if (complexity === 1) {
-    return generateBaseComplexityHTML();
-  }
-  
-  if (shouldShowBreakdown(breakdown, complexity)) {
-    return formatComplexityBreakdownStyled(breakdown.breakdown, complexity);
-  }
-  
-  return generateMissingBreakdownHTML();
-}
-
-/**
  * Finds the immediate parent function for a callback
  * @param {Object} func - Function object
  * @param {Map} functionBoundaries - Map of function boundaries
@@ -595,17 +527,77 @@ function fixFunctionNameForCallback(func, functionBoundaries, sortedFunctions) {
 }
 
 /**
- * Generates HTML for a function table row
+ * Gets default column structure (used when not provided)
+ * @returns {Object} Column configuration
+ */
+function getDefaultColumnStructure() {
+  return {
+    groups: [
+      {
+        name: 'Control Flow',
+        columns: [
+          { key: 'if', label: 'if' },
+          { key: 'else if', label: 'else if' },
+          { key: 'for', label: 'for' },
+          { key: 'for...of', label: 'for...of' },
+          { key: 'for...in', label: 'for...in' },
+          { key: 'while', label: 'while' },
+          { key: 'do...while', label: 'do...while' },
+          { key: 'switch', label: 'switch' },
+          { key: 'case', label: 'case' },
+          { key: 'catch', label: 'catch' },
+        ]
+      },
+      {
+        name: 'Expressions',
+        columns: [
+          { key: 'ternary', label: '?:' },
+          { key: '&&', label: '&&' },
+          { key: '||', label: '||' },
+          { key: '??', label: '??' },
+          { key: '?.', label: '?.' },
+        ]
+      },
+      {
+        name: 'Function Parameters',
+        columns: [
+          { key: 'default parameter', label: 'default parameter' },
+        ]
+      }
+    ],
+    baseColumn: { key: 'base', label: 'base' }
+  };
+}
+
+/**
+ * Generates HTML for a function table row with individual breakdown columns
  * @param {string} displayName - Function display name
  * @param {number} complexity - Function complexity
- * @param {string} breakdownHTML - Breakdown HTML
+ * @param {Object} breakdownData - Breakdown data object
+ * @param {Object} columnStructure - Column structure configuration
+ * @param {Set} emptyColumns - Set of column keys that are completely empty
+ * @param {Array} visibleColumns - Array of visible column objects (only include these)
  * @returns {string} HTML string for table row
  */
-function generateFunctionRowHTML(displayName, complexity, breakdownHTML) {
+function generateFunctionRowHTML(displayName, complexity, breakdownData, columnStructure, emptyColumns, visibleColumns) {
+  // Generate cells only for visible columns
+  const breakdownCells = visibleColumns.map(col => {
+    const value = breakdownData[col.key] || 0;
+    // Display "-" instead of 0 for better readability
+    const displayValue = value === 0 ? '-' : value;
+    // Add empty class for styling when value is "-"
+    const emptyClass = value === 0 ? ' breakdown-value-empty' : '';
+    return `<td class="breakdown-value${emptyClass}" data-column-key="${col.key}">${displayValue}</td>`;
+  });
+  
+  // Add base column (at the end) - always show 1, never "-"
+  const baseValue = breakdownData.base || 1;
+  breakdownCells.push(`<td class="breakdown-value">${baseValue}</td>`);
+  
   return `        <tr>
-          <td class="breakdown-function"><span class="strong">${escapeHtml(displayName)}</span></td>
-          <td class="breakdown-complexity"><span class="complexity-number">${complexity}</span></td>
-          <td class="breakdown-details">${breakdownHTML}</td>
+          <td class="function-name"><span class="strong">${escapeHtml(displayName)}</span></td>
+          <td class="complexity-value"><span class="complexity-number">${complexity}</span></td>
+          ${breakdownCells.join('')}
         </tr>`;
 }
 
@@ -617,14 +609,31 @@ function generateFunctionRowHTML(displayName, complexity, breakdownHTML) {
  * @param {Map} functionBoundaries - Map of functionLine -> { start, end }
  * @param {Map} functionBreakdowns - Map of functionLine -> breakdown
  * @param {string} sourceCode - Source code for context
+ * @param {Object} [columnStructure] - Column structure configuration (optional, uses default if not provided)
+ * @param {Set} [emptyColumns] - Set of column keys that are completely empty (optional)
+ * @param {boolean} [showAllColumns] - Whether to show all columns including empty ones (default: false)
  * @returns {string} Formatted HTML string
  */
-export function formatFunctionHierarchy(functions, functionBoundaries, functionBreakdowns, sourceCode = '') {
+export function formatFunctionHierarchy(functions, functionBoundaries, functionBreakdowns, _sourceCode, columnStructure, emptyColumns, showAllColumns = false) {
   if (!escapeHtml) {
     throw new Error('escapeHtml not set. Call setEscapeHtml() first.');
   }
   
   if (functions.length === 0) return '';
+  
+  // Use default column structure if not provided (for backward compatibility with tests)
+  const structure = columnStructure || getDefaultColumnStructure();
+  
+  // Use empty set if not provided (for backward compatibility with tests)
+  const emptyCols = emptyColumns || new Set();
+  
+  // Build visible columns list based on showAllColumns flag
+  const visibleColumns = structure.groups.flatMap(group => {
+    if (showAllColumns) {
+      return group.columns;
+    }
+    return group.columns.filter(col => !emptyCols.has(col.key));
+  });
   
   // Show each function exactly as ESLint reports it, but deduplicate by line number
   // This ensures the breakdown matches the inline code annotations
@@ -668,13 +677,13 @@ export function formatFunctionHierarchy(functions, functionBoundaries, functionB
   
   const lines = [];
   
-  // Format each function on one line with styled breakdown
+  // Format each function on one line with individual breakdown columns
   sortedFunctions.forEach(func => {
     const complexity = parseInt(func.complexity);
     const breakdown = functionBreakdowns.get(func.line);
-    const breakdownHTML = generateBreakdownHTML(complexity, breakdown);
+    const breakdownData = breakdown ? breakdown.breakdown : {};
     const displayName = fixFunctionNameForCallback(func, functionBoundaries, sortedFunctions);
-    const rowHTML = generateFunctionRowHTML(displayName, complexity, breakdownHTML);
+    const rowHTML = generateFunctionRowHTML(displayName, complexity, breakdownData, structure, emptyCols, visibleColumns);
     lines.push(rowHTML);
   });
   

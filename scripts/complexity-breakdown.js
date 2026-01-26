@@ -29,7 +29,7 @@ export function calculateComplexityBreakdown(functionLine, decisionPoints, baseC
   };
   
   functionDecisionPoints.forEach(dp => {
-    if (breakdown.hasOwnProperty(dp.type)) {
+    if (Object.hasOwn(breakdown, dp.type)) {
       breakdown[dp.type]++;
     }
   });
@@ -76,7 +76,7 @@ export function formatComplexityBreakdown(breakdown, actualComplexity) {
  * @param {number} actualComplexity - Actual complexity from ESLint
  * @returns {string} Formatted breakdown string
  */
-export function formatComplexityBreakdownInline(breakdown, actualComplexity) {
+export function formatComplexityBreakdownInline(breakdown, _actualComplexity) {
   const parts = [];
   
   // Always include base
@@ -85,13 +85,15 @@ export function formatComplexityBreakdownInline(breakdown, actualComplexity) {
   }
   
   // Order decision point types consistently (matching ESLint's counting)
+  // ESLint's classic variant DOES count default parameters, so include them in display
   const typeOrder = ['if', 'else if', 'for', 'for...of', 'for...in', 'while', 'do...while', 'switch', 'case', 'catch', 'ternary', '&&', '||', '??', '?.', 'default parameter'];
   
   typeOrder.forEach(type => {
     const count = breakdown[type] || 0;
     if (count > 0) {
       // Use ESLint symbols: ?: for ternary, && for AND, || for OR, ?? for nullish coalescing, ?. for optional chaining
-      const symbol = type === 'ternary' ? '?:' : type === '&&' ? '&&' : type === '||' ? '||' : type === '??' ? '??' : type === '?.' ? '?.' : type;
+      // For default parameters, use "default param" as the display symbol
+      const symbol = type === 'ternary' ? '?:' : type === '&&' ? '&&' : type === '||' ? '||' : type === '??' ? '??' : type === '?.' ? '?.' : type === 'default parameter' ? 'default param' : type;
       parts.push(`+${count} ${symbol}`);
     }
   });
@@ -106,7 +108,7 @@ export function formatComplexityBreakdownInline(breakdown, actualComplexity) {
  * @param {number} actualComplexity - Actual complexity from ESLint
  * @returns {string} Formatted HTML string
  */
-export function formatComplexityBreakdownStyled(breakdown, actualComplexity) {
+export function formatComplexityBreakdownStyled(breakdown, _actualComplexity) {
   const parts = [];
   
   // Always include base with styled number
@@ -115,13 +117,15 @@ export function formatComplexityBreakdownStyled(breakdown, actualComplexity) {
   }
   
   // Order decision point types consistently (matching ESLint's counting)
+  // ESLint's classic variant DOES count default parameters, so include them in display
   const typeOrder = ['if', 'else if', 'for', 'for...of', 'for...in', 'while', 'do...while', 'switch', 'case', 'catch', 'ternary', '&&', '||', '??', '?.', 'default parameter'];
   
   typeOrder.forEach(type => {
     const count = breakdown[type] || 0;
     if (count > 0) {
       // Use ESLint symbols: ?: for ternary, && for AND, || for OR, ?? for nullish coalescing, ?. for optional chaining
-      const symbol = type === 'ternary' ? '?:' : type === '&&' ? '&&' : type === '||' ? '||' : type === '??' ? '??' : type === '?.' ? '?.' : type;
+      // For default parameters, use "default param" as the display symbol
+      const symbol = type === 'ternary' ? '?:' : type === '&&' ? '&&' : type === '||' ? '||' : type === '??' ? '??' : type === '?.' ? '?.' : type === 'default parameter' ? 'default param' : type;
       parts.push(`${symbol} <span class="complexity-number">${count}</span>`);
     }
   });

@@ -9,6 +9,8 @@ dist-ssr/
 complexity-report.html
 complexity-report.json
 .complexity_report/
+complexity/
+eslint.config.temp.js
 
 # Editor directories and files
 .vscode/*
@@ -37,8 +39,6 @@ lerna-debug.log*
 
 # Testing
 coverage/
-complexity/
-scripts/
 .nyc_output
 
 # Temporary files

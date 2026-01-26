@@ -301,7 +301,7 @@ function scanForSingleExpressionEnd(lines, startLine, parenDepth) {
  * @param {number} functionLine - Reported line number (1-based)
  * @returns {{end: number, found: boolean}} End line (1-based) and whether end was found
  */
-function findArrowFunctionEndSingleExpression(lines, startLine, arrowIndex, functionLine) {
+function findArrowFunctionEndSingleExpression(lines, startLine, arrowIndex, _functionLine) {
   const line = lines[startLine];
   const lineAfterArrow = line.substring(arrowIndex + 2);
   
@@ -585,7 +585,7 @@ function findDependencyArrayEnd(lines, i) {
  * @param {number} functionLine - Reported line number (1-based)
  * @returns {number|null} End line number if found, null otherwise
  */
-function findSetTimeoutCallbackEnd(lines, i, functionLine) {
+function findSetTimeoutCallbackEnd(lines, i, _functionLine) {
   for (let k = i; k < Math.min(i + 3, lines.length); k++) {
     const checkLine = lines[k];
     if (checkLine.includes(')') && (checkLine.includes(';') || k === i + 1)) {
@@ -626,7 +626,7 @@ function checkCallbackPatterns(line, i, lines) {
  * @returns {{inFunctionBody: boolean, braceCount: number, end: number|null}} Result
  */
 function handleFunctionBodyStart(line, i, lines) {
-  const hasFunctionBodyPattern = /\)\s*[:\w\s<>\[\]|'"]*\s*\{/.test(line);
+  const hasFunctionBodyPattern = /\)\s*[:\w\s<>[\]|'"]*\s*\{/.test(line);
   const isFunctionDeclaration = isFunctionDeclarationPattern(line);
   const hasArrowFunction = line.includes('=>') && !line.includes('{');
   
@@ -725,6 +725,377 @@ function processLineBeforeFunctionBody(line, i, lines, typeBraceCount) {
 }
 
 /**
+ * Handles escape sequences in strings
+ * @param {string} char - Current character
+ * @param {boolean} inString - Whether we're inside a string
+ * @param {boolean} escapeNext - Whether next character should be escaped
+ * @returns {{escapeNext: boolean, shouldContinue: boolean}} Result
+ */
+function handleEscapeSequence(char, inString, escapeNext) {
+  if (escapeNext) {
+    return { escapeNext: false, shouldContinue: true };
+  }
+  if (char === '\\' && inString) {
+    return { escapeNext: true, shouldContinue: true };
+  }
+  return { escapeNext: false, shouldContinue: false };
+}
+
+/**
+ * Checks if a single-line comment starts
+ * @param {string} char - Current character
+ * @param {string} nextChar - Next character
+ * @param {boolean} inString - Whether we're inside a string
+ * @param {boolean} inRegex - Whether we're inside a regex
+ * @param {boolean} inMultiLineComment - Whether we're in a multi-line comment
+ * @returns {boolean} True if single-line comment starts
+ */
+function isSingleLineCommentStart(char, nextChar, inString, inRegex, inMultiLineComment) {
+  return char === '/' && nextChar === '/' && !inString && !inRegex && !inMultiLineComment;
+}
+
+/**
+ * Checks if a multi-line comment starts
+ * @param {string} char - Current character
+ * @param {string} nextChar - Next character
+ * @param {boolean} inString - Whether we're inside a string
+ * @param {boolean} inRegex - Whether we're inside a regex
+ * @param {boolean} inSingleLineComment - Whether we're in a single-line comment
+ * @returns {boolean} True if multi-line comment starts
+ */
+function isMultiLineCommentStart(char, nextChar, inString, inRegex, inSingleLineComment) {
+  return char === '/' && nextChar === '*' && !inString && !inRegex && !inSingleLineComment;
+}
+
+/**
+ * Checks if a multi-line comment ends
+ * @param {string} char - Current character
+ * @param {string} nextChar - Next character
+ * @param {boolean} inMultiLineComment - Whether we're in a multi-line comment
+ * @returns {boolean} True if multi-line comment ends
+ */
+function isMultiLineCommentEnd(char, nextChar, inMultiLineComment) {
+  return char === '*' && nextChar === '/' && inMultiLineComment;
+}
+
+/**
+ * Handles comment detection and state updates
+ * @param {string} char - Current character
+ * @param {string} nextChar - Next character
+ * @param {boolean} inString - Whether we're inside a string
+ * @param {boolean} inRegex - Whether we're inside a regex
+ * @param {boolean} inSingleLineComment - Whether we're in a single-line comment
+ * @param {boolean} inMultiLineComment - Whether we're in a multi-line comment
+ * @returns {{inSingleLineComment: boolean, inMultiLineComment: boolean, shouldBreak: boolean, shouldContinue: boolean, skipNext: boolean}} Result
+ */
+function handleComments(char, nextChar, inString, inRegex, inSingleLineComment, inMultiLineComment) {
+  // Handle single-line comments (//)
+  if (isSingleLineCommentStart(char, nextChar, inString, inRegex, inMultiLineComment)) {
+    return { inSingleLineComment: true, inMultiLineComment: false, shouldBreak: true, shouldContinue: false, skipNext: false };
+  }
+  
+  // Handle multi-line comment start (/*)
+  if (isMultiLineCommentStart(char, nextChar, inString, inRegex, inSingleLineComment)) {
+    return { inSingleLineComment: false, inMultiLineComment: true, shouldBreak: false, shouldContinue: true, skipNext: true };
+  }
+  
+  // Handle multi-line comment end (*/)
+  if (isMultiLineCommentEnd(char, nextChar, inMultiLineComment)) {
+    return { inSingleLineComment: false, inMultiLineComment: false, shouldBreak: false, shouldContinue: true, skipNext: true };
+  }
+  
+  // Skip everything if we're in a comment
+  if (inSingleLineComment || inMultiLineComment) {
+    return { inSingleLineComment, inMultiLineComment, shouldBreak: false, shouldContinue: true, skipNext: false };
+  }
+  
+  return { inSingleLineComment: false, inMultiLineComment: false, shouldBreak: false, shouldContinue: false, skipNext: false };
+}
+
+/**
+ * Handles string literal detection
+ * @param {string} char - Current character
+ * @param {boolean} inRegex - Whether we're inside a regex
+ * @param {boolean} inString - Whether we're inside a string
+ * @param {string|null} stringChar - The quote character that started the string
+ * @returns {{inString: boolean, stringChar: string|null}} Result
+ */
+function handleStringLiterals(char, inRegex, inString, stringChar) {
+  if ((char === '"' || char === "'") && !inRegex) {
+    if (!inString) {
+      return { inString: true, stringChar: char };
+    } else if (char === stringChar) {
+      return { inString: false, stringChar: null };
+    }
+  }
+  return { inString, stringChar };
+}
+
+/**
+ * Detects if a slash character is the start of a regex pattern
+ * @param {string} line - Current line
+ * @param {number} j - Current character index
+ * @param {string} prevChar - Previous character
+ * @returns {boolean} True if this is a regex start
+ */
+function isRegexStart(line, j, _prevChar) {
+  const beforeSlash = line.substring(Math.max(0, j - 2), j).trim();
+  return beforeSlash === '' || beforeSlash.endsWith('=') || beforeSlash.endsWith('(') || 
+         beforeSlash.endsWith('[') || beforeSlash.endsWith(',') || /^\s*$/.test(beforeSlash);
+}
+
+/**
+ * Checks if a slash could start a regex
+ * @param {string} char - Current character
+ * @param {string} prevChar - Previous character
+ * @param {boolean} inRegex - Whether we're inside a regex
+ * @param {boolean} inString - Whether we're inside a string
+ * @returns {boolean} True if could be regex start
+ */
+function couldBeRegexStart(char, prevChar, inRegex, inString) {
+  return char === '/' && prevChar !== '/' && prevChar !== '*' && !inRegex && !inString;
+}
+
+/**
+ * Checks if a slash could end a regex
+ * @param {string} char - Current character
+ * @param {string} nextChar - Next character
+ * @param {boolean} inRegex - Whether we're inside a regex
+ * @returns {boolean} True if could be regex end
+ */
+function couldBeRegexEnd(char, nextChar, inRegex) {
+  return char === '/' && inRegex && nextChar !== '/' && nextChar !== '*';
+}
+
+/**
+ * Handles regex detection
+ * @param {string} char - Current character
+ * @param {string} prevChar - Previous character
+ * @param {string} nextChar - Next character
+ * @param {string} line - Current line
+ * @param {number} j - Current character index
+ * @param {boolean} inRegex - Whether we're inside a regex
+ * @param {boolean} inString - Whether we're inside a string
+ * @returns {boolean} Updated regex state
+ */
+function handleRegexDetection(char, prevChar, nextChar, line, j, inRegex, inString) {
+  if (couldBeRegexStart(char, prevChar, inRegex, inString)) {
+    if (isRegexStart(line, j, prevChar)) {
+      return true;
+    }
+  }
+  
+  if (couldBeRegexEnd(char, nextChar, inRegex)) {
+    return false;
+  }
+  
+  return inRegex;
+}
+
+/**
+ * Checks if braces are balanced and function ends
+ * @param {number} updatedBraceCount - Updated brace count
+ * @param {number} closeBraces - Number of closing braces found
+ * @param {string} line - Current line
+ * @param {number} i - Current line index
+ * @param {number} functionLine - Reported line number
+ * @param {Array<string>} lines - All lines
+ * @returns {number|null} End line number if found, null otherwise
+ */
+function checkFunctionEnd(updatedBraceCount, closeBraces, line, i, functionLine, lines) {
+  if (updatedBraceCount === 0 && closeBraces > 0) {
+    // Special case: For arrow functions assigned to const/let/var, check if line ends with };
+    const trimmed = line.trim();
+    if (trimmed === '};' || trimmed.endsWith('};')) {
+      if (i > 0) {
+        const prevLines = lines.slice(Math.max(0, i - 10), i);
+        const hasAssignmentPattern = prevLines.some(prevLine => 
+          /^\s*(const|let|var)\s+\w+\s*=.*=>/.test(prevLine.trim())
+        );
+        if (hasAssignmentPattern) {
+          return i + 1;
+        }
+      }
+    }
+    
+    const endLine = handleFunctionBodyEnd(line, i, functionLine, lines);
+    if (endLine !== null) {
+      return endLine;
+    }
+  }
+  return null;
+}
+
+/**
+ * Creates a result object with updated state
+ * @param {number} openBraces - Current open braces count
+ * @param {number} closeBraces - Current close braces count
+ * @param {Object} state - Current parsing state
+ * @param {Object} updatedState - Updated state properties
+ * @param {boolean} shouldBreak - Whether to break processing
+ * @param {boolean} shouldContinue - Whether to continue to next character
+ * @param {boolean} skipNext - Whether to skip next character
+ * @returns {{openBraces: number, closeBraces: number, state: Object, shouldBreak: boolean, shouldContinue: boolean, skipNext: boolean}} Result
+ */
+function createBracesResult(openBraces, closeBraces, state, updatedState, shouldBreak, shouldContinue, skipNext) {
+  return {
+    openBraces,
+    closeBraces,
+    state: { ...state, ...updatedState },
+    shouldBreak,
+    shouldContinue,
+    skipNext
+  };
+}
+
+/**
+ * Handles escape sequence processing
+ * @param {string} char - Current character
+ * @param {boolean} inString - Whether inside string
+ * @param {boolean} escapeNext - Whether next character is escaped
+ * @param {Object} state - Current state
+ * @param {number} openBraces - Current open braces count
+ * @param {number} closeBraces - Current close braces count
+ * @returns {{result: Object|null, escapeNext: boolean}} Result object or null if should continue
+ */
+function processEscapeSequence(char, inString, escapeNext, state, openBraces, closeBraces) {
+  const escapeResult = handleEscapeSequence(char, inString, escapeNext);
+  if (escapeResult.shouldContinue) {
+    return {
+      result: createBracesResult(openBraces, closeBraces, state, { escapeNext: escapeResult.escapeNext }, false, true, false),
+      escapeNext: escapeResult.escapeNext
+    };
+  }
+  return { result: null, escapeNext: escapeResult.escapeNext };
+}
+
+/**
+ * Handles comment processing
+ * @param {string} char - Current character
+ * @param {string} nextChar - Next character
+ * @param {boolean} inString - Whether inside string
+ * @param {boolean} inRegex - Whether inside regex
+ * @param {boolean} inSingleLineComment - Whether in single-line comment
+ * @param {boolean} inMultiLineComment - Whether in multi-line comment
+ * @param {boolean} escapeNext - Whether next character is escaped
+ * @param {Object} state - Current state
+ * @param {number} openBraces - Current open braces count
+ * @param {number} closeBraces - Current close braces count
+ * @returns {{result: Object|null, inSingleLineComment: boolean, inMultiLineComment: boolean}} Result object or null if should continue
+ */
+function processCommentHandling(char, nextChar, inString, inRegex, inSingleLineComment, inMultiLineComment, escapeNext, state, openBraces, closeBraces) {
+  const commentResult = handleComments(char, nextChar, inString, inRegex, inSingleLineComment, inMultiLineComment);
+  if (commentResult.shouldBreak) {
+    return {
+      result: createBracesResult(openBraces, closeBraces, state, {
+        inSingleLineComment: commentResult.inSingleLineComment,
+        inMultiLineComment: commentResult.inMultiLineComment,
+        escapeNext
+      }, true, false, false),
+      inSingleLineComment: commentResult.inSingleLineComment,
+      inMultiLineComment: commentResult.inMultiLineComment
+    };
+  }
+  if (commentResult.shouldContinue) {
+    return {
+      result: createBracesResult(openBraces, closeBraces, state, {
+        inSingleLineComment: commentResult.inSingleLineComment,
+        inMultiLineComment: commentResult.inMultiLineComment,
+        escapeNext
+      }, false, true, commentResult.skipNext),
+      inSingleLineComment: commentResult.inSingleLineComment,
+      inMultiLineComment: commentResult.inMultiLineComment
+    };
+  }
+  return {
+    result: null,
+    inSingleLineComment: commentResult.inSingleLineComment,
+    inMultiLineComment: commentResult.inMultiLineComment
+  };
+}
+
+/**
+ * Handles string literal processing
+ * @param {string} char - Current character
+ * @param {boolean} inRegex - Whether inside regex
+ * @param {boolean} inString - Whether inside string
+ * @param {string|null} stringChar - String quote character
+ * @param {boolean} escapeNext - Whether next character is escaped
+ * @param {Object} state - Current state
+ * @param {number} openBraces - Current open braces count
+ * @param {number} closeBraces - Current close braces count
+ * @returns {{result: Object|null, inString: boolean, stringChar: string|null}} Result object or null if should continue
+ */
+function processStringLiteralHandling(char, inRegex, inString, stringChar, escapeNext, state, openBraces, closeBraces) {
+  const stringResult = handleStringLiterals(char, inRegex, inString, stringChar);
+  if (stringResult.inString !== inString || stringResult.stringChar !== stringChar) {
+    return {
+      result: createBracesResult(openBraces, closeBraces, state, {
+        inString: stringResult.inString,
+        stringChar: stringResult.stringChar,
+        escapeNext
+      }, false, true, false),
+      inString: stringResult.inString,
+      stringChar: stringResult.stringChar
+    };
+  }
+  return { result: null, inString: stringResult.inString, stringChar: stringResult.stringChar };
+}
+
+/**
+ * Processes a single character in the line to count braces
+ * @param {string} char - Current character
+ * @param {string} prevChar - Previous character
+ * @param {string} nextChar - Next character
+ * @param {string} line - Current line
+ * @param {number} j - Current character index
+ * @param {Object} state - Current parsing state
+ * @param {number} openBraces - Current open braces count
+ * @param {number} closeBraces - Current close braces count
+ * @returns {{openBraces: number, closeBraces: number, state: Object, shouldBreak: boolean, shouldContinue: boolean, skipNext: boolean}} Result
+ */
+function processCharacterForBraces(char, prevChar, nextChar, line, j, state, openBraces, closeBraces) {
+  let { inRegex, inString, inSingleLineComment, inMultiLineComment, stringChar, escapeNext } = state;
+  
+  // Handle escape sequences
+  const escapeHandling = processEscapeSequence(char, inString, escapeNext, state, openBraces, closeBraces);
+  if (escapeHandling.result) return escapeHandling.result;
+  escapeNext = escapeHandling.escapeNext;
+  
+  // Handle comments
+  const commentHandling = processCommentHandling(char, nextChar, inString, inRegex, inSingleLineComment, inMultiLineComment, escapeNext, state, openBraces, closeBraces);
+  if (commentHandling.result) return commentHandling.result;
+  inSingleLineComment = commentHandling.inSingleLineComment;
+  inMultiLineComment = commentHandling.inMultiLineComment;
+  
+  // Handle string literals
+  const stringHandling = processStringLiteralHandling(char, inRegex, inString, stringChar, escapeNext, state, openBraces, closeBraces);
+  if (stringHandling.result) return stringHandling.result;
+  inString = stringHandling.inString;
+  stringChar = stringHandling.stringChar;
+  
+  // Handle regex detection
+  const newRegexState = handleRegexDetection(char, prevChar, nextChar, line, j, inRegex, inString);
+  if (newRegexState !== inRegex) {
+    return createBracesResult(openBraces, closeBraces, state, {
+      inRegex: newRegexState,
+      inString,
+      stringChar,
+      escapeNext
+    }, false, true, false);
+  }
+  inRegex = newRegexState;
+  
+  // Count braces only if not inside regex, string, or comment
+  if (!inRegex && !inString) {
+    if (char === '{') openBraces++;
+    if (char === '}') closeBraces++;
+  }
+  
+  return createBracesResult(openBraces, closeBraces, state, { inRegex, inString, stringChar, escapeNext }, false, false, false);
+}
+
+/**
  * Handles processing a line within function body
  * @param {string} line - Current line content
  * @param {number} i - Current line index
@@ -734,16 +1105,43 @@ function processLineBeforeFunctionBody(line, i, lines, typeBraceCount) {
  * @returns {{braceCount: number, end: number|null}} Result
  */
 function processLineInFunctionBody(line, i, functionLine, braceCount, lines) {
-  const openBraces = (line.match(/{/g) || []).length;
-  const closeBraces = (line.match(/}/g) || []).length;
-  const updatedBraceCount = braceCount + openBraces - closeBraces;
+  let openBraces = 0;
+  let closeBraces = 0;
+  let state = {
+    inRegex: false,
+    inString: false,
+    inSingleLineComment: false,
+    inMultiLineComment: false,
+    stringChar: null,
+    escapeNext: false
+  };
   
-  // Check if braces are balanced (function end)
-  if (updatedBraceCount === 0 && closeBraces > 0) {
-    const endLine = handleFunctionBodyEnd(line, i, functionLine, lines);
-    if (endLine !== null) {
-      return { braceCount: updatedBraceCount, end: endLine };
+  for (let j = 0; j < line.length; j++) {
+    const char = line[j];
+    const prevChar = j > 0 ? line[j - 1] : '';
+    const nextChar = j + 1 < line.length ? line[j + 1] : '';
+    
+    const result = processCharacterForBraces(char, prevChar, nextChar, line, j, state, openBraces, closeBraces);
+    openBraces = result.openBraces;
+    closeBraces = result.closeBraces;
+    state = result.state;
+    
+    if (result.shouldBreak) {
+      break;
     }
+    if (result.shouldContinue) {
+      if (result.skipNext) {
+        j++; // Skip next character
+      }
+      continue;
+    }
+  }
+  
+  const updatedBraceCount = braceCount + openBraces - closeBraces;
+  const endLine = checkFunctionEnd(updatedBraceCount, closeBraces, line, i, functionLine, lines);
+  
+  if (endLine !== null) {
+    return { braceCount: updatedBraceCount, end: endLine };
   }
   
   return { braceCount: updatedBraceCount, end: null };
@@ -763,10 +1161,13 @@ function findNamedFunctionEnd(lines, start, functionLine, arrowFunctionHandled, 
   let end = functionLine;
   let typeBraceCount = 0;
   
-  // For arrow functions that we've already handled, start from the line after the body start
-  // (since we've already counted the opening brace on the body start line)
+  // For arrow functions that we've already handled, start from the body start line
+  // but skip counting braces on that line since we already counted them in handleBraceOnSameLine
   // For other functions, start from start - 1 to find the body
-  const loopStart = (arrowFunctionHandled && inFunctionBody) ? start : start - 1;
+  // loopStart must be 0-based (array index)
+  const loopStart = start - 1; // Always 0-based array index (start is 1-based line number)
+  // Skip the first line if we already counted its braces in handleBraceOnSameLine
+  const skipFirstLine = (arrowFunctionHandled && inFunctionBody);
   
   for (let i = loopStart; i < lines.length; i++) {
     const line = lines[i];
@@ -791,6 +1192,13 @@ function findNamedFunctionEnd(lines, start, functionLine, arrowFunctionHandled, 
       typeBraceCount = result.typeBraceCount;
     } else {
       // We're in the function body, track its braces
+      // Skip the first line if we already counted its braces in handleBraceOnSameLine
+      // i is 0-based index, start is 1-based line number, so compare i + 1 === start
+      if (skipFirstLine && i + 1 === start) {
+        // Skip this line - braces already counted in handleBraceOnSameLine
+        continue;
+      }
+      
       const result = processLineInFunctionBody(line, i, functionLine, braceCount, lines);
       
       if (result.end !== null) {
@@ -811,7 +1219,7 @@ function findNamedFunctionEnd(lines, start, functionLine, arrowFunctionHandled, 
  * @returns {boolean} True if function body pattern found
  */
 function hasFunctionBodyPattern(line) {
-  return /\)\s*[:\w\s<>\[\]|'"]*\s*\{/.test(line);
+  return /\)\s*[:\w\s<>[\]|'"]*\s*\{/.test(line);
 }
 
 /**
@@ -830,14 +1238,16 @@ function scanForFunctionEndWithBraces(lines, start, functionLine) {
     
     if (!foundFunctionBody && hasFunctionBodyPattern(line)) {
       foundFunctionBody = true;
-      fallbackBraceCount = (line.match(/{/g) || []).length;
+      // Use the same brace counting logic that excludes comments, strings, and regex
+      const result = processLineInFunctionBody(line, i, functionLine, 0, lines);
+      fallbackBraceCount = result.braceCount;
     } else if (foundFunctionBody) {
-      const openBraces = (line.match(/{/g) || []).length;
-      const closeBraces = (line.match(/}/g) || []).length;
-      fallbackBraceCount += openBraces - closeBraces;
+      // Use the same brace counting logic that excludes comments, strings, and regex
+      const result = processLineInFunctionBody(line, i, functionLine, fallbackBraceCount, lines);
+      fallbackBraceCount = result.braceCount;
       
-      if (fallbackBraceCount === 0 && closeBraces > 0) {
-        return i + 1; // Convert to 1-based line number
+      if (fallbackBraceCount === 0 && result.end !== null) {
+        return result.end;
       }
     }
   }
@@ -929,7 +1339,6 @@ export function findFunctionBoundaries(sourceCode, functions) {
     // For TypeScript functions, we need to skip type definition braces and only track function body braces
     let braceCount = 0;
     let inFunctionBody = false;
-    let typeBraceCount = 0; // Track type definition braces separately
     let arrowFunctionEndSet = false; // Track if we've set the end for an arrow function (object literal case)
     let arrowFunctionHandled = false;
     

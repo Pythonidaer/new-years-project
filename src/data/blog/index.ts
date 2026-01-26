@@ -15,7 +15,7 @@ const postModules = import.meta.glob<{ default: BlogPosts }>("./*.json", {
 });
 
 // Cache for loaded posts by topic ID
-let blogPostsByTopic: Record<string, BlogPosts> = {};
+const blogPostsByTopic: Record<string, BlogPosts> = {};
 let loadPromise: Promise<void> | null = null;
 
 /**

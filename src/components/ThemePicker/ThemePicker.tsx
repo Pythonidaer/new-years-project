@@ -78,9 +78,9 @@ type ColorItemProps = {
   token: ColorToken;
   currentValue: string;
   hasChange: boolean;
-  onColorChange: (key: keyof ReturnType<typeof useTheme>['theme'], value: string) => void;
-  onCancel: (key: keyof ReturnType<typeof useTheme>['theme']) => void;
-  colorToHex: (color: string) => string;
+  onColorChange: (_key: keyof ReturnType<typeof useTheme>['theme'], _value: string) => void;
+  onCancel: (_key: keyof ReturnType<typeof useTheme>['theme']) => void;
+  colorToHex: (_color: string) => string;
   styles: typeof styles;
 };
 
@@ -124,9 +124,9 @@ type GradientGroupProps = {
   gradientPreview: string;
   localChanges: Partial<ReturnType<typeof useTheme>['theme']>;
   theme: ReturnType<typeof useTheme>['theme'];
-  onColorChange: (key: keyof ReturnType<typeof useTheme>['theme'], value: string) => void;
-  onCancel: (key: keyof ReturnType<typeof useTheme>['theme']) => void;
-  colorToHex: (color: string) => string;
+  onColorChange: (_key: keyof ReturnType<typeof useTheme>['theme'], _value: string) => void;
+  onCancel: (_key: keyof ReturnType<typeof useTheme>['theme']) => void;
+  colorToHex: (_color: string) => string;
   styles: typeof styles;
 };
 
@@ -267,14 +267,14 @@ type PresetSectionProps = {
   isPresetsHeaderCollapsed: boolean;
   showSavePreset: boolean;
   presetName: string;
-  onLoadPreset: (presetId: string) => void;
-  onDeletePreset: (presetId: string, e: React.MouseEvent) => void;
+  onLoadPreset: (_presetId: string) => void;
+  onDeletePreset: (_presetId: string, _e: React.MouseEvent) => void;
   onToggleExpanded: () => void;
-  onPresetsHeaderKeyDown: (e: React.KeyboardEvent) => void;
+  onPresetsHeaderKeyDown: (_e: React.KeyboardEvent) => void;
   onShowSavePreset: () => void;
   onSavePreset: () => void;
-  onSavePresetKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  onPresetNameChange: (value: string) => void;
+  onSavePresetKeyDown: (_e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onPresetNameChange: (_value: string) => void;
   onCancelSavePreset: () => void;
   styles: typeof styles;
 };
@@ -401,9 +401,9 @@ type ColorCategoriesProps = {
   categoryLabels: Record<ColorToken['category'], string>;
   localChanges: Partial<ReturnType<typeof useTheme>['theme']>;
   theme: ReturnType<typeof useTheme>['theme'];
-  onColorChange: (key: keyof ReturnType<typeof useTheme>['theme'], value: string) => void;
-  onCancel: (key: keyof ReturnType<typeof useTheme>['theme']) => void;
-  colorToHex: (color: string) => string;
+  onColorChange: (_key: keyof ReturnType<typeof useTheme>['theme'], _value: string) => void;
+  onCancel: (_key: keyof ReturnType<typeof useTheme>['theme']) => void;
+  colorToHex: (_color: string) => string;
   getGradientPreview: () => string;
   getCampaignGradientPreview: () => string;
   getAuthorBoxGradientPreview: () => string;

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { LatestBlogs } from "@/sections/LatestBlogs";
 import { ThemeProvider } from "@/context/ThemeContext";
@@ -18,7 +18,7 @@ describe("LatestBlogs Component", () => {
     expect(heading).toBeTruthy();
   });
 
-  it("renders up to 3 most recent blog posts", () => {
+  it("renders up to 3 most recent blog posts", async () => {
     render(
       <BrowserRouter>
         <ThemeProvider>
@@ -26,14 +26,19 @@ describe("LatestBlogs Component", () => {
         </ThemeProvider>
       </BrowserRouter>
     );
+
+    // Wait for blog posts to load
+    await waitFor(() => {
+      const articles = document.querySelectorAll('article');
+      expect(articles.length).toBeGreaterThan(0);
+    }, { timeout: 3000 });
 
     // Should render blog post cards (up to 3)
     const articles = document.querySelectorAll('article');
-    expect(articles.length).toBeGreaterThan(0);
     expect(articles.length).toBeLessThanOrEqual(3);
   });
 
-  it("displays blog post titles", () => {
+  it("displays blog post titles", async () => {
     render(
       <BrowserRouter>
         <ThemeProvider>
@@ -42,12 +47,14 @@ describe("LatestBlogs Component", () => {
       </BrowserRouter>
     );
 
-    // Should have at least one blog post title link
-    const titleLinks = document.querySelectorAll('a[href*="/resources/blog/"]');
-    expect(titleLinks.length).toBeGreaterThan(0);
+    // Wait for blog posts to load
+    await waitFor(() => {
+      const titleLinks = document.querySelectorAll('a[href*="/resources/blog/"]');
+      expect(titleLinks.length).toBeGreaterThan(0);
+    }, { timeout: 3000 });
   });
 
-  it("displays blog post dates", () => {
+  it("displays blog post dates", async () => {
     render(
       <BrowserRouter>
         <ThemeProvider>
@@ -56,12 +63,14 @@ describe("LatestBlogs Component", () => {
       </BrowserRouter>
     );
 
-    // Should have time elements for dates
-    const timeElements = document.querySelectorAll('time');
-    expect(timeElements.length).toBeGreaterThan(0);
+    // Wait for blog posts to load
+    await waitFor(() => {
+      const timeElements = document.querySelectorAll('time');
+      expect(timeElements.length).toBeGreaterThan(0);
+    }, { timeout: 3000 });
   });
 
-  it("renders blog post images with proper alt text", () => {
+  it("renders blog post images with proper alt text", async () => {
     render(
       <BrowserRouter>
         <ThemeProvider>
@@ -69,17 +78,21 @@ describe("LatestBlogs Component", () => {
         </ThemeProvider>
       </BrowserRouter>
     );
+
+    // Wait for blog posts to load
+    await waitFor(() => {
+      const images = document.querySelectorAll('img');
+      expect(images.length).toBeGreaterThan(0);
+    }, { timeout: 3000 });
 
     const images = document.querySelectorAll('img');
-    expect(images.length).toBeGreaterThan(0);
-    
     // Each image should have alt text
     images.forEach((img) => {
       expect(img.getAttribute('alt')).toBeTruthy();
     });
   });
 
-  it("renders blog post images as links", () => {
+  it("renders blog post images as links", async () => {
     render(
       <BrowserRouter>
         <ThemeProvider>
@@ -88,8 +101,10 @@ describe("LatestBlogs Component", () => {
       </BrowserRouter>
     );
 
-    // Images should be wrapped in links
-    const imageLinks = document.querySelectorAll('a[href*="/resources/blog/"] img');
-    expect(imageLinks.length).toBeGreaterThan(0);
+    // Wait for blog posts to load
+    await waitFor(() => {
+      const imageLinks = document.querySelectorAll('a[href*="/resources/blog/"] img');
+      expect(imageLinks.length).toBeGreaterThan(0);
+    }, { timeout: 3000 });
   });
 });

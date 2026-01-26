@@ -78,8 +78,10 @@ describe("App", () => {
 
     it("renders BlogPost component when navigating to /resources/blog/:slug", async () => {
       // Get a real blog post slug for testing
-      const { getAllBlogPosts, getBlogPostSlug } = await import("@/data/blog");
+      const { getAllBlogPosts, getBlogPostSlug, loadAllBlogPosts } = await import("@/data/blog");
+      await loadAllBlogPosts();
       const allPosts = getAllBlogPosts();
+      expect(allPosts.length).toBeGreaterThan(0);
       const testPost = allPosts[0];
       const testSlug = getBlogPostSlug(testPost);
 
@@ -105,9 +107,11 @@ describe("App", () => {
 
     it("renders Tag component when navigating to /resources/tag/:categoryName", async () => {
       // Get a real category/tag for testing
-      const { getAllUniqueTags } = await import("@/data/blog");
+      const { getAllUniqueTags, loadAllBlogPosts } = await import("@/data/blog");
       const { slugify } = await import("@/utils/slug");
+      await loadAllBlogPosts();
       const allTags = getAllUniqueTags();
+      expect(allTags.length).toBeGreaterThan(0);
       const testTag = allTags[0];
       const testSlug = slugify(testTag);
 
