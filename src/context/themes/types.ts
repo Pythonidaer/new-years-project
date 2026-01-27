@@ -1,0 +1,42 @@
+export type Theme = {
+  bg: string;
+  surface: string;
+  surfaceDark: string;
+  marqueeBg: string;
+  text: string;
+  textDark: string;
+  muted: string;
+  border: string;
+  codeBg: string;
+  codeText: string;
+  primary: string;
+  primaryHover: string;
+  primaryContrast: string;
+  blogLink: string;
+  link: string;
+  focus: string;
+  accent: string;
+  accentAlt: string;
+  footerBg: string;
+  footerTextMuted: string;
+  footerTextSubtle: string;
+  footerSocialBg: string;
+  footerBorder: string;
+  heroStart: string;
+  heroEnd: string;
+  heroRadial: string;
+  campaignStart: string;
+  campaignEnd: string;
+  authorBoxStart: string;
+  authorBoxEnd: string;
+  relatedSectionStart: string;
+  relatedSectionEnd: string;
+  shadow: string;
+  shadowSubtle: string;
+};
+
+export type Preset = {
+  id: string;
+  name: string;
+  theme: Theme;
+};

@@ -180,6 +180,29 @@ scripts/html-generators/
 - ✅ Module interfaces are clean and focused
 - ✅ Module responsibilities are documented
 
+## Recent Improvements (2026-01-27)
+
+### ✅ Dynamic Complexity Threshold
+- **Added**: `get-complexity-threshold.js` module to read threshold from `eslint.config.js`
+- **Changed**: All hardcoded threshold values now read dynamically
+- **Result**: Reports automatically adapt when threshold changes in ESLint config
+- **Implementation**: Extracts max complexity from all config blocks, uses maximum value
+
+### ✅ Breakdown Controls UI Refactoring
+- **Changed**: Converted buttons to checkboxes for more compact UI
+- **Removed**: `breakdown-toggle-info` span (no longer needed)
+- **Layout**: Horizontal side-by-side checkboxes
+- **Styling**: Reduced padding and max-width for more compact panel
+
+### ✅ New Command-Line Flags
+- **Added**: `--show-all-columns` flag to show all columns by default
+- **Added**: `--hide-table` flag to hide breakdown table by default
+- **Updated**: `package.json` with example scripts for new flags
+
+### ✅ Configuration & Cleanup
+- **Updated**: `.gitignore` to include `complexity/` directory and `eslint.config.temp.js`
+- **Fixed**: All ESLint errors (removed unused imports and variables)
+
 ## Summary
 
 **Status**: ✅ **ALL MAJOR WORK COMPLETE**
@@ -196,7 +219,9 @@ scripts/html-generators/
   - 0 mismatches out of 817 functions (0.0% error rate)
   - AST parser is now the default (no flag needed)
 - ✅ **Heuristic Parser Removed**: All obsolete parser files deleted (~8,500+ lines removed)
-- ✅ **Test Coverage**: All 237 tests passing
+- ✅ **Dynamic Threshold**: Threshold now read from `eslint.config.js` (no hardcoded values)
+- ✅ **UI Improvements**: Breakdown controls refactored to checkboxes with new flags
+- ✅ **Test Coverage**: All 317+ tests passing
 - ✅ **Code Quality**: All ESLint errors in `scripts/` directory resolved
 - ✅ **Documentation**: All documentation updated to reflect AST-only approach
 
@@ -204,4 +229,6 @@ scripts/html-generators/
 - All functions ≤ 10 complexity
 - All tests passing
 - AST parser provides 100% accuracy
+- Dynamic threshold reading from ESLint config
+- Improved UI with checkbox controls
 - Codebase is clean and maintainable

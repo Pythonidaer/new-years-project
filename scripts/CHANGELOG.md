@@ -1,5 +1,66 @@
 # Complexity Report Generator - Changelog
 
+## 2026-01-27 - Dynamic Threshold & UI Improvements
+
+### Major Changes
+
+#### ✅ Dynamic Complexity Threshold
+- **Added**: `get-complexity-threshold.js` module to read threshold from `eslint.config.js`
+- **Changed**: All hardcoded threshold values (10) now read dynamically from ESLint config
+- **Result**: Reports automatically adapt when threshold changes in `eslint.config.js`
+- **Implementation**: Extracts max complexity values from all config blocks and uses the maximum
+- **Files Updated**:
+  - `scripts/generate-complexity-report.js` - Reads and passes threshold to all generators
+  - `scripts/html-generators/main-index.js` - Uses dynamic threshold in text
+  - `scripts/html-generators/folder.js` - Uses dynamic threshold in help text and filtering
+  - `scripts/html-generators/file.js` - Uses dynamic threshold in statistics calculations
+
+#### ✅ Breakdown Controls Refactoring
+- **Changed**: Converted breakdown control buttons to checkboxes for more compact UI
+- **Removed**: `breakdown-toggle-info` span (no longer needed)
+- **Updated**: Controls now use horizontal layout (side-by-side checkboxes)
+- **Labels**: 
+  - "Show All Columns" checkbox (replaces "Show All Columns" / "Hide Empty Columns" button)
+  - "Show Table" checkbox (replaces "Hide Table" / "Show Table" button)
+- **Styling**: Reduced padding and max-width for more compact panel
+
+#### ✅ New Command-Line Flags
+- **Added**: `--show-all-columns` flag to show all columns by default
+- **Added**: `--hide-table` flag to hide breakdown table by default
+- **Updated**: `package.json` with example scripts:
+  - `lint:complexity:all-columns` - Shows all columns by default
+  - `lint:complexity:hide-table` - Hides table by default
+- **Default Behavior**: 
+  - Show Table: checked (table visible)
+  - Show All Columns: unchecked (empty columns hidden)
+
+#### ✅ Git Ignore Updates
+- **Added**: `complexity/` directory to `.gitignore` (generated reports)
+- **Added**: `eslint.config.temp.js` to `.gitignore` (temporary config file)
+- **Uncommented**: `complexity/` entry that was previously commented out
+
+#### ✅ ESLint Error Fixes
+- **Fixed**: Removed unused imports in `analyze-ast-mismatches.test.js`
+- **Fixed**: Removed unused variables in `function-hierarchy.test.js`
+- **Result**: All ESLint errors resolved (only file length warnings remain)
+
+### Files Modified
+- `scripts/get-complexity-threshold.js` - **NEW**: Reads threshold from ESLint config
+- `scripts/generate-complexity-report.js` - Reads threshold, passes to generators, new flags
+- `scripts/html-generators/file.js` - Checkbox controls, dynamic threshold, new flag support
+- `scripts/html-generators/folder.js` - Dynamic threshold in text and logic
+- `scripts/html-generators/main-index.js` - Dynamic threshold in text
+- `.gitignore` - Added complexity/ and eslint.config.temp.js
+- `package.json` - Added example scripts for new flags
+
+### Testing
+- ✅ Threshold correctly reads 12 from current `eslint.config.js` (max of TS/TSX: 12, JS: 10)
+- ✅ Generated reports show "complexity > 12" instead of hardcoded "> 10"
+- ✅ Checkbox controls work correctly with new flags
+- ✅ All ESLint errors resolved
+
+---
+
 ## 2026-01-25 - AST Parser Made Default & Code Cleanup
 
 ### Major Changes

@@ -4,7 +4,73 @@
 
 **Current Status**: ✅ **AST-Based Parser Complete - Now Default and Only Parser** — ESLint AST-based decision point parser is the default and only parser, providing 100% accuracy.
 
+**🔄 Ongoing Debugging: Function Name Consistency**
+
+We are currently debugging discrepancies between the export system and `fixFunctionNameForCallback` to ensure consistency across:
+- **Function Complexity Breakdown table** — The table displayed on file pages showing function names and complexity breakdowns
+- **ESLint's AST parsing** — The source of truth for complexity calculations
+- **Export files** — The exported function name lists (JSON, TXT, MD formats in `complexity/reports/`)
+
+**Current Issue:**
+- The breakdown table uses `fixFunctionNameForCallback()` which was recently updated to recursively build full hierarchical names (e.g., `AgencyLogosComponent (useEffect callback) (IntersectionObserver callback)`)
+- The export system uses `buildHierarchicalFunctionName()` which also recursively builds hierarchical names
+- Both systems should produce identical hierarchical function names, but there may still be edge cases where they diverge
+
+**Goal:**
+Ensure that function names displayed in the Function Complexity Breakdown table exactly match:
+1. What ESLint's AST parser identifies
+2. What appears in the export files (`function-names.all.txt`, `function-names.all.json`, etc.)
+3. The actual hierarchical structure of nested callbacks in the source code
+
+**Related Files:**
+- `scripts/function-hierarchy.js` — Contains `fixFunctionNameForCallback()` used by breakdown table
+- `scripts/export-generators/helpers.js` — Contains `buildHierarchicalFunctionName()` used by export system
+- Both functions use `findImmediateParentFunction()` to build parent-child relationships
+
 **Latest Work Completed:**
+- ✅ **UI/UX Improvements & Polish** — Comprehensive UI enhancements completed
+  - ✅ **Status Line Standardization** — Colored status bar added to homepage, folder pages, and file pages
+    - Status line positioned above tables on all pages
+    - Color coding matches complexity level (high/medium/low)
+  - ✅ **Complexity Color Scheme** — Updated function row colors to match coverage report standards
+    - Yellow (`#fff4c2` background, `#f9cd0b` chart) for complexity 11-14
+    - Red (`#FCE1E5` background, `#C21F39` chart) for complexity ≥15
+    - Scoped CSS to prevent conflicts with homepage percentage-based rows
+  - ✅ **Filter Functionality** — Added filter inputs to homepage and folder pages
+    - Case-insensitive regex matching
+    - Matches coverage report design and behavior
+    - Filter section with `margin-top: 14px` for consistent spacing
+  - ✅ **Table Header Improvements** — Aligned with coverage report design
+    - Using `sort-arrow-sprite.png` for sort indicators on homepage and folder pages
+    - Text-based sort indicators (▲▼) for breakdown table columns
+    - Removed borders from headers
+    - Sort indicators reserve fixed space (`width: 12px`, `min-width: 12px`) to prevent header resizing when arrows appear
+    - Breakdown table function name font size adjusted to `11px` for better alignment
+  - ✅ **Breakdown Table Enhancements** — Improved function breakdown table
+    - Default sort by Complexity (descending) on file pages
+    - All breakdown columns (if, for, ternary, &&, ||, base, etc.) are sortable
+    - Sort indicators properly update when columns are toggled
+    - Fixed spacing to prevent header size changes when arrows appear
+  - ✅ **Footer Updates** — Standardized footer across all pages
+    - Footer on all three page types (homepage, folders, files)
+    - GitHub profile link (`https://www.github.com/pythonidaer`)
+    - Consistent styling (`height: 48px`, `padding: 20px`)
+  - ✅ **UI Cleanup** — Removed redundant displays and improved spacing
+    - Removed "Functions Within Threshold Max and Avg" from file pages
+    - Removed "Functions / Max: / Avg:" from homepage
+    - Simplified breakdown controls (removed grey background, inline layout)
+    - Consistent `margin-top: 14px` on filter sections
+- ✅ **Dynamic Complexity Threshold** — Threshold now read dynamically from `eslint.config.js`
+  - Created `get-complexity-threshold.js` module to parse ESLint config
+  - All hardcoded threshold values replaced with dynamic reading
+  - Reports automatically adapt when threshold changes in ESLint config
+- ✅ **Breakdown Controls UI Refactoring** — Converted buttons to checkboxes for more compact UI
+  - Horizontal side-by-side checkboxes
+  - Removed `breakdown-toggle-info` span
+  - Reduced padding and max-width for more compact panel
+- ✅ **New Command-Line Flags** — Added `--show-all-columns` and `--hide-table` flags
+  - `--show-all-columns`: Show all columns by default
+  - `--hide-table`: Hide breakdown table by default
 - ✅ **ESLint AST-Based Parser Implemented** — `decision-points-ast.js` module created with 100% accuracy
   - Uses `@typescript-eslint/typescript-estree` to parse code into AST
   - Traverses AST to find all decision point types (if, loops, ternaries, logical operators, default params)
@@ -19,6 +85,7 @@
 
 **Key Files:**
 - `scripts/decision-points-ast.js` — AST-based decision point parser (100% accuracy, 0 mismatches, now default)
+- `scripts/get-complexity-threshold.js` — Dynamic threshold reading from `eslint.config.js`
 - `scripts/html-generators/` — HTML generation modules (all functions ≤ 10 complexity)
 - `scripts/function-boundaries.js` — Function boundary detection (all functions ≤ 10 complexity)
 
@@ -48,6 +115,12 @@ This directory contains the modular complexity report generator system. Each mod
   - Executes ESLint with JSON output format
   - Reads and parses ESLint JSON results
   - Cleans up temporary config files
+
+- **[`get-complexity-threshold.js`](./get-complexity-threshold.js)** — Dynamic complexity threshold reading
+  - Reads and parses `eslint.config.js` to extract complexity threshold values
+  - Handles multiple config blocks (e.g., different thresholds for TS/TSX vs JS files)
+  - Returns the maximum threshold value found
+  - Provides fallback to default value (10) if parsing fails
 
 ### Function Extraction & Analysis
 
@@ -105,7 +178,6 @@ This directory contains the modular complexity report generator system. Each mod
   - `folder.js` — Folder-specific pages with function listings
   - `file.js` — File-level pages with detailed function breakdowns and code annotations
   - `about.js` — About page explaining cyclomatic complexity
-  - `about-examples.js` — Examples page with code samples
   - `utils.js` — HTML escaping utilities
 
 ---
@@ -114,6 +186,7 @@ This directory contains the modular complexity report generator system. Each mod
 
 ```
 generate-complexity-report.js (main entry point)
+├── get-complexity-threshold.js (dynamic threshold reading)
 ├── eslint-integration.js
 ├── function-extraction.js
 ├── function-boundaries.js
@@ -135,14 +208,23 @@ generate-complexity-report.js (main entry point)
 Run the complexity report generator:
 
 ```bash
-# Generate report (default: show only functions > 10, uses AST parser)
+# Generate report (default: show only functions > threshold, uses AST parser)
 npm run lint:complexity
 
 # Generate report with all functions visible by default (uses AST parser)
 npm run lint:complexity:all
+
+# Generate report with all columns visible by default
+npm run lint:complexity:all-columns
+
+# Generate report with breakdown table hidden by default
+npm run lint:complexity:hide-table
 ```
 
-**Note**: The complexity report generator now uses the AST-based parser by default, providing 100% accuracy with ESLint's complexity calculations.
+**Note**: 
+- The complexity report generator now uses the AST-based parser by default, providing 100% accuracy with ESLint's complexity calculations.
+- The complexity threshold is read dynamically from `eslint.config.js` (no hardcoded values).
+- Default breakdown table state: "Show Table" (checked), "Show All Columns" (unchecked).
 
 ## Output
 
@@ -150,7 +232,6 @@ The generator creates:
 
 - `complexity/index.html` — Main report (folder-level summary)
 - `complexity/about.html` — About page explaining cyclomatic complexity
-- `complexity/about-examples.html` — Examples page
 - `complexity/<folder_path>/index.html` — Folder-specific reports
 - `complexity/<folder_path>/<filename>.html` — File-specific reports with code annotations
 
@@ -160,8 +241,10 @@ The complexity report generator uses an AST-based parser that provides **100% ac
 
 - ✅ **0 mismatches** out of 817 functions (0.0% error rate)
 - ✅ **All functions ≤ 10 complexity** in `scripts/` directory
-- ✅ **All tests passing** (237 tests)
+- ✅ **All tests passing** (317+ tests)
 - ✅ **Heuristic parser removed** — AST parser is now the default and only parser
+- ✅ **Dynamic threshold reading** — Threshold read from `eslint.config.js` (no hardcoded values)
+- ✅ **Improved UI** — Breakdown controls refactored to checkboxes with new command-line flags
 
 See [`CHANGELOG.md`](./CHANGELOG.md) for detailed change history.
 
@@ -394,8 +477,8 @@ The AST-based parser uses ESLint's own parsing infrastructure (`@typescript-esli
 - ✅ **Fix Nested Border Top and Bottoms** — Border styling for nested function boundaries now shows hierarchy: borders start at each function's indent (--indent-ch) and extend to the right
 - ✅ **Hover vertical line** — Hover over the line-count or line-coverage column (left gutter) to show a vertical border spanning the full height of that function in the coverage table
 - 🔄 **Add Vertical Full-Length Hover Lines** — Add vertical hover indicators that span the full height of the table row
-- 🔄 **Update Vertical Hover Styles** — Will update vertical hover styles for better user experience
-- 🔄 **Update Horizontal Borders** — Will update horizontal borders to not always be full width (to help show indentation)
+- ✅ **Update Vertical Hover Styles** — Will update vertical hover styles for better user experience
+- ✅ **Update Horizontal Borders** — Will update horizontal borders to not always be full width (to help show indentation)
 
 #### Code Organization
 
@@ -412,8 +495,11 @@ The AST-based parser uses ESLint's own parsing infrastructure (`@typescript-esli
 
 **Scripts Directory Status:**
 - ✅ All functions ≤ 10 complexity (highest: 10)
-- ✅ All 237 tests passing
+- ✅ All 317+ tests passing
 - ✅ AST parser provides 100% accuracy
+- ✅ Dynamic threshold reading from `eslint.config.js`
+- ✅ Breakdown controls refactored to checkboxes
+- ✅ New command-line flags (`--show-all-columns`, `--hide-table`)
 - ✅ All ESLint errors resolved
 - ✅ Heuristic parser removed
 - ✅ Documentation updated
@@ -489,9 +575,10 @@ The AST-based parser uses ESLint's own parsing infrastructure (`@typescript-esli
 - [ ] Condense markdown files (multiple documentation files could be consolidated)
 
 ### 10. Breakdown Controls & UI Refactoring
-- [ ] **Refactor breakdown controls panel** - Make the breakdown controls panel shorter and more compact
-  - [ ] Use shorter labels for control elements
-  - [ ] Convert buttons to checkboxes to reduce panel height
+- [x] **Refactor breakdown controls panel** - ✅ **COMPLETED** - Make the breakdown controls panel shorter and more compact
+  - [x] Use shorter labels for control elements (✅ "Filter Functions:" → "Filter:")
+  - [x] Convert buttons to checkboxes to reduce panel height (✅ Completed)
+  - [x] Add command-line flags for default states (✅ `--show-all-columns`, `--hide-table`)
   - [ ] Mimic Vitest coverage report styles:
     - [ ] Match spacing and line styles from coverage report
     - [ ] Apply coverage color scheme across table rows (high/medium/low complexity indicators)
@@ -508,3 +595,45 @@ The AST-based parser uses ESLint's own parsing infrastructure (`@typescript-esli
   - [ ] Document minimal required dependencies for the npm package
   - [ ] Create a clean package structure suitable for npm distribution
   - [ ] Test that scripts work with minimal dependencies after cleanup
+
+### 12. UI/UX Improvements & Polish
+- [x] **Add status line to all pages** — ✅ **COMPLETED**
+  - [x] Add status line (colored bar) to folder pages
+  - [x] Add status line to individual file pages (already existed)
+  - [x] Add status line to homepage
+  - [x] Ensure status line color matches complexity level (high/medium/low)
+  - [x] Status line positioned above tables on all pages
+- [x] **Update cell colors to match coverage logic** — ✅ **COMPLETED**
+  - [x] Add yellow color option for medium complexity (11-14): `#fff4c2` background, `#f9cd0b` chart bar
+  - [x] Add red color option for high complexity (≥15): `#FCE1E5` background, `#C21F39` chart bar
+  - [x] Align color scheme with Vitest coverage report standards
+  - [x] Scoped CSS to apply colors only to function rows (not homepage percentage rows)
+- [x] **Remove duplicate display on individual file page** — ✅ **COMPLETED**
+  - [x] Removed "Functions Within Threshold Max and Avg" section from file pages
+  - [x] Consolidated statistics into status line display
+- [x] **Confirm spacing aligns with design needs** — ✅ **COMPLETED**
+  - [x] Added `margin-top: 14px` to filter sections on all pages
+  - [x] Removed unnecessary margins and padding
+  - [x] Aligned spacing with Vitest coverage report style
+- [x] **Add filter functionality to some pages** — ✅ **COMPLETED**
+  - [x] Add filter controls to folder pages
+  - [x] Add filter controls to main index page
+  - [x] Filter input matches coverage report design
+  - [x] Filter works with case-insensitive regex matching
+- [ ] **Add export function feature**
+  - [ ] Implement export functionality for complexity data
+  - [ ] Support multiple formats (JSON, CSV, HTML)
+  - [ ] Allow exporting filtered/selected data
+- [ ] **Clean up package files**
+  - [ ] Review and remove unused dependencies
+  - [ ] Clean up unnecessary files in package structure
+  - [ ] Organize package.json dependencies
+- [ ] **Fix small things on homepage**
+  - [ ] Review homepage layout and spacing
+  - [ ] Fix any visual inconsistencies
+  - [ ] Improve overall homepage presentation
+- [x] **Update links and references** — ✅ **COMPLETED**
+  - [x] Updated footer to show: "Complexity report generated by <pythonidaer> at <timestamp>"
+  - [x] Added GitHub profile link (`https://www.github.com/pythonidaer`) to footer on all pages
+  - [x] Footer appears on all three page types (homepage, folders, files)
+  - [x] Footer styled with `height: 48px` and `padding: 20px`

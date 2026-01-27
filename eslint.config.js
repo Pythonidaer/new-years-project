@@ -9,6 +9,7 @@ export default defineConfig([
   globalIgnores(['dist', 'coverage']),
   {
     files: ['**/*.{ts,tsx}'],
+    ignores: ['**/__tests__/**', '**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
@@ -27,6 +28,7 @@ export default defineConfig([
       // File length enforcement
       // Target: ≤ 1000 lines per file (excluding blank lines and comments)
       // See .cursorrules section 13 for file length guidelines
+      // Note: Test files are excluded from this rule
       "max-lines": ["warn", { max: 1000, skipBlankLines: true, skipComments: true }],
       // Allow underscore-prefixed parameters for unused parameters (API compatibility)
       "no-unused-vars": ["error", { 
@@ -38,6 +40,7 @@ export default defineConfig([
   },
   {
     files: ['**/*.js'],
+    ignores: ['**/__tests__/**', '**/*.test.js', '**/*.spec.js'],
     extends: [
       js.configs.recommended,
     ],
@@ -49,6 +52,7 @@ export default defineConfig([
       // Cyclomatic complexity enforcement
       complexity: ["warn", { max: 10, variant: "classic" }],
       // File length enforcement
+      // Note: Test files are excluded from this rule
       "max-lines": ["warn", { max: 1000, skipBlankLines: true, skipComments: true }],
       // Allow underscore-prefixed parameters for unused parameters (API compatibility)
       "no-unused-vars": ["error", { 

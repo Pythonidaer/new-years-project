@@ -1,0 +1,41 @@
+import type { Theme } from './types';
+import { defaultTheme } from './default';
+
+// Crimson Flame theme
+export const crimson_flameTheme: Theme = {
+  ...defaultTheme,
+  bg: '#fff5f5',
+  surface: '#ffe8e8',
+  surfaceDark: '#8b1a1a',
+  marqueeBg: '#6b1414',
+  text: '#2d1a1a',
+  textDark: '#1a0f0f',
+  muted: '#6b4a4a',
+  border: 'rgba(139, 26, 26, 0.2)',
+  codeBg: '#ffe8e8',
+  codeText: '#2d1a1a',
+  primary: '#c41e1e',
+  primaryHover: '#d34120',
+  primaryContrast: '#ffffff',
+  link: '#8b1a1a', // Dark red for contrast on light background
+  blogLink: '#8b1a1a',
+  focus: '#d34120',
+  accent: '#ff4d4d',
+  accentAlt: '#ff6b6b',
+  footerBg: '#1a0f0f',
+  footerTextMuted: 'rgba(255, 255, 255, 0.75)',
+  footerTextSubtle: 'rgba(255, 255, 255, 0.65)',
+  footerSocialBg: 'rgba(255, 255, 255, 0.12)',
+  footerBorder: 'rgba(255, 255, 255, 0.12)',
+  heroStart: '#8b1a1a',
+  heroEnd: '#6b1414',
+  heroRadial: 'rgba(255, 77, 77, 0.15)',
+  campaignStart: '#c41e1e',
+  campaignEnd: '#8b1a1a',
+  authorBoxStart: 'rgba(255, 232, 232, 0.8)',
+  authorBoxEnd: 'rgba(255, 200, 200, 0.8)',
+  relatedSectionStart: 'rgba(255, 200, 200, 0.5)',
+  relatedSectionEnd: 'rgba(255, 245, 245, 0.5)',
+  shadow: 'rgba(139, 26, 26, 0.15)',
+  shadowSubtle: 'rgba(139, 26, 26, 0.08)',
+};

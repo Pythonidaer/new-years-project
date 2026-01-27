@@ -376,7 +376,10 @@ export function getDirectory(filePath) {
  * @returns {string} Base function name
  */
 export function getBaseFunctionName(name) {
+  if (!name) return 'unknown';
+  
   // Remove callback suffixes: (useEffect callback), (setTimeout callback), etc.
+  // Also handle generic patterns like (forEach callback), (map callback), etc.
   const callbackPatterns = [
     /\s*\(useEffect callback\)/i,
     /\s*\(setTimeout callback\)/i,
@@ -385,12 +388,25 @@ export function getBaseFunctionName(name) {
     /\s*\(arrow function\)/i,
     /\s*\(map callback\)/i,
     /\s*\(filter callback\)/i,
+    /\s*\(forEach callback\)/i,
+    /\s*\(reduce callback\)/i,
+    /\s*\(find callback\)/i,
+    /\s*\(some callback\)/i,
+    /\s*\(every callback\)/i,
+    /\s*\(.+?\s+callback\)/i,  // Generic pattern for any callback type
   ];
   
   let baseName = name;
-  callbackPatterns.forEach(pattern => {
-    baseName = baseName.replace(pattern, '');
-  });
+  // Apply patterns in order, with generic pattern last
+  for (let i = 0; i < callbackPatterns.length - 1; i++) {
+    baseName = baseName.replace(callbackPatterns[i], '');
+  }
+  // Apply generic pattern last to catch any remaining callback patterns
+  baseName = baseName.replace(/\s*\(.+?\s+callback\)/gi, '');
   
-  return baseName.trim();
+  // Also remove standalone callback indicators
+  baseName = baseName.replace(/^addEventListener\s+callback$/i, 'addEventListener');
+  baseName = baseName.replace(/^anonymous\s+arrow\s+function$/i, 'anonymous');
+  
+  return baseName.trim() || 'unknown';
 }

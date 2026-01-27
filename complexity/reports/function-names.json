@@ -1,0 +1,2585 @@
+{
+  "metadata": {
+    "exportType": "top-level-functions",
+    "totalFunctions": 368,
+    "generatedAt": "2026-01-27T22:48:59.327Z"
+  },
+  "functions": [
+    {
+      "name": "addEventListener callback",
+      "file": "src/main.tsx",
+      "line": 34,
+      "complexity": 10,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "AgencyLogosComponent",
+      "file": "src/sections/AgencyLogos/index.tsx",
+      "line": 24,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "analyzeASTMismatches",
+      "file": "scripts/analyze-ast-mismatches.js",
+      "line": 60,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "anonymous arrow function",
+      "file": "src/utils/contrast.ts",
+      "line": 186,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "anonymous arrow function",
+      "file": "src/components/AudioControl/AudioControl.tsx",
+      "line": 61,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "anonymous arrow function",
+      "file": "src/components/ThemePicker/ThemePicker.tsx",
+      "line": 372,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "anonymous arrow function",
+      "file": "src/main.tsx",
+      "line": 57,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "anonymous arrow function",
+      "file": "src/sections/BlogFilters/index.tsx",
+      "line": 83,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "anonymous arrow function",
+      "file": "src/sections/Header/index.tsx",
+      "line": 246,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "anonymous arrow function",
+      "file": "src/setupTests.ts",
+      "line": 6,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "App",
+      "file": "src/App.tsx",
+      "line": 35,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "AppContent",
+      "file": "src/App.tsx",
+      "line": 17,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "applyFallback1FunctionDeclaration",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 74,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "applyFallback2ArrowOnLaterLine",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 95,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "applyFallback3OpeningParen",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 119,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "applyParameterListEndFallbacks",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 144,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "applyThemeToDom",
+      "file": "src/main.tsx",
+      "line": 63,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "applyThemeToDom",
+      "file": "src/context/ThemeContext.tsx",
+      "line": 20,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "AudioControl",
+      "file": "src/components/AudioControl/AudioControl.tsx",
+      "line": 6,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "blendColor",
+      "file": "src/utils/contrast.ts",
+      "line": 7,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "Blog",
+      "file": "src/pages/Blog.tsx",
+      "line": 13,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "BlogFilters",
+      "file": "src/sections/BlogFilters/index.tsx",
+      "line": 42,
+      "complexity": 5,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "BlogGrid",
+      "file": "src/sections/BlogGrid/index.tsx",
+      "line": 17,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "BlogHeading",
+      "file": "src/sections/BlogHeading/index.tsx",
+      "line": 3,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "BlogPost",
+      "file": "src/pages/BlogPost.tsx",
+      "line": 20,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "BlogPostNotFound",
+      "file": "src/pages/BlogPostNotFound.tsx",
+      "line": 8,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "BlogSkeleton",
+      "file": "src/components/BlogSkeleton.tsx",
+      "line": 8,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "boundary",
+      "file": "scripts/html-generators/file.js",
+      "line": 193,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "buildBoundaryLineSets",
+      "file": "scripts/html-generators/file.js",
+      "line": 351,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "buildCodeLineHTML",
+      "file": "scripts/html-generators/file.js",
+      "line": 465,
+      "complexity": 10,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "buildFunctionHierarchy",
+      "file": "scripts/function-hierarchy.js",
+      "line": 35,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "buildFunctionLine",
+      "file": "scripts/function-hierarchy.js",
+      "line": 175,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "buildLineToSpan",
+      "file": "scripts/html-generators/file.js",
+      "line": 374,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "buildParentMap",
+      "file": "scripts/decision-points-ast.js",
+      "line": 166,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "buildVisibleColumns",
+      "file": "scripts/html-generators/file.js",
+      "line": 749,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "calculateComplexityBreakdown",
+      "file": "scripts/complexity-breakdown.js",
+      "line": 8,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "calculateDecisionPointTotals",
+      "file": "scripts/generate-complexity-report.js",
+      "line": 24,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "calculateDecisionPointTotalsFromBreakdowns",
+      "file": "scripts/html-generators/file.js",
+      "line": 251,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "calculateFileStatistics",
+      "file": "scripts/html-generators/file.js",
+      "line": 329,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "calculateFunctionBodyBraceCount",
+      "file": "scripts/function-boundaries.js",
+      "line": 531,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "calculateFunctionBreakdowns",
+      "file": "scripts/html-generators/file.js",
+      "line": 214,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "calculateInitialParenDepth",
+      "file": "scripts/function-boundaries.js",
+      "line": 256,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "CampaignBanner",
+      "file": "src/sections/CampaignBanner/index.tsx",
+      "line": 8,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "catch callback",
+      "file": "scripts/analyze-ast-mismatches.js",
+      "line": 131,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "catch callback",
+      "file": "scripts/generate-complexity-report.js",
+      "line": 362,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "checkArrayPatternElements",
+      "file": "scripts/decision-points-ast.js",
+      "line": 386,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkCallbackPatterns",
+      "file": "scripts/function-boundaries.js",
+      "line": 605,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkCleanupCallback",
+      "file": "scripts/function-hierarchy.js",
+      "line": 306,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkContrastIssues",
+      "file": "src/utils/contrast.ts",
+      "line": 123,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "checkEventHandlerFromContext",
+      "file": "scripts/function-hierarchy.js",
+      "line": 400,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkEventHandlerFromName",
+      "file": "scripts/function-hierarchy.js",
+      "line": 374,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkFunctionEnd",
+      "file": "scripts/function-boundaries.js",
+      "line": 905,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkInFunctionBodyDestructuring",
+      "file": "scripts/decision-points-ast.js",
+      "line": 333,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkInFunctionParams",
+      "file": "scripts/decision-points-ast.js",
+      "line": 247,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkInTopLevelDestructuring",
+      "file": "scripts/decision-points-ast.js",
+      "line": 299,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkJSXAttribute",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 566,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkJSXContinuation",
+      "file": "scripts/decision-points/operators.js",
+      "line": 62,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkJSXInlineCallback",
+      "file": "scripts/function-hierarchy.js",
+      "line": 387,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkJSXReturnClosingPattern",
+      "file": "scripts/function-boundaries.js",
+      "line": 40,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkNamedArrowFunction",
+      "file": "scripts/function-extraction.js",
+      "line": 78,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkNestedPattern",
+      "file": "scripts/decision-points-ast.js",
+      "line": 436,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkObjectPatternProperties",
+      "file": "scripts/decision-points-ast.js",
+      "line": 402,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkRequestAnimationFrameCallback",
+      "file": "scripts/function-hierarchy.js",
+      "line": 349,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkRestElement",
+      "file": "scripts/decision-points-ast.js",
+      "line": 421,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkSetTimeoutCallback",
+      "file": "scripts/function-hierarchy.js",
+      "line": 362,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "checkUseEffectCallback",
+      "file": "scripts/function-hierarchy.js",
+      "line": 331,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "closeMenu",
+      "file": "src/sections/Header/index.tsx",
+      "line": 81,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "collectNodesByType",
+      "file": "scripts/decision-points-ast.js",
+      "line": 76,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "ColorCategories",
+      "file": "src/components/ThemePicker/ThemePicker.tsx",
+      "line": 430,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "ColorItem",
+      "file": "src/components/ThemePicker/ThemePicker.tsx",
+      "line": 87,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "Container",
+      "file": "src/layout/Container.tsx",
+      "line": 9,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "ContrastWarnings",
+      "file": "src/components/ThemePicker/ThemePicker.tsx",
+      "line": 228,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "couldBeRegexEnd",
+      "file": "scripts/function-boundaries.js",
+      "line": 866,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "couldBeRegexStart",
+      "file": "scripts/function-boundaries.js",
+      "line": 855,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "createBracesResult",
+      "file": "scripts/function-boundaries.js",
+      "line": 940,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "createFunctionInfo",
+      "file": "scripts/debug-ast-matching.js",
+      "line": 60,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "CustomerSpotlight",
+      "file": "src/sections/CustomerSpotlight/index.tsx",
+      "line": 34,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "detectBooleanExpression",
+      "file": "scripts/decision-points/operators.js",
+      "line": 237,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "detectBooleanExpressionType",
+      "file": "scripts/decision-points/operators.js",
+      "line": 213,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "detectCallbackType",
+      "file": "scripts/function-hierarchy.js",
+      "line": 103,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "detectEmptyColumns",
+      "file": "scripts/html-generators/file.js",
+      "line": 70,
+      "complexity": 5,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "detectJSXExpressions",
+      "file": "scripts/decision-points/operators.js",
+      "line": 28,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "detectLanguage",
+      "file": "scripts/html-generators/file.js",
+      "line": 11,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "detectMultiLineArrowParameter",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 176,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "detectMultiLineTernaries",
+      "file": "scripts/decision-points/ternaries.js",
+      "line": 6,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "determineLineClasses",
+      "file": "scripts/html-generators/file.js",
+      "line": 428,
+      "complexity": 10,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "endsOnSameLine",
+      "file": "scripts/function-boundaries.js",
+      "line": 245,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "escapeHtml",
+      "file": "scripts/html-generators/utils.js",
+      "line": 6,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "existing",
+      "file": "scripts/function-hierarchy.js",
+      "line": 681,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "existing",
+      "file": "scripts/function-extraction.js",
+      "line": 342,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "extractArrowFunctionParamBoundaries",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 701,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "extractCallbackLabel",
+      "file": "scripts/function-hierarchy.js",
+      "line": 440,
+      "complexity": 10,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "extractFunctionName",
+      "file": "scripts/function-extraction.js",
+      "line": 274,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "extractFunctionsFromESLintResults",
+      "file": "scripts/function-extraction.js",
+      "line": 300,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "extractParamListFromVariableAssignment",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 190,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "FeatureAccordion",
+      "file": "src/sections/FeatureAccordion/index.tsx",
+      "line": 93,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "FeaturedBlogPost",
+      "file": "src/sections/FeaturedBlogPost/index.tsx",
+      "line": 21,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "filter callback",
+      "file": "src/data/blog/index.ts",
+      "line": 196,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "filter callback",
+      "file": "src/context/scripts/extract-themes.js",
+      "line": 108,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "findActiveNestedFunctions",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 90,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findAllFunctions",
+      "file": "scripts/decision-points-ast.js",
+      "line": 100,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findArrowFunctionEnd",
+      "file": "scripts/function-boundaries.js",
+      "line": 474,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findArrowFunctionEndJSXAttribute",
+      "file": "scripts/function-boundaries.js",
+      "line": 210,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findArrowFunctionEndJSXReturn",
+      "file": "scripts/function-boundaries.js",
+      "line": 102,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findArrowFunctionEndObjectLiteral",
+      "file": "scripts/function-boundaries.js",
+      "line": 183,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findArrowFunctionEndSingleExpression",
+      "file": "scripts/function-boundaries.js",
+      "line": 304,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findArrowFunctionStart",
+      "file": "scripts/function-boundaries.js",
+      "line": 7,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findArrowOnSubsequentLines",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 54,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findBooleanExpressionFunctionLine",
+      "file": "scripts/decision-points/operators.js",
+      "line": 81,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findBoundaryForFunction",
+      "file": "scripts/html-generators/file.js",
+      "line": 139,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findBreakdownLine",
+      "file": "scripts/html-generators/file.js",
+      "line": 164,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findCallbackFunctionLine",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 28,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "findCallbackWithFallbackPatterns",
+      "file": "scripts/function-extraction.js",
+      "line": 134,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findDependencyArrayEnd",
+      "file": "scripts/function-boundaries.js",
+      "line": 571,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findDestructuredParamBoundaries",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 682,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findFunctionBoundaries",
+      "file": "scripts/function-boundaries.js",
+      "line": 1322,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findFunctionCallCallback",
+      "file": "scripts/function-extraction.js",
+      "line": 114,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findFunctionEndFallback",
+      "file": "scripts/function-boundaries.js",
+      "line": 1265,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findFunctionsStartingOnLine",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 104,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findImmediateParent",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 30,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "findImmediateParentFunction",
+      "file": "scripts/function-hierarchy.js",
+      "line": 476,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findMaxComplexityInSubtree",
+      "file": "scripts/function-hierarchy.js",
+      "line": 90,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "findMethodCallCallback",
+      "file": "scripts/function-extraction.js",
+      "line": 94,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findNamedFunctionEnd",
+      "file": "scripts/function-boundaries.js",
+      "line": 1160,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findNamedFunctionStart",
+      "file": "scripts/function-boundaries.js",
+      "line": 1284,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findNestedEndingOnLine",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 157,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findNestedFunctionsEndingOnOrBefore",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 48,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "findNestedFunctionsStartingOnLine",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 62,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findObjectLiteralClosingParen",
+      "file": "scripts/function-boundaries.js",
+      "line": 153,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findParamBoundariesWithParens",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 662,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findParameterListEnd",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 410,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findParentFunction",
+      "file": "scripts/function-extraction.js",
+      "line": 20,
+      "complexity": 10,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findParentFunctionWithFallback",
+      "file": "scripts/function-extraction.js",
+      "line": 50,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findSetTimeoutCallbackEnd",
+      "file": "scripts/function-boundaries.js",
+      "line": 588,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findSingleLineNestedFunctions",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 133,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "findSmallestBoundaryFunction",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 114,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "fixFunctionNameForCallback",
+      "file": "scripts/function-hierarchy.js",
+      "line": 505,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "Footer",
+      "file": "src/sections/Footer/index.tsx",
+      "line": 41,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "forEach callback",
+      "file": "scripts/generate-complexity-report.js",
+      "line": 337,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "formatCallbackName",
+      "file": "scripts/function-extraction.js",
+      "line": 65,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "formatComplexityDisplay",
+      "file": "scripts/function-hierarchy.js",
+      "line": 138,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "formatFunctionHierarchy",
+      "file": "scripts/function-hierarchy.js",
+      "line": 617,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "formatFunctionNode",
+      "file": "scripts/function-hierarchy.js",
+      "line": 239,
+      "complexity": 10,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "formatPercentage",
+      "file": "scripts/html-generators/file.js",
+      "line": 286,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "formatPercentage",
+      "file": "scripts/html-generators/main-index.js",
+      "line": 8,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "from callback",
+      "file": "scripts/generate-complexity-report.js",
+      "line": 282,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "from callback",
+      "file": "src/sections/HeroMarquee/index.tsx",
+      "line": 5,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "funcBoundary",
+      "file": "scripts/function-hierarchy.js",
+      "line": 43,
+      "complexity": 6,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "functionsWithHierarchy",
+      "file": "scripts/export-generators/md-exports.js",
+      "line": 138,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "generateAboutPageHTML",
+      "file": "scripts/html-generators/about.js",
+      "line": 6,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateAllExports",
+      "file": "scripts/export-generators/index.js",
+      "line": 27,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateAllFunctionsJSON",
+      "file": "scripts/export-generators/json-exports.js",
+      "line": 53,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateAllFunctionsMD",
+      "file": "scripts/export-generators/md-exports.js",
+      "line": 53,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateAllFunctionsTXT",
+      "file": "scripts/export-generators/txt-exports.js",
+      "line": 50,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "generateBreakdownSectionHTML",
+      "file": "scripts/html-generators/file.js",
+      "line": 562,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateFileHTML",
+      "file": "scripts/html-generators/file.js",
+      "line": 677,
+      "complexity": 11,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateFilePageCSS",
+      "file": "scripts/html-generators/file-css.js",
+      "line": 6,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateFolderHTML",
+      "file": "scripts/html-generators/folder.js",
+      "line": 278,
+      "complexity": 13,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateFolderRow",
+      "file": "scripts/html-generators/main-index.js",
+      "line": 6,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateFunctionRowHTML",
+      "file": "scripts/function-hierarchy.js",
+      "line": 582,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateFunctionsByFolderJSON",
+      "file": "scripts/export-generators/json-exports.js",
+      "line": 97,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateFunctionsByFolderMD",
+      "file": "scripts/export-generators/md-exports.js",
+      "line": 96,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateFunctionsByFolderTXT",
+      "file": "scripts/export-generators/txt-exports.js",
+      "line": 86,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateJavaScriptCode",
+      "file": "scripts/html-generators/file-javascript.js",
+      "line": 9,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateLineRowHTML",
+      "file": "scripts/html-generators/file.js",
+      "line": 498,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateMainIndexHTML",
+      "file": "scripts/html-generators/main-index.js",
+      "line": 200,
+      "complexity": 10,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateMainIndexScript",
+      "file": "scripts/html-generators/main-index.js",
+      "line": 41,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateStatisticsHTML",
+      "file": "scripts/html-generators/file.js",
+      "line": 635,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateSummarySection",
+      "file": "scripts/html-generators/file.js",
+      "line": 282,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateTopLevelFunctionsJSON",
+      "file": "scripts/export-generators/json-exports.js",
+      "line": 11,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateTopLevelFunctionsMD",
+      "file": "scripts/export-generators/md-exports.js",
+      "line": 11,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "generateTopLevelFunctionsTXT",
+      "file": "scripts/export-generators/txt-exports.js",
+      "line": 11,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getAllBlogPosts",
+      "file": "src/data/blog/index.ts",
+      "line": 70,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getAllUniqueTags",
+      "file": "src/data/blog/index.ts",
+      "line": 216,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "getAuthorName",
+      "file": "src/pages/BlogPost.helpers.ts",
+      "line": 6,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getBaseFunctionName",
+      "file": "scripts/function-extraction.js",
+      "line": 378,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getBaseUrl",
+      "file": "src/hooks/useMetaTags.ts",
+      "line": 34,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getBlogPostBySlug",
+      "file": "src/data/blog/index.ts",
+      "line": 97,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "getComplexityLevel",
+      "file": "scripts/function-extraction.js",
+      "line": 352,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getComplexityThreshold",
+      "file": "scripts/get-complexity-threshold.js",
+      "line": 10,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getContextAroundLine",
+      "file": "scripts/function-hierarchy.js",
+      "line": 290,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getContrastRatio",
+      "file": "src/utils/contrast.ts",
+      "line": 36,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getControlFlowDecisionType",
+      "file": "scripts/decision-points-ast.js",
+      "line": 463,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getDecisionPointType",
+      "file": "scripts/decision-points-ast.js",
+      "line": 517,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getDefaultCallbackLabel",
+      "file": "scripts/function-hierarchy.js",
+      "line": 416,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getDefaultColumnStructure",
+      "file": "scripts/function-hierarchy.js",
+      "line": 533,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getDirectory",
+      "file": "scripts/function-extraction.js",
+      "line": 366,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getExpressionDecisionType",
+      "file": "scripts/decision-points-ast.js",
+      "line": 494,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getFunctionLineForControlStructure",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 321,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getGrayscaleFilter",
+      "file": "src/utils/imageGrayscale.ts",
+      "line": 35,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getGrayscaleImageUrl",
+      "file": "src/utils/imageGrayscale.ts",
+      "line": 11,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getIndentChars",
+      "file": "scripts/html-generators/file.js",
+      "line": 413,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getInnermostFunction",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 286,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getLogicalExpressionType",
+      "file": "scripts/decision-points-ast.js",
+      "line": 481,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getMetaDescription",
+      "file": "src/pages/BlogPost.helpers.ts",
+      "line": 13,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getNodeLine",
+      "file": "scripts/decision-points-ast.js",
+      "line": 123,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getPrettifyRelativePath",
+      "file": "scripts/html-generators/file.js",
+      "line": 42,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getRelatedPosts",
+      "file": "src/data/blog/index.ts",
+      "line": 157,
+      "complexity": 6,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "getTopicIdFromPath",
+      "file": "src/data/blog/index.ts",
+      "line": 26,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getValidFunctions",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 15,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "getVariantClass",
+      "file": "src/components/Button.tsx",
+      "line": 11,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "GradientGroup",
+      "file": "src/components/ThemePicker/ThemePicker.tsx",
+      "line": 133,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "groupFunctionsByBaseName",
+      "file": "scripts/html-generators/folder.js",
+      "line": 9,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "handleActiveNestedFunctions",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 210,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleAllNestedCases",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 253,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleArrowFunctionDefaultParams",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 767,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleArrowFunctionDetection",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 265,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleArrowFunctionExpression",
+      "file": "scripts/function-extraction.js",
+      "line": 202,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleArrowFunctionFinalFallback",
+      "file": "scripts/function-extraction.js",
+      "line": 161,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleArrowFunctionWithoutBraces",
+      "file": "scripts/function-boundaries.js",
+      "line": 557,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleBraceOnSameLine",
+      "file": "scripts/function-boundaries.js",
+      "line": 358,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleClosingParen",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 304,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleComments",
+      "file": "scripts/function-boundaries.js",
+      "line": 791,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleContactClick",
+      "file": "src/sections/Hero/index.tsx",
+      "line": 9,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "handleEnded",
+      "file": "src/components/AudioControl/AudioControl.tsx",
+      "line": 93,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "handleEscape",
+      "file": "src/sections/Header/index.tsx",
+      "line": 82,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "handleEscapeSequence",
+      "file": "scripts/function-boundaries.js",
+      "line": 734,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleEscapeSequence",
+      "file": "scripts/decision-points/string-literals.js",
+      "line": 15,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleFinalCases",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 269,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleFunctionBodyEnd",
+      "file": "scripts/function-boundaries.js",
+      "line": 656,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleFunctionBodyOnSameLine",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 385,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleFunctionBodyStart",
+      "file": "scripts/function-boundaries.js",
+      "line": 628,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleFunctionDeclaration",
+      "file": "scripts/function-extraction.js",
+      "line": 236,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleJSXReturnPattern",
+      "file": "scripts/function-boundaries.js",
+      "line": 334,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleLoadMore",
+      "file": "src/sections/BlogGrid/index.tsx",
+      "line": 30,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "handleMenuLinkClick",
+      "file": "src/sections/Header/index.tsx",
+      "line": 40,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "handleNestedFunctionsEnding",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 179,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleNestedStartingOnLine",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 239,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleNoBraceOnSameLine",
+      "file": "scripts/function-boundaries.js",
+      "line": 414,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleOpeningBrace",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 322,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleOpeningParen",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 291,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleRegexDetection",
+      "file": "scripts/function-boundaries.js",
+      "line": 881,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleResize",
+      "file": "src/sections/Header/index.tsx",
+      "line": 157,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "handleScroll",
+      "file": "src/sections/Header/index.tsx",
+      "line": 132,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "handleSimpleCases",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 224,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "handleStringLiterals",
+      "file": "scripts/function-boundaries.js",
+      "line": 823,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "hasAudioEasterEgg",
+      "file": "src/components/ThemePicker/ThemePicker.tsx",
+      "line": 164,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "hasBooleanAssignmentPattern",
+      "file": "scripts/decision-points/operators.js",
+      "line": 170,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "hasBooleanExpressionInParens",
+      "file": "scripts/decision-points/operators.js",
+      "line": 179,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "hasCallbackSuffix",
+      "file": "scripts/export-generators/helpers.js",
+      "line": 9,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "hasContent",
+      "file": "src/pages/BlogPost.helpers.ts",
+      "line": 27,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "hasExclusionCondition",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 620,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "hasFunctionBodyPattern",
+      "file": "scripts/function-boundaries.js",
+      "line": 1221,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "hasFunctionSignature",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 449,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "hasJSXInPreviousLines",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 475,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "hasJSXOnCurrentLine",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 463,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "hasTags",
+      "file": "src/pages/BlogPost.helpers.ts",
+      "line": 20,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "Header",
+      "file": "src/sections/Header/index.tsx",
+      "line": 8,
+      "complexity": 10,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "Hero",
+      "file": "src/sections/Hero/index.tsx",
+      "line": 6,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "HeroMarquee",
+      "file": "src/sections/HeroMarquee/index.tsx",
+      "line": 11,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "Home",
+      "file": "src/pages/Home.tsx",
+      "line": 18,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "Icon",
+      "file": "src/components/Icon.tsx",
+      "line": 10,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isArrowFunctionAssignment",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 540,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isBooleanAssignmentLine",
+      "file": "scripts/decision-points/multi-line-conditions.js",
+      "line": 26,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isBooleanExpressionLine",
+      "file": "scripts/decision-points/multi-line-conditions.js",
+      "line": 35,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isBuiltInPreset",
+      "file": "src/components/ThemePicker/ThemePicker.tsx",
+      "line": 168,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isConditionStart",
+      "file": "scripts/decision-points/multi-line-conditions.js",
+      "line": 14,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isConstLetVarAssignment",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 530,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isContinuingMultiLineCondition",
+      "file": "scripts/decision-points/multi-line-conditions.js",
+      "line": 76,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isDependencyArray",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 831,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isDependencyArrayPattern",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 600,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isFunctionDeclarationPattern",
+      "file": "scripts/function-boundaries.js",
+      "line": 519,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isFunctionType",
+      "file": "scripts/debug-ast-matching.js",
+      "line": 25,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isFunctionType",
+      "file": "scripts/decision-points-ast.js",
+      "line": 197,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isHighestComplexityInGroup",
+      "file": "scripts/function-hierarchy.js",
+      "line": 155,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isInDestructuredAssignment",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 973,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isInFunctionParameters",
+      "file": "scripts/decision-points-ast.js",
+      "line": 370,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isInsideActiveNestedFunction",
+      "file": "scripts/decision-points/assignment.js",
+      "line": 75,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isInsideComment",
+      "file": "scripts/decision-points/string-literals.js",
+      "line": 7,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isJSXAttributeLine",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 504,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isLogicalOperatorInNonControlFlow",
+      "file": "scripts/decision-points/operators.js",
+      "line": 194,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isMethodCall",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 582,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isMultiLineCommentEnd",
+      "file": "scripts/function-boundaries.js",
+      "line": 777,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isMultiLineCommentStart",
+      "file": "scripts/function-boundaries.js",
+      "line": 766,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isNodeInFunctionParams",
+      "file": "scripts/decision-points-ast.js",
+      "line": 209,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isObjectLiteralPattern",
+      "file": "scripts/function-boundaries.js",
+      "line": 134,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isOperatorInStringLiteral",
+      "file": "scripts/decision-points/string-literals.js",
+      "line": 11,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isPatternContainer",
+      "file": "scripts/decision-points-ast.js",
+      "line": 234,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isRegexStart",
+      "file": "scripts/function-boundaries.js",
+      "line": 841,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isRegularAssignment",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 550,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isReturnStatement",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 609,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isSingleLineCommentStart",
+      "file": "scripts/function-boundaries.js",
+      "line": 753,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isTypeDefinition",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 521,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isValidArrowFunctionDefaultParameterContext",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 724,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isValidDefaultParameterContext",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 639,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "isVariableDeclarationInFunctionBody",
+      "file": "scripts/decision-points-ast.js",
+      "line": 280,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "LatestBlogs",
+      "file": "src/sections/LatestBlogs/index.tsx",
+      "line": 11,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "lazy callback",
+      "file": "src/App.tsx",
+      "line": 13,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "lazy callback",
+      "file": "src/pages/Home.tsx",
+      "line": 16,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "loadAllBlogPosts",
+      "file": "src/data/blog/index.ts",
+      "line": 36,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "log callback",
+      "file": "scripts/analyze-ast-mismatches.js",
+      "line": 110,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "logComplexityMismatch",
+      "file": "scripts/html-generators/file.js",
+      "line": 178,
+      "complexity": 10,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "map callback",
+      "file": "scripts/generate-complexity-report.js",
+      "line": 242,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "map callback",
+      "file": "src/sections/FeatureAccordion/index.tsx",
+      "line": 192,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "map callback",
+      "file": "src/pages/BlogPost.tsx",
+      "line": 125,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "map callback",
+      "file": "src/sections/BlogFilters/index.tsx",
+      "line": 67,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "matchArrowFunctionDefaultParams",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 221,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "matchDefaultParameters",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 243,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "matchHeights",
+      "file": "src/sections/FeatureAccordion/index.tsx",
+      "line": 147,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "MetaTags",
+      "file": "src/components/MetaTags.tsx",
+      "line": 7,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "onScroll",
+      "file": "src/sections/TopBanner/index.tsx",
+      "line": 31,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "parseAST",
+      "file": "scripts/decision-points-ast.js",
+      "line": 16,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "parseBooleanExpressions",
+      "file": "scripts/decision-points/operators.js",
+      "line": 297,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "parseDefaultParameters",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 915,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "parseDestructuredAssignments",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 1018,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "parseMultiLineConditions",
+      "file": "scripts/decision-points/multi-line-conditions.js",
+      "line": 169,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "PlatformCards",
+      "file": "src/sections/PlatformCards/index.tsx",
+      "line": 30,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "PlatformIntro",
+      "file": "src/sections/PlatformIntro/index.tsx",
+      "line": 40,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "PresetSection",
+      "file": "src/components/ThemePicker/ThemePicker.tsx",
+      "line": 282,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processArrayChildren",
+      "file": "scripts/decision-points-ast.js",
+      "line": 50,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processArrayChildrenForFunctions",
+      "file": "scripts/debug-ast-matching.js",
+      "line": 36,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processArrayChildrenForParentMap",
+      "file": "scripts/decision-points-ast.js",
+      "line": 142,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "processArrowFunctionDefaultParams",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 746,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processCharacterForBraces",
+      "file": "scripts/function-boundaries.js",
+      "line": 1057,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processChildNode",
+      "file": "scripts/decision-points-ast.js",
+      "line": 64,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processChildNodeForFunctions",
+      "file": "scripts/debug-ast-matching.js",
+      "line": 49,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processChildNodeForParentMap",
+      "file": "scripts/decision-points-ast.js",
+      "line": 155,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processChildren",
+      "file": "scripts/function-hierarchy.js",
+      "line": 212,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processCommentHandling",
+      "file": "scripts/function-boundaries.js",
+      "line": 986,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processDefaultParameterMatches",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 650,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processDefaultParameterMatchesByContext",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 814,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processEscapeSequence",
+      "file": "scripts/function-boundaries.js",
+      "line": 961,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processLineBeforeFunctionBody",
+      "file": "scripts/function-boundaries.js",
+      "line": 694,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processLineInFunctionBody",
+      "file": "scripts/function-boundaries.js",
+      "line": 1107,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processMultiLineConditionOperators",
+      "file": "scripts/decision-points/multi-line-conditions.js",
+      "line": 145,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processNonArrowDefaultParameters",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 875,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "processStringLiteralHandling",
+      "file": "scripts/function-boundaries.js",
+      "line": 1029,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "readSourceFile",
+      "file": "scripts/html-generators/file.js",
+      "line": 536,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "renderLeftChevron",
+      "file": "src/components/Button.tsx",
+      "line": 31,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "renderRightChevron",
+      "file": "src/components/Button.tsx",
+      "line": 38,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "resolveImageUrl",
+      "file": "src/hooks/useMetaTags.ts",
+      "line": 26,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "resolveUrl",
+      "file": "src/hooks/useMetaTags.ts",
+      "line": 18,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "runESLintComplexityCheck",
+      "file": "scripts/eslint-integration.js",
+      "line": 10,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "scanForFunctionEndWithBraces",
+      "file": "scripts/function-boundaries.js",
+      "line": 1232,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "scanForSingleExpressionEnd",
+      "file": "scripts/function-boundaries.js",
+      "line": 269,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "scrollNext",
+      "file": "src/sections/CustomerSpotlight/index.tsx",
+      "line": 85,
+      "complexity": 2,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "scrollPrev",
+      "file": "src/sections/CustomerSpotlight/index.tsx",
+      "line": 38,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "ScrollToTop",
+      "file": "src/components/ScrollToTop.tsx",
+      "line": 8,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "Section",
+      "file": "src/layout/Section.tsx",
+      "line": 10,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "setEscapeHtml",
+      "file": "scripts/function-hierarchy.js",
+      "line": 12,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "setMetaTag",
+      "file": "src/hooks/useMetaTags.ts",
+      "line": 41,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "shouldCheckForDefaultParameters",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 794,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "shouldDisplayChevron",
+      "file": "src/components/Button.tsx",
+      "line": 21,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "shouldExcludeFromBooleanExpressions",
+      "file": "scripts/decision-points/operators.js",
+      "line": 265,
+      "complexity": 8,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "shouldExcludeFromMultiLineConditions",
+      "file": "scripts/decision-points/multi-line-conditions.js",
+      "line": 112,
+      "complexity": 7,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "shouldProcessDefaultParameters",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 852,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "shouldProcessMultiLineCondition",
+      "file": "scripts/decision-points/multi-line-conditions.js",
+      "line": 127,
+      "complexity": 9,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "shouldSkipKey",
+      "file": "scripts/decision-points-ast.js",
+      "line": 39,
+      "complexity": 5,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "shouldStopConditionLookback",
+      "file": "scripts/decision-points/multi-line-conditions.js",
+      "line": 49,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "slice callback",
+      "file": "scripts/analyze-ast-mismatches.js",
+      "line": 105,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "slugify",
+      "file": "src/utils/slug.ts",
+      "line": 6,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "sort callback",
+      "file": "scripts/analyze-ast-mismatches.js",
+      "line": 98,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "sortChildren",
+      "file": "scripts/function-hierarchy.js",
+      "line": 73,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "split callback",
+      "file": "src/context/scripts/extract-themes.js",
+      "line": 101,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "Tag",
+      "file": "src/pages/Tag.tsx",
+      "line": 16,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "themeKeyToCssVar",
+      "file": "src/context/ThemeContext.tsx",
+      "line": 14,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "ThemePicker",
+      "file": "src/components/ThemePicker/ThemePicker.tsx",
+      "line": 517,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "TopBanner",
+      "file": "src/sections/TopBanner/index.tsx",
+      "line": 5,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "totalFunctions",
+      "file": "scripts/html-generators/file.js",
+      "line": 331,
+      "complexity": 1,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "trackParameterListBoundaries",
+      "file": "scripts/decision-points/default-parameters.js",
+      "line": 343,
+      "complexity": 10,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "trackTemplateExpressionBraces",
+      "file": "scripts/decision-points/string-literals.js",
+      "line": 17,
+      "complexity": 1,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "trackTypeBraces",
+      "file": "scripts/function-boundaries.js",
+      "line": 677,
+      "complexity": 4,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "traverse",
+      "file": "scripts/debug-ast-matching.js",
+      "line": 108,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "tryFindCallbackFromCurrentLine",
+      "file": "scripts/function-extraction.js",
+      "line": 178,
+      "complexity": 3,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "updateVars",
+      "file": "src/sections/TopBanner/index.tsx",
+      "line": 13,
+      "complexity": 4,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "useImagePreload",
+      "file": "src/hooks/useImagePreload.ts",
+      "line": 13,
+      "complexity": 3,
+      "nodeType": "ArrowFunctionExpression"
+    },
+    {
+      "name": "useMetaTags",
+      "file": "src/hooks/useMetaTags.ts",
+      "line": 132,
+      "complexity": 6,
+      "nodeType": "FunctionDeclaration"
+    },
+    {
+      "name": "useTheme",
+      "file": "src/context/useTheme.ts",
+      "line": 4,
+      "complexity": 2,
+      "nodeType": "FunctionDeclaration"
+    }
+  ]
+}

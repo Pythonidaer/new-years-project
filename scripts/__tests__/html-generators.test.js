@@ -38,7 +38,6 @@ import { readFileSync, existsSync } from "fs";
 import {
   escapeHtml,
   generateAboutPageHTML,
-  generateAboutExamplesPageHTML,
   generateMainIndexHTML,
   generateFolderHTML,
   generateFileHTML,
@@ -113,45 +112,11 @@ describe("html-generators", () => {
       expect(result).toContain("Back to complexity report");
     });
 
-    it("should include link to examples page", () => {
-      const result = generateAboutPageHTML();
-      
-      expect(result).toContain('href="about-examples.html"');
-      expect(result).toContain("Examples");
-    });
-
     it("should include complexity explanation", () => {
       const result = generateAboutPageHTML();
       
       expect(result).toContain("Cyclomatic complexity");
       expect(result).toContain("decision points");
-    });
-  });
-
-  describe("generateAboutExamplesPageHTML", () => {
-    it("should return HTML string", () => {
-      const result = generateAboutExamplesPageHTML();
-      
-      expect(typeof result).toBe("string");
-      // HTML might be lowercase doctype
-      expect(result.toLowerCase()).toContain("<!doctype html>");
-      expect(result).toContain("<html");
-      expect(result).toContain("Examples");
-    });
-
-    it("should include back links", () => {
-      const result = generateAboutExamplesPageHTML();
-      
-      expect(result).toContain('href="index.html"');
-      expect(result).toContain('href="about.html"');
-    });
-
-    it("should include code examples", () => {
-      const result = generateAboutExamplesPageHTML();
-      
-      expect(result).toContain("<pre>");
-      expect(result).toContain("<code>");
-      expect(result).toContain("if statement");
     });
   });
 

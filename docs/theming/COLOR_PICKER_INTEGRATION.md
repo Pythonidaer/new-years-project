@@ -93,8 +93,16 @@ The theming system follows a **clear separation of concerns** with four distinct
 ```
 src/
 ├── context/
-│   ├── ThemeContext.tsx          # ThemeProvider, Theme type, built-in presets
+│   ├── ThemeContext.tsx          # ThemeProvider, theme state management
 │   ├── ThemeContextInstance.ts   # Context instance and TypeScript types
+│   ├── themeData.ts              # Re-exports types and themes from themes/
+│   ├── themes/                    # Individual theme files (one per theme)
+│   │   ├── types.ts              # Theme and Preset type definitions
+│   │   ├── default.ts            # Default theme (Midnight Blue)
+│   │   ├── noir.ts               # Noir theme
+│   │   ├── king.ts               # King theme
+│   │   ├── ...                   # Other theme files (one per preset)
+│   │   └── index.ts              # Exports builtInPresets array
 │   └── useTheme.ts               # useTheme hook
 ├── components/
 │   └── ThemePicker/

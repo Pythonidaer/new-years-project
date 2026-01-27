@@ -1,0 +1,2003 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Complexity report for src/sections/FeatureAccordion/index.tsx</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../../shared.css" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <style>
+      /* File-specific styles - coverage table and breakdown */
+      .coverage-block {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      table.coverage {
+        border-collapse: collapse;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+      table.coverage td {
+        margin: 0;
+        padding: 0;
+        vertical-align: top;
+      }
+      table.coverage td.line-count {
+        text-align: right;
+        padding: 0 5px 0 5px;
+      }
+      table.coverage td.line-coverage {
+        text-align: right;
+        padding-right: 10px;
+        min-width:20px;
+      }
+      table.coverage td span.cline-any {
+        display: inline-block;
+        padding: 0 5px;
+        width: 100%;
+      }
+      span.cline-neutral { background: #eaeaea; }
+      span.cline-yes { background: rgb(230,245,208); }
+      pre.prettyprint {
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .wrapper {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -48px;
+      }
+      .footer, .push {
+        height: 48px;
+      }
+      .footer {
+        padding: 20px;
+      }
+      .code-line {
+        display: inline-block;
+        white-space: pre;
+        width: max-content;
+        font: inherit;
+      }
+      .decision-point-line {
+        background: #F6C6CE;
+      }
+      .function-boundary-highlight {
+        background: yellow !important;
+      }
+      /* Top-level (indent 0): full-width border across all columns. */
+      tr.function-boundary-start[data-boundary-top-level="true"] td,
+      tr.function-boundary-end[data-boundary-top-level="true"] td,
+      tr.function-boundary-single[data-boundary-top-level="true"] td {
+        border-top: 1px solid #0074D9;
+      }
+      tr[data-boundary-top-level="true"] td.text::before {
+        display: none;
+      }
+      /* Nested: indented border in code column only, extend to right. Hierarchy via indent. */
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.text,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.text,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.text {
+        position: relative;
+        border-top: none;
+      }
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.text::before,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.text::before,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.text::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: calc(var(--indent-ch, 0) * 1ch);
+        right: 0;
+        height: 1px;
+        background: #0074D9;
+      }
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.line-count,
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.line-coverage,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.line-count,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.line-coverage,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.line-count,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.line-coverage {
+        border-top: none;
+      }
+      .complexity-breakdown {
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+        overflow-x: auto;
+        display: block;
+        width: auto;
+      }
+      .complexity-breakdown h2 {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+      }
+      .complexity-breakdown-table {
+        width: auto;
+        max-width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0 0;
+        font-size: 13px;
+      }
+      .complexity-breakdown-table th {
+        padding: 8px 4px;
+        text-align: center;
+        border: 1px solid #ddd;
+        background-color: #f5f5f5;
+        font-weight: bold;
+        vertical-align: middle;
+      }
+      .complexity-breakdown-table td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+        vertical-align: middle;
+      }
+      .complexity-breakdown-table td.function-name {
+        text-align: left;
+      }
+      .breakdown-header {
+        text-align: center;
+        font-size: 16px;
+        background-color: #e8e8e8;
+        font-weight: bold;
+        padding: 10px;
+      }
+      .breakdown-group-header {
+        background-color: #f0f0f0;
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .breakdown-col-header {
+        font-weight: normal;
+        font-size: 11px;
+        background-color: #fafafa;
+        white-space: nowrap;
+      }
+      .breakdown-value {
+        text-align: center;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 12px;
+        color: #333;
+      }
+      .breakdown-value-empty {
+        background: #fff4c2;
+      }
+      .breakdown-col-empty {
+        display: none;
+      }
+      .breakdown-group-empty {
+        display: none;
+      }
+      .no-matches-message {
+        text-align: center;
+        padding: 30px 20px;
+        color: #666;
+        font-style: italic;
+        background-color: #f9f9f9;
+      }
+      .function-name {
+        text-align: left;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 11px;
+        padding-left: 10px;
+        padding-right: 10px;
+        white-space: nowrap;
+      }
+      .breakdown-function-header {
+        text-align: left;
+        vertical-align: middle;
+        font-weight: bold;
+      }
+      .breakdown-complexity-header {
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+      }
+      .sortable {
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+      }
+      .sortable:hover {
+        background-color: #e8e8e8;
+      }
+      .sort-indicator {
+        display: inline-block;
+        margin-left: 5px;
+        font-size: 10px;
+        color: #666;
+        width: 12px;
+        min-width: 12px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 1;
+      }
+      .sort-indicator::after {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+      }
+      .sort-indicator.sort-asc::after {
+        content: '▲';
+      }
+      .sort-indicator.sort-desc::after {
+        content: '▼';
+      }
+      .complexity-value {
+        text-align: center;
+        font-weight: bold;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 13px;
+      }
+      .complexity-breakdown-table tbody tr {
+        background-color: rgb(230, 245, 208);
+      }
+      .complexity-breakdown-table tbody tr:hover {
+        background-color: rgb(220, 235, 198);
+      }
+      .breakdown-function {
+        font-weight: bold;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      }
+      .breakdown-complexity {
+        text-align: center;
+      }
+      .breakdown-details {
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 13px;
+      }
+      .breakdown-divider {
+        color: #999;
+        margin: 0 4px;
+        font-weight: normal;
+      }
+      .complexity-number {
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 10px;
+        color: #555;
+        background: #E8E8E8;
+        padding: 4px 5px;
+        border-radius: 3px;
+        vertical-align: middle;
+        margin: 0 2px;
+        display: inline-block;
+      }
+      .coverage-table-wrapper {
+        position: relative;
+      }
+      #hover-vertical-line {
+        position: absolute;
+        left: 0;
+        width: 0;
+        border-left: 1px solid #0074D9;
+        pointer-events: none;
+        visibility: hidden;
+        z-index: 1;
+      }
+      #hover-vertical-line.visible {
+        visibility: visible;
+      }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <div class="header-row">
+            <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/sections/FeatureAccordion</a> index.tsx</h1>
+            <a href="../../../about.html" class="about-link">About Cyclomatic Complexity</a>
+        </div>
+        
+    <div class="clearfix">
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100%</span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100%</span>
+        <span class="quiet">Control Flow</span>
+        <span class='fraction'>3/3</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100%</span>
+        <span class="quiet">Expressions</span>
+        <span class='fraction'>6/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0%</span>
+        <span class="quiet">Default Parameters</span>
+        <span class='fraction'>0/0</span>
+      </div>
+    </div>
+        
+    <div class="complexity-breakdown">
+      <div class="quiet" style="display: flex; align-items: center; gap: 15px; margin-top: 14px;">
+        <div>
+          Filter:
+          <input type="search" id="breakdown-search" oninput="filterFunctions(this.value)">
+        </div>
+        <label style="margin: 0; font-weight: normal;">
+          <input type="checkbox" id="breakdown-show-all-columns" onchange="toggleEmptyColumns()" >
+          Show All Columns
+        </label>
+        <label style="margin: 0; font-weight: normal;">
+          <input type="checkbox" id="breakdown-show-table" onchange="toggleTableVisibility()" checked>
+          Show Table
+        </label>
+      </div>
+      <table class="complexity-breakdown-table" id="complexity-breakdown-table" style="display: table;">
+        <thead id="complexity-breakdown-thead">
+          <tr>
+            <th colspan="8" class="breakdown-header" id="breakdown-header-span">Function Complexity Breakdown</th>
+          </tr>
+          <tr id="breakdown-group-headers-row">
+            <th rowspan="2" class="breakdown-function-header sortable" onclick="sortTable('function')" id="sort-function-header">
+              Function <span class="sort-indicator" id="sort-function-indicator"></span>
+            </th>
+            <th rowspan="2" class="breakdown-complexity-header sortable" onclick="sortTable('complexity')" id="sort-complexity-header">
+              Complexity <span class="sort-indicator" id="sort-complexity-indicator"></span>
+            </th>
+            <th colspan="1" class="breakdown-group-header" data-group="Control Flow" data-total-cols="10">Control Flow</th><th colspan="4" class="breakdown-group-header" data-group="Expressions" data-total-cols="5">Expressions</th>
+            <th class="breakdown-group-header" colspan="1">base</th>
+          </tr>
+          <tr id="breakdown-col-headers-row">
+            <th class="breakdown-col-header sortable" data-column-key="if" onclick="sortTable('if')" id="sort-if-header">if <span class="sort-indicator" id="sort-if-indicator"></span></th><th class="breakdown-col-header sortable" data-column-key="ternary" onclick="sortTable('ternary')" id="sort-ternary-header">?: <span class="sort-indicator" id="sort-ternary-indicator"></span></th><th class="breakdown-col-header sortable" data-column-key="&&" onclick="sortTable('&&')" id="sort-&&-header">&& <span class="sort-indicator" id="sort-&&-indicator"></span></th><th class="breakdown-col-header sortable" data-column-key="??" onclick="sortTable('??')" id="sort-??-header">?? <span class="sort-indicator" id="sort-??-indicator"></span></th><th class="breakdown-col-header sortable" data-column-key="?." onclick="sortTable('?.')" id="sort-?.-header">?. <span class="sort-indicator" id="sort-?.-indicator"></span></th>
+            <th class="breakdown-col-header sortable" data-column-key="base" onclick="sortTable('base')" id="sort-base-header">base <span class="sort-indicator" id="sort-base-indicator"></span></th>
+          </tr>
+        </thead>
+        <tbody id="complexity-breakdown-tbody">
+                  <tr>
+          <td class="function-name"><span class="strong">FeatureAccordion</span></td>
+          <td class="complexity-value"><span class="complexity-number">3</span></td>
+          <td class="breakdown-value breakdown-value-empty" data-column-key="if">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="&&">-</td><td class="breakdown-value" data-column-key="??">1</td><td class="breakdown-value" data-column-key="?.">1</td><td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">FeatureAccordion (useEffect callback)</span></td>
+          <td class="complexity-value"><span class="complexity-number">1</span></td>
+          <td class="breakdown-value breakdown-value-empty" data-column-key="if">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="&&">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="?.">-</td><td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">matchHeights</span></td>
+          <td class="complexity-value"><span class="complexity-number">5</span></td>
+          <td class="breakdown-value" data-column-key="if">3</td><td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value" data-column-key="&&">1</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="?.">-</td><td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">FeatureAccordion (useEffect callback) (return callback)</span></td>
+          <td class="complexity-value"><span class="complexity-number">1</span></td>
+          <td class="breakdown-value breakdown-value-empty" data-column-key="if">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="&&">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="?.">-</td><td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">FeatureAccordion (map callback)</span></td>
+          <td class="complexity-value"><span class="complexity-number">2</span></td>
+          <td class="breakdown-value breakdown-value-empty" data-column-key="if">-</td><td class="breakdown-value" data-column-key="ternary">1</td><td class="breakdown-value breakdown-value-empty" data-column-key="&&">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="?.">-</td><td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">matchHeights (arrow function)</span></td>
+          <td class="complexity-value"><span class="complexity-number">1</span></td>
+          <td class="breakdown-value breakdown-value-empty" data-column-key="if">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="&&">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="?.">-</td><td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">FeatureAccordion (map callback)</span></td>
+          <td class="complexity-value"><span class="complexity-number">3</span></td>
+          <td class="breakdown-value breakdown-value-empty" data-column-key="if">-</td><td class="breakdown-value" data-column-key="ternary">2</td><td class="breakdown-value breakdown-value-empty" data-column-key="&&">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="?.">-</td><td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">anonymous arrow function</span></td>
+          <td class="complexity-value"><span class="complexity-number">1</span></td>
+          <td class="breakdown-value breakdown-value-empty" data-column-key="if">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="&&">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="?.">-</td><td class="breakdown-value">1</td>
+        </tr>
+          <tr id="no-matches-row" style="display: none;">
+            <td colspan="8" class="no-matches-message">
+              No functions match the current filter.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    </div>
+    <div class='status-line high'></div>
+    <div class="pad1 coverage-block">
+    <div class="coverage-table-wrapper">
+    <div id="hover-vertical-line" aria-hidden="true"></div>
+<pre><table class="coverage" id="coverage-table">
+<tr data-line="1">
+<td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import { useState, useEffect, useRef } from &quot;react&quot;;</span></pre></td>
+</tr>
+<tr data-line="2">
+<td class="line-count quiet"><a name='L2'></a><a href='#L2'>2</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import { Container } from &quot;@/layout/Container&quot;;</span></pre></td>
+</tr>
+<tr data-line="3">
+<td class="line-count quiet"><a name='L3'></a><a href='#L3'>3</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import { Section } from &quot;@/layout/Section&quot;;</span></pre></td>
+</tr>
+<tr data-line="4">
+<td class="line-count quiet"><a name='L4'></a><a href='#L4'>4</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import { Icon } from &quot;@/components/Icon&quot;;</span></pre></td>
+</tr>
+<tr data-line="5">
+<td class="line-count quiet"><a name='L5'></a><a href='#L5'>5</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import { useTheme } from &quot;@/context/useTheme&quot;;</span></pre></td>
+</tr>
+<tr data-line="6">
+<td class="line-count quiet"><a name='L6'></a><a href='#L6'>6</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import { getGrayscaleFilter } from &quot;@/utils/imageGrayscale&quot;;</span></pre></td>
+</tr>
+<tr data-line="7">
+<td class="line-count quiet"><a name='L7'></a><a href='#L7'>7</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import styles from &quot;./FeatureAccordion.module.css&quot;;</span></pre></td>
+</tr>
+<tr data-line="8">
+<td class="line-count quiet"><a name='L8'></a><a href='#L8'>8</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import buttonStyles from &quot;@/components/Button.module.css&quot;;</span></pre></td>
+</tr>
+<tr data-line="9">
+<td class="line-count quiet"><a name='L9'></a><a href='#L9'>9</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="10">
+<td class="line-count quiet"><a name='L10'></a><a href='#L10'>10</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import {</span></pre></td>
+</tr>
+<tr data-line="11">
+<td class="line-count quiet"><a name='L11'></a><a href='#L11'>11</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  FileText,</span></pre></td>
+</tr>
+<tr data-line="12">
+<td class="line-count quiet"><a name='L12'></a><a href='#L12'>12</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  Network,</span></pre></td>
+</tr>
+<tr data-line="13">
+<td class="line-count quiet"><a name='L13'></a><a href='#L13'>13</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  Code,</span></pre></td>
+</tr>
+<tr data-line="14">
+<td class="line-count quiet"><a name='L14'></a><a href='#L14'>14</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  Film,</span></pre></td>
+</tr>
+<tr data-line="15">
+<td class="line-count quiet"><a name='L15'></a><a href='#L15'>15</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  Quote,</span></pre></td>
+</tr>
+<tr data-line="16">
+<td class="line-count quiet"><a name='L16'></a><a href='#L16'>16</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  Timer,</span></pre></td>
+</tr>
+<tr data-line="17">
+<td class="line-count quiet"><a name='L17'></a><a href='#L17'>17</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">} from &quot;lucide-react&quot;;</span></pre></td>
+</tr>
+<tr data-line="18">
+<td class="line-count quiet"><a name='L18'></a><a href='#L18'>18</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="19">
+<td class="line-count quiet"><a name='L19'></a><a href='#L19'>19</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">type FeatureItem = {</span></pre></td>
+</tr>
+<tr data-line="20">
+<td class="line-count quiet"><a name='L20'></a><a href='#L20'>20</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  id: number;</span></pre></td>
+</tr>
+<tr data-line="21">
+<td class="line-count quiet"><a name='L21'></a><a href='#L21'>21</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  title: string;</span></pre></td>
+</tr>
+<tr data-line="22">
+<td class="line-count quiet"><a name='L22'></a><a href='#L22'>22</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  content: string;</span></pre></td>
+</tr>
+<tr data-line="23">
+<td class="line-count quiet"><a name='L23'></a><a href='#L23'>23</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  ctaLabel: string;</span></pre></td>
+</tr>
+<tr data-line="24">
+<td class="line-count quiet"><a name='L24'></a><a href='#L24'>24</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  url: string;</span></pre></td>
+</tr>
+<tr data-line="25">
+<td class="line-count quiet"><a name='L25'></a><a href='#L25'>25</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  icon: typeof FileText;</span></pre></td>
+</tr>
+<tr data-line="26">
+<td class="line-count quiet"><a name='L26'></a><a href='#L26'>26</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  imageLabel: string;</span></pre></td>
+</tr>
+<tr data-line="27">
+<td class="line-count quiet"><a name='L27'></a><a href='#L27'>27</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  image?: string;</span></pre></td>
+</tr>
+<tr data-line="28">
+<td class="line-count quiet"><a name='L28'></a><a href='#L28'>28</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">};</span></pre></td>
+</tr>
+<tr data-line="29">
+<td class="line-count quiet"><a name='L29'></a><a href='#L29'>29</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="30">
+<td class="line-count quiet"><a name='L30'></a><a href='#L30'>30</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">const items: FeatureItem[] = [</span></pre></td>
+</tr>
+<tr data-line="31">
+<td class="line-count quiet"><a name='L31'></a><a href='#L31'>31</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
+</tr>
+<tr data-line="32">
+<td class="line-count quiet"><a name='L32'></a><a href='#L32'>32</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 1,</span></pre></td>
+</tr>
+<tr data-line="33">
+<td class="line-count quiet"><a name='L33'></a><a href='#L33'>33</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    title: &quot;Docs Summarizer&quot;,</span></pre></td>
+</tr>
+<tr data-line="34">
+<td class="line-count quiet"><a name='L34'></a><a href='#L34'>34</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    content: &quot;Chrome extension using OpenAI API to summarize any webpage with interactive features and export options.&quot;,</span></pre></td>
+</tr>
+<tr data-line="35">
+<td class="line-count quiet"><a name='L35'></a><a href='#L35'>35</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    ctaLabel: &quot;VIEW PROJECT&quot;,</span></pre></td>
+</tr>
+<tr data-line="36">
+<td class="line-count quiet"><a name='L36'></a><a href='#L36'>36</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    url: &quot;https://chromewebstore.google.com/detail/docs-summarizer/cbohkbdgjdpmoffedjbcdagmhpjdbiag?hl=en-US&quot;,</span></pre></td>
+</tr>
+<tr data-line="37">
+<td class="line-count quiet"><a name='L37'></a><a href='#L37'>37</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    icon: FileText,</span></pre></td>
+</tr>
+<tr data-line="38">
+<td class="line-count quiet"><a name='L38'></a><a href='#L38'>38</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    imageLabel: &quot;Docs Summarizer&quot;,</span></pre></td>
+</tr>
+<tr data-line="39">
+<td class="line-count quiet"><a name='L39'></a><a href='#L39'>39</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/Docs_Summarizer_3x4_600x800.webp&quot;,</span></pre></td>
+</tr>
+<tr data-line="40">
+<td class="line-count quiet"><a name='L40'></a><a href='#L40'>40</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
+</tr>
+<tr data-line="41">
+<td class="line-count quiet"><a name='L41'></a><a href='#L41'>41</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
+</tr>
+<tr data-line="42">
+<td class="line-count quiet"><a name='L42'></a><a href='#L42'>42</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 2,</span></pre></td>
+</tr>
+<tr data-line="43">
+<td class="line-count quiet"><a name='L43'></a><a href='#L43'>43</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    title: &quot;Mind Map Method&quot;,</span></pre></td>
+</tr>
+<tr data-line="44">
+<td class="line-count quiet"><a name='L44'></a><a href='#L44'>44</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    content: &quot;Interactive D3.js mind maps for learning topics from AI to WordPress, backed by cognitive science principles.&quot;,</span></pre></td>
+</tr>
+<tr data-line="45">
+<td class="line-count quiet"><a name='L45'></a><a href='#L45'>45</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    ctaLabel: &quot;VIEW PROJECT&quot;,</span></pre></td>
+</tr>
+<tr data-line="46">
+<td class="line-count quiet"><a name='L46'></a><a href='#L46'>46</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    url: &quot;https://mindmapmethod.netlify.app/about&quot;,</span></pre></td>
+</tr>
+<tr data-line="47">
+<td class="line-count quiet"><a name='L47'></a><a href='#L47'>47</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    icon: Network,</span></pre></td>
+</tr>
+<tr data-line="48">
+<td class="line-count quiet"><a name='L48'></a><a href='#L48'>48</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    imageLabel: &quot;Mind Map Method&quot;,</span></pre></td>
+</tr>
+<tr data-line="49">
+<td class="line-count quiet"><a name='L49'></a><a href='#L49'>49</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/Mind_Map_Method_3x4_600x800.png&quot;,</span></pre></td>
+</tr>
+<tr data-line="50">
+<td class="line-count quiet"><a name='L50'></a><a href='#L50'>50</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
+</tr>
+<tr data-line="51">
+<td class="line-count quiet"><a name='L51'></a><a href='#L51'>51</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
+</tr>
+<tr data-line="52">
+<td class="line-count quiet"><a name='L52'></a><a href='#L52'>52</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 3,</span></pre></td>
+</tr>
+<tr data-line="53">
+<td class="line-count quiet"><a name='L53'></a><a href='#L53'>53</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    title: &quot;Hammond Bytes&quot;,</span></pre></td>
+</tr>
+<tr data-line="54">
+<td class="line-count quiet"><a name='L54'></a><a href='#L54'>54</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    content: &quot;Personal blog built with Next.js, Strapi, and Railway, exploring new technologies and development.&quot;,</span></pre></td>
+</tr>
+<tr data-line="55">
+<td class="line-count quiet"><a name='L55'></a><a href='#L55'>55</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    ctaLabel: &quot;VIEW PROJECT&quot;,</span></pre></td>
+</tr>
+<tr data-line="56">
+<td class="line-count quiet"><a name='L56'></a><a href='#L56'>56</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    url: &quot;https://hammondbytes.netlify.app/&quot;,</span></pre></td>
+</tr>
+<tr data-line="57">
+<td class="line-count quiet"><a name='L57'></a><a href='#L57'>57</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    icon: Code,</span></pre></td>
+</tr>
+<tr data-line="58">
+<td class="line-count quiet"><a name='L58'></a><a href='#L58'>58</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    imageLabel: &quot;Hammond Bytes&quot;,</span></pre></td>
+</tr>
+<tr data-line="59">
+<td class="line-count quiet"><a name='L59'></a><a href='#L59'>59</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/Hammond_Bytes_3x4_600x800.webp&quot;,</span></pre></td>
+</tr>
+<tr data-line="60">
+<td class="line-count quiet"><a name='L60'></a><a href='#L60'>60</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
+</tr>
+<tr data-line="61">
+<td class="line-count quiet"><a name='L61'></a><a href='#L61'>61</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
+</tr>
+<tr data-line="62">
+<td class="line-count quiet"><a name='L62'></a><a href='#L62'>62</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 4,</span></pre></td>
+</tr>
+<tr data-line="63">
+<td class="line-count quiet"><a name='L63'></a><a href='#L63'>63</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    title: &quot;Movie Watch List&quot;,</span></pre></td>
+</tr>
+<tr data-line="64">
+<td class="line-count quiet"><a name='L64'></a><a href='#L64'>64</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    content: &quot;Password-protected Next.js app for friends to share and organize movie watchlists by genre.&quot;,</span></pre></td>
+</tr>
+<tr data-line="65">
+<td class="line-count quiet"><a name='L65'></a><a href='#L65'>65</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    ctaLabel: &quot;VIEW PROJECT&quot;,</span></pre></td>
+</tr>
+<tr data-line="66">
+<td class="line-count quiet"><a name='L66'></a><a href='#L66'>66</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    url: &quot;https://movie-friend-watch-list.vercel.app/&quot;,</span></pre></td>
+</tr>
+<tr data-line="67">
+<td class="line-count quiet"><a name='L67'></a><a href='#L67'>67</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    icon: Film,</span></pre></td>
+</tr>
+<tr data-line="68">
+<td class="line-count quiet"><a name='L68'></a><a href='#L68'>68</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    imageLabel: &quot;Movie Watch List&quot;,</span></pre></td>
+</tr>
+<tr data-line="69">
+<td class="line-count quiet"><a name='L69'></a><a href='#L69'>69</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/Movie_Watch_List_3x4_600x800.webp&quot;,</span></pre></td>
+</tr>
+<tr data-line="70">
+<td class="line-count quiet"><a name='L70'></a><a href='#L70'>70</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
+</tr>
+<tr data-line="71">
+<td class="line-count quiet"><a name='L71'></a><a href='#L71'>71</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
+</tr>
+<tr data-line="72">
+<td class="line-count quiet"><a name='L72'></a><a href='#L72'>72</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 5,</span></pre></td>
+</tr>
+<tr data-line="73">
+<td class="line-count quiet"><a name='L73'></a><a href='#L73'>73</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    title: &quot;Peak Scrivening&quot;,</span></pre></td>
+</tr>
+<tr data-line="74">
+<td class="line-count quiet"><a name='L74'></a><a href='#L74'>74</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    content: &quot;PWA featuring Gary Gulman&#039;s 365 comedy quotes with random generation, search, and slideshow modes.&quot;,</span></pre></td>
+</tr>
+<tr data-line="75">
+<td class="line-count quiet"><a name='L75'></a><a href='#L75'>75</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    ctaLabel: &quot;VIEW PROJECT&quot;,</span></pre></td>
+</tr>
+<tr data-line="76">
+<td class="line-count quiet"><a name='L76'></a><a href='#L76'>76</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    url: &quot;https://peak-scrivening.vercel.app/&quot;,</span></pre></td>
+</tr>
+<tr data-line="77">
+<td class="line-count quiet"><a name='L77'></a><a href='#L77'>77</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    icon: Quote,</span></pre></td>
+</tr>
+<tr data-line="78">
+<td class="line-count quiet"><a name='L78'></a><a href='#L78'>78</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    imageLabel: &quot;Peak Scrivening&quot;,</span></pre></td>
+</tr>
+<tr data-line="79">
+<td class="line-count quiet"><a name='L79'></a><a href='#L79'>79</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/Peak_Scrivening_3x4_600x800.png&quot;,</span></pre></td>
+</tr>
+<tr data-line="80">
+<td class="line-count quiet"><a name='L80'></a><a href='#L80'>80</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
+</tr>
+<tr data-line="81">
+<td class="line-count quiet"><a name='L81'></a><a href='#L81'>81</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
+</tr>
+<tr data-line="82">
+<td class="line-count quiet"><a name='L82'></a><a href='#L82'>82</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 6,</span></pre></td>
+</tr>
+<tr data-line="83">
+<td class="line-count quiet"><a name='L83'></a><a href='#L83'>83</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    title: &quot;PWA Timer&quot;,</span></pre></td>
+</tr>
+<tr data-line="84">
+<td class="line-count quiet"><a name='L84'></a><a href='#L84'>84</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    content: &quot;Picture-in-Picture timer being converted to Tauri desktop app, expanding beyond browser limitations.&quot;,</span></pre></td>
+</tr>
+<tr data-line="85">
+<td class="line-count quiet"><a name='L85'></a><a href='#L85'>85</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    ctaLabel: &quot;VIEW PROJECT&quot;,</span></pre></td>
+</tr>
+<tr data-line="86">
+<td class="line-count quiet"><a name='L86'></a><a href='#L86'>86</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    url: &quot;https://pythonidaer.github.io/vue-pwa-timer/site&quot;,</span></pre></td>
+</tr>
+<tr data-line="87">
+<td class="line-count quiet"><a name='L87'></a><a href='#L87'>87</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    icon: Timer,</span></pre></td>
+</tr>
+<tr data-line="88">
+<td class="line-count quiet"><a name='L88'></a><a href='#L88'>88</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    imageLabel: &quot;PWA Timer&quot;,</span></pre></td>
+</tr>
+<tr data-line="89">
+<td class="line-count quiet"><a name='L89'></a><a href='#L89'>89</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/PWA_Timer_3x4_600x800.webp&quot;,</span></pre></td>
+</tr>
+<tr data-line="90">
+<td class="line-count quiet"><a name='L90'></a><a href='#L90'>90</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
+</tr>
+<tr data-line="91">
+<td class="line-count quiet"><a name='L91'></a><a href='#L91'>91</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">];</span></pre></td>
+</tr>
+<tr data-line="92">
+<td class="line-count quiet"><a name='L92'></a><a href='#L92'>92</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 0" data-boundary-top-level="true" data-line="93">
+<td class="line-count quiet"><a name='L93'></a><a href='#L93'>93</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'FeatureAccordion' has complexity 3">3</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line function-boundary-highlight">export function FeatureAccordion() {</span></pre></td>
+</tr>
+<tr data-line="94">
+<td class="line-count quiet"><a name='L94'></a><a href='#L94'>94</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const { currentPresetId } = useTheme();</span></pre></td>
+</tr>
+<tr data-line="95">
+<td class="line-count quiet"><a name='L95'></a><a href='#L95'>95</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const isNoirTheme = currentPresetId === &#039;noir&#039;;</span></pre></td>
+</tr>
+<tr data-line="96">
+<td class="line-count quiet"><a name='L96'></a><a href='#L96'>96</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="97">
+<td class="line-count quiet"><a name='L97'></a><a href='#L97'>97</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  // Accordion behavior: one item open at all times</span></pre></td>
+</tr>
+<tr data-line="98">
+<td class="line-count quiet"><a name='L98'></a><a href='#L98'>98</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  // Initialize with first item&#039;s ID, defaulting to 1 if items array is empty</span></pre></td>
+</tr>
+<tr class="decision-point" data-line="99">
+<td class="line-count quiet"><a name='L99'></a><a href='#L99'>99</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text" title=", "><pre class="prettyprint lang-ts">  <span class="code-line decision-point-line">const firstItemId = items[0]?.id ?? 1;</span></pre></td>
+</tr>
+<tr data-line="100">
+<td class="line-count quiet"><a name='L100'></a><a href='#L100'>100</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const [activeId, setActiveId] = useState&lt;number&gt;(firstItemId);</span></pre></td>
+</tr>
+<tr data-line="101">
+<td class="line-count quiet"><a name='L101'></a><a href='#L101'>101</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="102">
+<td class="line-count quiet"><a name='L102'></a><a href='#L102'>102</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  // Refs for height matching</span></pre></td>
+</tr>
+<tr data-line="103">
+<td class="line-count quiet"><a name='L103'></a><a href='#L103'>103</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const controlsWrapperRef = useRef&lt;HTMLDivElement&gt;(null);</span></pre></td>
+</tr>
+<tr data-line="104">
+<td class="line-count quiet"><a name='L104'></a><a href='#L104'>104</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const contentsWrapperRef = useRef&lt;HTMLDivElement&gt;(null);</span></pre></td>
+</tr>
+<tr data-line="105">
+<td class="line-count quiet"><a name='L105'></a><a href='#L105'>105</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="106">
+<td class="line-count quiet"><a name='L106'></a><a href='#L106'>106</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  // Match heights between left and right columns (desktop only)</span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 2" data-line="107">
+<td class="line-count quiet"><a name='L107'></a><a href='#L107'>107</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'FeatureAccordion (useEffect callback)' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts">  <span class="code-line function-boundary-highlight">useEffect(() =&gt; {</span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 4" data-line="108">
+<td class="line-count quiet"><a name='L108'></a><a href='#L108'>108</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'matchHeights' has complexity 5">5</span></td>
+<td class="text"><pre class="prettyprint lang-ts">    <span class="code-line function-boundary-highlight">const matchHeights = () =&gt; {</span></pre></td>
+</tr>
+<tr data-line="109">
+<td class="line-count quiet"><a name='L109'></a><a href='#L109'>109</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      // Only run on desktop (window width &gt; 990px)</span></pre></td>
+</tr>
+<tr class="decision-point" data-line="110">
+<td class="line-count quiet"><a name='L110'></a><a href='#L110'>110</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text" title=""><pre class="prettyprint lang-ts">      <span class="code-line decision-point-line">if (window.innerWidth &lt;= 990) {</span></pre></td>
+</tr>
+<tr data-line="111">
+<td class="line-count quiet"><a name='L111'></a><a href='#L111'>111</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        // Reset height on mobile</span></pre></td>
+</tr>
+<tr class="decision-point" data-line="112">
+<td class="line-count quiet"><a name='L112'></a><a href='#L112'>112</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text" title=""><pre class="prettyprint lang-ts">        <span class="code-line decision-point-line">if (contentsWrapperRef.current) {</span></pre></td>
+</tr>
+<tr data-line="113">
+<td class="line-count quiet"><a name='L113'></a><a href='#L113'>113</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          contentsWrapperRef.current.style.height = &quot;&quot;;</span></pre></td>
+</tr>
+<tr data-line="114">
+<td class="line-count quiet"><a name='L114'></a><a href='#L114'>114</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        }</span></pre></td>
+</tr>
+<tr data-line="115">
+<td class="line-count quiet"><a name='L115'></a><a href='#L115'>115</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        return;</span></pre></td>
+</tr>
+<tr data-line="116">
+<td class="line-count quiet"><a name='L116'></a><a href='#L116'>116</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      }</span></pre></td>
+</tr>
+<tr data-line="117">
+<td class="line-count quiet"><a name='L117'></a><a href='#L117'>117</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr class="decision-point" data-line="118">
+<td class="line-count quiet"><a name='L118'></a><a href='#L118'>118</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text" title=", "><pre class="prettyprint lang-ts">      <span class="code-line decision-point-line">if (controlsWrapperRef.current &amp;&amp; contentsWrapperRef.current) {</span></pre></td>
+</tr>
+<tr data-line="119">
+<td class="line-count quiet"><a name='L119'></a><a href='#L119'>119</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        const leftHeight = controlsWrapperRef.current.offsetHeight;</span></pre></td>
+</tr>
+<tr data-line="120">
+<td class="line-count quiet"><a name='L120'></a><a href='#L120'>120</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        contentsWrapperRef.current.style.height = `${leftHeight}px`;</span></pre></td>
+</tr>
+<tr data-line="121">
+<td class="line-count quiet"><a name='L121'></a><a href='#L121'>121</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      }</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="122">
+<td class="line-count quiet"><a name='L122'></a><a href='#L122'>122</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts">    <span class="code-line function-boundary-highlight">};</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 0" data-boundary-top-level="true" data-line="123">
+<td class="line-count quiet"><a name='L123'></a><a href='#L123'>123</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="124">
+<td class="line-count quiet"><a name='L124'></a><a href='#L124'>124</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    // Match heights on mount, activeId change, and window resize</span></pre></td>
+</tr>
+<tr data-line="125">
+<td class="line-count quiet"><a name='L125'></a><a href='#L125'>125</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    matchHeights();</span></pre></td>
+</tr>
+<tr data-line="126">
+<td class="line-count quiet"><a name='L126'></a><a href='#L126'>126</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    window.addEventListener(&quot;resize&quot;, matchHeights);</span></pre></td>
+</tr>
+<tr data-line="127">
+<td class="line-count quiet"><a name='L127'></a><a href='#L127'>127</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="128">
+<td class="line-count quiet"><a name='L128'></a><a href='#L128'>128</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    // Use a small delay to ensure DOM has updated after activeId change</span></pre></td>
+</tr>
+<tr data-line="129">
+<td class="line-count quiet"><a name='L129'></a><a href='#L129'>129</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    const timeoutId = setTimeout(matchHeights, 0);</span></pre></td>
+</tr>
+<tr data-line="130">
+<td class="line-count quiet"><a name='L130'></a><a href='#L130'>130</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 4" data-line="131">
+<td class="line-count quiet"><a name='L131'></a><a href='#L131'>131</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'matchHeights (return callback)' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts">    <span class="code-line function-boundary-highlight">return () =&gt; {</span></pre></td>
+</tr>
+<tr data-line="132">
+<td class="line-count quiet"><a name='L132'></a><a href='#L132'>132</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      window.removeEventListener(&quot;resize&quot;, matchHeights);</span></pre></td>
+</tr>
+<tr data-line="133">
+<td class="line-count quiet"><a name='L133'></a><a href='#L133'>133</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      clearTimeout(timeoutId);</span></pre></td>
+</tr>
+<tr data-line="134">
+<td class="line-count quiet"><a name='L134'></a><a href='#L134'>134</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    };</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="135">
+<td class="line-count quiet"><a name='L135'></a><a href='#L135'>135</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts">  <span class="code-line function-boundary-highlight">}, [activeId]);</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 0" data-boundary-top-level="true" data-line="136">
+<td class="line-count quiet"><a name='L136'></a><a href='#L136'>136</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="137">
+<td class="line-count quiet"><a name='L137'></a><a href='#L137'>137</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  return (</span></pre></td>
+</tr>
+<tr data-line="138">
+<td class="line-count quiet"><a name='L138'></a><a href='#L138'>138</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    &lt;Section id=&quot;projects&quot;&gt;</span></pre></td>
+</tr>
+<tr data-line="139">
+<td class="line-count quiet"><a name='L139'></a><a href='#L139'>139</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      &lt;Container className={styles.projectsContainer}&gt;</span></pre></td>
+</tr>
+<tr data-line="140">
+<td class="line-count quiet"><a name='L140'></a><a href='#L140'>140</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      &lt;h2 className={styles.heading}&gt;Recent Projects&lt;/h2&gt;</span></pre></td>
+</tr>
+<tr data-line="141">
+<td class="line-count quiet"><a name='L141'></a><a href='#L141'>141</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="142">
+<td class="line-count quiet"><a name='L142'></a><a href='#L142'>142</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;div className={styles.wrapper}&gt;</span></pre></td>
+</tr>
+<tr data-line="143">
+<td class="line-count quiet"><a name='L143'></a><a href='#L143'>143</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            </span></pre></td>
+</tr>
+<tr data-line="144">
+<td class="line-count quiet"><a name='L144'></a><a href='#L144'>144</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          {/* LEFT: Accordion Controls (Desktop: shows heading + text + button when active) */}</span></pre></td>
+</tr>
+<tr data-line="145">
+<td class="line-count quiet"><a name='L145'></a><a href='#L145'>145</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;div ref={controlsWrapperRef} className={styles.controlsWrapper}&gt;</span></pre></td>
+</tr>
+<tr data-line="146">
+<td class="line-count quiet"><a name='L146'></a><a href='#L146'>146</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.accordion}&gt;</span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 14" data-line="147">
+<td class="line-count quiet"><a name='L147'></a><a href='#L147'>147</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'matchHeights (map callback)' has complexity 2">2</span></td>
+<td class="text"><pre class="prettyprint lang-ts">              <span class="code-line function-boundary-highlight">{items.map((item) =&gt; {</span></pre></td>
+</tr>
+<tr data-line="148">
+<td class="line-count quiet"><a name='L148'></a><a href='#L148'>148</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                const isActive = activeId === item.id;</span></pre></td>
+</tr>
+<tr data-line="149">
+<td class="line-count quiet"><a name='L149'></a><a href='#L149'>149</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="150">
+<td class="line-count quiet"><a name='L150'></a><a href='#L150'>150</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                return (</span></pre></td>
+</tr>
+<tr data-line="151">
+<td class="line-count quiet"><a name='L151'></a><a href='#L151'>151</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;div</span></pre></td>
+</tr>
+<tr data-line="152">
+<td class="line-count quiet"><a name='L152'></a><a href='#L152'>152</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    key={item.id}</span></pre></td>
+</tr>
+<tr class="decision-point" data-line="153">
+<td class="line-count quiet"><a name='L153'></a><a href='#L153'>153</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text" title=""><pre class="prettyprint lang-ts">                    <span class="code-line decision-point-line">className={`${styles.item} ${isActive ? styles.itemActive : &quot;&quot;}`}</span></pre></td>
+</tr>
+<tr data-line="154">
+<td class="line-count quiet"><a name='L154'></a><a href='#L154'>154</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &gt;</span></pre></td>
+</tr>
+<tr data-line="155">
+<td class="line-count quiet"><a name='L155'></a><a href='#L155'>155</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;div className={styles.itemInner}&gt;</span></pre></td>
+</tr>
+<tr data-line="156">
+<td class="line-count quiet"><a name='L156'></a><a href='#L156'>156</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      {/* Heading and Icon */}</span></pre></td>
+</tr>
+<tr data-line="157">
+<td class="line-count quiet"><a name='L157'></a><a href='#L157'>157</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      &lt;button</span></pre></td>
+</tr>
+<tr data-line="158">
+<td class="line-count quiet"><a name='L158'></a><a href='#L158'>158</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        type=&quot;button&quot;</span></pre></td>
+</tr>
+<tr data-line="159">
+<td class="line-count quiet"><a name='L159'></a><a href='#L159'>159</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        className={styles.trigger}</span></pre></td>
+</tr>
+<tr class="function-boundary-start function-boundary-closing" style="--indent-ch: 24" data-line="160">
+<td class="line-count quiet"><a name='L160'></a><a href='#L160'>160</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'matchHeights (arrow function)' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts">                        <span class="code-line function-boundary-highlight">onClick={() =&gt; setActiveId(item.id)}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 24" data-line="161">
+<td class="line-count quiet"><a name='L161'></a><a href='#L161'>161</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        aria-expanded={isActive}</span></pre></td>
+</tr>
+<tr data-line="162">
+<td class="line-count quiet"><a name='L162'></a><a href='#L162'>162</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      &gt;</span></pre></td>
+</tr>
+<tr data-line="163">
+<td class="line-count quiet"><a name='L163'></a><a href='#L163'>163</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;h3 className={styles.triggerText}&gt;{item.title}&lt;/h3&gt;</span></pre></td>
+</tr>
+<tr data-line="164">
+<td class="line-count quiet"><a name='L164'></a><a href='#L164'>164</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;Icon icon={item.icon} size={24} className={styles.featureIcon} /&gt;</span></pre></td>
+</tr>
+<tr data-line="165">
+<td class="line-count quiet"><a name='L165'></a><a href='#L165'>165</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      &lt;/button&gt;</span></pre></td>
+</tr>
+<tr data-line="166">
+<td class="line-count quiet"><a name='L166'></a><a href='#L166'>166</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      </span></pre></td>
+</tr>
+<tr data-line="167">
+<td class="line-count quiet"><a name='L167'></a><a href='#L167'>167</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      {/* Text and Button (Desktop only, shown when active) */}</span></pre></td>
+</tr>
+<tr data-line="168">
+<td class="line-count quiet"><a name='L168'></a><a href='#L168'>168</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      &lt;div className={styles.controlContent}&gt;</span></pre></td>
+</tr>
+<tr data-line="169">
+<td class="line-count quiet"><a name='L169'></a><a href='#L169'>169</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;div className={styles.controlText}&gt;</span></pre></td>
+</tr>
+<tr data-line="170">
+<td class="line-count quiet"><a name='L170'></a><a href='#L170'>170</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                          &lt;p className={styles.panelText}&gt;{item.content}&lt;/p&gt;</span></pre></td>
+</tr>
+<tr data-line="171">
+<td class="line-count quiet"><a name='L171'></a><a href='#L171'>171</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="172">
+<td class="line-count quiet"><a name='L172'></a><a href='#L172'>172</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;div className={styles.controlCtaWrapper}&gt;</span></pre></td>
+</tr>
+<tr data-line="173">
+<td class="line-count quiet"><a name='L173'></a><a href='#L173'>173</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                          &lt;a </span></pre></td>
+</tr>
+<tr data-line="174">
+<td class="line-count quiet"><a name='L174'></a><a href='#L174'>174</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            href={item.url} </span></pre></td>
+</tr>
+<tr data-line="175">
+<td class="line-count quiet"><a name='L175'></a><a href='#L175'>175</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            target=&quot;_blank&quot; </span></pre></td>
+</tr>
+<tr data-line="176">
+<td class="line-count quiet"><a name='L176'></a><a href='#L176'>176</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            rel=&quot;noopener noreferrer&quot;</span></pre></td>
+</tr>
+<tr data-line="177">
+<td class="line-count quiet"><a name='L177'></a><a href='#L177'>177</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            className={`${buttonStyles.primary} ${styles.controlCtaButton}`}</span></pre></td>
+</tr>
+<tr data-line="178">
+<td class="line-count quiet"><a name='L178'></a><a href='#L178'>178</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                          &gt;</span></pre></td>
+</tr>
+<tr data-line="179">
+<td class="line-count quiet"><a name='L179'></a><a href='#L179'>179</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            {item.ctaLabel}</span></pre></td>
+</tr>
+<tr data-line="180">
+<td class="line-count quiet"><a name='L180'></a><a href='#L180'>180</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                          &lt;/a&gt;</span></pre></td>
+</tr>
+<tr data-line="181">
+<td class="line-count quiet"><a name='L181'></a><a href='#L181'>181</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="182">
+<td class="line-count quiet"><a name='L182'></a><a href='#L182'>182</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="183">
+<td class="line-count quiet"><a name='L183'></a><a href='#L183'>183</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="184">
+<td class="line-count quiet"><a name='L184'></a><a href='#L184'>184</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="185">
+<td class="line-count quiet"><a name='L185'></a><a href='#L185'>185</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                );</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="186">
+<td class="line-count quiet"><a name='L186'></a><a href='#L186'>186</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts">              <span class="code-line function-boundary-highlight">})}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 12" data-line="187">
+<td class="line-count quiet"><a name='L187'></a><a href='#L187'>187</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="188">
+<td class="line-count quiet"><a name='L188'></a><a href='#L188'>188</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="189">
+<td class="line-count quiet"><a name='L189'></a><a href='#L189'>189</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="190">
+<td class="line-count quiet"><a name='L190'></a><a href='#L190'>190</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          {/* RIGHT: Image Content (Desktop: image only, Mobile: image + text + button) */}</span></pre></td>
+</tr>
+<tr data-line="191">
+<td class="line-count quiet"><a name='L191'></a><a href='#L191'>191</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;div ref={contentsWrapperRef} className={styles.contentsWrapper}&gt;</span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 12" data-line="192">
+<td class="line-count quiet"><a name='L192'></a><a href='#L192'>192</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'map callback' has complexity 3">3</span></td>
+<td class="text"><pre class="prettyprint lang-ts">            <span class="code-line function-boundary-highlight">{items.map((item) =&gt; {</span></pre></td>
+</tr>
+<tr data-line="193">
+<td class="line-count quiet"><a name='L193'></a><a href='#L193'>193</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              const isActive = activeId === item.id;</span></pre></td>
+</tr>
+<tr data-line="194">
+<td class="line-count quiet"><a name='L194'></a><a href='#L194'>194</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              const radioId = `feature-accordion-${item.id}`;</span></pre></td>
+</tr>
+<tr data-line="195">
+<td class="line-count quiet"><a name='L195'></a><a href='#L195'>195</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="196">
+<td class="line-count quiet"><a name='L196'></a><a href='#L196'>196</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              return (</span></pre></td>
+</tr>
+<tr data-line="197">
+<td class="line-count quiet"><a name='L197'></a><a href='#L197'>197</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;div</span></pre></td>
+</tr>
+<tr data-line="198">
+<td class="line-count quiet"><a name='L198'></a><a href='#L198'>198</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  key={item.id}</span></pre></td>
+</tr>
+<tr class="decision-point" data-line="199">
+<td class="line-count quiet"><a name='L199'></a><a href='#L199'>199</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text" title=""><pre class="prettyprint lang-ts">                  <span class="code-line decision-point-line">className={`${styles.contentItem} ${isActive ? styles.contentItemActive : &quot;&quot;}`}</span></pre></td>
+</tr>
+<tr data-line="200">
+<td class="line-count quiet"><a name='L200'></a><a href='#L200'>200</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &gt;</span></pre></td>
+</tr>
+<tr data-line="201">
+<td class="line-count quiet"><a name='L201'></a><a href='#L201'>201</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;div className={styles.contentItemInner}&gt;</span></pre></td>
+</tr>
+<tr data-line="202">
+<td class="line-count quiet"><a name='L202'></a><a href='#L202'>202</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    {/* Radio input for mobile toggle */}</span></pre></td>
+</tr>
+<tr data-line="203">
+<td class="line-count quiet"><a name='L203'></a><a href='#L203'>203</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;input</span></pre></td>
+</tr>
+<tr data-line="204">
+<td class="line-count quiet"><a name='L204'></a><a href='#L204'>204</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      type=&quot;radio&quot;</span></pre></td>
+</tr>
+<tr data-line="205">
+<td class="line-count quiet"><a name='L205'></a><a href='#L205'>205</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      id={radioId}</span></pre></td>
+</tr>
+<tr data-line="206">
+<td class="line-count quiet"><a name='L206'></a><a href='#L206'>206</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      name=&quot;feature-accordion&quot;</span></pre></td>
+</tr>
+<tr data-line="207">
+<td class="line-count quiet"><a name='L207'></a><a href='#L207'>207</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      value={item.id}</span></pre></td>
+</tr>
+<tr data-line="208">
+<td class="line-count quiet"><a name='L208'></a><a href='#L208'>208</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      checked={isActive}</span></pre></td>
+</tr>
+<tr class="function-boundary-start function-boundary-closing" style="--indent-ch: 22" data-line="209">
+<td class="line-count quiet"><a name='L209'></a><a href='#L209'>209</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'anonymous arrow function' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts">                      <span class="code-line function-boundary-highlight">onChange={() =&gt; setActiveId(item.id)}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 22" data-line="210">
+<td class="line-count quiet"><a name='L210'></a><a href='#L210'>210</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      className={styles.radioInput}</span></pre></td>
+</tr>
+<tr data-line="211">
+<td class="line-count quiet"><a name='L211'></a><a href='#L211'>211</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    /&gt;</span></pre></td>
+</tr>
+<tr data-line="212">
+<td class="line-count quiet"><a name='L212'></a><a href='#L212'>212</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    {/* Label for mobile (shows title + icon) */}</span></pre></td>
+</tr>
+<tr data-line="213">
+<td class="line-count quiet"><a name='L213'></a><a href='#L213'>213</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;label htmlFor={radioId} className={styles.mobileLabel}&gt;</span></pre></td>
+</tr>
+<tr data-line="214">
+<td class="line-count quiet"><a name='L214'></a><a href='#L214'>214</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      &lt;div className={styles.mobileLabelInner}&gt;{item.title}&lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="215">
+<td class="line-count quiet"><a name='L215'></a><a href='#L215'>215</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      &lt;Icon icon={item.icon} size={24} className={styles.featureIcon} /&gt;</span></pre></td>
+</tr>
+<tr data-line="216">
+<td class="line-count quiet"><a name='L216'></a><a href='#L216'>216</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;/label&gt;</span></pre></td>
+</tr>
+<tr data-line="217">
+<td class="line-count quiet"><a name='L217'></a><a href='#L217'>217</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    {/* Content area: image only on desktop, image + text + button on mobile */}</span></pre></td>
+</tr>
+<tr data-line="218">
+<td class="line-count quiet"><a name='L218'></a><a href='#L218'>218</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;div className={styles.contentContent}&gt;</span></pre></td>
+</tr>
+<tr data-line="219">
+<td class="line-count quiet"><a name='L219'></a><a href='#L219'>219</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      {/* Image (shown on both desktop and mobile) */}</span></pre></td>
+</tr>
+<tr data-line="220">
+<td class="line-count quiet"><a name='L220'></a><a href='#L220'>220</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      &lt;div className={styles.image}&gt;</span></pre></td>
+</tr>
+<tr data-line="221">
+<td class="line-count quiet"><a name='L221'></a><a href='#L221'>221</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;div className={styles.imagePlaceholder}&gt;</span></pre></td>
+</tr>
+<tr class="decision-point" data-line="222">
+<td class="line-count quiet"><a name='L222'></a><a href='#L222'>222</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text" title=""><pre class="prettyprint lang-ts">                          <span class="code-line decision-point-line">{item.image ? (</span></pre></td>
+</tr>
+<tr data-line="223">
+<td class="line-count quiet"><a name='L223'></a><a href='#L223'>223</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            &lt;img</span></pre></td>
+</tr>
+<tr data-line="224">
+<td class="line-count quiet"><a name='L224'></a><a href='#L224'>224</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                              src={item.image}</span></pre></td>
+</tr>
+<tr data-line="225">
+<td class="line-count quiet"><a name='L225'></a><a href='#L225'>225</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                              alt={item.imageLabel}</span></pre></td>
+</tr>
+<tr data-line="226">
+<td class="line-count quiet"><a name='L226'></a><a href='#L226'>226</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                              className={styles.imageContent}</span></pre></td>
+</tr>
+<tr data-line="227">
+<td class="line-count quiet"><a name='L227'></a><a href='#L227'>227</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                              style={{ filter: getGrayscaleFilter(isNoirTheme) }}</span></pre></td>
+</tr>
+<tr data-line="228">
+<td class="line-count quiet"><a name='L228'></a><a href='#L228'>228</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            /&gt;</span></pre></td>
+</tr>
+<tr data-line="229">
+<td class="line-count quiet"><a name='L229'></a><a href='#L229'>229</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                          ) : (</span></pre></td>
+</tr>
+<tr data-line="230">
+<td class="line-count quiet"><a name='L230'></a><a href='#L230'>230</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            &lt;span className={styles.placeholderText}&gt;{item.imageLabel}&lt;/span&gt;</span></pre></td>
+</tr>
+<tr data-line="231">
+<td class="line-count quiet"><a name='L231'></a><a href='#L231'>231</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                          )}</span></pre></td>
+</tr>
+<tr data-line="232">
+<td class="line-count quiet"><a name='L232'></a><a href='#L232'>232</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="233">
+<td class="line-count quiet"><a name='L233'></a><a href='#L233'>233</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="234">
+<td class="line-count quiet"><a name='L234'></a><a href='#L234'>234</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      {/* Text content (mobile only) */}</span></pre></td>
+</tr>
+<tr data-line="235">
+<td class="line-count quiet"><a name='L235'></a><a href='#L235'>235</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      &lt;div className={styles.textContent}&gt;</span></pre></td>
+</tr>
+<tr data-line="236">
+<td class="line-count quiet"><a name='L236'></a><a href='#L236'>236</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;div className={styles.textContentInner}&gt;</span></pre></td>
+</tr>
+<tr data-line="237">
+<td class="line-count quiet"><a name='L237'></a><a href='#L237'>237</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                          &lt;p className={styles.panelText}&gt;{item.content}&lt;/p&gt;</span></pre></td>
+</tr>
+<tr data-line="238">
+<td class="line-count quiet"><a name='L238'></a><a href='#L238'>238</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="239">
+<td class="line-count quiet"><a name='L239'></a><a href='#L239'>239</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;div className={styles.ctaWrapper}&gt;</span></pre></td>
+</tr>
+<tr data-line="240">
+<td class="line-count quiet"><a name='L240'></a><a href='#L240'>240</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                          &lt;a </span></pre></td>
+</tr>
+<tr data-line="241">
+<td class="line-count quiet"><a name='L241'></a><a href='#L241'>241</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            href={item.url} </span></pre></td>
+</tr>
+<tr data-line="242">
+<td class="line-count quiet"><a name='L242'></a><a href='#L242'>242</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            target=&quot;_blank&quot; </span></pre></td>
+</tr>
+<tr data-line="243">
+<td class="line-count quiet"><a name='L243'></a><a href='#L243'>243</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            rel=&quot;noopener noreferrer&quot;</span></pre></td>
+</tr>
+<tr data-line="244">
+<td class="line-count quiet"><a name='L244'></a><a href='#L244'>244</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            className={`${buttonStyles.primary} ${styles.ctaButton}`}</span></pre></td>
+</tr>
+<tr data-line="245">
+<td class="line-count quiet"><a name='L245'></a><a href='#L245'>245</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                          &gt;</span></pre></td>
+</tr>
+<tr data-line="246">
+<td class="line-count quiet"><a name='L246'></a><a href='#L246'>246</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                            {item.ctaLabel}</span></pre></td>
+</tr>
+<tr data-line="247">
+<td class="line-count quiet"><a name='L247'></a><a href='#L247'>247</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                          &lt;/a&gt;</span></pre></td>
+</tr>
+<tr data-line="248">
+<td class="line-count quiet"><a name='L248'></a><a href='#L248'>248</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                        &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="249">
+<td class="line-count quiet"><a name='L249'></a><a href='#L249'>249</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="250">
+<td class="line-count quiet"><a name='L250'></a><a href='#L250'>250</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="251">
+<td class="line-count quiet"><a name='L251'></a><a href='#L251'>251</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="252">
+<td class="line-count quiet"><a name='L252'></a><a href='#L252'>252</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="253">
+<td class="line-count quiet"><a name='L253'></a><a href='#L253'>253</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              );</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="254">
+<td class="line-count quiet"><a name='L254'></a><a href='#L254'>254</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts">            <span class="code-line function-boundary-highlight">})}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 10" data-line="255">
+<td class="line-count quiet"><a name='L255'></a><a href='#L255'>255</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="256">
+<td class="line-count quiet"><a name='L256'></a><a href='#L256'>256</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="257">
+<td class="line-count quiet"><a name='L257'></a><a href='#L257'>257</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      &lt;/Container&gt;</span></pre></td>
+</tr>
+<tr data-line="258">
+<td class="line-count quiet"><a name='L258'></a><a href='#L258'>258</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    &lt;/Section&gt;</span></pre></td>
+</tr>
+<tr data-line="259">
+<td class="line-count quiet"><a name='L259'></a><a href='#L259'>259</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  );</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="260">
+<td class="line-count quiet"><a name='L260'></a><a href='#L260'>260</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line function-boundary-highlight">}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 0" data-boundary-top-level="true" data-line="261">
+<td class="line-count quiet"><a name='L261'></a><a href='#L261'>261</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="262">
+<td class="line-count quiet"><a name='L262'></a><a href='#L262'>262</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+</table></pre>
+    </div>
+    </div>
+    <div class='push'></div>
+</div>
+<div class='footer quiet pad2 space-top1 center small'>
+    Complexity report generated by <a href="https://www.github.com/pythonidaer" target="_blank" rel="noopener noreferrer">pythonidaer</a> at 2026-01-27T23:02:59.473Z
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+  let showAllColumns = false;
+  let sortColumn = 'complexity';
+  let sortDirection = 'desc';
+  const columnConfig = {"groups":[{"name":"Control Flow","columns":[{"key":"if","label":"if"},{"key":"else if","label":"else if"},{"key":"for","label":"for"},{"key":"for...of","label":"for...of"},{"key":"for...in","label":"for...in"},{"key":"while","label":"while"},{"key":"do...while","label":"do...while"},{"key":"switch","label":"switch"},{"key":"case","label":"case"},{"key":"catch","label":"catch"}],"totalColumns":10},{"name":"Expressions","columns":[{"key":"ternary","label":"?:"},{"key":"&&","label":"&&"},{"key":"||","label":"||"},{"key":"??","label":"??"},{"key":"?.","label":"?."}],"totalColumns":5},{"name":"Function Parameters","columns":[{"key":"default parameter","label":"default parameter"}],"totalColumns":1}],"emptyColumns":["else if","for","for...of","for...in","while","do...while","switch","case","catch","||","default parameter"],"baseColumn":{"key":"base","label":"base"}};
+  const COVERAGE_LINE_TO_SPAN = {"93":{"start":93,"end":260,"indent":0},"94":{"start":93,"end":260,"indent":0},"95":{"start":93,"end":260,"indent":0},"96":{"start":93,"end":260,"indent":0},"97":{"start":93,"end":260,"indent":0},"98":{"start":93,"end":260,"indent":0},"99":{"start":93,"end":260,"indent":0},"100":{"start":93,"end":260,"indent":0},"101":{"start":93,"end":260,"indent":0},"102":{"start":93,"end":260,"indent":0},"103":{"start":93,"end":260,"indent":0},"104":{"start":93,"end":260,"indent":0},"105":{"start":93,"end":260,"indent":0},"106":{"start":93,"end":260,"indent":0},"107":{"start":107,"end":135,"indent":2},"108":{"start":108,"end":122,"indent":4},"109":{"start":108,"end":122,"indent":4},"110":{"start":108,"end":122,"indent":4},"111":{"start":108,"end":122,"indent":4},"112":{"start":108,"end":122,"indent":4},"113":{"start":108,"end":122,"indent":4},"114":{"start":108,"end":122,"indent":4},"115":{"start":108,"end":122,"indent":4},"116":{"start":108,"end":122,"indent":4},"117":{"start":108,"end":122,"indent":4},"118":{"start":108,"end":122,"indent":4},"119":{"start":108,"end":122,"indent":4},"120":{"start":108,"end":122,"indent":4},"121":{"start":108,"end":122,"indent":4},"122":{"start":108,"end":122,"indent":4},"123":{"start":107,"end":135,"indent":2},"124":{"start":107,"end":135,"indent":2},"125":{"start":107,"end":135,"indent":2},"126":{"start":107,"end":135,"indent":2},"127":{"start":107,"end":135,"indent":2},"128":{"start":107,"end":135,"indent":2},"129":{"start":107,"end":135,"indent":2},"130":{"start":107,"end":135,"indent":2},"131":{"start":131,"end":135,"indent":4},"132":{"start":131,"end":135,"indent":4},"133":{"start":131,"end":135,"indent":4},"134":{"start":131,"end":135,"indent":4},"135":{"start":131,"end":135,"indent":4},"136":{"start":93,"end":260,"indent":0},"137":{"start":93,"end":260,"indent":0},"138":{"start":93,"end":260,"indent":0},"139":{"start":93,"end":260,"indent":0},"140":{"start":93,"end":260,"indent":0},"141":{"start":93,"end":260,"indent":0},"142":{"start":93,"end":260,"indent":0},"143":{"start":93,"end":260,"indent":0},"144":{"start":93,"end":260,"indent":0},"145":{"start":93,"end":260,"indent":0},"146":{"start":93,"end":260,"indent":0},"147":{"start":147,"end":186,"indent":14},"148":{"start":147,"end":186,"indent":14},"149":{"start":147,"end":186,"indent":14},"150":{"start":147,"end":186,"indent":14},"151":{"start":147,"end":186,"indent":14},"152":{"start":147,"end":186,"indent":14},"153":{"start":147,"end":186,"indent":14},"154":{"start":147,"end":186,"indent":14},"155":{"start":147,"end":186,"indent":14},"156":{"start":147,"end":186,"indent":14},"157":{"start":147,"end":186,"indent":14},"158":{"start":147,"end":186,"indent":14},"159":{"start":147,"end":186,"indent":14},"160":{"start":160,"end":160,"indent":24},"161":{"start":147,"end":186,"indent":14},"162":{"start":147,"end":186,"indent":14},"163":{"start":147,"end":186,"indent":14},"164":{"start":147,"end":186,"indent":14},"165":{"start":147,"end":186,"indent":14},"166":{"start":147,"end":186,"indent":14},"167":{"start":147,"end":186,"indent":14},"168":{"start":147,"end":186,"indent":14},"169":{"start":147,"end":186,"indent":14},"170":{"start":147,"end":186,"indent":14},"171":{"start":147,"end":186,"indent":14},"172":{"start":147,"end":186,"indent":14},"173":{"start":147,"end":186,"indent":14},"174":{"start":147,"end":186,"indent":14},"175":{"start":147,"end":186,"indent":14},"176":{"start":147,"end":186,"indent":14},"177":{"start":147,"end":186,"indent":14},"178":{"start":147,"end":186,"indent":14},"179":{"start":147,"end":186,"indent":14},"180":{"start":147,"end":186,"indent":14},"181":{"start":147,"end":186,"indent":14},"182":{"start":147,"end":186,"indent":14},"183":{"start":147,"end":186,"indent":14},"184":{"start":147,"end":186,"indent":14},"185":{"start":147,"end":186,"indent":14},"186":{"start":147,"end":186,"indent":14},"187":{"start":93,"end":260,"indent":0},"188":{"start":93,"end":260,"indent":0},"189":{"start":93,"end":260,"indent":0},"190":{"start":93,"end":260,"indent":0},"191":{"start":93,"end":260,"indent":0},"192":{"start":192,"end":254,"indent":12},"193":{"start":192,"end":254,"indent":12},"194":{"start":192,"end":254,"indent":12},"195":{"start":192,"end":254,"indent":12},"196":{"start":192,"end":254,"indent":12},"197":{"start":192,"end":254,"indent":12},"198":{"start":192,"end":254,"indent":12},"199":{"start":192,"end":254,"indent":12},"200":{"start":192,"end":254,"indent":12},"201":{"start":192,"end":254,"indent":12},"202":{"start":192,"end":254,"indent":12},"203":{"start":192,"end":254,"indent":12},"204":{"start":192,"end":254,"indent":12},"205":{"start":192,"end":254,"indent":12},"206":{"start":192,"end":254,"indent":12},"207":{"start":192,"end":254,"indent":12},"208":{"start":192,"end":254,"indent":12},"209":{"start":209,"end":209,"indent":22},"210":{"start":192,"end":254,"indent":12},"211":{"start":192,"end":254,"indent":12},"212":{"start":192,"end":254,"indent":12},"213":{"start":192,"end":254,"indent":12},"214":{"start":192,"end":254,"indent":12},"215":{"start":192,"end":254,"indent":12},"216":{"start":192,"end":254,"indent":12},"217":{"start":192,"end":254,"indent":12},"218":{"start":192,"end":254,"indent":12},"219":{"start":192,"end":254,"indent":12},"220":{"start":192,"end":254,"indent":12},"221":{"start":192,"end":254,"indent":12},"222":{"start":192,"end":254,"indent":12},"223":{"start":192,"end":254,"indent":12},"224":{"start":192,"end":254,"indent":12},"225":{"start":192,"end":254,"indent":12},"226":{"start":192,"end":254,"indent":12},"227":{"start":192,"end":254,"indent":12},"228":{"start":192,"end":254,"indent":12},"229":{"start":192,"end":254,"indent":12},"230":{"start":192,"end":254,"indent":12},"231":{"start":192,"end":254,"indent":12},"232":{"start":192,"end":254,"indent":12},"233":{"start":192,"end":254,"indent":12},"234":{"start":192,"end":254,"indent":12},"235":{"start":192,"end":254,"indent":12},"236":{"start":192,"end":254,"indent":12},"237":{"start":192,"end":254,"indent":12},"238":{"start":192,"end":254,"indent":12},"239":{"start":192,"end":254,"indent":12},"240":{"start":192,"end":254,"indent":12},"241":{"start":192,"end":254,"indent":12},"242":{"start":192,"end":254,"indent":12},"243":{"start":192,"end":254,"indent":12},"244":{"start":192,"end":254,"indent":12},"245":{"start":192,"end":254,"indent":12},"246":{"start":192,"end":254,"indent":12},"247":{"start":192,"end":254,"indent":12},"248":{"start":192,"end":254,"indent":12},"249":{"start":192,"end":254,"indent":12},"250":{"start":192,"end":254,"indent":12},"251":{"start":192,"end":254,"indent":12},"252":{"start":192,"end":254,"indent":12},"253":{"start":192,"end":254,"indent":12},"254":{"start":192,"end":254,"indent":12},"255":{"start":93,"end":260,"indent":0},"256":{"start":93,"end":260,"indent":0},"257":{"start":93,"end":260,"indent":0},"258":{"start":93,"end":260,"indent":0},"259":{"start":93,"end":260,"indent":0},"260":{"start":93,"end":260,"indent":0}};
+
+  (function initHoverVerticalLine() {
+    return;
+    const table = document.getElementById('coverage-table');
+    const wrapper = table && table.closest('.coverage-table-wrapper');
+    const lineEl = document.getElementById('hover-vertical-line');
+    if (!table || !wrapper || !lineEl) return;
+    const pre = table.querySelector('pre.prettyprint');
+    let chWidth = 0;
+    if (pre) {
+      const s = document.createElement('span');
+      s.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font:' + getComputedStyle(pre).font + ';';
+      s.textContent = '0';
+      document.body.appendChild(s);
+      chWidth = s.offsetWidth;
+      document.body.removeChild(s);
+    }
+    function onEnter(ev) {
+      const td = ev.target.closest('td');
+      if (!td || (!td.classList.contains('line-count') && !td.classList.contains('line-coverage'))) return;
+      const tr = td.closest('tr');
+      const line = tr && tr.getAttribute('data-line');
+      if (!line) return;
+      const span = COVERAGE_LINE_TO_SPAN[line];
+      if (!span) return;
+      const first = table.querySelector(`tr[data-line="${span.start}"]`);
+      const last = table.querySelector(`tr[data-line="${span.end}"]`);
+      if (!first || !last) return;
+      const codeCell = first.querySelector('td.text');
+      if (!codeCell) return;
+      const wr = wrapper.getBoundingClientRect();
+      const fr = first.getBoundingClientRect();
+      const lr = last.getBoundingClientRect();
+      const cr = codeCell.getBoundingClientRect();
+      const top = fr.top - wr.top;
+      const height = lr.bottom - fr.top;
+      const indent = (span.indent != null ? span.indent : 0) * chWidth;
+      const left = (cr.left - wr.left) + indent;
+      lineEl.style.top = top + 'px';
+      lineEl.style.height = height + 'px';
+      lineEl.style.left = left + 'px';
+      lineEl.classList.add('visible');
+    }
+    function onLeave(ev) {
+      const td = ev.target.closest('td');
+      if (!td || (!td.classList.contains('line-count') && !td.classList.contains('line-coverage'))) return;
+      const next = ev.relatedTarget;
+      if (next && table.contains(next)) {
+        const nextTd = next.closest && next.closest('td');
+        if (nextTd && (nextTd.classList.contains('line-count') || nextTd.classList.contains('line-coverage'))) return;
+      }
+      lineEl.classList.remove('visible');
+      lineEl.style.left = '';
+      lineEl.style.top = '';
+      lineEl.style.height = '';
+    }
+    table.addEventListener('mouseover', onEnter);
+    table.addEventListener('mouseout', onLeave);
+  })();
+
+  function updateSortIndicators() {
+    // Reset all indicators
+    const allIndicators = document.querySelectorAll('.sort-indicator');
+    allIndicators.forEach(indicator => {
+      indicator.className = 'sort-indicator';
+    });
+    
+    // Set active indicator
+    if (sortColumn) {
+      const indicator = document.getElementById(`sort-${sortColumn}-indicator`);
+      if (indicator) {
+        indicator.className = `sort-indicator sort-${sortDirection}`;
+      }
+    }
+  }
+  
+  function sortTable(column) {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    if (sortColumn === column) {
+      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortColumn = column;
+      // Default to desc for complexity, asc for function
+      sortDirection = column === 'complexity' ? 'desc' : 'asc';
+    }
+    rows.sort((a, b) => {
+      let aValue, bValue;
+      if (column === 'function') {
+        const aCell = a.querySelector('.function-name');
+        const bCell = b.querySelector('.function-name');
+        aValue = aCell ? aCell.textContent.trim().toLowerCase() : '';
+        bValue = bCell ? bCell.textContent.trim().toLowerCase() : '';
+      } else if (column === 'complexity') {
+        const aCell = a.querySelector('.complexity-value');
+        const bCell = b.querySelector('.complexity-value');
+        aValue = aCell ? parseInt(aCell.textContent.trim()) || 0 : 0;
+        bValue = bCell ? parseInt(bCell.textContent.trim()) || 0 : 0;
+      } else {
+        // Breakdown column (if, for, ternary, &&, ||, etc.)
+        const aCell = a.querySelector(`td[data-column-key="${column}"]`);
+        const bCell = b.querySelector(`td[data-column-key="${column}"]`);
+        const aText = aCell ? aCell.textContent.trim() : '-';
+        const bText = bCell ? bCell.textContent.trim() : '-';
+        aValue = aText === '-' ? 0 : parseInt(aText) || 0;
+        bValue = bText === '-' ? 0 : parseInt(bText) || 0;
+      }
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+    rows.forEach(row => tbody.appendChild(row));
+    updateSortIndicators();
+  }
+  
+  function rebuildTableHeaders(showAll) {
+    const headerSpan = document.getElementById('breakdown-header-span');
+    const groupHeadersRow = document.getElementById('breakdown-group-headers-row');
+    const colHeadersRow = document.getElementById('breakdown-col-headers-row');
+    const visibleGroups = columnConfig.groups.map(group => {
+      const visibleColumns = showAll 
+        ? group.columns 
+        : group.columns.filter(col => !columnConfig.emptyColumns.includes(col.key));
+      return {
+        name: group.name,
+        columns: visibleColumns,
+        totalColumns: group.columns.length
+      };
+    });
+    const totalBreakdownCols = visibleGroups.reduce((sum, group) => sum + group.columns.length, 0) + 1;
+    headerSpan.setAttribute('colspan', 2 + totalBreakdownCols);
+    const groupHeadersHTML = visibleGroups.map(group => {
+      if (group.columns.length === 0) return '';
+      return `<th colspan="${group.columns.length}" class="breakdown-group-header" data-group="${group.name}">${group.name}</th>`;
+    }).filter(Boolean).join('');
+    groupHeadersRow.innerHTML = `<th rowspan="2" class="breakdown-function-header sortable" onclick="sortTable('function')" id="sort-function-header">Function <span class="sort-indicator" id="sort-function-indicator"></span></th><th rowspan="2" class="breakdown-complexity-header sortable" onclick="sortTable('complexity')" id="sort-complexity-header">Complexity <span class="sort-indicator" id="sort-complexity-indicator"></span></th>${groupHeadersHTML}<th class="breakdown-group-header" colspan="1">${columnConfig.baseColumn.label}</th>`;
+    updateSortIndicators();
+    const colHeadersHTML = visibleGroups.map(group => 
+      group.columns.map(col => `<th class="breakdown-col-header sortable" data-column-key="${col.key}" onclick="sortTable('${col.key}')" id="sort-${col.key}-header">${col.label} <span class="sort-indicator" id="sort-${col.key}-indicator"></span></th>`).join('')
+    ).join('');
+    colHeadersRow.innerHTML = `${colHeadersHTML}<th class="breakdown-col-header sortable" data-column-key="${columnConfig.baseColumn.key}" onclick="sortTable('${columnConfig.baseColumn.key}')" id="sort-${columnConfig.baseColumn.key}-header">${columnConfig.baseColumn.label} <span class="sort-indicator" id="sort-${columnConfig.baseColumn.key}-indicator"></span></th>`;
+  }
+  
+  function rebuildTableBody(showAll) {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    const rows = tbody.querySelectorAll('tr');
+    const visibleColumns = columnConfig.groups.flatMap(group => {
+      if (showAll) {
+        return group.columns;
+      }
+      return group.columns.filter(col => !columnConfig.emptyColumns.includes(col.key));
+    });
+    rows.forEach(row => {
+      // Skip the no-matches row
+      if (row.id === 'no-matches-row') {
+        return;
+      }
+      const cells = row.querySelectorAll('td');
+      const functionCell = cells[0];
+      const complexityCell = cells[1];
+      // Skip rows that don't have the expected structure
+      if (!functionCell || !complexityCell) {
+        return;
+      }
+      const breakdownData = {};
+      const existingBreakdownCells = Array.from(cells).slice(2, -1);
+      existingBreakdownCells.forEach(cell => {
+        const key = cell.getAttribute('data-column-key');
+        if (key) {
+          const text = cell.textContent.trim();
+          breakdownData[key] = text === '-' ? 0 : parseInt(text) || 0;
+        }
+      });
+      const baseValue = parseInt(cells[cells.length - 1].textContent.trim()) || 1;
+      breakdownData.base = baseValue;
+      const breakdownCells = visibleColumns.map(col => {
+        const value = breakdownData[col.key] || 0;
+        const displayValue = value === 0 ? '-' : value;
+        const emptyClass = value === 0 ? ' breakdown-value-empty' : '';
+        return `<td class="breakdown-value${emptyClass}" data-column-key="${col.key}">${displayValue}</td>`;
+      });
+      breakdownCells.push(`<td class="breakdown-value">${baseValue}</td>`);
+      row.innerHTML = `${functionCell.outerHTML}${complexityCell.outerHTML}${breakdownCells.join('')}`;
+    });
+  }
+  
+  function toggleEmptyColumns() {
+    const checkbox = document.getElementById('breakdown-show-all-columns');
+    showAllColumns = checkbox ? checkbox.checked : false;
+    rebuildTableHeaders(showAllColumns);
+    rebuildTableBody(showAllColumns);
+    if (sortColumn) {
+      sortTable(sortColumn);
+    }
+    const searchInput = document.getElementById('breakdown-search');
+    if (searchInput && searchInput.value) {
+      filterFunctions(searchInput.value);
+    }
+  }
+  
+  function filterFunctions(searchTerm) {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    const rows = tbody.querySelectorAll('tr:not(#no-matches-row)');
+    const noMatchesRow = document.getElementById('no-matches-row');
+    const searchLower = searchTerm.toLowerCase().trim();
+    let visibleCount = 0;
+    rows.forEach(row => {
+      const functionCell = row.querySelector('.function-name');
+      if (functionCell) {
+        const functionName = functionCell.textContent.trim().toLowerCase();
+        const matches = searchLower === '' || functionName.includes(searchLower);
+        row.style.display = matches ? '' : 'none';
+        if (matches) visibleCount++;
+      }
+    });
+    if (noMatchesRow) {
+      if (searchLower !== '' && visibleCount === 0) {
+        noMatchesRow.style.display = '';
+        const headerSpan = document.getElementById('breakdown-header-span');
+        const currentColspan = headerSpan ? parseInt(headerSpan.getAttribute('colspan')) || 0 : 0;
+        const noMatchesCell = noMatchesRow.querySelector('.no-matches-message');
+        if (noMatchesCell) {
+          noMatchesCell.setAttribute('colspan', 2 + currentColspan);
+        }
+      } else {
+        noMatchesRow.style.display = 'none';
+      }
+    }
+  }
+  
+  function toggleTableVisibility() {
+    const checkbox = document.getElementById('breakdown-show-table');
+    const table = document.getElementById('complexity-breakdown-table');
+    if (table && checkbox) {
+      table.style.display = checkbox.checked ? 'table' : 'none';
+    }
+  }
+  
+  // Initialize with complexity sorted descending
+  // Apply initial sort after DOM is ready
+  setTimeout(function() {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    if (tbody) {
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort((a, b) => {
+        const aCell = a.querySelector('.complexity-value');
+        const bCell = b.querySelector('.complexity-value');
+        const aValue = aCell ? parseInt(aCell.textContent.trim()) || 0 : 0;
+        const bValue = bCell ? parseInt(bCell.textContent.trim()) || 0 : 0;
+        if (aValue < bValue) return 1; // desc: higher values first
+        if (aValue > bValue) return -1;
+        return 0;
+      });
+      rows.forEach(row => tbody.appendChild(row));
+    }
+    updateSortIndicators();
+  }, 0);
+  
+  // Initialize syntax highlighting with prettify
+  if (typeof prettyPrint !== 'undefined') {
+    // Use setTimeout to ensure DOM is fully ready
+    setTimeout(function() {
+      prettyPrint();
+    }, 0);
+  }
+</script>
+</body>
+</html>

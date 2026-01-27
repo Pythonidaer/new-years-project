@@ -4,17 +4,31 @@
  * @returns {string} HTML row string
  */
 function generateFolderRow(folder) {
-  const percentage = folder.percentage;
-  const level = percentage >= 80 ? 'high' : percentage >= 60 ? 'high' : percentage >= 40 ? 'medium' : 'low';
+  // Helper function to format percentage (2 decimal places if needed, whole number otherwise)
+  const formatPercentage = (numerator, denominator) => {
+    if (denominator === 0) return '0%';
+    const percentage = (numerator / denominator) * 100;
+    // If it's a whole number, show without decimals; otherwise show 2 decimal places
+    return percentage % 1 === 0 ? `${percentage}%` : `${percentage.toFixed(2)}%`;
+  };
+  
+  // Calculate accurate percentage (not the pre-rounded value)
+  const percentageValue = folder.totalFunctions > 0 
+    ? (folder.withinThreshold / folder.totalFunctions) * 100 
+    : 100;
+  const percentageDisplay = formatPercentage(folder.withinThreshold, folder.totalFunctions);
+  const percentageForBar = percentageValue; // Use raw value for bar width calculation
+  
+  const level = percentageValue >= 80 ? 'high' : percentageValue >= 60 ? 'high' : percentageValue >= 40 ? 'medium' : 'low';
   return `
-    <tr data-file="${folder.directory || '.'}" data-functions="${folder.withinThreshold}/${folder.totalFunctions}" data-percentage="${percentage}">
+    <tr data-file="${folder.directory || '.'}" data-functions="${folder.withinThreshold}/${folder.totalFunctions}" data-percentage="${percentageValue}">
       <td class="file">
         <a href="${folder.directory ? folder.directory + '/index.html' : 'index.html'}">${folder.directory || '.'}</a>
       </td>
       <td class="bar ${level}">
-        <div class="chart"><div class="cover-fill ${level} ${percentage === 100 ? 'cover-full' : ''}" style="width: ${percentage}%"></div><div class="cover-empty" style="width: ${100 - percentage}%"></div></div>
+        <div class="chart"><div class="cover-fill ${level} ${percentageForBar === 100 ? 'cover-full' : ''}" style="width: ${percentageForBar}%"></div><div class="cover-empty" style="width: ${100 - percentageForBar}%"></div></div>
       </td>
-      <td class="pic">${percentage}%</td>
+      <td class="pic">${percentageDisplay}</td>
       <td class="pct">${folder.withinThreshold}/${folder.totalFunctions}</td>
     </tr>
   `;
@@ -28,6 +42,40 @@ function generateMainIndexScript() {
   return `(function() {
       const headers = document.querySelectorAll('.coverage-summary th[data-sort]');
       let currentSort = { column: null, direction: 'asc' };
+      
+      // Filter functionality
+      const fileSearch = document.getElementById('fileSearch');
+      if (fileSearch) {
+        fileSearch.addEventListener('input', function() {
+          const searchValue = this.value;
+          const tbody = document.querySelector('.coverage-summary tbody');
+          if (!tbody) return;
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+          
+          // Try to create a RegExp from the searchValue. If it fails (invalid regex),
+          // it will be treated as a plain text search
+          let searchRegex;
+          try {
+            searchRegex = new RegExp(searchValue, 'i'); // 'i' for case-insensitive
+          } catch (error) {
+            searchRegex = null;
+          }
+          
+          rows.forEach(row => {
+            let isMatch = false;
+            
+            if (searchRegex) {
+              // If a valid regex was created, use it for matching
+              isMatch = searchRegex.test(row.textContent);
+            } else {
+              // Otherwise, fall back to the original plain text search
+              isMatch = row.textContent.toLowerCase().includes(searchValue.toLowerCase());
+            }
+            
+            row.style.display = isMatch ? '' : 'none';
+          });
+        });
+      }
       
       function getSortValue(row, column) {
         if (column === 'file') {
@@ -76,13 +124,15 @@ function generateMainIndexScript() {
           }
           
           headers.forEach(h => {
-            const icon = h.querySelector('.sort-icon');
+            // Remove sorted classes from all headers
+            h.classList.remove('sorted', 'sorted-desc');
+            // Add appropriate class to the clicked header
             if (h === this) {
-              icon.textContent = currentSort.direction === 'asc' ? '↑' : '↓';
-              icon.classList.add('active');
-            } else {
-              icon.textContent = '↕';
-              icon.classList.remove('active');
+              if (currentSort.direction === 'asc') {
+                h.classList.add('sorted');
+              } else {
+                h.classList.add('sorted-desc');
+              }
             }
           });
           
@@ -96,6 +146,39 @@ function generateMainIndexScript() {
           rows.forEach(row => tbody.appendChild(row));
         });
       });
+      
+      // Export functionality
+      const exportBtn = document.getElementById('exportBtn');
+      if (exportBtn) {
+        const exportMenu = document.createElement('div');
+        exportMenu.id = 'exportMenu';
+        exportMenu.style.cssText = 'display: none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; border-radius: 2px; padding: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 1000; margin-top: 4px; min-width: 240px;';
+        exportMenu.innerHTML = '<div style="display: flex; flex-direction: column; gap: 4px;">' +
+          '<a href="reports/function-names.json" download style="padding: 4px 8px; text-decoration: none; color: #000; display: block;">Top-Level Functions (JSON)</a>' +
+          '<a href="reports/function-names.txt" download style="padding: 4px 8px; text-decoration: none; color: #000; display: block;">Top-Level Functions (TXT)</a>' +
+          '<a href="reports/function-names.md" download style="padding: 4px 8px; text-decoration: none; color: #000; display: block;">Top-Level Functions (MD)</a>' +
+          '<hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">' +
+          '<a href="reports/function-names.all.json" download style="padding: 4px 8px; text-decoration: none; color: #000; display: block;">All Functions (JSON)</a>' +
+          '<a href="reports/function-names.all.txt" download style="padding: 4px 8px; text-decoration: none; color: #000; display: block;">All Functions (TXT)</a>' +
+          '<a href="reports/function-names.all.md" download style="padding: 4px 8px; text-decoration: none; color: #000; display: block;">All Functions (MD)</a>' +
+          '<hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">' +
+          '<a href="reports/function-names-by-file.json" download style="padding: 4px 8px; text-decoration: none; color: #000; display: block;">By Folder/File (JSON)</a>' +
+          '<a href="reports/function-names-by-file.txt" download style="padding: 4px 8px; text-decoration: none; color: #000; display: block;">By Folder/File (TXT)</a>' +
+          '<a href="reports/function-names-by-file.md" download style="padding: 4px 8px; text-decoration: none; color: #000; display: block;">By Folder/File (MD)</a>' +
+          '</div>';
+        exportBtn.parentElement.appendChild(exportMenu);
+        
+        exportBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          exportMenu.style.display = exportMenu.style.display === 'none' ? 'block' : 'none';
+        });
+        
+        document.addEventListener('click', function(e) {
+          if (!exportBtn.contains(e.target) && !exportMenu.contains(e.target)) {
+            exportMenu.style.display = 'none';
+          }
+        });
+      }
     })();`;
 }
 
@@ -103,287 +186,61 @@ function generateMainIndexScript() {
  * Generates the main index HTML page
  * @param {Array} folders - Array of folder objects with directory, totalFunctions, withinThreshold, percentage, functions
  * @param {number} allFunctionsCount - Total number of functions
- * @param {Array} overThreshold - Array of functions with complexity > 10
+ * @param {Array} overThreshold - Array of functions with complexity > threshold
  * @param {number} maxComplexity - Maximum complexity value
  * @param {number} avgComplexity - Average complexity value
  * @param {boolean} showAllInitially - Whether to show all functions initially (default: false)
+ * @param {number} _complexityThreshold - Complexity threshold value from ESLint config (unused, kept for API compatibility)
+ * @param {Object} decisionPointTotals - Object with controlFlow, expressions, functionParameters totals
+ * @param {number} withinThreshold - Number of functions within threshold
+ * @param {number} _withinThresholdPercentage - Percentage of functions within threshold (unused, calculated from withinThreshold/allFunctionsCount)
  * @returns {string} Full HTML document string
  */
-export function generateMainIndexHTML(folders, allFunctionsCount, overThreshold, maxComplexity, avgComplexity, _showAllInitially) {
+export function generateMainIndexHTML(
+  folders, 
+  allFunctionsCount, 
+  overThreshold, 
+  maxComplexity, 
+  avgComplexity, 
+  _showAllInitially, 
+  _complexityThreshold = 10,
+  decisionPointTotals = { controlFlow: 0, expressions: 0, functionParameters: 0 },
+  withinThreshold = 0,
+  _withinThresholdPercentage = 100
+) {
+  const { controlFlow, expressions, functionParameters } = decisionPointTotals;
+  
+  // Helper function to format percentage (2 decimal places if needed, whole number otherwise)
+  const formatPercentage = (numerator, denominator) => {
+    if (denominator === 0) return '0%';
+    const percentage = (numerator / denominator) * 100;
+    // If it's a whole number, show without decimals; otherwise show 2 decimal places
+    return percentage % 1 === 0 ? `${percentage}%` : `${percentage.toFixed(2)}%`;
+  };
+  
+  // Calculate Functions percentage using formatPercentage (not the pre-rounded value)
+  const functionsPercentage = formatPercentage(withinThreshold, allFunctionsCount);
+  const controlFlowPercentage = formatPercentage(controlFlow, controlFlow);
+  const expressionsPercentage = formatPercentage(expressions, expressions);
+  const defaultParamsPercentage = formatPercentage(functionParameters, functionParameters);
+  
+  // Calculate level for status bar
+  const percentageValue = allFunctionsCount > 0 
+    ? (withinThreshold / allFunctionsCount) * 100 
+    : 100;
+  const level = percentageValue >= 80 ? 'high' : percentageValue >= 60 ? 'high' : percentageValue >= 40 ? 'medium' : 'low';
+  
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Complexity Report</title>
+  <link rel="stylesheet" href="shared.css" />
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    body {
-      font-family: Helvetica Neue, Helvetica, Arial;
-      font-size: 14px;
-      color: #333;
-    }
-    *, *:after, *:before {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-    h1 {
-      font-size: 20px;
-      margin: 0;
-    }
-    h2 {
-      font-size: 14px;
-    }
-    a {
-      color: #0074D9;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .strong {
-      font-weight: bold;
-    }
-    .pad2 {
-      padding: 20px;
-    }
-    .pad2x {
-      padding: 0 20px;
-    }
-    .pad2y {
-      padding: 20px 0;
-    }
-    .pad1 {
-      padding: 10px;
-    }
-    .pad1y {
-      padding: 10px 0;
-    }
-    .quiet {
-      color: #7f7f7f;
-      color: rgba(0,0,0,0.5);
-    }
-    .quiet a {
-      opacity: 0.7;
-    }
-    .fraction {
-      font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-      font-size: 10px;
-      color: #555;
-      background: #E8E8E8;
-      padding: 4px 5px;
-      border-radius: 3px;
-      vertical-align: middle;
-    }
-    .coverage-summary {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    .coverage-summary tr {
-      border-bottom: 1px solid #bbb;
-    }
-    .keyline-all {
-      border: 1px solid #ddd;
-    }
-    .coverage-summary td,
-    .coverage-summary th {
-      padding: 10px;
-    }
-    .coverage-summary tbody tr {
-      background-color: rgb(230, 245, 208);
-    }
-    .coverage-summary tbody {
-      border: 1px solid #bbb;
-    }
-    .coverage-summary td {
-      border-right: 1px solid #bbb;
-    }
-    .coverage-summary td:last-child {
-      border-right: none;
-    }
-    .coverage-summary th {
-      text-align: left;
-      font-weight: normal;
-      white-space: nowrap;
-      cursor: pointer;
-      user-select: none;
-      border: none !important;
-    }
-    .coverage-summary th:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-    .coverage-summary th.file {
-      border-right: none !important;
-    }
-    .coverage-summary th.pct {
-    }
-    .coverage-summary th.pic,
-    .coverage-summary th.abs,
-    .coverage-summary td.pct,
-    .coverage-summary td.abs {
-      text-align: right;
-    }
-    .coverage-summary td.file {
-      white-space: nowrap;
-    }
-    .coverage-summary td.pic {
-      min-width: 120px !important;
-      text-align: right;
-    }
-    .sort-icon {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      margin-left: 5px;
-      color: #999;
-      opacity: 0.5;
-    }
-    .sort-icon.active {
-      color: #000;
-      opacity: 1;
-    }
-    .coverage-summary td.bar {
-      padding: 10px;
-      min-width: 120px !important;
-    }
-    /* Color scheme matching coverage report */
-    /* Dark red */
-    .red.solid,
-    .status-line.low,
-    .low .cover-fill {
-      background: #C21F39;
-    }
-    .low .chart {
-      border: 1px solid #C21F39;
-    }
-    /* Medium red */
-    .cstat-no,
-    .fstat-no,
-    .cbranch-no {
-      background: #F6C6CE;
-    }
-    /* Light red */
-    .cline-no {
-      background: #FCE1E5;
-    }
-    /* Light green */
-    .cline-yes {
-      background: rgb(230,245,208);
-    }
-    /* Medium green */
-    .cstat-yes {
-      background: rgb(161,215,106);
-    }
-    /* Dark green */
-    .status-line.high,
-    .high .cover-fill {
-      background: rgb(77,146,33);
-    }
-    .high .chart {
-      border: 1px solid rgb(77,146,33);
-    }
-    /* Dark yellow (gold) */
-    .status-line.medium,
-    .medium .cover-fill {
-      background: #f9cd0b;
-    }
-    .medium .chart {
-      border: 1px solid #f9cd0b;
-    }
-    .cover-fill,
-    .cover-empty {
-      display: inline-block;
-      height: 12px;
-      vertical-align: top;
-    }
-    .chart {
-      line-height: 0;
-      font-size: 0;
-      white-space: nowrap;
-    }
-    .cover-empty {
-      background: white;
-    }
-    .cover-full {
-      border-right: none !important;
-    }
-    .status-line {
-      height: 10px;
-    }
-    .complexity-value {
-      font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-    }
-    .complexity-value.low {
-      color: #C21F39;
-    }
-    .complexity-value.medium {
-      color: #f9cd0b;
-    }
-    .complexity-value.high {
-      color: rgb(77,146,33);
-    }
-    .complexity-value.acceptable {
-      color: rgb(100,150,50);
-    }
-    .complexity-value.good {
-      color: rgb(120,160,70);
-    }
-    .acceptable {
-      background: rgb(240,250,230);
-    }
-    .good {
-      background: rgb(245,252,240);
-    }
-    .acceptable .cover-fill {
-      background: rgb(100,150,50);
-    }
-    .good .cover-fill {
-      background: rgb(120,160,70);
-    }
-    .acceptable .chart {
-      border: 1px solid rgb(100,150,50);
-    }
-    .good .chart {
-      border: 1px solid rgb(120,160,70);
-    }
-    .controls {
-      margin: 20px 0;
-      padding: 15px;
-      background: #f5f5f5;
-      border-radius: 4px;
-    }
-    .controls label {
-      margin-right: 15px;
-      font-weight: normal;
-    }
-    .controls select,
-    .controls input {
-      margin-left: 5px;
-      padding: 5px;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-    }
-    .header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0;
-    }
-    .header-row h1 {
-      margin: 0;
-    }
-    .about-link {
-      color: #0074D9;
-      text-decoration: none;
-      font-size: 14px;
-    }
-    .about-link:hover {
-      text-decoration: underline;
+    #exportMenu a:hover {
+      background-color: #f5f5f5;
+      border-radius: 2px;
     }
   </style>
 </head>
@@ -393,26 +250,48 @@ export function generateMainIndexHTML(folders, allFunctionsCount, overThreshold,
       <h1>All files</h1>
       <a href="about.html" class="about-link">About Cyclomatic Complexity</a>
     </div>
-    <div class="pad1y quiet">
-      All Functions (${allFunctionsCount} total)
-      ${overThreshold.length > 0 ? ` / ${overThreshold.length} with complexity > 10` : ''}
-    </div>
-    <div class="pad2y">
-      <div class="strong">
-        ${allFunctionsCount} Function${allFunctionsCount !== 1 ? 's' : ''}
-        ${allFunctionsCount > 0 ? ` / Max: ${maxComplexity} / Avg: ${avgComplexity}` : ''}
+    <div class="clearfix">
+      <div class='fl pad1y space-right2'>
+        <span class="strong">${functionsPercentage}</span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>${withinThreshold}/${allFunctionsCount}</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">${controlFlowPercentage}</span>
+        <span class="quiet">Control Flow</span>
+        <span class='fraction'>${controlFlow}/${controlFlow}</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">${expressionsPercentage}</span>
+        <span class="quiet">Expressions</span>
+        <span class='fraction'>${expressions}/${expressions}</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">${defaultParamsPercentage}</span>
+        <span class="quiet">Default Parameters</span>
+        <span class='fraction'>${functionParameters}/${functionParameters}</span>
       </div>
     </div>
+    <div class="quiet" style="margin-top: 14px; display: flex; align-items: center; gap: 15px;">
+      <span>Filter:</span>
+      <input type="search" id="fileSearch" style="flex: 0 0 auto; width: auto;">
+      <div style="position: relative;">
+        <button id="exportBtn" style="padding: 6px 12px; font-size: 13px; cursor: pointer; border: 1px solid var(--color-muted, #ccc); background: var(--color-bg, #fff); color: var(--color-text, #000); border-radius: 2px;">Export</button>
+      </div>
+    </div>
+  </div>
+  <div class='status-line ${level}'></div>
+  <div class="pad2">
     ${folders.length === 0
       ? '<div class="pad2y"><div class="strong" style="color: rgb(77,146,33);">✓ No functions found.</div></div>'
       : `        <div class="folder-view" id="folderView">
           <table class="coverage-summary">
             <thead>
-              <tr class="keyline-all">
-                <th class="file" data-sort="file">File <span class="sort-icon">↕</span></th>
-                <th class="bar" data-sort="percentage" style="text-align: right;"><span class="sort-icon">↕</span></th>
-                <th class="pic" data-sort="percentage" style="text-align: left;">Functions <span class="sort-icon">↕</span></th>
-                <th class="pct" data-sort="functions" style="text-align: right;"><span class="sort-icon">↕</span></th>
+              <tr>
+                <th class="file" data-sort="file">File <span class="sorter"></span></th>
+                <th class="bar" data-sort="percentage" style="text-align: right;"><span class="sorter"></span></th>
+                <th class="pic" data-sort="percentage" style="text-align: left;">Functions <span class="sorter"></span></th>
+                <th class="pct" data-sort="functions" style="text-align: right;"><span class="sorter"></span></th>
               </tr>
             </thead>
             <tbody>
@@ -421,6 +300,9 @@ export function generateMainIndexHTML(folders, allFunctionsCount, overThreshold,
           </table>
         </div>`
     }
+  </div>
+  <div class='footer quiet pad2 space-top1 center small'>
+    Complexity report generated by <a href="https://www.github.com/pythonidaer" target="_blank" rel="noopener noreferrer">pythonidaer</a> at ${new Date().toISOString()}
   </div>
   <script>
     ${generateMainIndexScript()}

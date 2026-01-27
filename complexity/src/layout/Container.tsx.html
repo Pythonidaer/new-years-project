@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Complexity report for src/layout/Container.tsx</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../shared.css" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <style>
+      /* File-specific styles - coverage table and breakdown */
+      .coverage-block {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      table.coverage {
+        border-collapse: collapse;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+      table.coverage td {
+        margin: 0;
+        padding: 0;
+        vertical-align: top;
+      }
+      table.coverage td.line-count {
+        text-align: right;
+        padding: 0 5px 0 5px;
+      }
+      table.coverage td.line-coverage {
+        text-align: right;
+        padding-right: 10px;
+        min-width:20px;
+      }
+      table.coverage td span.cline-any {
+        display: inline-block;
+        padding: 0 5px;
+        width: 100%;
+      }
+      span.cline-neutral { background: #eaeaea; }
+      span.cline-yes { background: rgb(230,245,208); }
+      pre.prettyprint {
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .wrapper {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -48px;
+      }
+      .footer, .push {
+        height: 48px;
+      }
+      .footer {
+        padding: 20px;
+      }
+      .code-line {
+        display: inline-block;
+        white-space: pre;
+        width: max-content;
+        font: inherit;
+      }
+      .decision-point-line {
+        background: #F6C6CE;
+      }
+      .function-boundary-highlight {
+        background: yellow !important;
+      }
+      /* Top-level (indent 0): full-width border across all columns. */
+      tr.function-boundary-start[data-boundary-top-level="true"] td,
+      tr.function-boundary-end[data-boundary-top-level="true"] td,
+      tr.function-boundary-single[data-boundary-top-level="true"] td {
+        border-top: 1px solid #0074D9;
+      }
+      tr[data-boundary-top-level="true"] td.text::before {
+        display: none;
+      }
+      /* Nested: indented border in code column only, extend to right. Hierarchy via indent. */
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.text,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.text,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.text {
+        position: relative;
+        border-top: none;
+      }
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.text::before,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.text::before,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.text::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: calc(var(--indent-ch, 0) * 1ch);
+        right: 0;
+        height: 1px;
+        background: #0074D9;
+      }
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.line-count,
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.line-coverage,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.line-count,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.line-coverage,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.line-count,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.line-coverage {
+        border-top: none;
+      }
+      .complexity-breakdown {
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+        overflow-x: auto;
+        display: block;
+        width: auto;
+      }
+      .complexity-breakdown h2 {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+      }
+      .complexity-breakdown-table {
+        width: auto;
+        max-width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0 0;
+        font-size: 13px;
+      }
+      .complexity-breakdown-table th {
+        padding: 8px 4px;
+        text-align: center;
+        border: 1px solid #ddd;
+        background-color: #f5f5f5;
+        font-weight: bold;
+        vertical-align: middle;
+      }
+      .complexity-breakdown-table td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+        vertical-align: middle;
+      }
+      .complexity-breakdown-table td.function-name {
+        text-align: left;
+      }
+      .breakdown-header {
+        text-align: center;
+        font-size: 16px;
+        background-color: #e8e8e8;
+        font-weight: bold;
+        padding: 10px;
+      }
+      .breakdown-group-header {
+        background-color: #f0f0f0;
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .breakdown-col-header {
+        font-weight: normal;
+        font-size: 11px;
+        background-color: #fafafa;
+        white-space: nowrap;
+      }
+      .breakdown-value {
+        text-align: center;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 12px;
+        color: #333;
+      }
+      .breakdown-value-empty {
+        background: #fff4c2;
+      }
+      .breakdown-col-empty {
+        display: none;
+      }
+      .breakdown-group-empty {
+        display: none;
+      }
+      .no-matches-message {
+        text-align: center;
+        padding: 30px 20px;
+        color: #666;
+        font-style: italic;
+        background-color: #f9f9f9;
+      }
+      .function-name {
+        text-align: left;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 11px;
+        padding-left: 10px;
+        padding-right: 10px;
+        white-space: nowrap;
+      }
+      .breakdown-function-header {
+        text-align: left;
+        vertical-align: middle;
+        font-weight: bold;
+      }
+      .breakdown-complexity-header {
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+      }
+      .sortable {
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+      }
+      .sortable:hover {
+        background-color: #e8e8e8;
+      }
+      .sort-indicator {
+        display: inline-block;
+        margin-left: 5px;
+        font-size: 10px;
+        color: #666;
+        width: 12px;
+        min-width: 12px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 1;
+      }
+      .sort-indicator::after {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+      }
+      .sort-indicator.sort-asc::after {
+        content: '▲';
+      }
+      .sort-indicator.sort-desc::after {
+        content: '▼';
+      }
+      .complexity-value {
+        text-align: center;
+        font-weight: bold;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 13px;
+      }
+      .complexity-breakdown-table tbody tr {
+        background-color: rgb(230, 245, 208);
+      }
+      .complexity-breakdown-table tbody tr:hover {
+        background-color: rgb(220, 235, 198);
+      }
+      .breakdown-function {
+        font-weight: bold;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      }
+      .breakdown-complexity {
+        text-align: center;
+      }
+      .breakdown-details {
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 13px;
+      }
+      .breakdown-divider {
+        color: #999;
+        margin: 0 4px;
+        font-weight: normal;
+      }
+      .complexity-number {
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 10px;
+        color: #555;
+        background: #E8E8E8;
+        padding: 4px 5px;
+        border-radius: 3px;
+        vertical-align: middle;
+        margin: 0 2px;
+        display: inline-block;
+      }
+      .coverage-table-wrapper {
+        position: relative;
+      }
+      #hover-vertical-line {
+        position: absolute;
+        left: 0;
+        width: 0;
+        border-left: 1px solid #0074D9;
+        pointer-events: none;
+        visibility: hidden;
+        z-index: 1;
+      }
+      #hover-vertical-line.visible {
+        visibility: visible;
+      }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <div class="header-row">
+            <h1><a href="../../index.html">All files</a> / <a href="index.html">src/layout</a> Container.tsx</h1>
+            <a href="../../about.html" class="about-link">About Cyclomatic Complexity</a>
+        </div>
+        
+    <div class="clearfix">
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100%</span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/1</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0%</span>
+        <span class="quiet">Control Flow</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0%</span>
+        <span class="quiet">Expressions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100%</span>
+        <span class="quiet">Default Parameters</span>
+        <span class='fraction'>1/1</span>
+      </div>
+    </div>
+        
+    <div class="complexity-breakdown">
+      <div class="quiet" style="display: flex; align-items: center; gap: 15px; margin-top: 14px;">
+        <div>
+          Filter:
+          <input type="search" id="breakdown-search" oninput="filterFunctions(this.value)">
+        </div>
+        <label style="margin: 0; font-weight: normal;">
+          <input type="checkbox" id="breakdown-show-all-columns" onchange="toggleEmptyColumns()" >
+          Show All Columns
+        </label>
+        <label style="margin: 0; font-weight: normal;">
+          <input type="checkbox" id="breakdown-show-table" onchange="toggleTableVisibility()" checked>
+          Show Table
+        </label>
+      </div>
+      <table class="complexity-breakdown-table" id="complexity-breakdown-table" style="display: table;">
+        <thead id="complexity-breakdown-thead">
+          <tr>
+            <th colspan="4" class="breakdown-header" id="breakdown-header-span">Function Complexity Breakdown</th>
+          </tr>
+          <tr id="breakdown-group-headers-row">
+            <th rowspan="2" class="breakdown-function-header sortable" onclick="sortTable('function')" id="sort-function-header">
+              Function <span class="sort-indicator" id="sort-function-indicator"></span>
+            </th>
+            <th rowspan="2" class="breakdown-complexity-header sortable" onclick="sortTable('complexity')" id="sort-complexity-header">
+              Complexity <span class="sort-indicator" id="sort-complexity-indicator"></span>
+            </th>
+            <th colspan="1" class="breakdown-group-header" data-group="Function Parameters" data-total-cols="1">Function Parameters</th>
+            <th class="breakdown-group-header" colspan="1">base</th>
+          </tr>
+          <tr id="breakdown-col-headers-row">
+            <th class="breakdown-col-header sortable" data-column-key="default parameter" onclick="sortTable('default parameter')" id="sort-default parameter-header">default parameter <span class="sort-indicator" id="sort-default parameter-indicator"></span></th>
+            <th class="breakdown-col-header sortable" data-column-key="base" onclick="sortTable('base')" id="sort-base-header">base <span class="sort-indicator" id="sort-base-indicator"></span></th>
+          </tr>
+        </thead>
+        <tbody id="complexity-breakdown-tbody">
+                  <tr>
+          <td class="function-name"><span class="strong">Container</span></td>
+          <td class="complexity-value"><span class="complexity-number">2</span></td>
+          <td class="breakdown-value" data-column-key="default parameter">1</td><td class="breakdown-value">1</td>
+        </tr>
+          <tr id="no-matches-row" style="display: none;">
+            <td colspan="4" class="no-matches-message">
+              No functions match the current filter.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    </div>
+    <div class='status-line high'></div>
+    <div class="pad1 coverage-block">
+    <div class="coverage-table-wrapper">
+    <div id="hover-vertical-line" aria-hidden="true"></div>
+<pre><table class="coverage" id="coverage-table">
+<tr data-line="1">
+<td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import type { PropsWithChildren, ElementType } from &quot;react&quot;;</span></pre></td>
+</tr>
+<tr data-line="2">
+<td class="line-count quiet"><a name='L2'></a><a href='#L2'>2</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import styles from &quot;./Container.module.css&quot;;</span></pre></td>
+</tr>
+<tr data-line="3">
+<td class="line-count quiet"><a name='L3'></a><a href='#L3'>3</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="4">
+<td class="line-count quiet"><a name='L4'></a><a href='#L4'>4</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">type Props = PropsWithChildren&lt;{</span></pre></td>
+</tr>
+<tr data-line="5">
+<td class="line-count quiet"><a name='L5'></a><a href='#L5'>5</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  as?: ElementType;</span></pre></td>
+</tr>
+<tr data-line="6">
+<td class="line-count quiet"><a name='L6'></a><a href='#L6'>6</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  className?: string;</span></pre></td>
+</tr>
+<tr data-line="7">
+<td class="line-count quiet"><a name='L7'></a><a href='#L7'>7</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">}&gt;;</span></pre></td>
+</tr>
+<tr data-line="8">
+<td class="line-count quiet"><a name='L8'></a><a href='#L8'>8</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr class="decision-point function-boundary-start" style="--indent-ch: 0" data-boundary-top-level="true" data-line="9">
+<td class="line-count quiet"><a name='L9'></a><a href='#L9'>9</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'Container' has complexity 2">2</span></td>
+<td class="text" title=""><pre class="prettyprint lang-ts"><span class="code-line decision-point-line">export function Container({ as: Tag = &quot;div&quot;, className, children }: Props) {</span></pre></td>
+</tr>
+<tr data-line="10">
+<td class="line-count quiet"><a name='L10'></a><a href='#L10'>10</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  return (</span></pre></td>
+</tr>
+<tr data-line="11">
+<td class="line-count quiet"><a name='L11'></a><a href='#L11'>11</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    &lt;Tag className={[styles.container, className].filter(Boolean).join(&quot; &quot;)}&gt;</span></pre></td>
+</tr>
+<tr data-line="12">
+<td class="line-count quiet"><a name='L12'></a><a href='#L12'>12</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      {children}</span></pre></td>
+</tr>
+<tr data-line="13">
+<td class="line-count quiet"><a name='L13'></a><a href='#L13'>13</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    &lt;/Tag&gt;</span></pre></td>
+</tr>
+<tr data-line="14">
+<td class="line-count quiet"><a name='L14'></a><a href='#L14'>14</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  );</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="15">
+<td class="line-count quiet"><a name='L15'></a><a href='#L15'>15</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line function-boundary-highlight">}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 0" data-boundary-top-level="true" data-line="16">
+<td class="line-count quiet"><a name='L16'></a><a href='#L16'>16</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+</table></pre>
+    </div>
+    </div>
+    <div class='push'></div>
+</div>
+<div class='footer quiet pad2 space-top1 center small'>
+    Complexity report generated by <a href="https://www.github.com/pythonidaer" target="_blank" rel="noopener noreferrer">pythonidaer</a> at 2026-01-27T23:02:59.475Z
+</div>
+<script src="../../prettify.js"></script>
+<script>
+  let showAllColumns = false;
+  let sortColumn = 'complexity';
+  let sortDirection = 'desc';
+  const columnConfig = {"groups":[{"name":"Control Flow","columns":[{"key":"if","label":"if"},{"key":"else if","label":"else if"},{"key":"for","label":"for"},{"key":"for...of","label":"for...of"},{"key":"for...in","label":"for...in"},{"key":"while","label":"while"},{"key":"do...while","label":"do...while"},{"key":"switch","label":"switch"},{"key":"case","label":"case"},{"key":"catch","label":"catch"}],"totalColumns":10},{"name":"Expressions","columns":[{"key":"ternary","label":"?:"},{"key":"&&","label":"&&"},{"key":"||","label":"||"},{"key":"??","label":"??"},{"key":"?.","label":"?."}],"totalColumns":5},{"name":"Function Parameters","columns":[{"key":"default parameter","label":"default parameter"}],"totalColumns":1}],"emptyColumns":["if","else if","for","for...of","for...in","while","do...while","switch","case","catch","ternary","&&","||","??","?."],"baseColumn":{"key":"base","label":"base"}};
+  const COVERAGE_LINE_TO_SPAN = {"9":{"start":9,"end":15,"indent":0},"10":{"start":9,"end":15,"indent":0},"11":{"start":9,"end":15,"indent":0},"12":{"start":9,"end":15,"indent":0},"13":{"start":9,"end":15,"indent":0},"14":{"start":9,"end":15,"indent":0},"15":{"start":9,"end":15,"indent":0}};
+
+  (function initHoverVerticalLine() {
+    return;
+    const table = document.getElementById('coverage-table');
+    const wrapper = table && table.closest('.coverage-table-wrapper');
+    const lineEl = document.getElementById('hover-vertical-line');
+    if (!table || !wrapper || !lineEl) return;
+    const pre = table.querySelector('pre.prettyprint');
+    let chWidth = 0;
+    if (pre) {
+      const s = document.createElement('span');
+      s.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font:' + getComputedStyle(pre).font + ';';
+      s.textContent = '0';
+      document.body.appendChild(s);
+      chWidth = s.offsetWidth;
+      document.body.removeChild(s);
+    }
+    function onEnter(ev) {
+      const td = ev.target.closest('td');
+      if (!td || (!td.classList.contains('line-count') && !td.classList.contains('line-coverage'))) return;
+      const tr = td.closest('tr');
+      const line = tr && tr.getAttribute('data-line');
+      if (!line) return;
+      const span = COVERAGE_LINE_TO_SPAN[line];
+      if (!span) return;
+      const first = table.querySelector(`tr[data-line="${span.start}"]`);
+      const last = table.querySelector(`tr[data-line="${span.end}"]`);
+      if (!first || !last) return;
+      const codeCell = first.querySelector('td.text');
+      if (!codeCell) return;
+      const wr = wrapper.getBoundingClientRect();
+      const fr = first.getBoundingClientRect();
+      const lr = last.getBoundingClientRect();
+      const cr = codeCell.getBoundingClientRect();
+      const top = fr.top - wr.top;
+      const height = lr.bottom - fr.top;
+      const indent = (span.indent != null ? span.indent : 0) * chWidth;
+      const left = (cr.left - wr.left) + indent;
+      lineEl.style.top = top + 'px';
+      lineEl.style.height = height + 'px';
+      lineEl.style.left = left + 'px';
+      lineEl.classList.add('visible');
+    }
+    function onLeave(ev) {
+      const td = ev.target.closest('td');
+      if (!td || (!td.classList.contains('line-count') && !td.classList.contains('line-coverage'))) return;
+      const next = ev.relatedTarget;
+      if (next && table.contains(next)) {
+        const nextTd = next.closest && next.closest('td');
+        if (nextTd && (nextTd.classList.contains('line-count') || nextTd.classList.contains('line-coverage'))) return;
+      }
+      lineEl.classList.remove('visible');
+      lineEl.style.left = '';
+      lineEl.style.top = '';
+      lineEl.style.height = '';
+    }
+    table.addEventListener('mouseover', onEnter);
+    table.addEventListener('mouseout', onLeave);
+  })();
+
+  function updateSortIndicators() {
+    // Reset all indicators
+    const allIndicators = document.querySelectorAll('.sort-indicator');
+    allIndicators.forEach(indicator => {
+      indicator.className = 'sort-indicator';
+    });
+    
+    // Set active indicator
+    if (sortColumn) {
+      const indicator = document.getElementById(`sort-${sortColumn}-indicator`);
+      if (indicator) {
+        indicator.className = `sort-indicator sort-${sortDirection}`;
+      }
+    }
+  }
+  
+  function sortTable(column) {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    if (sortColumn === column) {
+      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortColumn = column;
+      // Default to desc for complexity, asc for function
+      sortDirection = column === 'complexity' ? 'desc' : 'asc';
+    }
+    rows.sort((a, b) => {
+      let aValue, bValue;
+      if (column === 'function') {
+        const aCell = a.querySelector('.function-name');
+        const bCell = b.querySelector('.function-name');
+        aValue = aCell ? aCell.textContent.trim().toLowerCase() : '';
+        bValue = bCell ? bCell.textContent.trim().toLowerCase() : '';
+      } else if (column === 'complexity') {
+        const aCell = a.querySelector('.complexity-value');
+        const bCell = b.querySelector('.complexity-value');
+        aValue = aCell ? parseInt(aCell.textContent.trim()) || 0 : 0;
+        bValue = bCell ? parseInt(bCell.textContent.trim()) || 0 : 0;
+      } else {
+        // Breakdown column (if, for, ternary, &&, ||, etc.)
+        const aCell = a.querySelector(`td[data-column-key="${column}"]`);
+        const bCell = b.querySelector(`td[data-column-key="${column}"]`);
+        const aText = aCell ? aCell.textContent.trim() : '-';
+        const bText = bCell ? bCell.textContent.trim() : '-';
+        aValue = aText === '-' ? 0 : parseInt(aText) || 0;
+        bValue = bText === '-' ? 0 : parseInt(bText) || 0;
+      }
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+    rows.forEach(row => tbody.appendChild(row));
+    updateSortIndicators();
+  }
+  
+  function rebuildTableHeaders(showAll) {
+    const headerSpan = document.getElementById('breakdown-header-span');
+    const groupHeadersRow = document.getElementById('breakdown-group-headers-row');
+    const colHeadersRow = document.getElementById('breakdown-col-headers-row');
+    const visibleGroups = columnConfig.groups.map(group => {
+      const visibleColumns = showAll 
+        ? group.columns 
+        : group.columns.filter(col => !columnConfig.emptyColumns.includes(col.key));
+      return {
+        name: group.name,
+        columns: visibleColumns,
+        totalColumns: group.columns.length
+      };
+    });
+    const totalBreakdownCols = visibleGroups.reduce((sum, group) => sum + group.columns.length, 0) + 1;
+    headerSpan.setAttribute('colspan', 2 + totalBreakdownCols);
+    const groupHeadersHTML = visibleGroups.map(group => {
+      if (group.columns.length === 0) return '';
+      return `<th colspan="${group.columns.length}" class="breakdown-group-header" data-group="${group.name}">${group.name}</th>`;
+    }).filter(Boolean).join('');
+    groupHeadersRow.innerHTML = `<th rowspan="2" class="breakdown-function-header sortable" onclick="sortTable('function')" id="sort-function-header">Function <span class="sort-indicator" id="sort-function-indicator"></span></th><th rowspan="2" class="breakdown-complexity-header sortable" onclick="sortTable('complexity')" id="sort-complexity-header">Complexity <span class="sort-indicator" id="sort-complexity-indicator"></span></th>${groupHeadersHTML}<th class="breakdown-group-header" colspan="1">${columnConfig.baseColumn.label}</th>`;
+    updateSortIndicators();
+    const colHeadersHTML = visibleGroups.map(group => 
+      group.columns.map(col => `<th class="breakdown-col-header sortable" data-column-key="${col.key}" onclick="sortTable('${col.key}')" id="sort-${col.key}-header">${col.label} <span class="sort-indicator" id="sort-${col.key}-indicator"></span></th>`).join('')
+    ).join('');
+    colHeadersRow.innerHTML = `${colHeadersHTML}<th class="breakdown-col-header sortable" data-column-key="${columnConfig.baseColumn.key}" onclick="sortTable('${columnConfig.baseColumn.key}')" id="sort-${columnConfig.baseColumn.key}-header">${columnConfig.baseColumn.label} <span class="sort-indicator" id="sort-${columnConfig.baseColumn.key}-indicator"></span></th>`;
+  }
+  
+  function rebuildTableBody(showAll) {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    const rows = tbody.querySelectorAll('tr');
+    const visibleColumns = columnConfig.groups.flatMap(group => {
+      if (showAll) {
+        return group.columns;
+      }
+      return group.columns.filter(col => !columnConfig.emptyColumns.includes(col.key));
+    });
+    rows.forEach(row => {
+      // Skip the no-matches row
+      if (row.id === 'no-matches-row') {
+        return;
+      }
+      const cells = row.querySelectorAll('td');
+      const functionCell = cells[0];
+      const complexityCell = cells[1];
+      // Skip rows that don't have the expected structure
+      if (!functionCell || !complexityCell) {
+        return;
+      }
+      const breakdownData = {};
+      const existingBreakdownCells = Array.from(cells).slice(2, -1);
+      existingBreakdownCells.forEach(cell => {
+        const key = cell.getAttribute('data-column-key');
+        if (key) {
+          const text = cell.textContent.trim();
+          breakdownData[key] = text === '-' ? 0 : parseInt(text) || 0;
+        }
+      });
+      const baseValue = parseInt(cells[cells.length - 1].textContent.trim()) || 1;
+      breakdownData.base = baseValue;
+      const breakdownCells = visibleColumns.map(col => {
+        const value = breakdownData[col.key] || 0;
+        const displayValue = value === 0 ? '-' : value;
+        const emptyClass = value === 0 ? ' breakdown-value-empty' : '';
+        return `<td class="breakdown-value${emptyClass}" data-column-key="${col.key}">${displayValue}</td>`;
+      });
+      breakdownCells.push(`<td class="breakdown-value">${baseValue}</td>`);
+      row.innerHTML = `${functionCell.outerHTML}${complexityCell.outerHTML}${breakdownCells.join('')}`;
+    });
+  }
+  
+  function toggleEmptyColumns() {
+    const checkbox = document.getElementById('breakdown-show-all-columns');
+    showAllColumns = checkbox ? checkbox.checked : false;
+    rebuildTableHeaders(showAllColumns);
+    rebuildTableBody(showAllColumns);
+    if (sortColumn) {
+      sortTable(sortColumn);
+    }
+    const searchInput = document.getElementById('breakdown-search');
+    if (searchInput && searchInput.value) {
+      filterFunctions(searchInput.value);
+    }
+  }
+  
+  function filterFunctions(searchTerm) {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    const rows = tbody.querySelectorAll('tr:not(#no-matches-row)');
+    const noMatchesRow = document.getElementById('no-matches-row');
+    const searchLower = searchTerm.toLowerCase().trim();
+    let visibleCount = 0;
+    rows.forEach(row => {
+      const functionCell = row.querySelector('.function-name');
+      if (functionCell) {
+        const functionName = functionCell.textContent.trim().toLowerCase();
+        const matches = searchLower === '' || functionName.includes(searchLower);
+        row.style.display = matches ? '' : 'none';
+        if (matches) visibleCount++;
+      }
+    });
+    if (noMatchesRow) {
+      if (searchLower !== '' && visibleCount === 0) {
+        noMatchesRow.style.display = '';
+        const headerSpan = document.getElementById('breakdown-header-span');
+        const currentColspan = headerSpan ? parseInt(headerSpan.getAttribute('colspan')) || 0 : 0;
+        const noMatchesCell = noMatchesRow.querySelector('.no-matches-message');
+        if (noMatchesCell) {
+          noMatchesCell.setAttribute('colspan', 2 + currentColspan);
+        }
+      } else {
+        noMatchesRow.style.display = 'none';
+      }
+    }
+  }
+  
+  function toggleTableVisibility() {
+    const checkbox = document.getElementById('breakdown-show-table');
+    const table = document.getElementById('complexity-breakdown-table');
+    if (table && checkbox) {
+      table.style.display = checkbox.checked ? 'table' : 'none';
+    }
+  }
+  
+  // Initialize with complexity sorted descending
+  // Apply initial sort after DOM is ready
+  setTimeout(function() {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    if (tbody) {
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort((a, b) => {
+        const aCell = a.querySelector('.complexity-value');
+        const bCell = b.querySelector('.complexity-value');
+        const aValue = aCell ? parseInt(aCell.textContent.trim()) || 0 : 0;
+        const bValue = bCell ? parseInt(bCell.textContent.trim()) || 0 : 0;
+        if (aValue < bValue) return 1; // desc: higher values first
+        if (aValue > bValue) return -1;
+        return 0;
+      });
+      rows.forEach(row => tbody.appendChild(row));
+    }
+    updateSortIndicators();
+  }, 0);
+  
+  // Initialize syntax highlighting with prettify
+  if (typeof prettyPrint !== 'undefined') {
+    // Use setTimeout to ensure DOM is fully ready
+    setTimeout(function() {
+      prettyPrint();
+    }, 0);
+  }
+</script>
+</body>
+</html>

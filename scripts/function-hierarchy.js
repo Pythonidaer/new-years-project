@@ -497,29 +497,73 @@ function findImmediateParentFunction(func, functionBoundaries, sortedFunctions) 
 
 /**
  * Fixes function name for callbacks using function boundaries
+ * Recursively builds the full hierarchical chain (e.g., "AgencyLogosComponent (useEffect callback) (IntersectionObserver callback)")
  * @param {Object} func - Function object
  * @param {Map} functionBoundaries - Map of function boundaries
  * @param {Array} sortedFunctions - Sorted array of all functions
- * @returns {string} Fixed display name
+ * @param {Set} visited - Set to track visited functions (prevents infinite loops)
+ * @returns {string} Fixed display name with full hierarchical chain
  */
-function fixFunctionNameForCallback(func, functionBoundaries, sortedFunctions) {
+function fixFunctionNameForCallback(func, functionBoundaries, sortedFunctions, visited = new Set()) {
   let displayName = func.functionName || 'unknown';
-  const callbackMatch = displayName.match(/^(.+?)\s+\((.+?)\s+callback\)$/);
   
-  if (!callbackMatch || !functionBoundaries) {
+  // Prevent infinite loops
+  const funcKey = `${func.file}:${func.line}`;
+  if (visited.has(funcKey)) {
+    return displayName;
+  }
+  visited.add(funcKey);
+  
+  if (!functionBoundaries) {
     return displayName;
   }
   
-  const [, parentName, callbackType] = callbackMatch;
+  // Find the actual immediate parent using boundaries
   const immediateParentFunc = findImmediateParentFunction(func, functionBoundaries, sortedFunctions);
   
-  if (immediateParentFunc) {
-    const correctParentName = getBaseFunctionName(immediateParentFunc.functionName);
-    if (correctParentName && 
-        correctParentName !== parentName && 
-        correctParentName !== 'unknown' && 
-        correctParentName !== 'anonymous') {
-      displayName = `${correctParentName} (${callbackType} callback)`;
+  if (!immediateParentFunc) {
+    // No parent found, return name as-is
+    return displayName;
+  }
+  
+  // Recursively build the parent's hierarchical name
+  const parentHierarchicalName = fixFunctionNameForCallback(
+    immediateParentFunc, 
+    functionBoundaries, 
+    sortedFunctions,
+    new Set(visited) // New visited set for parent traversal
+  );
+  
+  // Extract callback type from current function name
+  // Pattern 1: "parentName (callbackType callback)" - extract callbackType
+  // Pattern 2: "callbackType callback" - extract callbackType
+  // Pattern 3: "callbackType callback (nested callback)" - extract the last callbackType
+  let callbackType = null;
+  const nestedCallbackMatch = displayName.match(/\((.+?)\s+callback\)\s*$/);
+  if (nestedCallbackMatch) {
+    callbackType = nestedCallbackMatch[1];
+  } else {
+    const simpleCallbackMatch = displayName.match(/^(.+?)\s+callback$/i);
+    if (simpleCallbackMatch) {
+      callbackType = simpleCallbackMatch[1];
+    }
+  }
+  
+  if (callbackType) {
+    // Build full chain: parent's full hierarchical name + this callback
+    const parentBaseName = getBaseFunctionName(parentHierarchicalName);
+    if (parentBaseName && parentBaseName !== 'unknown' && parentBaseName !== 'anonymous') {
+      displayName = `${parentHierarchicalName} (${callbackType} callback)`;
+    }
+  } else {
+    // Not a callback, or couldn't extract callback type - use parent's name if it's different
+    const currentBaseName = getBaseFunctionName(displayName);
+    const parentBaseName = getBaseFunctionName(parentHierarchicalName);
+    if (parentBaseName && parentBaseName !== currentBaseName && 
+        parentBaseName !== 'unknown' && parentBaseName !== 'anonymous') {
+      // This might be a nested function that should show its parent
+      // But for now, keep the original name if it's not a callback
+      return displayName;
     }
   }
   

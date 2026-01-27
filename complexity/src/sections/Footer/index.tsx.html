@@ -1,0 +1,1353 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Complexity report for src/sections/Footer/index.tsx</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../../shared.css" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <style>
+      /* File-specific styles - coverage table and breakdown */
+      .coverage-block {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      table.coverage {
+        border-collapse: collapse;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+      table.coverage td {
+        margin: 0;
+        padding: 0;
+        vertical-align: top;
+      }
+      table.coverage td.line-count {
+        text-align: right;
+        padding: 0 5px 0 5px;
+      }
+      table.coverage td.line-coverage {
+        text-align: right;
+        padding-right: 10px;
+        min-width:20px;
+      }
+      table.coverage td span.cline-any {
+        display: inline-block;
+        padding: 0 5px;
+        width: 100%;
+      }
+      span.cline-neutral { background: #eaeaea; }
+      span.cline-yes { background: rgb(230,245,208); }
+      pre.prettyprint {
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .wrapper {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -48px;
+      }
+      .footer, .push {
+        height: 48px;
+      }
+      .footer {
+        padding: 20px;
+      }
+      .code-line {
+        display: inline-block;
+        white-space: pre;
+        width: max-content;
+        font: inherit;
+      }
+      .decision-point-line {
+        background: #F6C6CE;
+      }
+      .function-boundary-highlight {
+        background: yellow !important;
+      }
+      /* Top-level (indent 0): full-width border across all columns. */
+      tr.function-boundary-start[data-boundary-top-level="true"] td,
+      tr.function-boundary-end[data-boundary-top-level="true"] td,
+      tr.function-boundary-single[data-boundary-top-level="true"] td {
+        border-top: 1px solid #0074D9;
+      }
+      tr[data-boundary-top-level="true"] td.text::before {
+        display: none;
+      }
+      /* Nested: indented border in code column only, extend to right. Hierarchy via indent. */
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.text,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.text,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.text {
+        position: relative;
+        border-top: none;
+      }
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.text::before,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.text::before,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.text::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: calc(var(--indent-ch, 0) * 1ch);
+        right: 0;
+        height: 1px;
+        background: #0074D9;
+      }
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.line-count,
+      tr.function-boundary-start:not([data-boundary-top-level="true"]) td.line-coverage,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.line-count,
+      tr.function-boundary-end:not([data-boundary-top-level="true"]) td.line-coverage,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.line-count,
+      tr.function-boundary-single:not([data-boundary-top-level="true"]) td.line-coverage {
+        border-top: none;
+      }
+      .complexity-breakdown {
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+        overflow-x: auto;
+        display: block;
+        width: auto;
+      }
+      .complexity-breakdown h2 {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+      }
+      .complexity-breakdown-table {
+        width: auto;
+        max-width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0 0;
+        font-size: 13px;
+      }
+      .complexity-breakdown-table th {
+        padding: 8px 4px;
+        text-align: center;
+        border: 1px solid #ddd;
+        background-color: #f5f5f5;
+        font-weight: bold;
+        vertical-align: middle;
+      }
+      .complexity-breakdown-table td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+        vertical-align: middle;
+      }
+      .complexity-breakdown-table td.function-name {
+        text-align: left;
+      }
+      .breakdown-header {
+        text-align: center;
+        font-size: 16px;
+        background-color: #e8e8e8;
+        font-weight: bold;
+        padding: 10px;
+      }
+      .breakdown-group-header {
+        background-color: #f0f0f0;
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .breakdown-col-header {
+        font-weight: normal;
+        font-size: 11px;
+        background-color: #fafafa;
+        white-space: nowrap;
+      }
+      .breakdown-value {
+        text-align: center;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 12px;
+        color: #333;
+      }
+      .breakdown-value-empty {
+        background: #fff4c2;
+      }
+      .breakdown-col-empty {
+        display: none;
+      }
+      .breakdown-group-empty {
+        display: none;
+      }
+      .no-matches-message {
+        text-align: center;
+        padding: 30px 20px;
+        color: #666;
+        font-style: italic;
+        background-color: #f9f9f9;
+      }
+      .function-name {
+        text-align: left;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 11px;
+        padding-left: 10px;
+        padding-right: 10px;
+        white-space: nowrap;
+      }
+      .breakdown-function-header {
+        text-align: left;
+        vertical-align: middle;
+        font-weight: bold;
+      }
+      .breakdown-complexity-header {
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+      }
+      .sortable {
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+      }
+      .sortable:hover {
+        background-color: #e8e8e8;
+      }
+      .sort-indicator {
+        display: inline-block;
+        margin-left: 5px;
+        font-size: 10px;
+        color: #666;
+        width: 12px;
+        min-width: 12px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 1;
+      }
+      .sort-indicator::after {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+      }
+      .sort-indicator.sort-asc::after {
+        content: '▲';
+      }
+      .sort-indicator.sort-desc::after {
+        content: '▼';
+      }
+      .complexity-value {
+        text-align: center;
+        font-weight: bold;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 13px;
+      }
+      .complexity-breakdown-table tbody tr {
+        background-color: rgb(230, 245, 208);
+      }
+      .complexity-breakdown-table tbody tr:hover {
+        background-color: rgb(220, 235, 198);
+      }
+      .breakdown-function {
+        font-weight: bold;
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+      }
+      .breakdown-complexity {
+        text-align: center;
+      }
+      .breakdown-details {
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 13px;
+      }
+      .breakdown-divider {
+        color: #999;
+        margin: 0 4px;
+        font-weight: normal;
+      }
+      .complexity-number {
+        font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        font-size: 10px;
+        color: #555;
+        background: #E8E8E8;
+        padding: 4px 5px;
+        border-radius: 3px;
+        vertical-align: middle;
+        margin: 0 2px;
+        display: inline-block;
+      }
+      .coverage-table-wrapper {
+        position: relative;
+      }
+      #hover-vertical-line {
+        position: absolute;
+        left: 0;
+        width: 0;
+        border-left: 1px solid #0074D9;
+        pointer-events: none;
+        visibility: hidden;
+        z-index: 1;
+      }
+      #hover-vertical-line.visible {
+        visibility: visible;
+      }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <div class="header-row">
+            <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/sections/Footer</a> index.tsx</h1>
+            <a href="../../../about.html" class="about-link">About Cyclomatic Complexity</a>
+        </div>
+        
+    <div class="clearfix">
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100%</span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0%</span>
+        <span class="quiet">Control Flow</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0%</span>
+        <span class="quiet">Expressions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0%</span>
+        <span class="quiet">Default Parameters</span>
+        <span class='fraction'>0/0</span>
+      </div>
+    </div>
+        
+    <div class="complexity-breakdown">
+      <div class="quiet" style="display: flex; align-items: center; gap: 15px; margin-top: 14px;">
+        <div>
+          Filter:
+          <input type="search" id="breakdown-search" oninput="filterFunctions(this.value)">
+        </div>
+        <label style="margin: 0; font-weight: normal;">
+          <input type="checkbox" id="breakdown-show-all-columns" onchange="toggleEmptyColumns()" >
+          Show All Columns
+        </label>
+        <label style="margin: 0; font-weight: normal;">
+          <input type="checkbox" id="breakdown-show-table" onchange="toggleTableVisibility()" checked>
+          Show Table
+        </label>
+      </div>
+      <table class="complexity-breakdown-table" id="complexity-breakdown-table" style="display: table;">
+        <thead id="complexity-breakdown-thead">
+          <tr>
+            <th colspan="3" class="breakdown-header" id="breakdown-header-span">Function Complexity Breakdown</th>
+          </tr>
+          <tr id="breakdown-group-headers-row">
+            <th rowspan="2" class="breakdown-function-header sortable" onclick="sortTable('function')" id="sort-function-header">
+              Function <span class="sort-indicator" id="sort-function-indicator"></span>
+            </th>
+            <th rowspan="2" class="breakdown-complexity-header sortable" onclick="sortTable('complexity')" id="sort-complexity-header">
+              Complexity <span class="sort-indicator" id="sort-complexity-indicator"></span>
+            </th>
+            
+            <th class="breakdown-group-header" colspan="1">base</th>
+          </tr>
+          <tr id="breakdown-col-headers-row">
+            
+            <th class="breakdown-col-header sortable" data-column-key="base" onclick="sortTable('base')" id="sort-base-header">base <span class="sort-indicator" id="sort-base-indicator"></span></th>
+          </tr>
+        </thead>
+        <tbody id="complexity-breakdown-tbody">
+                  <tr>
+          <td class="function-name"><span class="strong">Footer</span></td>
+          <td class="complexity-value"><span class="complexity-number">1</span></td>
+          <td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">Footer (map callback)</span></td>
+          <td class="complexity-value"><span class="complexity-number">1</span></td>
+          <td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">Footer (map callback)</span></td>
+          <td class="complexity-value"><span class="complexity-number">1</span></td>
+          <td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">Footer (map callback)</span></td>
+          <td class="complexity-value"><span class="complexity-number">1</span></td>
+          <td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">Footer (map callback)</span></td>
+          <td class="complexity-value"><span class="complexity-number">1</span></td>
+          <td class="breakdown-value">1</td>
+        </tr>
+        <tr>
+          <td class="function-name"><span class="strong">Footer (map callback)</span></td>
+          <td class="complexity-value"><span class="complexity-number">1</span></td>
+          <td class="breakdown-value">1</td>
+        </tr>
+          <tr id="no-matches-row" style="display: none;">
+            <td colspan="3" class="no-matches-message">
+              No functions match the current filter.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    </div>
+    <div class='status-line high'></div>
+    <div class="pad1 coverage-block">
+    <div class="coverage-table-wrapper">
+    <div id="hover-vertical-line" aria-hidden="true"></div>
+<pre><table class="coverage" id="coverage-table">
+<tr data-line="1">
+<td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import { Container } from &quot;@/layout/Container&quot;;</span></pre></td>
+</tr>
+<tr data-line="2">
+<td class="line-count quiet"><a name='L2'></a><a href='#L2'>2</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import { Facebook, Twitter, Linkedin, Github } from &quot;lucide-react&quot;;</span></pre></td>
+</tr>
+<tr data-line="3">
+<td class="line-count quiet"><a name='L3'></a><a href='#L3'>3</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import { slugify } from &quot;@/utils/slug&quot;;</span></pre></td>
+</tr>
+<tr data-line="4">
+<td class="line-count quiet"><a name='L4'></a><a href='#L4'>4</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">import styles from &quot;./Footer.module.css&quot;;</span></pre></td>
+</tr>
+<tr data-line="5">
+<td class="line-count quiet"><a name='L5'></a><a href='#L5'>5</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="6">
+<td class="line-count quiet"><a name='L6'></a><a href='#L6'>6</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">const aboutMeLinks = [</span></pre></td>
+</tr>
+<tr data-line="7">
+<td class="line-count quiet"><a name='L7'></a><a href='#L7'>7</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Experience&quot;, href: &quot;/#experience&quot; },</span></pre></td>
+</tr>
+<tr data-line="8">
+<td class="line-count quiet"><a name='L8'></a><a href='#L8'>8</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Projects&quot;, href: &quot;/#projects&quot; },</span></pre></td>
+</tr>
+<tr data-line="9">
+<td class="line-count quiet"><a name='L9'></a><a href='#L9'>9</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Resources&quot;, href: &quot;/resources/blog&quot; },</span></pre></td>
+</tr>
+<tr data-line="10">
+<td class="line-count quiet"><a name='L10'></a><a href='#L10'>10</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Contact&quot;, href: &quot;/#contact&quot; },</span></pre></td>
+</tr>
+<tr data-line="11">
+<td class="line-count quiet"><a name='L11'></a><a href='#L11'>11</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">];</span></pre></td>
+</tr>
+<tr data-line="12">
+<td class="line-count quiet"><a name='L12'></a><a href='#L12'>12</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="13">
+<td class="line-count quiet"><a name='L13'></a><a href='#L13'>13</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">const hobbies = [</span></pre></td>
+</tr>
+<tr data-line="14">
+<td class="line-count quiet"><a name='L14'></a><a href='#L14'>14</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Comedy&quot;, url: &quot;https://en.wikipedia.org/wiki/Comedy&quot; },</span></pre></td>
+</tr>
+<tr data-line="15">
+<td class="line-count quiet"><a name='L15'></a><a href='#L15'>15</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Boxing&quot;, url: &quot;https://en.wikipedia.org/wiki/Boxing&quot; },</span></pre></td>
+</tr>
+<tr data-line="16">
+<td class="line-count quiet"><a name='L16'></a><a href='#L16'>16</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Coding&quot;, url: &quot;https://en.wikipedia.org/wiki/Computer_programming&quot; },</span></pre></td>
+</tr>
+<tr data-line="17">
+<td class="line-count quiet"><a name='L17'></a><a href='#L17'>17</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Movies&quot;, url: &quot;https://en.wikipedia.org/wiki/Film&quot; },</span></pre></td>
+</tr>
+<tr data-line="18">
+<td class="line-count quiet"><a name='L18'></a><a href='#L18'>18</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">];</span></pre></td>
+</tr>
+<tr data-line="19">
+<td class="line-count quiet"><a name='L19'></a><a href='#L19'>19</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="20">
+<td class="line-count quiet"><a name='L20'></a><a href='#L20'>20</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">const desiredRoles = [</span></pre></td>
+</tr>
+<tr data-line="21">
+<td class="line-count quiet"><a name='L21'></a><a href='#L21'>21</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Frontend Engineer&quot;, url: &quot;https://en.wikipedia.org/wiki/Front-end_web_development&quot; },</span></pre></td>
+</tr>
+<tr data-line="22">
+<td class="line-count quiet"><a name='L22'></a><a href='#L22'>22</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Software Engineer&quot;, url: &quot;https://en.wikipedia.org/wiki/Software_engineering&quot; },</span></pre></td>
+</tr>
+<tr data-line="23">
+<td class="line-count quiet"><a name='L23'></a><a href='#L23'>23</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Data Analyst&quot;, url: &quot;https://en.wikipedia.org/wiki/Data_analysis&quot; },</span></pre></td>
+</tr>
+<tr data-line="24">
+<td class="line-count quiet"><a name='L24'></a><a href='#L24'>24</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;AI Engineer&quot;, url: &quot;https://en.wikipedia.org/wiki/Artificial_intelligence&quot; },</span></pre></td>
+</tr>
+<tr data-line="25">
+<td class="line-count quiet"><a name='L25'></a><a href='#L25'>25</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">];</span></pre></td>
+</tr>
+<tr data-line="26">
+<td class="line-count quiet"><a name='L26'></a><a href='#L26'>26</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="27">
+<td class="line-count quiet"><a name='L27'></a><a href='#L27'>27</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">const blogCategories = [</span></pre></td>
+</tr>
+<tr data-line="28">
+<td class="line-count quiet"><a name='L28'></a><a href='#L28'>28</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Architecture&quot;, category: &quot;Frontend Architecture&quot; },</span></pre></td>
+</tr>
+<tr data-line="29">
+<td class="line-count quiet"><a name='L29'></a><a href='#L29'>29</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Maintainability&quot;, category: &quot;Maintainability&quot; },</span></pre></td>
+</tr>
+<tr data-line="30">
+<td class="line-count quiet"><a name='L30'></a><a href='#L30'>30</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Caching&quot;, category: &quot;Caching&quot; },</span></pre></td>
+</tr>
+<tr data-line="31">
+<td class="line-count quiet"><a name='L31'></a><a href='#L31'>31</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { label: &quot;Interview Prep&quot;, category: &quot;Interview Prep&quot; },</span></pre></td>
+</tr>
+<tr data-line="32">
+<td class="line-count quiet"><a name='L32'></a><a href='#L32'>32</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">];</span></pre></td>
+</tr>
+<tr data-line="33">
+<td class="line-count quiet"><a name='L33'></a><a href='#L33'>33</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="34">
+<td class="line-count quiet"><a name='L34'></a><a href='#L34'>34</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">const socialLinks = [</span></pre></td>
+</tr>
+<tr data-line="35">
+<td class="line-count quiet"><a name='L35'></a><a href='#L35'>35</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { icon: Facebook, href: &quot;https://www.youtube.com/watch?v=dQw4w9WgXcQ&quot;, label: &quot;Facebook&quot; },</span></pre></td>
+</tr>
+<tr data-line="36">
+<td class="line-count quiet"><a name='L36'></a><a href='#L36'>36</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { icon: Twitter, href: &quot;https://www.youtube.com/watch?v=dQw4w9WgXcQ&quot;, label: &quot;Twitter&quot; },</span></pre></td>
+</tr>
+<tr data-line="37">
+<td class="line-count quiet"><a name='L37'></a><a href='#L37'>37</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { icon: Linkedin, href: &quot;https://www.linkedin.com/in/jonamichahammo&quot;, label: &quot;LinkedIn&quot; },</span></pre></td>
+</tr>
+<tr data-line="38">
+<td class="line-count quiet"><a name='L38'></a><a href='#L38'>38</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  { icon: Github, href: &quot;https://github.com/pythonidaer&quot;, label: &quot;Github&quot; },</span></pre></td>
+</tr>
+<tr data-line="39">
+<td class="line-count quiet"><a name='L39'></a><a href='#L39'>39</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">];</span></pre></td>
+</tr>
+<tr data-line="40">
+<td class="line-count quiet"><a name='L40'></a><a href='#L40'>40</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 0" data-boundary-top-level="true" data-line="41">
+<td class="line-count quiet"><a name='L41'></a><a href='#L41'>41</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'Footer' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line function-boundary-highlight">export function Footer() {</span></pre></td>
+</tr>
+<tr data-line="42">
+<td class="line-count quiet"><a name='L42'></a><a href='#L42'>42</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  return (</span></pre></td>
+</tr>
+<tr data-line="43">
+<td class="line-count quiet"><a name='L43'></a><a href='#L43'>43</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    &lt;footer className={styles.footer}&gt;</span></pre></td>
+</tr>
+<tr data-line="44">
+<td class="line-count quiet"><a name='L44'></a><a href='#L44'>44</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      &lt;Container className={styles.footerContainer}&gt;</span></pre></td>
+</tr>
+<tr data-line="45">
+<td class="line-count quiet"><a name='L45'></a><a href='#L45'>45</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;div className={styles.top}&gt;</span></pre></td>
+</tr>
+<tr data-line="46">
+<td class="line-count quiet"><a name='L46'></a><a href='#L46'>46</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;div className={styles.brand}&gt;</span></pre></td>
+</tr>
+<tr data-line="47">
+<td class="line-count quiet"><a name='L47'></a><a href='#L47'>47</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.brandName}&gt;Find Me Easily&lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="48">
+<td class="line-count quiet"><a name='L48'></a><a href='#L48'>48</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;p className={styles.brandText}&gt;</span></pre></td>
+</tr>
+<tr data-line="49">
+<td class="line-count quiet"><a name='L49'></a><a href='#L49'>49</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              I am frequently checking my LinkedIn and email. Feel free to visit my profile or code repositories below.</span></pre></td>
+</tr>
+<tr data-line="50">
+<td class="line-count quiet"><a name='L50'></a><a href='#L50'>50</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/p&gt;</span></pre></td>
+</tr>
+<tr data-line="51">
+<td class="line-count quiet"><a name='L51'></a><a href='#L51'>51</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.social}&gt;</span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 14" data-line="52">
+<td class="line-count quiet"><a name='L52'></a><a href='#L52'>52</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'Footer (map callback)' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts">              <span class="code-line function-boundary-highlight">{socialLinks.map((social) =&gt; {</span></pre></td>
+</tr>
+<tr data-line="53">
+<td class="line-count quiet"><a name='L53'></a><a href='#L53'>53</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                const Icon = social.icon;</span></pre></td>
+</tr>
+<tr data-line="54">
+<td class="line-count quiet"><a name='L54'></a><a href='#L54'>54</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                return (</span></pre></td>
+</tr>
+<tr data-line="55">
+<td class="line-count quiet"><a name='L55'></a><a href='#L55'>55</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;a</span></pre></td>
+</tr>
+<tr data-line="56">
+<td class="line-count quiet"><a name='L56'></a><a href='#L56'>56</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    key={social.label}</span></pre></td>
+</tr>
+<tr data-line="57">
+<td class="line-count quiet"><a name='L57'></a><a href='#L57'>57</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    href={social.href}</span></pre></td>
+</tr>
+<tr data-line="58">
+<td class="line-count quiet"><a name='L58'></a><a href='#L58'>58</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    className={styles.socialLink}</span></pre></td>
+</tr>
+<tr data-line="59">
+<td class="line-count quiet"><a name='L59'></a><a href='#L59'>59</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    aria-label={social.label}</span></pre></td>
+</tr>
+<tr data-line="60">
+<td class="line-count quiet"><a name='L60'></a><a href='#L60'>60</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    target=&quot;_blank&quot;</span></pre></td>
+</tr>
+<tr data-line="61">
+<td class="line-count quiet"><a name='L61'></a><a href='#L61'>61</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &gt;</span></pre></td>
+</tr>
+<tr data-line="62">
+<td class="line-count quiet"><a name='L62'></a><a href='#L62'>62</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;Icon size={20} /&gt;</span></pre></td>
+</tr>
+<tr data-line="63">
+<td class="line-count quiet"><a name='L63'></a><a href='#L63'>63</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;/a&gt;</span></pre></td>
+</tr>
+<tr data-line="64">
+<td class="line-count quiet"><a name='L64'></a><a href='#L64'>64</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                );</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="65">
+<td class="line-count quiet"><a name='L65'></a><a href='#L65'>65</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts">              <span class="code-line function-boundary-highlight">})}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 12" data-line="66">
+<td class="line-count quiet"><a name='L66'></a><a href='#L66'>66</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="67">
+<td class="line-count quiet"><a name='L67'></a><a href='#L67'>67</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="68">
+<td class="line-count quiet"><a name='L68'></a><a href='#L68'>68</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;div className={styles.links}&gt;</span></pre></td>
+</tr>
+<tr data-line="69">
+<td class="line-count quiet"><a name='L69'></a><a href='#L69'>69</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.linkColumn}&gt;</span></pre></td>
+</tr>
+<tr data-line="70">
+<td class="line-count quiet"><a name='L70'></a><a href='#L70'>70</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;h3 className={styles.linkHeading}&gt;About Me&lt;/h3&gt;</span></pre></td>
+</tr>
+<tr data-line="71">
+<td class="line-count quiet"><a name='L71'></a><a href='#L71'>71</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;ul className={styles.linkList}&gt;</span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 16" data-line="72">
+<td class="line-count quiet"><a name='L72'></a><a href='#L72'>72</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'Footer (map callback)' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts">                <span class="code-line function-boundary-highlight">{aboutMeLinks.map((link) =&gt; (</span></pre></td>
+</tr>
+<tr data-line="73">
+<td class="line-count quiet"><a name='L73'></a><a href='#L73'>73</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;li key={link.label}&gt;</span></pre></td>
+</tr>
+<tr data-line="74">
+<td class="line-count quiet"><a name='L74'></a><a href='#L74'>74</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;a href={link.href} className={styles.link}&gt;</span></pre></td>
+</tr>
+<tr data-line="75">
+<td class="line-count quiet"><a name='L75'></a><a href='#L75'>75</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      {link.label}</span></pre></td>
+</tr>
+<tr data-line="76">
+<td class="line-count quiet"><a name='L76'></a><a href='#L76'>76</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;/a&gt;</span></pre></td>
+</tr>
+<tr data-line="77">
+<td class="line-count quiet"><a name='L77'></a><a href='#L77'>77</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;/li&gt;</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="78">
+<td class="line-count quiet"><a name='L78'></a><a href='#L78'>78</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts">                <span class="code-line function-boundary-highlight">))}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 14" data-line="79">
+<td class="line-count quiet"><a name='L79'></a><a href='#L79'>79</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/ul&gt;</span></pre></td>
+</tr>
+<tr data-line="80">
+<td class="line-count quiet"><a name='L80'></a><a href='#L80'>80</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="81">
+<td class="line-count quiet"><a name='L81'></a><a href='#L81'>81</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.linkColumn}&gt;</span></pre></td>
+</tr>
+<tr data-line="82">
+<td class="line-count quiet"><a name='L82'></a><a href='#L82'>82</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;h3 className={styles.linkHeading}&gt;Blogs&lt;/h3&gt;</span></pre></td>
+</tr>
+<tr data-line="83">
+<td class="line-count quiet"><a name='L83'></a><a href='#L83'>83</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;ul className={styles.linkList}&gt;</span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 16" data-line="84">
+<td class="line-count quiet"><a name='L84'></a><a href='#L84'>84</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'Footer (map callback)' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts">                <span class="code-line function-boundary-highlight">{blogCategories.map((item) =&gt; (</span></pre></td>
+</tr>
+<tr data-line="85">
+<td class="line-count quiet"><a name='L85'></a><a href='#L85'>85</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;li key={item.label}&gt;</span></pre></td>
+</tr>
+<tr data-line="86">
+<td class="line-count quiet"><a name='L86'></a><a href='#L86'>86</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;a href={`/resources/tag/${slugify(item.category)}`} className={styles.link}&gt;</span></pre></td>
+</tr>
+<tr data-line="87">
+<td class="line-count quiet"><a name='L87'></a><a href='#L87'>87</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      {item.label}</span></pre></td>
+</tr>
+<tr data-line="88">
+<td class="line-count quiet"><a name='L88'></a><a href='#L88'>88</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;/a&gt;</span></pre></td>
+</tr>
+<tr data-line="89">
+<td class="line-count quiet"><a name='L89'></a><a href='#L89'>89</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;/li&gt;</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="90">
+<td class="line-count quiet"><a name='L90'></a><a href='#L90'>90</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts">                <span class="code-line function-boundary-highlight">))}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 14" data-line="91">
+<td class="line-count quiet"><a name='L91'></a><a href='#L91'>91</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/ul&gt;</span></pre></td>
+</tr>
+<tr data-line="92">
+<td class="line-count quiet"><a name='L92'></a><a href='#L92'>92</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="93">
+<td class="line-count quiet"><a name='L93'></a><a href='#L93'>93</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.linkColumn}&gt;</span></pre></td>
+</tr>
+<tr data-line="94">
+<td class="line-count quiet"><a name='L94'></a><a href='#L94'>94</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;h3 className={styles.linkHeading}&gt;Hobbies&lt;/h3&gt;</span></pre></td>
+</tr>
+<tr data-line="95">
+<td class="line-count quiet"><a name='L95'></a><a href='#L95'>95</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;ul className={styles.linkList}&gt;</span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 16" data-line="96">
+<td class="line-count quiet"><a name='L96'></a><a href='#L96'>96</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'map callback' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts">                <span class="code-line function-boundary-highlight">{hobbies.map((hobby) =&gt; (</span></pre></td>
+</tr>
+<tr data-line="97">
+<td class="line-count quiet"><a name='L97'></a><a href='#L97'>97</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;li key={hobby.label}&gt;</span></pre></td>
+</tr>
+<tr data-line="98">
+<td class="line-count quiet"><a name='L98'></a><a href='#L98'>98</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;a href={hobby.url} className={styles.link} target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;</span></pre></td>
+</tr>
+<tr data-line="99">
+<td class="line-count quiet"><a name='L99'></a><a href='#L99'>99</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      {hobby.label}</span></pre></td>
+</tr>
+<tr data-line="100">
+<td class="line-count quiet"><a name='L100'></a><a href='#L100'>100</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;/a&gt;</span></pre></td>
+</tr>
+<tr data-line="101">
+<td class="line-count quiet"><a name='L101'></a><a href='#L101'>101</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;/li&gt;</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="102">
+<td class="line-count quiet"><a name='L102'></a><a href='#L102'>102</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts">                <span class="code-line function-boundary-highlight">))}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 14" data-line="103">
+<td class="line-count quiet"><a name='L103'></a><a href='#L103'>103</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/ul&gt;</span></pre></td>
+</tr>
+<tr data-line="104">
+<td class="line-count quiet"><a name='L104'></a><a href='#L104'>104</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="105">
+<td class="line-count quiet"><a name='L105'></a><a href='#L105'>105</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.linkColumn}&gt;</span></pre></td>
+</tr>
+<tr data-line="106">
+<td class="line-count quiet"><a name='L106'></a><a href='#L106'>106</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;h3 className={styles.linkHeading}&gt;Desired Roles&lt;/h3&gt;</span></pre></td>
+</tr>
+<tr data-line="107">
+<td class="line-count quiet"><a name='L107'></a><a href='#L107'>107</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;ul className={styles.linkList}&gt;</span></pre></td>
+</tr>
+<tr class="function-boundary-start" style="--indent-ch: 16" data-line="108">
+<td class="line-count quiet"><a name='L108'></a><a href='#L108'>108</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'map callback' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts">                <span class="code-line function-boundary-highlight">{desiredRoles.map((role) =&gt; (</span></pre></td>
+</tr>
+<tr data-line="109">
+<td class="line-count quiet"><a name='L109'></a><a href='#L109'>109</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;li key={role.label}&gt;</span></pre></td>
+</tr>
+<tr data-line="110">
+<td class="line-count quiet"><a name='L110'></a><a href='#L110'>110</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;a href={role.url} className={styles.link} target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;</span></pre></td>
+</tr>
+<tr data-line="111">
+<td class="line-count quiet"><a name='L111'></a><a href='#L111'>111</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      {role.label}</span></pre></td>
+</tr>
+<tr data-line="112">
+<td class="line-count quiet"><a name='L112'></a><a href='#L112'>112</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    &lt;/a&gt;</span></pre></td>
+</tr>
+<tr data-line="113">
+<td class="line-count quiet"><a name='L113'></a><a href='#L113'>113</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;/li&gt;</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="114">
+<td class="line-count quiet"><a name='L114'></a><a href='#L114'>114</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts">                <span class="code-line function-boundary-highlight">))}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 14" data-line="115">
+<td class="line-count quiet"><a name='L115'></a><a href='#L115'>115</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/ul&gt;</span></pre></td>
+</tr>
+<tr data-line="116">
+<td class="line-count quiet"><a name='L116'></a><a href='#L116'>116</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="117">
+<td class="line-count quiet"><a name='L117'></a><a href='#L117'>117</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="118">
+<td class="line-count quiet"><a name='L118'></a><a href='#L118'>118</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="119">
+<td class="line-count quiet"><a name='L119'></a><a href='#L119'>119</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;div className={styles.bottom}&gt;</span></pre></td>
+</tr>
+<tr data-line="120">
+<td class="line-count quiet"><a name='L120'></a><a href='#L120'>120</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;p className={styles.copyright}&gt;</span></pre></td>
+</tr>
+<tr data-line="121">
+<td class="line-count quiet"><a name='L121'></a><a href='#L121'>121</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            Copyright {new Date().getFullYear()}</span></pre></td>
+</tr>
+<tr data-line="122">
+<td class="line-count quiet"><a name='L122'></a><a href='#L122'>122</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;/p&gt;</span></pre></td>
+</tr>
+<tr data-line="123">
+<td class="line-count quiet"><a name='L123'></a><a href='#L123'>123</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;div className={styles.legal}&gt;</span></pre></td>
+</tr>
+<tr data-line="124">
+<td class="line-count quiet"><a name='L124'></a><a href='#L124'>124</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;a href=&quot;#&quot; className={styles.legalLink}&gt;</span></pre></td>
+</tr>
+<tr data-line="125">
+<td class="line-count quiet"><a name='L125'></a><a href='#L125'>125</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              Jonnovative Designs</span></pre></td>
+</tr>
+<tr data-line="126">
+<td class="line-count quiet"><a name='L126'></a><a href='#L126'>126</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/a&gt;</span></pre></td>
+</tr>
+<tr data-line="127">
+<td class="line-count quiet"><a name='L127'></a><a href='#L127'>127</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="128">
+<td class="line-count quiet"><a name='L128'></a><a href='#L128'>128</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="129">
+<td class="line-count quiet"><a name='L129'></a><a href='#L129'>129</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      &lt;/Container&gt;</span></pre></td>
+</tr>
+<tr data-line="130">
+<td class="line-count quiet"><a name='L130'></a><a href='#L130'>130</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    &lt;/footer&gt;</span></pre></td>
+</tr>
+<tr data-line="131">
+<td class="line-count quiet"><a name='L131'></a><a href='#L131'>131</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  );</span></pre></td>
+</tr>
+<tr class="function-boundary-closing" data-line="132">
+<td class="line-count quiet"><a name='L132'></a><a href='#L132'>132</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line function-boundary-highlight">}</span></pre></td>
+</tr>
+<tr class="function-boundary-end" style="--indent-ch: 0" data-boundary-top-level="true" data-line="133">
+<td class="line-count quiet"><a name='L133'></a><a href='#L133'>133</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="134">
+<td class="line-count quiet"><a name='L134'></a><a href='#L134'>134</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+</table></pre>
+    </div>
+    </div>
+    <div class='push'></div>
+</div>
+<div class='footer quiet pad2 space-top1 center small'>
+    Complexity report generated by <a href="https://www.github.com/pythonidaer" target="_blank" rel="noopener noreferrer">pythonidaer</a> at 2026-01-27T23:02:59.479Z
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+  let showAllColumns = false;
+  let sortColumn = 'complexity';
+  let sortDirection = 'desc';
+  const columnConfig = {"groups":[{"name":"Control Flow","columns":[{"key":"if","label":"if"},{"key":"else if","label":"else if"},{"key":"for","label":"for"},{"key":"for...of","label":"for...of"},{"key":"for...in","label":"for...in"},{"key":"while","label":"while"},{"key":"do...while","label":"do...while"},{"key":"switch","label":"switch"},{"key":"case","label":"case"},{"key":"catch","label":"catch"}],"totalColumns":10},{"name":"Expressions","columns":[{"key":"ternary","label":"?:"},{"key":"&&","label":"&&"},{"key":"||","label":"||"},{"key":"??","label":"??"},{"key":"?.","label":"?."}],"totalColumns":5},{"name":"Function Parameters","columns":[{"key":"default parameter","label":"default parameter"}],"totalColumns":1}],"emptyColumns":["if","else if","for","for...of","for...in","while","do...while","switch","case","catch","ternary","&&","||","??","?.","default parameter"],"baseColumn":{"key":"base","label":"base"}};
+  const COVERAGE_LINE_TO_SPAN = {"41":{"start":41,"end":132,"indent":0},"42":{"start":41,"end":132,"indent":0},"43":{"start":41,"end":132,"indent":0},"44":{"start":41,"end":132,"indent":0},"45":{"start":41,"end":132,"indent":0},"46":{"start":41,"end":132,"indent":0},"47":{"start":41,"end":132,"indent":0},"48":{"start":41,"end":132,"indent":0},"49":{"start":41,"end":132,"indent":0},"50":{"start":41,"end":132,"indent":0},"51":{"start":41,"end":132,"indent":0},"52":{"start":52,"end":65,"indent":14},"53":{"start":52,"end":65,"indent":14},"54":{"start":52,"end":65,"indent":14},"55":{"start":52,"end":65,"indent":14},"56":{"start":52,"end":65,"indent":14},"57":{"start":52,"end":65,"indent":14},"58":{"start":52,"end":65,"indent":14},"59":{"start":52,"end":65,"indent":14},"60":{"start":52,"end":65,"indent":14},"61":{"start":52,"end":65,"indent":14},"62":{"start":52,"end":65,"indent":14},"63":{"start":52,"end":65,"indent":14},"64":{"start":52,"end":65,"indent":14},"65":{"start":52,"end":65,"indent":14},"66":{"start":41,"end":132,"indent":0},"67":{"start":41,"end":132,"indent":0},"68":{"start":41,"end":132,"indent":0},"69":{"start":41,"end":132,"indent":0},"70":{"start":41,"end":132,"indent":0},"71":{"start":41,"end":132,"indent":0},"72":{"start":72,"end":78,"indent":16},"73":{"start":72,"end":78,"indent":16},"74":{"start":72,"end":78,"indent":16},"75":{"start":72,"end":78,"indent":16},"76":{"start":72,"end":78,"indent":16},"77":{"start":72,"end":78,"indent":16},"78":{"start":72,"end":78,"indent":16},"79":{"start":41,"end":132,"indent":0},"80":{"start":41,"end":132,"indent":0},"81":{"start":41,"end":132,"indent":0},"82":{"start":41,"end":132,"indent":0},"83":{"start":41,"end":132,"indent":0},"84":{"start":84,"end":90,"indent":16},"85":{"start":84,"end":90,"indent":16},"86":{"start":84,"end":90,"indent":16},"87":{"start":84,"end":90,"indent":16},"88":{"start":84,"end":90,"indent":16},"89":{"start":84,"end":90,"indent":16},"90":{"start":84,"end":90,"indent":16},"91":{"start":41,"end":132,"indent":0},"92":{"start":41,"end":132,"indent":0},"93":{"start":41,"end":132,"indent":0},"94":{"start":41,"end":132,"indent":0},"95":{"start":41,"end":132,"indent":0},"96":{"start":96,"end":102,"indent":16},"97":{"start":96,"end":102,"indent":16},"98":{"start":96,"end":102,"indent":16},"99":{"start":96,"end":102,"indent":16},"100":{"start":96,"end":102,"indent":16},"101":{"start":96,"end":102,"indent":16},"102":{"start":96,"end":102,"indent":16},"103":{"start":41,"end":132,"indent":0},"104":{"start":41,"end":132,"indent":0},"105":{"start":41,"end":132,"indent":0},"106":{"start":41,"end":132,"indent":0},"107":{"start":41,"end":132,"indent":0},"108":{"start":108,"end":114,"indent":16},"109":{"start":108,"end":114,"indent":16},"110":{"start":108,"end":114,"indent":16},"111":{"start":108,"end":114,"indent":16},"112":{"start":108,"end":114,"indent":16},"113":{"start":108,"end":114,"indent":16},"114":{"start":108,"end":114,"indent":16},"115":{"start":41,"end":132,"indent":0},"116":{"start":41,"end":132,"indent":0},"117":{"start":41,"end":132,"indent":0},"118":{"start":41,"end":132,"indent":0},"119":{"start":41,"end":132,"indent":0},"120":{"start":41,"end":132,"indent":0},"121":{"start":41,"end":132,"indent":0},"122":{"start":41,"end":132,"indent":0},"123":{"start":41,"end":132,"indent":0},"124":{"start":41,"end":132,"indent":0},"125":{"start":41,"end":132,"indent":0},"126":{"start":41,"end":132,"indent":0},"127":{"start":41,"end":132,"indent":0},"128":{"start":41,"end":132,"indent":0},"129":{"start":41,"end":132,"indent":0},"130":{"start":41,"end":132,"indent":0},"131":{"start":41,"end":132,"indent":0},"132":{"start":41,"end":132,"indent":0}};
+
+  (function initHoverVerticalLine() {
+    return;
+    const table = document.getElementById('coverage-table');
+    const wrapper = table && table.closest('.coverage-table-wrapper');
+    const lineEl = document.getElementById('hover-vertical-line');
+    if (!table || !wrapper || !lineEl) return;
+    const pre = table.querySelector('pre.prettyprint');
+    let chWidth = 0;
+    if (pre) {
+      const s = document.createElement('span');
+      s.style.cssText = 'position:absolute;visibility:hidden;white-space:pre;font:' + getComputedStyle(pre).font + ';';
+      s.textContent = '0';
+      document.body.appendChild(s);
+      chWidth = s.offsetWidth;
+      document.body.removeChild(s);
+    }
+    function onEnter(ev) {
+      const td = ev.target.closest('td');
+      if (!td || (!td.classList.contains('line-count') && !td.classList.contains('line-coverage'))) return;
+      const tr = td.closest('tr');
+      const line = tr && tr.getAttribute('data-line');
+      if (!line) return;
+      const span = COVERAGE_LINE_TO_SPAN[line];
+      if (!span) return;
+      const first = table.querySelector(`tr[data-line="${span.start}"]`);
+      const last = table.querySelector(`tr[data-line="${span.end}"]`);
+      if (!first || !last) return;
+      const codeCell = first.querySelector('td.text');
+      if (!codeCell) return;
+      const wr = wrapper.getBoundingClientRect();
+      const fr = first.getBoundingClientRect();
+      const lr = last.getBoundingClientRect();
+      const cr = codeCell.getBoundingClientRect();
+      const top = fr.top - wr.top;
+      const height = lr.bottom - fr.top;
+      const indent = (span.indent != null ? span.indent : 0) * chWidth;
+      const left = (cr.left - wr.left) + indent;
+      lineEl.style.top = top + 'px';
+      lineEl.style.height = height + 'px';
+      lineEl.style.left = left + 'px';
+      lineEl.classList.add('visible');
+    }
+    function onLeave(ev) {
+      const td = ev.target.closest('td');
+      if (!td || (!td.classList.contains('line-count') && !td.classList.contains('line-coverage'))) return;
+      const next = ev.relatedTarget;
+      if (next && table.contains(next)) {
+        const nextTd = next.closest && next.closest('td');
+        if (nextTd && (nextTd.classList.contains('line-count') || nextTd.classList.contains('line-coverage'))) return;
+      }
+      lineEl.classList.remove('visible');
+      lineEl.style.left = '';
+      lineEl.style.top = '';
+      lineEl.style.height = '';
+    }
+    table.addEventListener('mouseover', onEnter);
+    table.addEventListener('mouseout', onLeave);
+  })();
+
+  function updateSortIndicators() {
+    // Reset all indicators
+    const allIndicators = document.querySelectorAll('.sort-indicator');
+    allIndicators.forEach(indicator => {
+      indicator.className = 'sort-indicator';
+    });
+    
+    // Set active indicator
+    if (sortColumn) {
+      const indicator = document.getElementById(`sort-${sortColumn}-indicator`);
+      if (indicator) {
+        indicator.className = `sort-indicator sort-${sortDirection}`;
+      }
+    }
+  }
+  
+  function sortTable(column) {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    if (sortColumn === column) {
+      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortColumn = column;
+      // Default to desc for complexity, asc for function
+      sortDirection = column === 'complexity' ? 'desc' : 'asc';
+    }
+    rows.sort((a, b) => {
+      let aValue, bValue;
+      if (column === 'function') {
+        const aCell = a.querySelector('.function-name');
+        const bCell = b.querySelector('.function-name');
+        aValue = aCell ? aCell.textContent.trim().toLowerCase() : '';
+        bValue = bCell ? bCell.textContent.trim().toLowerCase() : '';
+      } else if (column === 'complexity') {
+        const aCell = a.querySelector('.complexity-value');
+        const bCell = b.querySelector('.complexity-value');
+        aValue = aCell ? parseInt(aCell.textContent.trim()) || 0 : 0;
+        bValue = bCell ? parseInt(bCell.textContent.trim()) || 0 : 0;
+      } else {
+        // Breakdown column (if, for, ternary, &&, ||, etc.)
+        const aCell = a.querySelector(`td[data-column-key="${column}"]`);
+        const bCell = b.querySelector(`td[data-column-key="${column}"]`);
+        const aText = aCell ? aCell.textContent.trim() : '-';
+        const bText = bCell ? bCell.textContent.trim() : '-';
+        aValue = aText === '-' ? 0 : parseInt(aText) || 0;
+        bValue = bText === '-' ? 0 : parseInt(bText) || 0;
+      }
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+    rows.forEach(row => tbody.appendChild(row));
+    updateSortIndicators();
+  }
+  
+  function rebuildTableHeaders(showAll) {
+    const headerSpan = document.getElementById('breakdown-header-span');
+    const groupHeadersRow = document.getElementById('breakdown-group-headers-row');
+    const colHeadersRow = document.getElementById('breakdown-col-headers-row');
+    const visibleGroups = columnConfig.groups.map(group => {
+      const visibleColumns = showAll 
+        ? group.columns 
+        : group.columns.filter(col => !columnConfig.emptyColumns.includes(col.key));
+      return {
+        name: group.name,
+        columns: visibleColumns,
+        totalColumns: group.columns.length
+      };
+    });
+    const totalBreakdownCols = visibleGroups.reduce((sum, group) => sum + group.columns.length, 0) + 1;
+    headerSpan.setAttribute('colspan', 2 + totalBreakdownCols);
+    const groupHeadersHTML = visibleGroups.map(group => {
+      if (group.columns.length === 0) return '';
+      return `<th colspan="${group.columns.length}" class="breakdown-group-header" data-group="${group.name}">${group.name}</th>`;
+    }).filter(Boolean).join('');
+    groupHeadersRow.innerHTML = `<th rowspan="2" class="breakdown-function-header sortable" onclick="sortTable('function')" id="sort-function-header">Function <span class="sort-indicator" id="sort-function-indicator"></span></th><th rowspan="2" class="breakdown-complexity-header sortable" onclick="sortTable('complexity')" id="sort-complexity-header">Complexity <span class="sort-indicator" id="sort-complexity-indicator"></span></th>${groupHeadersHTML}<th class="breakdown-group-header" colspan="1">${columnConfig.baseColumn.label}</th>`;
+    updateSortIndicators();
+    const colHeadersHTML = visibleGroups.map(group => 
+      group.columns.map(col => `<th class="breakdown-col-header sortable" data-column-key="${col.key}" onclick="sortTable('${col.key}')" id="sort-${col.key}-header">${col.label} <span class="sort-indicator" id="sort-${col.key}-indicator"></span></th>`).join('')
+    ).join('');
+    colHeadersRow.innerHTML = `${colHeadersHTML}<th class="breakdown-col-header sortable" data-column-key="${columnConfig.baseColumn.key}" onclick="sortTable('${columnConfig.baseColumn.key}')" id="sort-${columnConfig.baseColumn.key}-header">${columnConfig.baseColumn.label} <span class="sort-indicator" id="sort-${columnConfig.baseColumn.key}-indicator"></span></th>`;
+  }
+  
+  function rebuildTableBody(showAll) {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    const rows = tbody.querySelectorAll('tr');
+    const visibleColumns = columnConfig.groups.flatMap(group => {
+      if (showAll) {
+        return group.columns;
+      }
+      return group.columns.filter(col => !columnConfig.emptyColumns.includes(col.key));
+    });
+    rows.forEach(row => {
+      // Skip the no-matches row
+      if (row.id === 'no-matches-row') {
+        return;
+      }
+      const cells = row.querySelectorAll('td');
+      const functionCell = cells[0];
+      const complexityCell = cells[1];
+      // Skip rows that don't have the expected structure
+      if (!functionCell || !complexityCell) {
+        return;
+      }
+      const breakdownData = {};
+      const existingBreakdownCells = Array.from(cells).slice(2, -1);
+      existingBreakdownCells.forEach(cell => {
+        const key = cell.getAttribute('data-column-key');
+        if (key) {
+          const text = cell.textContent.trim();
+          breakdownData[key] = text === '-' ? 0 : parseInt(text) || 0;
+        }
+      });
+      const baseValue = parseInt(cells[cells.length - 1].textContent.trim()) || 1;
+      breakdownData.base = baseValue;
+      const breakdownCells = visibleColumns.map(col => {
+        const value = breakdownData[col.key] || 0;
+        const displayValue = value === 0 ? '-' : value;
+        const emptyClass = value === 0 ? ' breakdown-value-empty' : '';
+        return `<td class="breakdown-value${emptyClass}" data-column-key="${col.key}">${displayValue}</td>`;
+      });
+      breakdownCells.push(`<td class="breakdown-value">${baseValue}</td>`);
+      row.innerHTML = `${functionCell.outerHTML}${complexityCell.outerHTML}${breakdownCells.join('')}`;
+    });
+  }
+  
+  function toggleEmptyColumns() {
+    const checkbox = document.getElementById('breakdown-show-all-columns');
+    showAllColumns = checkbox ? checkbox.checked : false;
+    rebuildTableHeaders(showAllColumns);
+    rebuildTableBody(showAllColumns);
+    if (sortColumn) {
+      sortTable(sortColumn);
+    }
+    const searchInput = document.getElementById('breakdown-search');
+    if (searchInput && searchInput.value) {
+      filterFunctions(searchInput.value);
+    }
+  }
+  
+  function filterFunctions(searchTerm) {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    const rows = tbody.querySelectorAll('tr:not(#no-matches-row)');
+    const noMatchesRow = document.getElementById('no-matches-row');
+    const searchLower = searchTerm.toLowerCase().trim();
+    let visibleCount = 0;
+    rows.forEach(row => {
+      const functionCell = row.querySelector('.function-name');
+      if (functionCell) {
+        const functionName = functionCell.textContent.trim().toLowerCase();
+        const matches = searchLower === '' || functionName.includes(searchLower);
+        row.style.display = matches ? '' : 'none';
+        if (matches) visibleCount++;
+      }
+    });
+    if (noMatchesRow) {
+      if (searchLower !== '' && visibleCount === 0) {
+        noMatchesRow.style.display = '';
+        const headerSpan = document.getElementById('breakdown-header-span');
+        const currentColspan = headerSpan ? parseInt(headerSpan.getAttribute('colspan')) || 0 : 0;
+        const noMatchesCell = noMatchesRow.querySelector('.no-matches-message');
+        if (noMatchesCell) {
+          noMatchesCell.setAttribute('colspan', 2 + currentColspan);
+        }
+      } else {
+        noMatchesRow.style.display = 'none';
+      }
+    }
+  }
+  
+  function toggleTableVisibility() {
+    const checkbox = document.getElementById('breakdown-show-table');
+    const table = document.getElementById('complexity-breakdown-table');
+    if (table && checkbox) {
+      table.style.display = checkbox.checked ? 'table' : 'none';
+    }
+  }
+  
+  // Initialize with complexity sorted descending
+  // Apply initial sort after DOM is ready
+  setTimeout(function() {
+    const tbody = document.getElementById('complexity-breakdown-tbody');
+    if (tbody) {
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort((a, b) => {
+        const aCell = a.querySelector('.complexity-value');
+        const bCell = b.querySelector('.complexity-value');
+        const aValue = aCell ? parseInt(aCell.textContent.trim()) || 0 : 0;
+        const bValue = bCell ? parseInt(bCell.textContent.trim()) || 0 : 0;
+        if (aValue < bValue) return 1; // desc: higher values first
+        if (aValue > bValue) return -1;
+        return 0;
+      });
+      rows.forEach(row => tbody.appendChild(row));
+    }
+    updateSortIndicators();
+  }, 0);
+  
+  // Initialize syntax highlighting with prettify
+  if (typeof prettyPrint !== 'undefined') {
+    // Use setTimeout to ensure DOM is fully ready
+    setTimeout(function() {
+      prettyPrint();
+    }, 0);
+  }
+</script>
+</body>
+</html>

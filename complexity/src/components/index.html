@@ -4,189 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Complexity Report - src/components</title>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    body {
-      font-family: Helvetica Neue, Helvetica, Arial;
-      font-size: 14px;
-      color: #333;
-    }
-    *, *:after, *:before {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-    h1 {
-      font-size: 20px;
-      margin: 0;
-    }
-    h2 {
-      font-size: 14px;
-    }
-    a {
-      color: #0074D9;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .strong {
-      font-weight: bold;
-    }
-    .pad2 {
-      padding: 20px;
-    }
-    .pad1y {
-      padding: 10px 0;
-    }
-    .quiet {
-      color: #7f7f7f;
-      color: rgba(0,0,0,0.5);
-    }
-    .coverage-summary {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    .coverage-summary tr {
-      border-bottom: 1px solid #bbb;
-    }
-    .keyline-all {
-      border: 1px solid #ddd;
-    }
-    .coverage-summary td,
-    .coverage-summary th {
-      padding: 10px;
-    }
-    .coverage-summary tbody tr {
-      background-color: rgb(230, 245, 208);
-    }
-    .coverage-summary tbody {
-      border: 1px solid #bbb;
-    }
-    .coverage-summary td {
-      border-right: 1px solid #bbb;
-    }
-    .coverage-summary td:last-child {
-      border-right: none;
-    }
-    .coverage-summary th {
-      text-align: left;
-      font-weight: normal;
-      white-space: nowrap;
-      cursor: pointer;
-      user-select: none;
-      border: none !important;
-    }
-    .coverage-summary th:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-    .coverage-summary th.file {
-      border-right: none !important;
-    }
-    .coverage-summary th.pct,
-    .coverage-summary th.abs {
-      text-align: right;
-    }
-    .coverage-summary td.pct,
-    .coverage-summary td.abs {
-      text-align: right;
-    }
-    .coverage-summary td.file {
-      white-space: nowrap;
-    }
-    .coverage-summary td.pic {
-      min-width: 120px !important;
-      text-align: right;
-    }
-    .sort-icon {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      margin-left: 5px;
-      color: #999;
-      opacity: 0.5;
-    }
-    .sort-icon.active {
-      color: #000;
-      opacity: 1;
-    }
-    .coverage-summary td.bar {
-      padding: 10px;
-      min-width: 120px !important;
-    }
-    .low .cover-fill { background: #C21F39; }
-    .low .chart { border: 1px solid #C21F39; }
-    .high .cover-fill { background: rgb(77,146,33); }
-    .high .chart { border: 1px solid rgb(77,146,33); }
-    .medium .cover-fill { background: #f9cd0b; }
-    .medium .chart { border: 1px solid #f9cd0b; }
-    .acceptable .cover-fill { background: rgb(100,150,50); }
-    .acceptable .chart { border: 1px solid rgb(100,150,50); }
-    .good .cover-fill { background: rgb(120,160,70); }
-    .good .chart { border: 1px solid rgb(120,160,70); }
-    .cover-fill,
-    .cover-empty {
-      display: inline-block;
-      height: 12px;
-      vertical-align: top;
-    }
-    .chart {
-      line-height: 0;
-      font-size: 0;
-      white-space: nowrap;
-    }
-    .cover-empty {
-      background: white;
-    }
-    .cover-full {
-      border-right: none !important;
-    }
-    .complexity-value {
-      font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-    }
-    .complexity-value.low { color: #C21F39; }
-    .complexity-value.medium { color: #f9cd0b; }
-    .complexity-value.high { color: rgb(77,146,33); }
-    .complexity-value.acceptable { color: rgb(100,150,50); }
-    .complexity-value.good { color: rgb(120,160,70); }
-    .controls {
-      margin: 20px 0;
-      padding: 15px;
-      background: #f5f5f5;
-      border-radius: 4px;
-    }
-    .controls label {
-      margin-right: 15px;
-      font-weight: normal;
-    }
-    .controls input {
-      margin-left: 5px;
-      padding: 5px;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-    }
-    .header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0;
-    }
-    .header-row h1 {
-      margin: 0;
-    }
-    .about-link {
-      color: #0074D9;
-      text-decoration: none;
-      font-size: 14px;
-    }
-    .about-link:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="../../shared.css" />
 </head>
 <body>
   <div class="pad2">
@@ -194,31 +12,55 @@
       <h1><a href="../../index.html" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">src/components</span></h1>
       <a href="../../about.html" class="about-link">About Cyclomatic Complexity</a>
     </div>
-    <div class="pad1y quiet">
-      12 Functions / 12 within threshold (100%)
+    
+    <div class="clearfix">
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100%</span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>12/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100%</span>
+        <span class="quiet">Control Flow</span>
+        <span class='fraction'>7/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100%</span>
+        <span class="quiet">Expressions</span>
+        <span class='fraction'>3/3</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100%</span>
+        <span class="quiet">Default Parameters</span>
+        <span class='fraction'>5/5</span>
+      </div>
     </div>
-    <div class="controls">
-      <label>
-        <input type="checkbox" id="showAllFunctions" checked>
-        Display all functions (12 total)
+    <div class="quiet" style="display: flex; align-items: center; gap: 15px; margin-top: 14px;">
+      <div>
+        Filter:
+        <input type="search" id="fileSearch">
+      </div>
+      <label style="margin: 0; font-weight: normal;">
+        <input type="checkbox" id="showAllFunctions" >
+        Show all functions
       </label>
-      <span class="quiet" style="margin-left: 15px;">
-        Uncheck to show only functions with complexity > 10
-      </span>
     </div>
-    <table class="coverage-summary">
+  </div>
+  <div class='status-line high'></div>
+  <div class="pad2">
+    <table class="coverage-summary function-complexity-table">
       <thead>
-        <tr class="keyline-all">
-          <th class="file" data-sort="file">File <span class="sort-icon">↕</span></th>
-          <th class="bar" data-sort="complexity" style="text-align: right;"><span class="sort-icon">↕</span></th>
-          <th class="file" data-sort="function">Function <span class="sort-icon">↕</span></th>
-          <th class="pct" data-sort="complexity">Complexity <span class="sort-icon">↕</span></th>
-          <th class="abs" data-sort="line">Line <span class="sort-icon">↕</span></th>
+        <tr>
+          <th class="file" data-sort="file">File <span class="sorter"></span></th>
+          <th class="bar" data-sort="complexity" style="text-align: right;"><span class="sorter"></span></th>
+          <th class="file" data-sort="function">Function <span class="sorter"></span></th>
+          <th class="pct" data-sort="complexity">Complexity <span class="sorter"></span></th>
+          <th class="abs" data-sort="line">Line <span class="sorter"></span></th>
         </tr>
       </thead>
       <tbody>
         
-    <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="Button" data-complexity="6" data-line="45" >
+    <tr class="good" data-over-threshold="false" data-file="src/components/Button.tsx" data-function="Button" data-complexity="6" data-line="45" style="display: none;">
       <td class="file"><a href="Button.tsx.html">src/components/Button.tsx</a></td>
       <td class="bar good">
         <div class="chart"><div class="cover-fill good " style="width: 20%"></div><div class="cover-empty" style="width: 80%"></div></div>
@@ -232,7 +74,7 @@
       <td class="abs">45</td>
     </tr>
   
-    <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="getVariantClass" data-complexity="3" data-line="11" >
+    <tr class="good" data-over-threshold="false" data-file="src/components/Button.tsx" data-function="getVariantClass" data-complexity="3" data-line="11" style="display: none;">
       <td class="file"><a href="Button.tsx.html">src/components/Button.tsx</a></td>
       <td class="bar good">
         <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
@@ -246,7 +88,7 @@
       <td class="abs">11</td>
     </tr>
   
-    <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="shouldDisplayChevron" data-complexity="3" data-line="21" >
+    <tr class="good" data-over-threshold="false" data-file="src/components/Button.tsx" data-function="shouldDisplayChevron" data-complexity="3" data-line="21" style="display: none;">
       <td class="file"><a href="Button.tsx.html">src/components/Button.tsx</a></td>
       <td class="bar good">
         <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
@@ -260,7 +102,7 @@
       <td class="abs">21</td>
     </tr>
   
-    <tr data-over-threshold="false" data-file="src/components/Icon.tsx" data-function="Icon" data-complexity="3" data-line="10" >
+    <tr class="good" data-over-threshold="false" data-file="src/components/Icon.tsx" data-function="Icon" data-complexity="3" data-line="10" style="display: none;">
       <td class="file"><a href="Icon.tsx.html">src/components/Icon.tsx</a></td>
       <td class="bar good">
         <div class="chart"><div class="cover-fill good " style="width: 10%"></div><div class="cover-empty" style="width: 90%"></div></div>
@@ -274,7 +116,7 @@
       <td class="abs">10</td>
     </tr>
   
-    <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="renderLeftChevron" data-complexity="2" data-line="31" >
+    <tr class="good" data-over-threshold="false" data-file="src/components/Button.tsx" data-function="renderLeftChevron" data-complexity="2" data-line="31" style="display: none;">
       <td class="file"><a href="Button.tsx.html">src/components/Button.tsx</a></td>
       <td class="bar good">
         <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
@@ -288,7 +130,7 @@
       <td class="abs">31</td>
     </tr>
   
-    <tr data-over-threshold="false" data-file="src/components/Button.tsx" data-function="renderRightChevron" data-complexity="2" data-line="38" >
+    <tr class="good" data-over-threshold="false" data-file="src/components/Button.tsx" data-function="renderRightChevron" data-complexity="2" data-line="38" style="display: none;">
       <td class="file"><a href="Button.tsx.html">src/components/Button.tsx</a></td>
       <td class="bar good">
         <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
@@ -302,7 +144,7 @@
       <td class="abs">38</td>
     </tr>
   
-    <tr data-over-threshold="false" data-file="src/components/ScrollToTop.tsx" data-function="ScrollToTop" data-complexity="2" data-line="11" >
+    <tr class="good" data-over-threshold="false" data-file="src/components/ScrollToTop.tsx" data-function="ScrollToTop" data-complexity="2" data-line="11" style="display: none;">
       <td class="file"><a href="ScrollToTop.tsx.html">src/components/ScrollToTop.tsx</a></td>
       <td class="bar good">
         <div class="chart"><div class="cover-fill good " style="width: 6.666666666666667%"></div><div class="cover-empty" style="width: 93.33333333333333%"></div></div>
@@ -316,7 +158,7 @@
       <td class="abs">11</td>
     </tr>
   
-    <tr data-over-threshold="false" data-file="src/components/BlogSkeleton.tsx" data-function="BlogSkeleton" data-complexity="1" data-line="8" >
+    <tr class="good" data-over-threshold="false" data-file="src/components/BlogSkeleton.tsx" data-function="BlogSkeleton" data-complexity="1" data-line="8" style="display: none;">
       <td class="file"><a href="BlogSkeleton.tsx.html">src/components/BlogSkeleton.tsx</a></td>
       <td class="bar good">
         <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
@@ -330,21 +172,7 @@
       <td class="abs">8</td>
     </tr>
   
-    <tr data-over-threshold="false" data-file="src/components/BlogSkeleton.tsx" data-function="BlogSkeleton (from callback)" data-complexity="1" data-line="50" >
-      <td class="file"><a href="BlogSkeleton.tsx.html">src/components/BlogSkeleton.tsx</a></td>
-      <td class="bar good">
-        <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
-      </td>
-      <td class="file">
-        <span style="font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 13px;">BlogSkeleton (from callback)</span>
-      </td>
-      <td class="pct">
-        <span class="complexity-value good">1</span>
-      </td>
-      <td class="abs">50</td>
-    </tr>
-  
-    <tr data-over-threshold="false" data-file="src/components/MetaTags.tsx" data-function="MetaTags" data-complexity="1" data-line="7" >
+    <tr class="good" data-over-threshold="false" data-file="src/components/MetaTags.tsx" data-function="MetaTags" data-complexity="1" data-line="7" style="display: none;">
       <td class="file"><a href="MetaTags.tsx.html">src/components/MetaTags.tsx</a></td>
       <td class="bar good">
         <div class="chart"><div class="cover-fill good " style="width: 3.3333333333333335%"></div><div class="cover-empty" style="width: 96.66666666666667%"></div></div>
@@ -361,23 +189,86 @@
       </tbody>
     </table>
   </div>
+  <div class='footer quiet pad2 space-top1 center small'>
+    Complexity report generated by <a href="https://www.github.com/pythonidaer" target="_blank" rel="noopener noreferrer">pythonidaer</a> at 2026-01-27T23:02:59.247Z
+  </div>
   <script>
     (function() {
-      // Checkbox filter
-      const checkbox = document.getElementById('showAllFunctions');
-      if (checkbox) {
-        const rows = document.querySelectorAll('tbody tr[data-over-threshold]');
-        checkbox.addEventListener('change', function() {
-          const showAll = this.checked;
-          rows.forEach(function(row) {
+      function initFilters() {
+        // Checkbox filter
+        const checkbox = document.getElementById('showAllFunctions');
+        const fileSearchInput = document.getElementById('fileSearch');
+        const table = document.querySelector('.coverage-summary.function-complexity-table');
+        
+        if (!table) {
+          console.warn('Complexity table not found');
+          return;
+        }
+        
+        const tbody = table.querySelector('tbody');
+        if (!tbody) {
+          console.warn('Table tbody not found');
+          return;
+        }
+        
+        function applyFilters() {
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+          const showAll = checkbox ? checkbox.checked : true;
+          const searchValue = fileSearchInput ? fileSearchInput.value : '';
+          
+          // Try to create a RegExp from the searchValue
+          let searchRegex;
+          try {
+            searchRegex = searchValue ? new RegExp(searchValue, 'i') : null;
+          } catch (error) {
+            searchRegex = null;
+          }
+          
+          rows.forEach(row => {
+            // Check if row matches search filter
+            let matchesSearch = true;
+            if (searchValue) {
+              if (searchRegex) {
+                matchesSearch = searchRegex.test(row.textContent);
+              } else {
+                matchesSearch = row.textContent.toLowerCase().includes(searchValue.toLowerCase());
+              }
+            }
+            
+            // Check if row matches checkbox filter
             const isOverThreshold = row.getAttribute('data-over-threshold') === 'true';
-            if (showAll || isOverThreshold) {
-              row.style.display = '';
+            const matchesCheckbox = showAll || isOverThreshold;
+            
+            // Show row only if it matches both filters
+            if (matchesSearch && matchesCheckbox) {
+              // Remove inline style attribute entirely if it only contains display:none
+              // Otherwise set display to empty string to show the row
+              if (row.getAttribute('style') === 'display: none;') {
+                row.removeAttribute('style');
+              } else {
+                row.style.display = '';
+              }
             } else {
               row.style.display = 'none';
             }
           });
-        });
+        }
+        
+        if (checkbox) {
+          checkbox.addEventListener('change', applyFilters);
+        }
+        
+        // Filter functionality
+        if (fileSearchInput) {
+          fileSearchInput.addEventListener('input', applyFilters);
+        }
+      }
+      
+      // Initialize when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFilters);
+      } else {
+        initFilters();
       }
       
       // Sorting functionality
@@ -437,15 +328,17 @@
             currentSort.direction = column === 'functions' ? 'desc' : 'asc';
           }
           
-          // Update sort icons
+          // Update sort classes
           headers.forEach(h => {
-            const icon = h.querySelector('.sort-icon');
+            // Remove sorted classes from all headers
+            h.classList.remove('sorted', 'sorted-desc');
+            // Add appropriate class to the clicked header
             if (h === this) {
-              icon.textContent = currentSort.direction === 'asc' ? '↑' : '↓';
-              icon.classList.add('active');
-            } else {
-              icon.textContent = '↕';
-              icon.classList.remove('active');
+              if (currentSort.direction === 'asc') {
+                h.classList.add('sorted');
+              } else {
+                h.classList.add('sorted-desc');
+              }
             }
           });
           

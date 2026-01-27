@@ -29,10 +29,10 @@ function groupFunctionsByBaseName(functions, getBaseFunctionName) {
  * @param {boolean} showAllInitially - Whether to show all functions initially
  * @returns {string} HTML row string
  */
-function generateFunctionRow(issue, getComplexityLevel, getBaseFunctionName, showAllInitially) {
+function generateFunctionRow(issue, getComplexityLevel, getBaseFunctionName, showAllInitially, complexityThreshold = 10) {
   const level = getComplexityLevel(issue.complexity);
   const complexityNum = parseInt(issue.complexity);
-  const isOverThreshold = complexityNum > 10;
+  const isOverThreshold = complexityNum > complexityThreshold;
   const maxComplexityForBar = Math.max(30, complexityNum);
   const percentage = Math.min(100, (complexityNum / maxComplexityForBar) * 100);
   const fileName = issue.file.split('/').pop();
@@ -40,7 +40,7 @@ function generateFunctionRow(issue, getComplexityLevel, getBaseFunctionName, sho
   const baseFunctionName = getBaseFunctionName(issue.functionName || 'unknown');
   
   return `
-    <tr data-over-threshold="${isOverThreshold}" data-file="${issue.file}" data-function="${baseFunctionName}" data-complexity="${complexityNum}" data-line="${issue.line}" ${!showAllInitially && !isOverThreshold ? 'style="display: none;"' : ''}>
+    <tr class="${level}" data-over-threshold="${isOverThreshold}" data-file="${issue.file}" data-function="${baseFunctionName}" data-complexity="${complexityNum}" data-line="${issue.line}" ${!showAllInitially && !isOverThreshold ? 'style="display: none;"' : ''}>
       <td class="file"><a href="${fileLinkPath}">${issue.file}</a></td>
       <td class="bar ${level}">
         <div class="chart"><div class="cover-fill ${level} ${percentage === 100 ? 'cover-full' : ''}" style="width: ${percentage}%"></div><div class="cover-empty" style="width: ${100 - percentage}%"></div></div>
@@ -62,21 +62,81 @@ function generateFunctionRow(issue, getComplexityLevel, getBaseFunctionName, sho
  */
 function generateFolderPageScript() {
   return `(function() {
-      // Checkbox filter
-      const checkbox = document.getElementById('showAllFunctions');
-      if (checkbox) {
-        const rows = document.querySelectorAll('tbody tr[data-over-threshold]');
-        checkbox.addEventListener('change', function() {
-          const showAll = this.checked;
-          rows.forEach(function(row) {
+      function initFilters() {
+        // Checkbox filter
+        const checkbox = document.getElementById('showAllFunctions');
+        const fileSearchInput = document.getElementById('fileSearch');
+        const table = document.querySelector('.coverage-summary.function-complexity-table');
+        
+        if (!table) {
+          console.warn('Complexity table not found');
+          return;
+        }
+        
+        const tbody = table.querySelector('tbody');
+        if (!tbody) {
+          console.warn('Table tbody not found');
+          return;
+        }
+        
+        function applyFilters() {
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+          const showAll = checkbox ? checkbox.checked : true;
+          const searchValue = fileSearchInput ? fileSearchInput.value : '';
+          
+          // Try to create a RegExp from the searchValue
+          let searchRegex;
+          try {
+            searchRegex = searchValue ? new RegExp(searchValue, 'i') : null;
+          } catch (error) {
+            searchRegex = null;
+          }
+          
+          rows.forEach(row => {
+            // Check if row matches search filter
+            let matchesSearch = true;
+            if (searchValue) {
+              if (searchRegex) {
+                matchesSearch = searchRegex.test(row.textContent);
+              } else {
+                matchesSearch = row.textContent.toLowerCase().includes(searchValue.toLowerCase());
+              }
+            }
+            
+            // Check if row matches checkbox filter
             const isOverThreshold = row.getAttribute('data-over-threshold') === 'true';
-            if (showAll || isOverThreshold) {
-              row.style.display = '';
+            const matchesCheckbox = showAll || isOverThreshold;
+            
+            // Show row only if it matches both filters
+            if (matchesSearch && matchesCheckbox) {
+              // Remove inline style attribute entirely if it only contains display:none
+              // Otherwise set display to empty string to show the row
+              if (row.getAttribute('style') === 'display: none;') {
+                row.removeAttribute('style');
+              } else {
+                row.style.display = '';
+              }
             } else {
               row.style.display = 'none';
             }
           });
-        });
+        }
+        
+        if (checkbox) {
+          checkbox.addEventListener('change', applyFilters);
+        }
+        
+        // Filter functionality
+        if (fileSearchInput) {
+          fileSearchInput.addEventListener('input', applyFilters);
+        }
+      }
+      
+      // Initialize when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFilters);
+      } else {
+        initFilters();
       }
       
       // Sorting functionality
@@ -136,15 +196,17 @@ function generateFolderPageScript() {
             currentSort.direction = column === 'functions' ? 'desc' : 'asc';
           }
           
-          // Update sort icons
+          // Update sort classes
           headers.forEach(h => {
-            const icon = h.querySelector('.sort-icon');
+            // Remove sorted classes from all headers
+            h.classList.remove('sorted', 'sorted-desc');
+            // Add appropriate class to the clicked header
             if (h === this) {
-              icon.textContent = currentSort.direction === 'asc' ? '↑' : '↓';
-              icon.classList.add('active');
-            } else {
-              icon.textContent = '↕';
-              icon.classList.remove('active');
+              if (currentSort.direction === 'asc') {
+                h.classList.add('sorted');
+              } else {
+                h.classList.add('sorted-desc');
+              }
             }
           });
           
@@ -163,9 +225,71 @@ function generateFolderPageScript() {
     })();`;
 }
 
-export function generateFolderHTML(folder, allFolders, showAllInitially, getComplexityLevel, getBaseFunctionName) {
+/**
+ * Generates summary section HTML (similar to main index)
+ * @param {Object} decisionPointTotals - Object with controlFlow, expressions, functionParameters totals
+ * @param {number} totalFunctions - Total number of functions
+ * @param {number} withinThreshold - Number of functions within threshold
+ * @param {number} withinThresholdPercentage - Percentage of functions within threshold
+ * @returns {string} Summary section HTML
+ */
+function generateSummarySection(decisionPointTotals, totalFunctions, withinThreshold, _withinThresholdPercentage) {
+  const { controlFlow, expressions, functionParameters } = decisionPointTotals;
+  
+  // Helper function to format percentage (2 decimal places if needed, whole number otherwise)
+  const formatPercentage = (numerator, denominator) => {
+    if (denominator === 0) return '0%';
+    const percentage = (numerator / denominator) * 100;
+    // If it's a whole number, show without decimals; otherwise show 2 decimal places
+    return percentage % 1 === 0 ? `${percentage}%` : `${percentage.toFixed(2)}%`;
+  };
+  
+  // Calculate Functions percentage using formatPercentage (not the pre-rounded value)
+  const functionsPercentage = formatPercentage(withinThreshold, totalFunctions);
+  const controlFlowPercentage = formatPercentage(controlFlow, controlFlow);
+  const expressionsPercentage = formatPercentage(expressions, expressions);
+  const defaultParamsPercentage = formatPercentage(functionParameters, functionParameters);
+  
+  return `
+    <div class="clearfix">
+      <div class='fl pad1y space-right2'>
+        <span class="strong">${functionsPercentage}</span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>${withinThreshold}/${totalFunctions}</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">${controlFlowPercentage}</span>
+        <span class="quiet">Control Flow</span>
+        <span class='fraction'>${controlFlow}/${controlFlow}</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">${expressionsPercentage}</span>
+        <span class="quiet">Expressions</span>
+        <span class='fraction'>${expressions}/${expressions}</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">${defaultParamsPercentage}</span>
+        <span class="quiet">Default Parameters</span>
+        <span class='fraction'>${functionParameters}/${functionParameters}</span>
+      </div>
+    </div>`;
+}
+
+export function generateFolderHTML(folder, allFolders, showAllInitially, getComplexityLevel, getBaseFunctionName, complexityThreshold = 10, decisionPointTotals = { controlFlow: 0, expressions: 0, functionParameters: 0 }) {
   const folderPath = folder.directory;
   const backLink = folderPath ? '../'.repeat(folderPath.split('/').length) + 'index.html' : 'index.html';
+  
+  // Calculate relative path to shared.css
+  const sharedCssPath = folderPath ? '../'.repeat(folderPath.split('/').length) + 'shared.css' : 'shared.css';
+  
+  // Generate summary section
+  const summarySection = generateSummarySection(decisionPointTotals, folder.totalFunctions, folder.withinThreshold, folder.percentage);
+  
+  // Calculate level for status bar
+  const percentageValue = folder.totalFunctions > 0 
+    ? (folder.withinThreshold / folder.totalFunctions) * 100 
+    : 100;
+  const level = percentageValue >= 80 ? 'high' : percentageValue >= 60 ? 'high' : percentageValue >= 40 ? 'medium' : 'low';
   
   return `<!DOCTYPE html>
 <html lang="en">
@@ -173,189 +297,7 @@ export function generateFolderHTML(folder, allFolders, showAllInitially, getComp
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Complexity Report - ${folderPath || 'Root'}</title>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    body {
-      font-family: Helvetica Neue, Helvetica, Arial;
-      font-size: 14px;
-      color: #333;
-    }
-    *, *:after, *:before {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-    h1 {
-      font-size: 20px;
-      margin: 0;
-    }
-    h2 {
-      font-size: 14px;
-    }
-    a {
-      color: #0074D9;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .strong {
-      font-weight: bold;
-    }
-    .pad2 {
-      padding: 20px;
-    }
-    .pad1y {
-      padding: 10px 0;
-    }
-    .quiet {
-      color: #7f7f7f;
-      color: rgba(0,0,0,0.5);
-    }
-    .coverage-summary {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    .coverage-summary tr {
-      border-bottom: 1px solid #bbb;
-    }
-    .keyline-all {
-      border: 1px solid #ddd;
-    }
-    .coverage-summary td,
-    .coverage-summary th {
-      padding: 10px;
-    }
-    .coverage-summary tbody tr {
-      background-color: rgb(230, 245, 208);
-    }
-    .coverage-summary tbody {
-      border: 1px solid #bbb;
-    }
-    .coverage-summary td {
-      border-right: 1px solid #bbb;
-    }
-    .coverage-summary td:last-child {
-      border-right: none;
-    }
-    .coverage-summary th {
-      text-align: left;
-      font-weight: normal;
-      white-space: nowrap;
-      cursor: pointer;
-      user-select: none;
-      border: none !important;
-    }
-    .coverage-summary th:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-    .coverage-summary th.file {
-      border-right: none !important;
-    }
-    .coverage-summary th.pct,
-    .coverage-summary th.abs {
-      text-align: right;
-    }
-    .coverage-summary td.pct,
-    .coverage-summary td.abs {
-      text-align: right;
-    }
-    .coverage-summary td.file {
-      white-space: nowrap;
-    }
-    .coverage-summary td.pic {
-      min-width: 120px !important;
-      text-align: right;
-    }
-    .sort-icon {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      margin-left: 5px;
-      color: #999;
-      opacity: 0.5;
-    }
-    .sort-icon.active {
-      color: #000;
-      opacity: 1;
-    }
-    .coverage-summary td.bar {
-      padding: 10px;
-      min-width: 120px !important;
-    }
-    .low .cover-fill { background: #C21F39; }
-    .low .chart { border: 1px solid #C21F39; }
-    .high .cover-fill { background: rgb(77,146,33); }
-    .high .chart { border: 1px solid rgb(77,146,33); }
-    .medium .cover-fill { background: #f9cd0b; }
-    .medium .chart { border: 1px solid #f9cd0b; }
-    .acceptable .cover-fill { background: rgb(100,150,50); }
-    .acceptable .chart { border: 1px solid rgb(100,150,50); }
-    .good .cover-fill { background: rgb(120,160,70); }
-    .good .chart { border: 1px solid rgb(120,160,70); }
-    .cover-fill,
-    .cover-empty {
-      display: inline-block;
-      height: 12px;
-      vertical-align: top;
-    }
-    .chart {
-      line-height: 0;
-      font-size: 0;
-      white-space: nowrap;
-    }
-    .cover-empty {
-      background: white;
-    }
-    .cover-full {
-      border-right: none !important;
-    }
-    .complexity-value {
-      font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-    }
-    .complexity-value.low { color: #C21F39; }
-    .complexity-value.medium { color: #f9cd0b; }
-    .complexity-value.high { color: rgb(77,146,33); }
-    .complexity-value.acceptable { color: rgb(100,150,50); }
-    .complexity-value.good { color: rgb(120,160,70); }
-    .controls {
-      margin: 20px 0;
-      padding: 15px;
-      background: #f5f5f5;
-      border-radius: 4px;
-    }
-    .controls label {
-      margin-right: 15px;
-      font-weight: normal;
-    }
-    .controls input {
-      margin-left: 5px;
-      padding: 5px;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-    }
-    .header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0;
-    }
-    .header-row h1 {
-      margin: 0;
-    }
-    .about-link {
-      color: #0074D9;
-      text-decoration: none;
-      font-size: 14px;
-    }
-    .about-link:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="${sharedCssPath}" />
 </head>
 <body>
   <div class="pad2">
@@ -363,34 +305,39 @@ export function generateFolderHTML(folder, allFolders, showAllInitially, getComp
       <h1>${folderPath ? `<a href="${backLink}" style="color: #0074D9; text-decoration: none; font-weight: bold;">All files</a> <span style="font-weight: bold;">${folderPath}</span>` : 'All files'}</h1>
       <a href="${folderPath ? '../'.repeat(folderPath.split('/').length) + 'about.html' : 'about.html'}" class="about-link">About Cyclomatic Complexity</a>
     </div>
-    <div class="pad1y quiet">
-      ${folder.totalFunctions} Function${folder.totalFunctions !== 1 ? 's' : ''} / ${folder.withinThreshold} within threshold (${folder.percentage}%)
-    </div>
-    <div class="controls">
-      <label>
+    ${summarySection}
+    <div class="quiet" style="display: flex; align-items: center; gap: 15px; margin-top: 14px;">
+      <div>
+        Filter:
+        <input type="search" id="fileSearch">
+      </div>
+      <label style="margin: 0; font-weight: normal;">
         <input type="checkbox" id="showAllFunctions" ${showAllInitially ? 'checked' : ''}>
-        Display all functions (${folder.totalFunctions} total)
+        Show all functions
       </label>
-      <span class="quiet" style="margin-left: 15px;">
-        Uncheck to show only functions with complexity > 10
-      </span>
     </div>
-    <table class="coverage-summary">
+  </div>
+  <div class='status-line ${level}'></div>
+  <div class="pad2">
+    <table class="coverage-summary function-complexity-table">
       <thead>
-        <tr class="keyline-all">
-          <th class="file" data-sort="file">File <span class="sort-icon">↕</span></th>
-          <th class="bar" data-sort="complexity" style="text-align: right;"><span class="sort-icon">↕</span></th>
-          <th class="file" data-sort="function">Function <span class="sort-icon">↕</span></th>
-          <th class="pct" data-sort="complexity">Complexity <span class="sort-icon">↕</span></th>
-          <th class="abs" data-sort="line">Line <span class="sort-icon">↕</span></th>
+        <tr>
+          <th class="file" data-sort="file">File <span class="sorter"></span></th>
+          <th class="bar" data-sort="complexity" style="text-align: right;"><span class="sorter"></span></th>
+          <th class="file" data-sort="function">Function <span class="sorter"></span></th>
+          <th class="pct" data-sort="complexity">Complexity <span class="sorter"></span></th>
+          <th class="abs" data-sort="line">Line <span class="sorter"></span></th>
         </tr>
       </thead>
       <tbody>
         ${groupFunctionsByBaseName(folder.functions, getBaseFunctionName)
-          .map(issue => generateFunctionRow(issue, getComplexityLevel, getBaseFunctionName, showAllInitially))
+          .map(issue => generateFunctionRow(issue, getComplexityLevel, getBaseFunctionName, showAllInitially, complexityThreshold))
           .join('')}
       </tbody>
     </table>
+  </div>
+  <div class='footer quiet pad2 space-top1 center small'>
+    Complexity report generated by <a href="https://www.github.com/pythonidaer" target="_blank" rel="noopener noreferrer">pythonidaer</a> at ${new Date().toISOString()}
   </div>
   <script>
     ${generateFolderPageScript()}

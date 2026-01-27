@@ -9,7 +9,7 @@ dist-ssr/
 complexity-report.html
 complexity-report.json
 .complexity_report/
-complexity/
+# complexity/
 eslint.config.temp.js
 
 # Editor directories and files
@@ -38,7 +38,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Testing
-coverage/
+# coverage/
 .nyc_output
 
 # Temporary files

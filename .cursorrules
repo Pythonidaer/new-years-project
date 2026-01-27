@@ -291,6 +291,10 @@ The theming system follows a clear separation of concerns:
 **Key Files:**
 - `src/design/tokens.css` - CSS variable definitions (themeable on `#root`, non-themeable on `:root`)
 - `src/context/ThemeContext.tsx` - Theme state management, presets, persistence, DOM application
+- `src/context/themeData.ts` - Re-exports types and themes from `themes/` directory
+- `src/context/themes/` - Individual theme files (each theme in its own file, e.g., `default.ts`, `noir.ts`, `king.ts`)
+  - `themes/types.ts` - Theme and Preset type definitions
+  - `themes/index.ts` - Exports all built-in presets array
 - `src/components/ThemePicker/` - Floating color picker UI with preset management (positioned bottom-left)
 - `src/utils/contrast.ts` - WCAG contrast checking with detailed warnings
 - `src/design/theming-goals.md` - Original theming architecture documentation
@@ -673,6 +677,7 @@ The AI assistant should **automatically suggest running test coverage** in these
      }
      ```
    - **Why:** ThemeProvider matches the saved theme to find the preset ID, so the theme object must match exactly
+   - **Note:** `themeData.ts` now re-exports from `themes/` directory. Each theme is in its own file (e.g., `themes/noir.ts`, `themes/default.ts`)
 
 3. **Mocking Browser APIs (Image, Audio, etc.):**
    - **Problem:** Constructor mocks need to return the same object instance for property assignments to work
