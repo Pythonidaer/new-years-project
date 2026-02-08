@@ -6,10 +6,14 @@ export interface BlogPost {
   category: string;
   image: string;
   link: string;
-  slug?: string; // Optional slug, will be generated from title if not provided
-  author?: string; // Author name (e.g., "Heidi Fieselmann")
-  content?: string; // Full article content (HTML string)
-  tags?: string[]; // Array of tag/category names for the footer tags section
+  /** Optional slug, will be generated from title if not provided */
+  slug?: string;
+  /** Author name (e.g., "Heidi Fieselmann") */
+  author?: string;
+  /** Full article content (HTML string) */
+  content?: string;
+  /** Array of tag/category names for the footer tags section */
+  tags?: string[];
 }
 
 export type BlogPosts = BlogPost[];

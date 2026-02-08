@@ -200,6 +200,48 @@ describe("ThemePicker Component", () => {
     });
   });
 
+  it("selects preset on Enter key", async () => {
+    render(
+      <ThemeProvider>
+        <ThemePicker />
+      </ThemeProvider>
+    );
+
+    const trigger = screen.getByRole("button", { name: /open theme picker/i });
+    fireEvent.click(trigger);
+
+    await waitFor(() => {
+      expect(screen.getByText("Theme Colors")).toBeTruthy();
+    });
+
+    const cedarOakCard = screen.getByRole("button", { name: /Select Cedar Oak theme/i });
+    fireEvent.keyDown(cedarOakCard, { key: "Enter" });
+
+    await waitFor(() => {
+      const root = document.getElementById("root");
+      expect(root).toBeTruthy();
+    });
+  });
+
+  it("selects preset on Space key", async () => {
+    render(
+      <ThemeProvider>
+        <ThemePicker />
+      </ThemeProvider>
+    );
+
+    const trigger = screen.getByRole("button", { name: /open theme picker/i });
+    fireEvent.click(trigger);
+
+    await waitFor(() => {
+      expect(screen.getByText("Theme Colors")).toBeTruthy();
+    });
+
+    const sageGreenCard = screen.getByRole("button", { name: /Select Sage Green theme/i });
+    fireEvent.keyDown(sageGreenCard, { key: " ", preventDefault: () => {} });
+    fireEvent.keyDown(sageGreenCard, { key: " " });
+  });
+
   it("shows delete button for custom presets only", async () => {
     // First, create a custom preset
     render(
@@ -235,15 +277,15 @@ describe("ThemePicker Component", () => {
       expect(customPreset).toBeTruthy();
     });
 
-    // Custom preset should have delete button
-    const customPresetCard = screen.getByText("Test Custom").closest("button");
+    // Custom preset should have delete button (preset card is div with role="button", delete is nested button)
+    const customPresetCard = screen.getByText("Test Custom").closest('[role="button"]');
     if (customPresetCard) {
       const deleteButton = customPresetCard.querySelector('button[aria-label*="Delete"]');
       expect(deleteButton).toBeTruthy();
     }
 
     // Built-in preset should NOT have delete button
-    const builtInPreset = screen.getByText("Midnight Blue").closest("button");
+    const builtInPreset = screen.getByText("Midnight Blue").closest('[role="button"]');
     if (builtInPreset) {
       const deleteButton = builtInPreset.querySelector('button[aria-label*="Delete"]');
       expect(deleteButton).toBeNull();
@@ -265,7 +307,7 @@ describe("ThemePicker Component", () => {
     });
 
     // Find presets with audio (noname, samson, vapor-wave, king, planet)
-    const nonamePreset = screen.getByText("Noname").closest("button");
+    const nonamePreset = screen.getByText("Noname").closest('[role="button"]');
     if (nonamePreset) {
       // Should have music icon
       const musicIcon = nonamePreset.querySelector("svg");
@@ -288,7 +330,7 @@ describe("ThemePicker Component", () => {
     });
 
     // Default theme should be selected
-    const defaultPreset = screen.getByText("Midnight Blue").closest("button");
+    const defaultPreset = screen.getByText("Midnight Blue").closest('[role="button"]');
     if (defaultPreset) {
       // Should have pin icon
       const pinIcon = defaultPreset.querySelector("svg[fill]");

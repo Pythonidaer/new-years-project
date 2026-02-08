@@ -37,14 +37,24 @@ export default defineConfig({
         "src/**/*.spec.{ts,tsx}",
         "src/**/__tests__/**",
         "src/setupTests.ts",
-        "src/**/types.ts", // Type definition files (don't execute, 0% coverage expected)
-        "src/data/blog/categories.ts", // Pure constant data file (no logic to test)
-        "src/context/ThemeContextInstance.ts", // Type exports and createContext only
-        "scripts/**/*.test.js", // Test files in scripts directory
-        "scripts/**/__tests__/**", // Test directories in scripts
-        "scripts/debug-*.js", // Debug utility scripts
-        "scripts/test-*.js", // Test utility scripts
-        "scripts/generate-complexity-report.js", // Main entry point (orchestration only, tested via integration)
+        // Type definition files (don't execute, 0% coverage expected)
+        "src/**/types.ts",
+        // Pure constant data file (no logic to test)
+        "src/data/blog/categories.ts",
+        // Type exports and createContext only
+        "src/context/ThemeContextInstance.ts",
+        // Test files in scripts directory
+        "scripts/**/*.test.js",
+        // Test directories in scripts
+        "scripts/**/__tests__/**",
+        // Debug utility scripts
+        "scripts/debug-*.js",
+        // Test utility scripts
+        "scripts/test-*.js",
+        // Main entry point (orchestration only, tested via integration)
+        "scripts/report/index.js",
+        // Third-party assets (prettify.js, etc.) - not project source
+        "scripts/assets/**",
       ],
       // Coverage thresholds - professional baseline for frontend React project
       // See .cursorrules section 12 for coverage standards and guidelines

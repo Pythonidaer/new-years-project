@@ -3,8 +3,10 @@ import { X } from "lucide-react";
 import styles from "./TopBanner.module.css";
 
 export function TopBanner() {
-  const [isVisible, setIsVisible] = useState(true);   // user can close permanently
-  const [isHidden, setIsHidden] = useState(false);    // scroll-controlled (slides away)
+  // user can close permanently
+  const [isVisible, setIsVisible] = useState(true);
+  // scroll-controlled (slides away)
+  const [isHidden, setIsHidden] = useState(false);
   const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,7 +42,8 @@ export function TopBanner() {
       });
     };
 
-    onScroll(); // initialize
+    // initialize
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

@@ -10,8 +10,9 @@ import { slugify } from "@/utils/slug";
  * 
  * Performance benefit: Blog data is NOT in the initial bundle, reducing initial JS payload
  */
+// Lazy load - creates separate chunks for each JSON file
 const postModules = import.meta.glob<{ default: BlogPosts }>("./*.json", {
-  eager: false, // Lazy load - creates separate chunks for each JSON file
+  eager: false,
 });
 
 // Cache for loaded posts by topic ID
@@ -180,8 +181,9 @@ export function getRelatedPosts(currentPost: BlogPost, limit: number = 3): BlogP
   });
   
   // Filter to posts with at least one match, sort by score (descending), take top N
+  // Only include posts with at least one match
   const related = scoredPosts
-    .filter(item => item.score > 0) // Only include posts with at least one match
+    .filter(item => item.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
     .map(item => item.post);

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -98,57 +98,57 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { BlogPost as BlogPostType } from '@/data/blog';
 &nbsp;
 /**
  * Get the author name with fallback
  */
-export function <span class="fstat-no" title="function not covered" >getAuthorName(p</span>ost: BlogPostType): string {
-<span class="cstat-no" title="statement not covered" >  return post.author || "LLM Writer";</span>
+export function getAuthorName(post: BlogPostType): string {
+  return post.author || "LLM Writer";
 }
 &nbsp;
 /**
  * Get the meta description with fallback
  */
-export function <span class="fstat-no" title="function not covered" >getMetaDescription(p</span>ost: BlogPostType): string {
-<span class="cstat-no" title="statement not covered" >  return post.excerpt || `Read about ${post.title} on Johnny H.'s technical blog.`;</span>
+export function getMetaDescription(post: BlogPostType): string {
+  return post.excerpt || `Read about ${post.title} on Johnny H.'s technical blog.`;
 }
 &nbsp;
 /**
  * Check if post has tags
  */
-export function <span class="fstat-no" title="function not covered" >hasTags(p</span>ost: BlogPostType): boolean {
-<span class="cstat-no" title="statement not covered" >  return Boolean(post.tags &amp;&amp; post.tags.length &gt; 0);</span>
+export function hasTags(post: BlogPostType): boolean {
+  return Boolean(post.tags &amp;&amp; post.tags.length &gt; 0);
 }
 &nbsp;
 /**
  * Check if post has content
  */
-export function <span class="fstat-no" title="function not covered" >hasContent(p</span>ost: BlogPostType): boolean {
-<span class="cstat-no" title="statement not covered" >  return Boolean(post.content);</span>
+export function hasContent(post: BlogPostType): boolean {
+  return Boolean(post.content);
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -157,7 +157,7 @@ export function <span class="fstat-no" title="function not covered" >hasContent(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-27T22:53:37.715Z
+                at 2026-02-08T16:35:10.206Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

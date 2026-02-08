@@ -29,7 +29,8 @@ export default defineConfig([
       // Target: ≤ 1000 lines per file (excluding blank lines and comments)
       // See .cursorrules section 13 for file length guidelines
       // Note: Test files are excluded from this rule
-      "max-lines": ["warn", { max: 1000, skipBlankLines: true, skipComments: true }],
+      "max-lines": ["warn", { max: 1000, skipBlankLines: false, skipComments: false }],
+      "no-inline-comments": "error",
       // Allow underscore-prefixed parameters for unused parameters (API compatibility)
       "no-unused-vars": ["error", { 
         argsIgnorePattern: "^_",
@@ -53,13 +54,36 @@ export default defineConfig([
       complexity: ["warn", { max: 10, variant: "classic" }],
       // File length enforcement
       // Note: Test files are excluded from this rule
-      "max-lines": ["warn", { max: 1000, skipBlankLines: true, skipComments: true }],
+      "max-lines": ["warn", { max: 1000, skipBlankLines: false, skipComments: false }],
+      "no-inline-comments": "error",
       // Allow underscore-prefixed parameters for unused parameters (API compatibility)
       "no-unused-vars": ["error", { 
         argsIgnorePattern: "^_",
         varsIgnorePattern: "^_",
         caughtErrorsIgnorePattern: "^_"
       }],
+    },
+  },
+  // Line length enforcement (scripts folder only)
+  {
+    files: ['scripts/**/*.js'],
+    ignores: ['scripts/__tests__/**'],
+    rules: {
+      // Target: ≤ 88 characters per line
+      "max-len": ["warn", { 
+        code: 88, 
+        ignoreUrls: true, 
+        ignoreStrings: true, 
+        ignoreTemplateLiterals: true, 
+        ignoreRegExpLiterals: true 
+      }],
+    },
+  },
+  // Allow inline comments in theme files (color/value notes are useful on same line)
+  {
+    files: ['src/context/themes/**'],
+    rules: {
+      'no-inline-comments': 'off',
     },
   },
 ])

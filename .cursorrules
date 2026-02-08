@@ -814,153 +814,23 @@ For each function:
 - **Tree sum CC** – sum of all nested functions (optional, custom)
 
 **ESLint Enforcement:**
-- Complexity rule is configured in `eslint.config.js`
-- Current threshold: `max: 10` with `variant: "classic"` (warn level)
-- File length rule: `max-lines: ["warn", { max: 1000, skipBlankLines: true, skipComments: true }]`
+- Complexity rule is configured in `eslint.config.js` (threshold and variant; report generator reads threshold via `scripts/get-complexity-threshold.js`)
+- File length: `max-lines: ["warn", { max: 1000, skipBlankLines: true, skipComments: true }]` in `eslint.config.js`
 - Use `npm run lint` to check for complexity and file length violations
-- Use `npm run lint:complexity` to generate an HTML complexity report (uses AST parser by default)
+- Use `npm run lint:complexity` to generate the HTML complexity report (AST parser, threshold from config)
 - Use `npm run lint:complexity:all` to generate report with all functions visible by default
+- Use `npm run lint:complexity:all-columns` to show all breakdown columns by default
+- Use `npm run lint:complexity:hide-table` to hide the breakdown table by default
+- Use `npm run lint:complexity:export` to also write TXT/MD exports to `complexity/reports/` (or `package.json` → `complexityReport.exportDir`)
 
-**Complexity Report Generation:**
+**Complexity Report (scripts):**
 
-The project includes a custom complexity report generator that creates an interactive HTML report mimicking Vitest's coverage UI. The report displays all functions (not just those exceeding the threshold) with comprehensive metrics and folder-based navigation.
+A custom report generator (`scripts/generate-complexity-report.js`) produces an HTML report (Vitest-style UI, folder navigation, per-file breakdown tables, decision-point breakdown). Output: `complexity/index.html`, `complexity/<folder_path>/index.html`, `complexity/<folder_path>/<file>.html`. Intermediate ESLint output: `scripts/complexity-report.json` (gitignored). For how it works, module layout, completed work, and TODOs, see **`scripts/README.md`**.
 
-**Script Location:**
-- `scripts/generate-complexity-report.js` - Custom Node.js script that generates HTML complexity reports
-
-**Current Status: ✅ Core Features Complete**
-
-**Completed Features:**
-- ✅ **Folder-based navigation** - Hierarchical structure matching Vitest (`complexity/index.html` → `complexity/src/components/index.html`)
-- ✅ **All functions displayed** - Shows all functions, not just those exceeding threshold (configurable via `--show-all` flag)
-- ✅ **Vitest-style UI** - Matches Vitest coverage report visual design:
-  - Progress bars with color-coded levels (high/medium/low)
-  - Table styling with `rgb(230, 245, 208)` background
-  - Sortable columns with toggle icons (↕, ↑, ↓)
-  - Right-aligned sort icons for progress bar and percentage columns
-  - Borderless headers matching Vitest design
-- ✅ **Comprehensive sorting** - Sortable by File, Function, Complexity, Line, and Functions (ratio)
-  - Functions column sorts by ratio first, then by total count (denominator) when ratios are equal
-  - Default sort direction: descending for functions/percentage columns (most to least)
-- ✅ **Filtering** - Checkbox to toggle between all functions and only those exceeding threshold
-- ✅ **Function name extraction** - Extracts function names from source code using regex patterns
-- ✅ **Deduplication** - Prevents duplicate function entries (keeps highest complexity)
-- ✅ **Test file exclusion** - Automatically excludes `__tests__` directories from analysis
-
-**How It Works:**
-
-1. **ESLint Integration:**
-   - Creates temporary `eslint.config.temp.js` with `complexity: ["warn", { max: 0, variant: "classic" }]` to capture all functions
-   - Sets `globalIgnores` to exclude `__tests__` directories
-   - Executes ESLint with JSON output format
-   - Cleans up temporary config file after execution
-
-2. **Report Generation:**
-   - Parses ESLint JSON output to extract all function complexity data
-   - Extracts function names from source files using regex patterns
-   - Deduplicates functions based on `filePath:functionName` (keeps highest complexity)
-   - Organizes functions by folder/directory structure
-   - Calculates folder-level statistics (total functions, within threshold, percentage)
-   - Generates separate HTML files for each folder (folder-based navigation)
-
-3. **HTML Report Output:**
-   - **Main report**: `complexity/index.html` - Shows folder-level summary with:
-     - File column (clickable links to folder pages)
-     - Progress bar column (sortable, right-aligned sort icon)
-     - Functions percentage column (sortable, left-aligned with "Functions" label)
-     - Functions fraction column (sortable, right-aligned sort icon)
-   - **Folder pages**: `complexity/<folder_path>/index.html` - Shows function-level details with:
-     - File, Function, Complexity, Line columns
-     - Progress bar column (sortable by complexity)
-     - Checkbox filter to show all functions or only those exceeding threshold
-   - Uses CSS styling matching Vitest's coverage report design
-   - Color-coded progress bars:
-     - **High (≥80%)**: Dark green (`rgb(77,146,33)`)
-     - **Medium (≥40%)**: Yellow/gold (`#f9cd0b`)
-     - **Low (<40%)**: Dark red (`#C21F39`)
-
-4. **Dependencies & Packages:**
-   - **ESLint** - Core linting engine (already in devDependencies)
-   - **complexity-report-html** (v0.0.3) - Listed in devDependencies but **not actively used** (evaluated but custom solution preferred)
-   - **eslintcc** (v0.8.3) - Listed in devDependencies but **not actively used** (alternative tool, kept for potential future use)
-
-**Command:**
-```bash
-npm run lint:complexity          # Generate report (default: show only functions > 10)
-npm run lint:complexity:all      # Generate report with all functions visible by default
-```
-
-**Output Files:**
-- `complexity/index.html` - Main report (folder-level summary)
-- `complexity/<folder_path>/index.html` - Folder-specific reports (function-level details)
-- `complexity-report.json` - Intermediate ESLint JSON output (gitignored, cleaned up after parsing)
-
-**Report Features:**
-- ✅ Visual progress bars showing complexity levels (horizontal bars with filled/empty segments on single line)
-- ✅ Color-coded rows matching complexity severity
-- ✅ Clickable folder links (navigate to folder-specific pages)
-- ✅ Line number references to locate functions in source code
-- ✅ Summary statistics (function count, max complexity, average complexity)
-- ✅ Sortable columns with visual indicators (↕ inactive, ↑/↓ active)
-- ✅ Filter checkbox to toggle function visibility
-- ✅ Right-aligned percentage values and sort icons
-- ✅ Borderless table headers matching Vitest design
-
-**CSS Styling:**
-- Matches Vitest coverage report color scheme and layout
-- Progress bars render on single line using `font-size: 0`, `white-space: nowrap`, and `vertical-align: top`
-- Table cell padding: `10px` (standardized)
-- Progress bar column: `min-width: 120px`
-- Table row background: `rgb(230, 245, 208)`
-- Headers: `border: none !important` (borderless design)
-
-**Future Enhancements:**
-
-**Note:** Remaining TODOs have been moved to `scripts/README.md` for better organization. See that file for detailed enhancement plans.
-
-**Completed:**
-- ✅ Complexity calculation accuracy (AST parser provides 100% accuracy, 0 mismatches)
-- ✅ Code refactoring (all modules split, all functions ≤ 10 complexity)
-- ✅ File length refactoring (html-generators split into modular structure)
-
-**Key Remaining Enhancements (see `scripts/README.md` for full list):**
-- Function source code viewing with syntax highlighting
-- Enhanced interactivity (expandable details, search/filter)
-- Integration improvements (CI/CD, historical trends, npm package)
-- UI/UX enhancements (keyboard navigation, mobile responsiveness)
-- Decision path tracking and visualization
-
-9. **Code Refactoring - Complexity Report Generator:**
-   - [x] **COMPLETED: Split `scripts/generate-complexity-report.js` into smaller, focused modules**
-     - **Problem:** File had grown to 3,103 lines, causing hallucinations, Cursor struggling, worse refactors, and making mistakes
-     - **Solution:** Successfully split into focused modules:
-       - `eslint-integration.js` (71 lines)
-       - `function-extraction.js` (207 lines)
-       - `function-boundaries.js` (1,382 lines) ⚠️ slightly over 1,000 line guideline (acceptable)
-       - `decision-points-ast.js` (856 lines) - AST-based parser (100% accuracy)
-       - `complexity-breakdown.js` (140 lines)
-       - `function-hierarchy.js` (405 lines)
-       - `html-generators/` directory - Modular HTML generation system (all modules < 1,000 lines)
-       - `generate-complexity-report.js` (161 lines) - Main orchestration
-     - **Result:** 95% reduction in main file size (3,103 → 161 lines)
-     - **Benefits:** Better maintainability, easier to understand, reduces AI confusion, improves refactoring quality
-     - **Status:** All modules complete and tested, all functions ≤ 10 complexity
-
-10. **File Length Guidelines:**
-    - **Target:** Keep files under **1,000 lines** to reduce AI hallucinations and improve maintainability
-    - **ESLint Enforcement:** The `max-lines` rule is configured in `eslint.config.js` with `max: 1000` (excluding blank lines and comments)
-    - **When approaching limit:** If a file exceeds 800 lines, consider refactoring or splitting
-    - **When exceeding limit:** If a file exceeds 1,000 lines, the AI assistant should:
-      1. **Inform the user** that the file is approaching or exceeding the guideline
-      2. **Suggest splitting** the file into smaller, focused modules
-      3. **Propose a refactoring plan** if the file is significantly over the limit
-    - **Rationale:** Files over 1,000 lines can cause:
-      - Increased AI hallucinations
-      - Reduced code understanding
-      - Worse refactoring quality
-      - Difficulty maintaining and debugging
-    - **Current files to monitor:**
-      - `scripts/function-boundaries.js` (1,382 lines) ⚠️ - Slightly over limit, but all functions ≤ 10 complexity (acceptable)
+**File Length Guidelines:**
+- **Target:** Keep files under **1,000 lines** (reduces AI confusion and improves maintainability).
+- **ESLint:** `max-lines` in `eslint.config.js` (1000, skip blank lines and comments). When splitting, use TDD and keep module interfaces focused.
+- **When exceeding limit:** Inform the user, suggest splitting into smaller modules, and propose a refactoring plan if significantly over. Current files over the guideline are noted in `scripts/README.md`.
 
 ---
 
@@ -1074,3 +944,147 @@ Before merging any UI animation or interaction change:
 
 ## If Unsure
 If you are about to animate anything other than `transform`/`opacity`, stop and propose a compositor-friendly alternative using pseudo-elements or transforms.
+
+---
+
+## Airbnb JavaScript Style Guide (ES2015+)
+
+**Style baseline:** [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript) (full README). *A mostly reasonable approach to JavaScript.*
+
+**Note:** The guide assumes Babel (e.g. [babel-preset-airbnb](https://www.npmjs.com/package/babel-preset-airbnb)) and shims/polyfills (e.g. [airbnb-browser-shims](https://www.npmjs.com/package/airbnb-browser-shims)) where needed. Other guides: [React](https://github.com/airbnb/javascript/tree/master/react), [CSS-in-JavaScript](https://github.com/airbnb/javascript/tree/master/css-in-javascript), [CSS & Sass](https://github.com/airbnb/css).
+
+This repo is an NPM package using ESM import/export. Module behavior is controlled via `package.json` and enforced via ESLint.
+
+### 0) Hard constraints
+- Use ESM syntax only: `import` / `export`. Do not use `require` / `module.exports`.
+- Assume `package.json` defines module format (e.g., `"type": "module"`) and entrypoints.
+- Assume ESLint is authoritative. Do not fight lint rules; refactor to satisfy them.
+- Do not use TC39 proposals that have not reached stage 3.
+
+### 1) Package.json / public API rules (NPM package conventions)
+- Treat `src/index.js` (or declared entry) as the public surface.
+- Prefer exporting from a single entry (barrel) unless instructed otherwise.
+- Avoid deep imports as part of public API unless explicitly designed:
+  - Consumers should import from the package root, not internal paths.
+- Keep exports stable: avoid breaking changes to names/paths without intent.
+
+### 2) Layering / boundaries (lint-enforced architecture)
+- Keep dependencies directional and predictable.
+- If the repo uses folder boundaries, follow them strictly (no cross-layer imports).
+- If `import/no-restricted-paths` zones exist, comply:
+  - Do not import across disallowed directories.
+  - If code needs shared logic, move it into an allowed shared module.
+
+### 3) Types (primitives vs complex)
+- **Primitives** (value copy): string, number, boolean, null, undefined, symbol, bigint.
+- **Complex** (reference): object, array, function. Mutating a copy mutates the original.
+- Use Symbols/BigInt only in environments that support them natively (no faithful polyfill).
+
+### 4) References & variables
+- Use `const` by default; use `let` only when reassignment is required. Never use `var`.
+- One `const` or `let` per declaration (no chained declarations).
+- Group all `const`s then all `let`s. Define variables where they are used (block scope).
+- Do not chain assignments (`let a = b = c = 1` creates globals). No `++`/`--`; use `+= 1`/`-= 1`.
+- No unused variables. No linebreak before/after `=` in assignment (use parens if line too long).
+- Variables, classes, and functions should be defined before use (no-use-before-define).
+
+### 5) Objects
+- Use object literals `{}`; never `new Object()`.
+- Use computed property names for dynamic keys: `{ [getKey('enabled')]: true }`.
+- Prefer property shorthand `{ a }` and method shorthand `{ foo() {} }`. Group shorthand first.
+- Only quote keys that require it (invalid identifiers).
+- Never call `obj.hasOwnProperty()` directly: use `Object.hasOwn(obj, key)` (ES2022+) or `Object.prototype.hasOwnProperty.call(obj, key)`.
+- Prefer object spread/rest over `Object.assign` for shallow copies and omission.
+
+### 6) Arrays
+- Use array literals `[]`; never `new Array()`. Use `.push()` to append.
+- Prefer spread for copying: `const copy = [...arr]`. For iterables, spread or `Array.from`; for array-like, `Array.from(arrLike)`.
+- Prefer `Array.from(iterable, mapFn)` when mapping while converting (avoids intermediate array).
+- Array method callbacks must return when needed (e.g. `reduce`/`filter`); omit return only for single-expression no-side-effect (per arrow implicit-return rules).
+- Multiline arrays: one item per line with trailing comma; no bracket newline for single-line.
+
+### 7) Destructuring
+- Prefer object destructuring for multiple properties; array destructuring when appropriate.
+- Prefer object destructuring for multiple return values (not array) so callers can select by name and order can change.
+- Destructure function params only when it improves clarity of the API.
+
+### 8) Strings
+- Use single quotes `'...'`. Use template literals for interpolation: `` `Hello ${name}` `` (no space inside `${}`).
+- Avoid long concatenation across lines; keep long strings on one line or use templates.
+- Never use `eval()`. Do not unnecessarily escape characters.
+
+### 9) Functions
+- Prefer named function expressions over declarations (hoisting clarity). IIFEs: wrap in parens `(function () { }());`
+- Never declare a function inside a non-function block (if/while etc); assign to a variable instead.
+- Never name a parameter `arguments`. Use rest `...args` instead of `arguments`.
+- Default params: prefer over mutating params; no side effects in default; put defaults last.
+- Never use the `Function` constructor. Spacing: space before `()` in declarations/calls.
+- Never mutate or reassign parameters. Prefer spread `...` over `apply` for variadic calls.
+- Multiline signatures/invocations: one argument per line, trailing comma.
+
+### 10) Arrow functions
+- Prefer arrows for inline callbacks. Always use parentheses around arguments: `(x) => x * x`.
+- Implicit return only for single expression without side effects; otherwise use braces and `return`.
+- Multi-line expression: wrap in parens. Avoid `=>` next to `<=`/`>=` (wrap ternary in parens or use block).
+
+### 11) Classes & constructors
+- Use `class`; use `extends` for inheritance. Prefer small focused classes.
+- Methods can return `this` for chaining. Custom `toString()` is OK; avoid empty or delegating-only constructors.
+- No duplicate class members. Instance methods should use `this` or be static.
+
+### 12) Imports / exports (ESM best practices)
+- Use `import` / `export` only. No wildcard imports. Do not export directly from an import (re-export from local).
+- One import per path (combine default and named). Do not export mutable bindings (use `const`).
+- Single-export modules: prefer default export. Put all imports at top; multiline imports with trailing comma.
+- No Webpack loader syntax in import. **Import extensions:** Omit `.js`/`.jsx` in import paths only when a build step (Babel, Webpack, Vite, etc.) resolves extensionless paths. When running scripts directly with Node ESM (`node script.js`), include the `.js` extension—Node’s ESM loader does not auto-resolve and will throw `ERR_MODULE_NOT_FOUND` without it.
+- Import order: builtins → external deps → internal → relative. No circular deps; no import from dist.
+
+### 13) Iterators and generators
+- Prefer `map`/`filter`/`reduce`/`some`/`every`/`find`/`findIndex`; use `Object.keys`/`Object.values`/`Object.entries` for objects. Avoid `for-in`/`for-of` for simple iteration.
+- Do not use generators unless necessary (transpilation/portability). If used: `function* foo()` spacing.
+
+### 14) Properties
+- Use dot notation when possible; bracket notation when property name is variable.
+- Use exponentiation operator `**` instead of `Math.pow`.
+
+### 15) Comparisons & equality
+- Use `===` / `!==` only. Use shortcuts for booleans; explicit comparisons for strings and numbers (e.g. `name !== ''`, `length > 0`).
+- In `switch`, use braces for `case`/`default` that contain lexical declarations (`let`/`const`/`function`/`class`). Include `default` or document omission.
+- Avoid nested ternaries; avoid unneeded ternaries (e.g. `a || b` instead of `a ? a : b`, `a ?? b` for null/undefined).
+- When mixing operators, use parentheses to clarify (except `+`, `-`, `**`). Prefer `??` for null/undefined defaults.
+
+### 16) Blocks & control flow
+- Use braces for all multiline blocks. Put `else` on same line as closing `}`. Omit `else` after `return`.
+- Long conditions: put logical operator at start of continuation line. Do not use selection operators (`&&`/`||`) in place of control statements.
+
+### 17) Comments
+- Multiline: `/** ... */`. Single-line: `//` on new line above subject; space after `//`.
+- Comment the "why", not the "what". Use `// FIXME:` for problems, `// TODO:` for solutions; keep actionable.
+
+### 18) Whitespace & formatting
+- 2-space indentation. Semicolons required. Trailing commas in multiline literals/imports/params. No leading commas.
+- Space before leading brace; space after control keywords; space around infix operators. Newline at end of file.
+- Long chains: leading dot, one call per line. Blank line after blocks; no padding inside blocks; no multiple blank lines.
+- No space inside parens/brackets; space inside braces: `{ a, b }`. Max line length (e.g. 100); no trailing spaces.
+
+### 19) Type casting & coercion
+- Coerce at the start of the statement. Use `String()`/`Number()`/`Boolean()` (not `new String`/`new Number`/`new Boolean`). Use `parseInt(s, 10)` with radix. Prefer `!!` or `Boolean()` for booleans.
+
+### 20) Naming
+- Avoid single-letter names; be descriptive. camelCase for objects, functions, instances; PascalCase for constructors/classes.
+- No leading or trailing underscores. Use arrow functions or `Function#bind` instead of saving `this` as `self`/`that`.
+- Default export: filename should match export name (PascalCase for class/singleton, camelCase for function).
+- Acronyms: all uppercase or all lowercase. Optionally UPPERCASE for exported immutable constants only.
+
+### 21) Accessors
+- Do not use getters/setters; use `getVal()`/`setVal()`. For booleans use `isVal()` or `hasVal()`.
+
+### 22) Standard library
+- Use `Number.isNaN` and `Number.isFinite` instead of global `isNaN`/`isFinite`.
+
+### 23) Testing
+- Write tests. Prefer many small pure functions; minimize mutations. Be cautious with stubs/mocks. When fixing a bug, add a regression test.
+
+### 24) When uncertain
+- Choose the option that reduces surprise for a new reader.
+- If a choice impacts the public API, module entrypoints, or export names, ask first.

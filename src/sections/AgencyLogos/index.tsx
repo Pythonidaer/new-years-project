@@ -37,7 +37,8 @@ function AgencyLogosComponent() {
   const scrollTo = useCallback(
     (index: number) => {
       if (emblaApi) {
-        setAutoplayEnabled(false); // Stop autoplay on user interaction
+        // Stop autoplay on user interaction
+        setAutoplayEnabled(false);
         emblaApi.scrollTo(index);
       }
     },
@@ -91,7 +92,8 @@ function AgencyLogosComponent() {
     };
     
     const handlePointerDown = () => {
-      setAutoplayEnabled(false); // Stop autoplay on drag/interaction
+      // Stop autoplay on drag/interaction
+      setAutoplayEnabled(false);
     };
     
     // Use ref to get current onSelect without adding it to dependencies
@@ -145,7 +147,8 @@ function AgencyLogosComponent() {
           setAutoplayEnabled(false);
         }
       },
-      { threshold: 0.1 } // Trigger when at least 10% visible
+      // Trigger when at least 10% visible
+      { threshold: 0.1 }
     );
 
     observer.observe(viewportRef.current);
@@ -159,11 +162,12 @@ function AgencyLogosComponent() {
   useEffect(() => {
     if (!emblaApi || !autoplayEnabled) return;
 
+    // Advance every 2 seconds
     const autoplayInterval = setInterval(() => {
       if (emblaApi && autoplayEnabled) {
         emblaApi.scrollNext();
       }
-    }, 2000); // Advance every 2 seconds
+    }, 2000);
 
     return () => {
       clearInterval(autoplayInterval);

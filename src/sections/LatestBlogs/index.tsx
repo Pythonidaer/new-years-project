@@ -22,7 +22,8 @@ export function LatestBlogs() {
       const sorted = [...allPosts].sort((a, b) => {
         const dateA = new Date(a.date).getTime();
         const dateB = new Date(b.date).getTime();
-        return dateB - dateA; // Most recent first
+        // Most recent first
+        return dateB - dateA;
       });
       
       setRecentPosts(sorted.slice(0, 3));

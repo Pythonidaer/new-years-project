@@ -23,7 +23,8 @@ if (typeof window !== 'undefined') {
       const lastReload = sessionStorage.getItem('chunkReloadAttempt');
       const now = Date.now();
       
-      if (!lastReload || (now - parseInt(lastReload)) > 10000) { // 10 second cooldown
+      // 10 second cooldown
+      if (!lastReload || (now - parseInt(lastReload)) > 10000) {
         sessionStorage.setItem('chunkReloadAttempt', now.toString());
         window.location.reload();
       }
@@ -41,7 +42,8 @@ if (typeof window !== 'undefined') {
       );
     
     if (isChunkLoadError) {
-      event.preventDefault(); // Prevent error from being logged
+      // Prevent error from being logged
+      event.preventDefault();
       const lastReload = sessionStorage.getItem('chunkReloadAttempt');
       const now = Date.now();
       

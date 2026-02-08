@@ -115,13 +115,59 @@
 <a name='L50'></a><a href='#L50'>50</a>
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -183,39 +229,62 @@ export function generateAboutPageHTML() {
   &lt;style&gt;
     body { padding: 20px; line-height: 1.4; }
     .back-link { display: inline-block; margin-bottom: 12px; }
-    h2 { font-size: 16px; margin: 16px 0 6px 0; }
+    h1 { margin-top: 1rem; }
+    h2 { font-size: 16px; margin: 2rem 0 6px 0; }
+    .about-subheading { margin-top: 2rem; }
+    .about-last-p { margin-bottom: 2rem; }
+    .summary-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1rem 0 1rem 0; }
+    @media (max-width: 640px) { .summary-two-col { grid-template-columns: 1fr; } }
+    .summary-col { min-width: 0; }
   &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
   &lt;a href="index.html" class="back-link"&gt;← Back to complexity report&lt;/a&gt;
   &lt;h1&gt;About Cyclomatic Complexity&lt;/h1&gt;
-  &lt;p&gt;Cyclomatic complexity measures linearly independent paths through code. &lt;strong&gt;Formula:&lt;/strong&gt; 1 (base) + decision points. Lower is better.&lt;/p&gt;
+  &lt;p&gt;Cyclomatic complexity measures the number of linearly independent execution paths through a function. It is calculated as a base value of 1 plus the number of decision points. Values above 10 typically indicate code that is harder to test, reason about, and safely modify, and should prompt refactoring. Cyclomatic complexity measures structural branching, not runtime performance or algorithmic efficiency.&lt;/p&gt;
   &lt;h2&gt;About This Report&lt;/h2&gt;
-  &lt;p&gt;This complexity report extends &lt;strong&gt;ESLint's &lt;code&gt;complexity&lt;/code&gt; rule&lt;/strong&gt; (&lt;code&gt;variant: "classic"&lt;/code&gt;) to provide detailed analysis of your codebase. The report analyzes &lt;code&gt;*.ts&lt;/code&gt; and &lt;code&gt;*.tsx&lt;/code&gt; files.&lt;/p&gt;
-  &lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt; Complexity is measured for &lt;strong&gt;callable units&lt;/strong&gt; (functions, methods, arrow functions). Top-level module code (code outside of functions) is not measured, as it executes once at module load and doesn't have the same complexity concerns as reusable functions.&lt;/p&gt;
-  &lt;h2&gt;Summary: JavaScript, TypeScript, React&lt;/h2&gt;
-  &lt;h3&gt;Counted&lt;/h3&gt;
+  &lt;p&gt;This complexity report extends &lt;strong&gt;ESLint's &lt;code&gt;complexity&lt;/code&gt; rule&lt;/strong&gt; and uses your project's chosen variant (&lt;code&gt;classic&lt;/code&gt; or &lt;code&gt;modified&lt;/code&gt;; see below). The report analyzes whatever files your ESLint config lints—commonly &lt;code&gt;*.ts&lt;/code&gt;, &lt;code&gt;*.tsx&lt;/code&gt;, and &lt;code&gt;*.js&lt;/code&gt;. Single-file component formats (e.g. Vue &lt;code&gt;.vue&lt;/code&gt;, Svelte &lt;code&gt;.svelte&lt;/code&gt;) are only included if ESLint is configured to lint them. The lists below show examples of which constructs are counted and which are not.&lt;/p&gt;
+  &lt;div class="summary-two-col"&gt;
+    &lt;div class="summary-col"&gt;
+      &lt;h3&gt;Counted&lt;/h3&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;Callable units&lt;/strong&gt; — complexity is measured per function, method, or arrow function&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Statements&lt;/strong&gt; — such as: &lt;code&gt;if&lt;/code&gt;, &lt;code&gt;else if&lt;/code&gt;, &lt;code&gt;switch&lt;/code&gt; (in &lt;code&gt;modified&lt;/code&gt;)&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Clauses&lt;/strong&gt; — such as: &lt;code&gt;catch&lt;/code&gt;, &lt;code&gt;case&lt;/code&gt; (in &lt;code&gt;classic&lt;/code&gt;)&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Loops&lt;/strong&gt; — such as: &lt;code&gt;for&lt;/code&gt;, &lt;code&gt;for...of&lt;/code&gt;, &lt;code&gt;for...in&lt;/code&gt;, &lt;code&gt;while&lt;/code&gt;, &lt;code&gt;do...while&lt;/code&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Ternary&lt;/strong&gt; —&lt;code&gt;? :&lt;/code&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Logical&lt;/strong&gt; and — &lt;code&gt;&amp;&amp;&lt;/code&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Logical&lt;/strong&gt; or — &lt;code&gt;||&lt;/code&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Optional chaining&lt;/strong&gt; — &lt;code&gt;?.&lt;/code&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Nullish coalescing&lt;/strong&gt; — &lt;code&gt;??&lt;/code&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Default parameters&lt;/strong&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class="summary-col"&gt;
+      &lt;h3&gt;Not counted&lt;/h3&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;Top-level module code&lt;/strong&gt; (code outside of functions); runs once at load and is not a callable unit&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Sequential statements&lt;/strong&gt; (assignments, calls, declarations)&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;else&lt;/code&gt; — does not introduce a new decision path by itself&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;try&lt;/code&gt; — does not add complexity by itself; each &lt;code&gt;catch&lt;/code&gt; adds one decision path&lt;/li&gt;
+        &lt;li&gt;JSX without conditionals&lt;/li&gt;
+        &lt;li&gt;Hook calls (only callbacks count)&lt;/li&gt;
+        &lt;li&gt;TypeScript types, interfaces, generics&lt;/li&gt;
+        &lt;li&gt;Literals, destructuring; arithmetic, strings&lt;/li&gt;
+        &lt;li&gt;Property access; method calls&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Early exits&lt;/strong&gt; (&lt;code&gt;return&lt;/code&gt;, &lt;code&gt;break&lt;/code&gt;, &lt;code&gt;continue&lt;/code&gt;) — do not add complexity unless conditional&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;Nesting depth&lt;/strong&gt; — nesting itself does not increase cyclomatic complexity; only decision points do, and nested functions are measured independently with their own base complexity.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;h2&gt;Classic vs modified variant&lt;/h2&gt;
+  &lt;p&gt;ESLint's &lt;code&gt;complexity&lt;/code&gt; rule supports two variants. This report uses the variant from your project's config.&lt;/p&gt;
   &lt;ul&gt;
-    &lt;li&gt;&lt;code&gt;if&lt;/code&gt;, each &lt;code&gt;else if&lt;/code&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;code&gt;for&lt;/code&gt;, &lt;code&gt;for...of&lt;/code&gt;, &lt;code&gt;for...in&lt;/code&gt;, &lt;code&gt;while&lt;/code&gt;, &lt;code&gt;do...while&lt;/code&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;code&gt;switch&lt;/code&gt;; each &lt;code&gt;case&lt;/code&gt; / &lt;code&gt;default&lt;/code&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;code&gt;catch&lt;/code&gt;&lt;/li&gt;
-    &lt;li&gt;Ternary &lt;code&gt;? :&lt;/code&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;code&gt;&amp;&amp;&lt;/code&gt; / &lt;code&gt;||&lt;/code&gt; in conditions (incl. JSX)&lt;/li&gt;
-    &lt;li&gt;Optional chaining &lt;code&gt;?.&lt;/code&gt;&lt;/li&gt;
-    &lt;li&gt;Nullish coalescing &lt;code&gt;??&lt;/code&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;strong&gt;Default parameters&lt;/strong&gt; (some linters, like ESLint's &lt;code&gt;classic&lt;/code&gt; variant, count default parameter values as decision points)&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Classic&lt;/strong&gt; — Each &lt;code&gt;case&lt;/code&gt; adds +1. So a switch with 5 cases adds 5 to complexity.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Modified&lt;/strong&gt; — The whole &lt;code&gt;switch&lt;/code&gt; adds +1 regardless of how many cases. So a switch with 5 cases adds 1 to complexity.&lt;/li&gt;
   &lt;/ul&gt;
-  &lt;h3&gt;Not counted&lt;/h3&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Sequential statements (assignments, calls, declarations)&lt;/li&gt;
-    &lt;li&gt;JSX without conditionals&lt;/li&gt;
-    &lt;li&gt;Hook calls (only callbacks count)&lt;/li&gt;
-    &lt;li&gt;TypeScript types, interfaces, generics&lt;/li&gt;
-    &lt;li&gt;Literals, destructuring; arithmetic, strings&lt;/li&gt;
-    &lt;li&gt;Property access; method calls&lt;/li&gt;
-    &lt;li&gt;Unconditional &lt;code&gt;return&lt;/code&gt;&lt;/li&gt;
-  &lt;/ul&gt;
+  &lt;h2 class="about-subheading"&gt;Cyclomatic vs. Cognitive Complexity&lt;/h2&gt;
+  &lt;p class="about-last-p"&gt;While cyclomatic complexity measures the number of independent execution paths in a function to estimate testing effort and structural risk, cognitive complexity is designed to reflect how difficult code is for a human to read and understand. Cognitive complexity increases with control flow and nesting that disrupts linear reading (such as conditionals, loops, and early exits), but intentionally does not track boolean expressions, default parameters, or short-circuit operators. By focusing on mental load rather than path count, cognitive complexity better highlights code that is technically correct but unnecessarily hard to reason about or maintain.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;`;
 }
@@ -226,7 +295,7 @@ export function generateAboutPageHTML() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-01-27T22:53:37.715Z
+                at 2026-02-08T16:35:10.206Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

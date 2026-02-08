@@ -23,7 +23,8 @@ function blendColor(foreground: string, background: string): string {
     return `rgb(${r}, ${g}, ${b})`;
   } catch (error) {
     console.warn('Failed to blend color:', error);
-    return foreground; // Fallback to original
+    // Fallback to original
+    return foreground;
   }
 }
 
@@ -40,7 +41,8 @@ export function getContrastRatio(color1: string, color2: string): number {
     return c1.contrast(c2);
   } catch (error) {
     console.warn('Failed to calculate contrast ratio:', error);
-    return 1; // Return minimum contrast on error
+    // Return minimum contrast on error
+    return 1;
   }
 }
 
@@ -64,7 +66,8 @@ export type ContrastIssue = {
   background: string;
   ratio: number;
   level: 'AAA' | 'AA' | 'Fail';
-  usage: string; // Where this color combination is used
+  /** Where this color combination is used */
+  usage: string;
 };
 
 export function checkContrastIssues(theme: {

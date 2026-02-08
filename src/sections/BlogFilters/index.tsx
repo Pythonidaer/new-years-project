@@ -24,7 +24,8 @@ export function BlogFilters({ posts, onFilterChange }: BlogFiltersProps) {
 
   // Filter posts based on search and category/tag
   useEffect(() => {
-    let filtered = [...posts]; // Create a copy to avoid mutating
+    // Create a copy to avoid mutating
+    let filtered = [...posts];
 
     // Filter by category or tag
     if (selectedCategory !== "all") {

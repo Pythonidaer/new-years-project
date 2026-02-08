@@ -6,6 +6,7 @@ import { useMetaTags, type MetaTagsConfig } from '@/hooks/useMetaTags';
  */
 export function MetaTags(config: MetaTagsConfig) {
   useMetaTags(config);
-  return null; // This component doesn't render anything
+  // This component doesn't render anything
+  return null;
 }
 

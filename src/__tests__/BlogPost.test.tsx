@@ -357,11 +357,11 @@ describe("BlogPost", () => {
       expect(screen.getByRole("main")).toBeInTheDocument();
       
       // Debug: Check if post content is rendered
-      const main = container.querySelector('main');
+      const main = container.querySelector("main");
       expect(main).toBeTruthy();
       
       // Try to find the title - it might be in an h1 with entryTitle class
-      const titleElement = container.querySelector('h1.entryTitle') || 
+      const titleElement = container.querySelector("h1.entryTitle") || 
                           screen.queryByText(post.title, { exact: false });
       expect(titleElement).toBeTruthy();
       if (titleElement) {

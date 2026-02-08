@@ -11,9 +11,11 @@ type ColorToken = {
   label: string;
   cssVar: string;
   category: 'core' | 'primary' | 'accent' | 'gradient' | 'footer' | 'shadows';
-  usage?: string; // Where this color is actually used
+  /** Where this color is actually used */
+  usage?: string;
   isGradient?: boolean;
-  gradientPartner?: string; // For gradient pairs (start/end)
+  /** For gradient pairs (start/end) */
+  gradientPartner?: string;
 };
 
 const colorTokens: ColorToken[] = [
@@ -328,9 +330,18 @@ function PresetSection({
           const isSelected = preset.id === currentPresetId;
           return (
             <div key={preset.id} className={styles.presetButtonWrapper}>
-              <button
+              <div
+                role="button"
+                tabIndex={0}
                 className={styles.presetButton}
                 onClick={() => onLoadPreset(preset.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onLoadPreset(preset.id);
+                  }
+                }}
+                aria-label={`Select ${preset.name} theme`}
               >
                 <span className={styles.presetName}>{preset.name}</span>
                 <div className={styles.presetIconContainer}>
@@ -350,7 +361,7 @@ function PresetSection({
                     </button>
                   )}
                 </div>
-              </button>
+              </div>
             </div>
           );
         })}

@@ -14,7 +14,8 @@ export function ScrollToTop() {
       setTimeout(() => {
         const element = document.querySelector(hash);
         if (element) {
-          const headerOffset = 110; // Account for fixed header height
+          // Account for fixed header height
+          const headerOffset = 110;
           const elementPosition = element.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.scrollY - headerOffset;
 

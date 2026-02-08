@@ -6,11 +6,8 @@ reference/
 dist/
 dist-ssr/
 *.local
-complexity-report.html
-complexity-report.json
-.complexity_report/
-# complexity/
-eslint.config.temp.js
+complexity/
+coverage/
 
 # Editor directories and files
 .vscode/*

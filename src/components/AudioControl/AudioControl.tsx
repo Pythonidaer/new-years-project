@@ -71,7 +71,8 @@ export function AudioControl() {
 
     // Create audio element only on user interaction (lazy load)
     const audio = new Audio(audioFileRef.current);
-    audio.loop = true; // Loop the audio
+    // Loop the audio
+    audio.loop = true;
     audioRef.current = audio;
 
     // Create event handlers

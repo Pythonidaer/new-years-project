@@ -11,11 +11,11 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "lint:complexity": "node scripts/generate-complexity-report.js",
-    "lint:complexity:all": "node scripts/generate-complexity-report.js --show-all",
-    "lint:complexity:all-columns": "node scripts/generate-complexity-report.js --show-all-columns",
-    "lint:complexity:hide-table": "node scripts/generate-complexity-report.js --hide-table",
-    "lint:complexity:export": "node scripts/generate-complexity-report.js --export"
+    "lint:complexity": "complexity-report",
+    "lint:complexity:all": "complexity-report --show-all",
+    "lint:complexity:all-columns": "complexity-report --show-all-columns",
+    "lint:complexity:hide-table": "complexity-report --hide-table",
+    "lint:complexity:export": "complexity-report --export"
   },
   "complexityReport": {
     "exportDir": "complexity/reports"
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@pythonidaer/complexity-report": "^1.0.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
     "@types/node": "^24.10.1",
@@ -40,11 +41,9 @@
     "@vitejs/plugin-react": "^5.1.1",
     "@vitest/coverage-v8": "^4.0.17",
     "@vitest/ui": "^4.0.17",
-    "complexity-report-html": "^0.0.3",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
-    "eslintcc": "^0.8.3",
     "globals": "^16.5.0",
     "jsdom": "^27.4.0",
     "rollup-plugin-visualizer": "^6.0.5",
