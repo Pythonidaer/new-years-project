@@ -479,7 +479,7 @@ describe("AgencyLogos", () => {
       let observerCallback: (entries: IntersectionObserverEntry[]) => void = () => {};
       const mockObserve = vi.fn();
       const mockDisconnect = vi.fn();
-      const OriginalIO = global.IntersectionObserver;
+      const OriginalIO = globalThis.IntersectionObserver;
 
       class MockIntersectionObserver {
         constructor(callback: (entries: IntersectionObserverEntry[]) => void) {
@@ -492,7 +492,7 @@ describe("AgencyLogos", () => {
         thresholds = [];
         takeRecords = () => [];
       }
-      global.IntersectionObserver = MockIntersectionObserver as unknown as typeof global.IntersectionObserver;
+      globalThis.IntersectionObserver = MockIntersectionObserver as unknown as typeof globalThis.IntersectionObserver;
 
       renderAgencyLogos();
 
@@ -508,7 +508,7 @@ describe("AgencyLogos", () => {
         expect(clearIntervalSpy).toHaveBeenCalled();
       });
 
-      global.IntersectionObserver = OriginalIO;
+      globalThis.IntersectionObserver = OriginalIO;
     });
   });
 

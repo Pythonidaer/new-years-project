@@ -10,9 +10,15 @@ vi.mock("@/data/blog", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@/data/blog")>();
   return {
     ...actual,
-    loadAllBlogPosts: vi.fn((...args: unknown[]) => actual.loadAllBlogPosts(...args)),
-    getAllBlogPosts: vi.fn((...args: unknown[]) => actual.getAllBlogPosts(...args)),
-    getAllUniqueTags: vi.fn((...args: unknown[]) => actual.getAllUniqueTags(...args)),
+    loadAllBlogPosts: vi.fn((...args: unknown[]) =>
+      actual.loadAllBlogPosts(...(args as Parameters<typeof actual.loadAllBlogPosts>)),
+    ),
+    getAllBlogPosts: vi.fn((...args: unknown[]) =>
+      actual.getAllBlogPosts(...(args as Parameters<typeof actual.getAllBlogPosts>)),
+    ),
+    getAllUniqueTags: vi.fn((...args: unknown[]) =>
+      actual.getAllUniqueTags(...(args as Parameters<typeof actual.getAllUniqueTags>)),
+    ),
   };
 });
 

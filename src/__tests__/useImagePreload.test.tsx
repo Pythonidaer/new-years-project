@@ -34,7 +34,7 @@ describe("useImagePreload", () => {
       },
       complete: false,
     };
-    global.Image = vi.fn(function ImageMock() {
+    globalThis.Image = vi.fn(function ImageMock() {
       return mockImage;
     }) as unknown as typeof Image;
   });
