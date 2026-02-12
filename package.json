@@ -15,7 +15,8 @@
     "lint:complexity:all": "complexity-report --show-all",
     "lint:complexity:all-columns": "complexity-report --show-all-columns",
     "lint:complexity:hide-table": "complexity-report --hide-table",
-    "lint:complexity:export": "complexity-report --export"
+    "lint:complexity:export": "complexity-report --export",
+    "analysis": "complexity-analysis"
   },
   "complexityReport": {
     "exportDir": "complexity/reports"

@@ -243,6 +243,22 @@ describe("Header", () => {
       }
     });
 
+    it("handles hash click when getAttribute('href') returns null (uses empty string fallback)", () => {
+      renderHeader(["/#experience"]);
+
+      const experienceLink = screen.getAllByText("Experience").find(
+        (link) => link.closest("nav") !== null
+      );
+      const anchor = experienceLink?.closest("a");
+      expect(anchor).toBeTruthy();
+      if (anchor) {
+        const getAttributeSpy = vi.spyOn(anchor, "getAttribute").mockReturnValueOnce(null);
+        fireEvent.click(anchor);
+        expect(getAttributeSpy).toHaveBeenCalledWith("href");
+        getAttributeSpy.mockRestore();
+      }
+    });
+
     it("calculates scroll position correctly with header offset", () => {
       renderHeader(["/#experience"]);
 
@@ -403,6 +419,38 @@ describe("Header", () => {
           expect(mockScrollTo).not.toHaveBeenCalled();
         }
       }
+    });
+
+    it("navigates to Projects hash when Projects link is clicked", () => {
+      renderHeader(["/resources/blog"]);
+
+      const menuButton = screen.getByLabelText("Mobile Menu Toggle");
+      fireEvent.click(menuButton);
+
+      const projectsLink = screen.getAllByText("Projects").find(
+        (el) => el.closest("[role='menu']") !== null
+      );
+      expect(projectsLink).toBeTruthy();
+      const anchor = projectsLink?.closest("a");
+      expect(anchor).toBeTruthy();
+      fireEvent.click(anchor!);
+      expect(mockNavigate).toHaveBeenCalledWith("/#projects");
+    });
+
+    it("navigates to Contact hash when Contact link is clicked", () => {
+      renderHeader(["/"]);
+
+      const menuButton = screen.getByLabelText("Mobile Menu Toggle");
+      fireEvent.click(menuButton);
+
+      const contactLink = screen.getAllByText("Contact").find(
+        (el) => el.closest("[role='menu']") !== null
+      );
+      expect(contactLink).toBeTruthy();
+      const anchor = contactLink?.closest("a");
+      expect(anchor).toBeTruthy();
+      fireEvent.click(anchor!);
+      expect(mockNavigate).toHaveBeenCalledWith("/#contact");
     });
 
     it("does not scroll when element is not found", async () => {
@@ -632,7 +680,7 @@ describe("Header", () => {
         dispatchEvent: vi.fn(),
       });
 
-      // Mock scroll position to be >= 90
+      // Mock scroll position to be >= 90 so handleScroll rAF callback hits setIsScrolled(true)
       Object.defineProperty(document.documentElement, "scrollTop", {
         writable: true,
         configurable: true,
@@ -647,7 +695,10 @@ describe("Header", () => {
 
       renderHeader(["/"]);
 
-      // Wait for initial scroll handler to run
+      await act(async () => {
+        await new Promise((r) => setTimeout(r, 20));
+      });
+
       await waitFor(() => {
         const root = document.documentElement;
         expect(root.style.getPropertyValue("--header-height")).toBe("60px");
@@ -686,6 +737,38 @@ describe("Header", () => {
       await waitFor(() => {
         const root = document.documentElement;
         expect(root.style.getPropertyValue("--header-height")).toBe("60px");
+      });
+    });
+
+    it("resize handler sets 110px on desktop when not scrolled (handleResize branch)", async () => {
+      matchMediaSpy.mockReturnValue({
+        matches: false,
+        media: "(max-width: 990px)",
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      });
+      Object.defineProperty(document.documentElement, "scrollTop", {
+        writable: true,
+        configurable: true,
+        value: 0,
+      });
+      Object.defineProperty(window, "scrollY", {
+        writable: true,
+        configurable: true,
+        value: 0,
+      });
+
+      renderHeader(["/"]);
+
+      fireEvent(window, new Event("resize"));
+
+      await waitFor(() => {
+        const root = document.documentElement;
+        expect(root.style.getPropertyValue("--header-height")).toBe("110px");
       });
     });
   });

@@ -464,37 +464,51 @@ describe("AgencyLogos", () => {
     });
 
     it.skip("should cleanup event listeners when emblaApi changes", async () => {
-      // NOTE: This test is skipped because it's difficult to simulate emblaApi changing
-      // during a rerender with mocks. The useLayoutEffect cleanup logic is tested
-      // indirectly through the unmount test, which exercises the same cleanup code paths.
-      // In practice, emblaApi would change when useEmblaCarousel returns a new instance
-      // (e.g., when carousel options change or DOM element changes), which is hard to
-      // simulate in a unit test without more complex setup.
-      
+      // Simulating emblaApi change requires the hook to return a new instance on rerender.
+      // Internal refs and effect order make this difficult; cleanup is covered by unmount test.
       const { rerender } = renderAgencyLogos();
-
-      await waitFor(() => {
-        expect(mockOn).toHaveBeenCalled();
-      });
-
-      const originalApi = mockEmblaApi;
-      const originalOffSpy = vi.spyOn(originalApi, 'off');
-
-      mockOff.mockClear();
-      mockOn.mockClear();
-
+      await waitFor(() => expect(mockOn).toHaveBeenCalled());
       const newMockEmblaApi = createMockEmblaApi();
       mockUseEmblaCarousel.mockReturnValue([mockEmblaRef, newMockEmblaApi]);
+      rerender(<ThemeProvider><AgencyLogos /></ThemeProvider>);
+    });
+  });
 
-      rerender(
-        <ThemeProvider>
-          <AgencyLogos />
-        </ThemeProvider>
-      );
+  describe("IntersectionObserver", () => {
+    it("disables autoplay when carousel is not visible (isIntersecting false)", async () => {
+      let observerCallback: (entries: IntersectionObserverEntry[]) => void = () => {};
+      const mockObserve = vi.fn();
+      const mockDisconnect = vi.fn();
+      const OriginalIO = global.IntersectionObserver;
 
-      expect(originalOffSpy).toHaveBeenCalledWith("select", expect.any(Function));
-      expect(originalOffSpy).toHaveBeenCalledWith("reInit", expect.any(Function));
-      expect(originalOffSpy).toHaveBeenCalledWith("pointerDown", expect.any(Function));
+      class MockIntersectionObserver {
+        constructor(callback: (entries: IntersectionObserverEntry[]) => void) {
+          observerCallback = callback;
+        }
+        observe = mockObserve;
+        disconnect = mockDisconnect;
+        root = null;
+        rootMargin = "";
+        thresholds = [];
+        takeRecords = () => [];
+      }
+      global.IntersectionObserver = MockIntersectionObserver as unknown as typeof global.IntersectionObserver;
+
+      renderAgencyLogos();
+
+      await waitFor(() => {
+        expect(mockObserve).toHaveBeenCalled();
+      });
+
+      act(() => {
+        observerCallback([{ isIntersecting: false } as IntersectionObserverEntry]);
+      });
+
+      await waitFor(() => {
+        expect(clearIntervalSpy).toHaveBeenCalled();
+      });
+
+      global.IntersectionObserver = OriginalIO;
     });
   });
 

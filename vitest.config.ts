@@ -43,6 +43,8 @@ export default defineConfig({
         "src/data/blog/categories.ts",
         // Type exports and createContext only
         "src/context/ThemeContextInstance.ts",
+        // Re-exports only (no logic)
+        "src/context/themeData.ts",
         // Test files in scripts directory
         "scripts/**/*.test.js",
         // Test directories in scripts

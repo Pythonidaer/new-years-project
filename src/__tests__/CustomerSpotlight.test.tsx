@@ -62,17 +62,22 @@ describe("CustomerSpotlight", () => {
     });
 
     it("renders placeholder text when image is not provided", () => {
-      // This test would require modifying testimonials data
-      // For now, we verify that all current testimonials have images
+      const testimonialsWithoutImage = [
+        {
+          id: 1,
+          quote: "Test quote without image.",
+          author: "Test Author",
+          role: "Test Role",
+          // no image - triggers placeholder branch
+        },
+      ];
       render(
         <ThemeProvider>
-          <CustomerSpotlight />
+          <CustomerSpotlight testimonials={testimonialsWithoutImage} />
         </ThemeProvider>
       );
 
-      // All current testimonials have images, so no placeholder should appear
-      const placeholders = screen.queryAllByText("Image");
-      expect(placeholders.length).toBe(0);
+      expect(screen.getByText("Image")).toBeInTheDocument();
     });
 
     it("renders all three dot indicators", () => {

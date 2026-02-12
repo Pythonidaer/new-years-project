@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { Blog } from "@/pages/Blog";
 import { ThemeProvider } from "@/context/ThemeContext";
@@ -14,14 +14,9 @@ describe("Blog Page", () => {
       </BrowserRouter>
     );
 
-    // Check that TopBanner is rendered (Blog page may not have TopBanner)
-    // TopBanner is only on Home page, so we skip this check for Blog page
-
-    // Check that Header is rendered
     const header = document.querySelector("header");
     expect(header).toBeTruthy();
 
-    // Check that BlogGrid is rendered
     const blogGrid = document.querySelector('[class*="grid"]');
     expect(blogGrid).toBeTruthy();
   });
@@ -37,5 +32,26 @@ describe("Blog Page", () => {
 
     const footer = document.querySelector("footer");
     expect(footer).toBeTruthy();
+  });
+
+  it("excludes featured post from grid when data has loaded (gridPosts branch)", async () => {
+    render(
+      <BrowserRouter>
+        <ThemeProvider>
+          <Blog />
+        </ThemeProvider>
+      </BrowserRouter>
+    );
+
+    await waitFor(
+      () => {
+        const gridLinks = document.querySelectorAll('a[href^="/resources/blog/"]');
+        expect(gridLinks.length).toBeGreaterThan(0);
+      },
+      { timeout: 3000 }
+    );
+
+    const main = screen.getByRole("main");
+    expect(main).toBeTruthy();
   });
 });

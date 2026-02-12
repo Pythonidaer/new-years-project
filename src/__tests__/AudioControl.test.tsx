@@ -91,20 +91,16 @@ describe("AudioControl", () => {
   it("does not create audio until user clicks play (lazy loading)", async () => {
     presetId = "samson";
     render(<AudioControl />);
-    
-    // Wait for button to render
+
     await waitFor(() => {
       expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
     });
 
-    // Audio should NOT be created yet (lazy loading)
     expect(instances.length).toBe(0);
 
-    // Click play to trigger lazy loading
     const button = screen.getByRole("button", { name: /play audio/i });
     fireEvent.click(button);
 
-    // Now audio should be created
     await waitFor(() => {
       expect(instances.length).toBe(1);
       expect(instances[0].src).toBe("/samson.mp3");
@@ -168,34 +164,31 @@ describe("AudioControl", () => {
     presetId = "samson";
     render(<AudioControl />);
 
-    // Wait for button to render
     await waitFor(() => {
       expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
     });
 
-    // Click play to create audio
     const button = screen.getByRole("button", { name: /play audio/i });
     fireEvent.click(button);
 
-    // Wait for audio to be created
     await waitFor(() => {
       expect(instances.length).toBe(1);
+      expect(screen.getByRole("button", { name: /pause audio/i })).toBeInTheDocument();
     });
 
-    // Make the created FakeAudio instance reject play()
-    const originalPlay = instances[0].play;
-    instances[0].play = vi.fn(() => Promise.reject(new Error("nope")));
-
-    // Click play again (audio already exists, so it will try to play)
-    fireEvent.click(button);
+    fireEvent.click(screen.getByRole("button", { name: /pause audio/i }));
 
     await waitFor(() => {
-      // Should stay / return to Play because catch sets isPlaying(false)
       expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
     });
 
-    // Restore original play for cleanup
-    instances[0].play = originalPlay;
+    instances[0].play = vi.fn(() => Promise.reject(new Error("nope")));
+
+    fireEvent.click(screen.getByRole("button", { name: /play audio/i }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: /play audio/i })).toBeInTheDocument();
+    });
   });
 
   it("runs cleanup when theme changes from audio -> non-audio (covers audioRef.current cleanup)", async () => {

@@ -32,11 +32,11 @@
       </div>
       <div class='fl pad1y space-right2'>
         <span class="quiet">Expressions</span>
-        <span class='fraction'>5</span>
+        <span class='fraction'>6</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="quiet">Default Parameters</span>
-        <span class='fraction'>0</span>
+        <span class='fraction'>1</span>
       </div>
     </div>
         
@@ -48,61 +48,61 @@
         <label style="margin: 0; font-weight: normal;"><input type="checkbox" id="breakdown-show-table" onchange="toggleTableVisibility()" checked> Show Table</label>
         <label style="margin: 0; font-weight: normal;"><input type="checkbox" id="breakdown-show-highlights" onchange="toggleHighlights()" checked> Show Highlights</label>
       </div>
-      <table class="complexity-breakdown-table" id="complexity-breakdown-table" style="display: table;" data-colspan-with-lines="5" data-colspan-without-lines="4">
+      <table class="complexity-breakdown-table" id="complexity-breakdown-table" style="display: table;" data-colspan-with-lines="7" data-colspan-without-lines="6">
         <thead id="complexity-breakdown-thead">
-          <tr><th colspan="5" class="breakdown-header" id="breakdown-header-span">Function Complexity Breakdown</th></tr>
+          <tr><th colspan="7" class="breakdown-header" id="breakdown-header-span">Function Complexity Breakdown</th></tr>
           <tr id="breakdown-group-headers-row">
             <th rowspan="2" class="breakdown-function-header sortable" onclick="sortTable('function')" id="sort-function-header">Function (base = 1) <span class="sort-indicator" id="sort-function-indicator"></span></th>
             <th rowspan="2" class="breakdown-line-header breakdown-line-column sortable" onclick="sortTable('line')" id="sort-line-header">Line <span class="sort-indicator" id="sort-line-indicator"></span></th>
             <th rowspan="2" class="breakdown-complexity-header sortable" onclick="sortTable('complexity')" id="sort-complexity-header">Complexity <span class="sort-indicator" id="sort-complexity-indicator"></span></th>
-            <th colspan="2" class="breakdown-group-header" data-group="Expressions" data-total-cols="5">Expressions</th>
+            <th colspan="3" class="breakdown-group-header" data-group="Expressions" data-total-cols="5">Expressions</th><th colspan="1" class="breakdown-group-header" data-group="Function Parameters" data-total-cols="1">Function Parameters</th>
           </tr>
-          <tr id="breakdown-col-headers-row"><th class="breakdown-col-header sortable" data-column-key="ternary" onclick="sortTable('ternary')" id="sort-ternary-header">?: <span class="sort-indicator" id="sort-ternary-indicator"></span></th><th class="breakdown-col-header sortable" data-column-key="||" onclick="sortTable('||')" id="sort-||-header">|| <span class="sort-indicator" id="sort-||-indicator"></span></th></tr>
+          <tr id="breakdown-col-headers-row"><th class="breakdown-col-header sortable" data-column-key="ternary" onclick="sortTable('ternary')" id="sort-ternary-header">?: <span class="sort-indicator" id="sort-ternary-indicator"></span></th><th class="breakdown-col-header sortable" data-column-key="||" onclick="sortTable('||')" id="sort-||-header">|| <span class="sort-indicator" id="sort-||-indicator"></span></th><th class="breakdown-col-header sortable" data-column-key="??" onclick="sortTable('??')" id="sort-??-header">?? <span class="sort-indicator" id="sort-??-indicator"></span></th><th class="breakdown-col-header sortable" data-column-key="default parameter" onclick="sortTable('default parameter')" id="sort-default parameter-header">default parameter <span class="sort-indicator" id="sort-default parameter-indicator"></span></th></tr>
         </thead>
         <tbody id="complexity-breakdown-tbody">
-                  <tr class="breakdown-function-row" data-line="34" data-function-start="34" data-function-end="109" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
+                  <tr class="breakdown-function-row" data-line="45" data-function-start="45" data-function-end="120" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
           <td class="function-name"><span class="function-name-leaf">CustomerSpotlight</span></td>
-          <td class="breakdown-line-value breakdown-line-column" data-line="34">34</td>
-          <td class="complexity-value"><span class="complexity-number">3</span></td>
-          <td class="breakdown-value" data-column-key="ternary">1</td><td class="breakdown-value" data-column-key="||">1</td>
+          <td class="breakdown-line-value breakdown-line-column" data-line="45">45</td>
+          <td class="complexity-value"><span class="complexity-number">5</span></td>
+          <td class="breakdown-value" data-column-key="ternary">1</td><td class="breakdown-value" data-column-key="||">1</td><td class="breakdown-value" data-column-key="??">1</td><td class="breakdown-value" data-column-key="default parameter">1</td>
         </tr>
-        <tr class="breakdown-function-row" data-line="38" data-function-start="38" data-function-end="40" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
+        <tr class="breakdown-function-row" data-line="49" data-function-start="49" data-function-end="51" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
           <td class="function-name">CustomerSpotlight → <span class="function-name-leaf">scrollPrev</span></td>
-          <td class="breakdown-line-value breakdown-line-column" data-line="38">38</td>
+          <td class="breakdown-line-value breakdown-line-column" data-line="49">49</td>
           <td class="complexity-value"><span class="complexity-number">1</span></td>
-          <td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td>
+          <td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="default parameter">-</td>
         </tr>
-        <tr class="breakdown-function-row" data-line="39" data-function-start="39" data-function-end="39" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
+        <tr class="breakdown-function-row" data-line="50" data-function-start="50" data-function-end="50" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
           <td class="function-name">CustomerSpotlight → scrollPrev → <span class="function-name-leaf">scrollPrev</span></td>
-          <td class="breakdown-line-value breakdown-line-column" data-line="39">39</td>
+          <td class="breakdown-line-value breakdown-line-column" data-line="50">50</td>
           <td class="complexity-value"><span class="complexity-number">2</span></td>
-          <td class="breakdown-value" data-column-key="ternary">1</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td>
+          <td class="breakdown-value" data-column-key="ternary">1</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="default parameter">-</td>
         </tr>
-        <tr class="breakdown-function-row" data-line="42" data-function-start="42" data-function-end="44" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
+        <tr class="breakdown-function-row" data-line="53" data-function-start="53" data-function-end="55" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
           <td class="function-name">CustomerSpotlight → <span class="function-name-leaf">scrollNext</span></td>
-          <td class="breakdown-line-value breakdown-line-column" data-line="42">42</td>
+          <td class="breakdown-line-value breakdown-line-column" data-line="53">53</td>
           <td class="complexity-value"><span class="complexity-number">1</span></td>
-          <td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td>
+          <td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="default parameter">-</td>
         </tr>
-        <tr class="breakdown-function-row" data-line="43" data-function-start="43" data-function-end="43" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
+        <tr class="breakdown-function-row" data-line="54" data-function-start="54" data-function-end="54" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
           <td class="function-name">CustomerSpotlight → scrollNext → <span class="function-name-leaf">scrollNext</span></td>
-          <td class="breakdown-line-value breakdown-line-column" data-line="43">43</td>
+          <td class="breakdown-line-value breakdown-line-column" data-line="54">54</td>
           <td class="complexity-value"><span class="complexity-number">2</span></td>
-          <td class="breakdown-value" data-column-key="ternary">1</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td>
+          <td class="breakdown-value" data-column-key="ternary">1</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="default parameter">-</td>
         </tr>
-        <tr class="breakdown-function-row" data-line="85" data-function-start="85" data-function-end="94" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
+        <tr class="breakdown-function-row" data-line="96" data-function-start="96" data-function-end="105" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
           <td class="function-name">CustomerSpotlight → <span class="function-name-leaf">map</span></td>
-          <td class="breakdown-line-value breakdown-line-column" data-line="85">85</td>
+          <td class="breakdown-line-value breakdown-line-column" data-line="96">96</td>
           <td class="complexity-value"><span class="complexity-number">2</span></td>
-          <td class="breakdown-value" data-column-key="ternary">1</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td>
+          <td class="breakdown-value" data-column-key="ternary">1</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="default parameter">-</td>
         </tr>
-        <tr class="breakdown-function-row" data-line="91" data-function-start="91" data-function-end="91" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
+        <tr class="breakdown-function-row" data-line="102" data-function-start="102" data-function-end="102" role="button" tabindex="0" title="Click to jump to function in code; click again to clear">
           <td class="function-name">CustomerSpotlight → map → <span class="function-name-leaf">onClick handler</span></td>
-          <td class="breakdown-line-value breakdown-line-column" data-line="91">91</td>
+          <td class="breakdown-line-value breakdown-line-column" data-line="102">102</td>
           <td class="complexity-value"><span class="complexity-number">1</span></td>
-          <td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td>
+          <td class="breakdown-value breakdown-value-empty" data-column-key="ternary">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="||">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="??">-</td><td class="breakdown-value breakdown-value-empty" data-column-key="default parameter">-</td>
         </tr>
-          <tr id="no-matches-row" style="display: none;"><td colspan="5" class="no-matches-message">No functions match the current filter.</td></tr>
+          <tr id="no-matches-row" style="display: none;"><td colspan="7" class="no-matches-message">No functions match the current filter.</td></tr>
         </tbody>
       </table>
     </div>
@@ -146,342 +146,342 @@
 <tr data-line="7">
 <td class="line-count quiet"><a name='L7'></a><a href='#L7'>7</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">const testimonials = [</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">export type Testimonial = {</span></pre></td>
 </tr>
 <tr data-line="8">
 <td class="line-count quiet"><a name='L8'></a><a href='#L8'>8</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  id: number;</span></pre></td>
 </tr>
 <tr data-line="9">
 <td class="line-count quiet"><a name='L9'></a><a href='#L9'>9</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 1,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  quote: string;</span></pre></td>
 </tr>
 <tr data-line="10">
 <td class="line-count quiet"><a name='L10'></a><a href='#L10'>10</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    quote: &quot;Jonathan built a clear, reliable and accessible campaign website that fit our needs perfectly. He explained every option and delivered thoughtful solutions on time.&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  author: string;</span></pre></td>
 </tr>
 <tr data-line="11">
 <td class="line-count quiet"><a name='L11'></a><a href='#L11'>11</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    author: &quot;Bil Legault&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  role: string;</span></pre></td>
 </tr>
 <tr data-line="12">
 <td class="line-count quiet"><a name='L12'></a><a href='#L12'>12</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    role: &quot;Former Salem City Councilor At-Large&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  image?: string;</span></pre></td>
 </tr>
 <tr data-line="13">
 <td class="line-count quiet"><a name='L13'></a><a href='#L13'>13</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/bil_legault.webp&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  alt?: string;</span></pre></td>
 </tr>
 <tr data-line="14">
 <td class="line-count quiet"><a name='L14'></a><a href='#L14'>14</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    alt: &quot;Bil Legault&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">};</span></pre></td>
 </tr>
 <tr data-line="15">
 <td class="line-count quiet"><a name='L15'></a><a href='#L15'>15</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
 </tr>
 <tr data-line="16">
 <td class="line-count quiet"><a name='L16'></a><a href='#L16'>16</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">const defaultTestimonials: Testimonial[] = [</span></pre></td>
 </tr>
 <tr data-line="17">
 <td class="line-count quiet"><a name='L17'></a><a href='#L17'>17</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 2,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
 </tr>
 <tr data-line="18">
 <td class="line-count quiet"><a name='L18'></a><a href='#L18'>18</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    quote: &quot;Johnny showed consistent drive and curiosity while growing from IT intern into developer. He learned quickly, solved problems, and earned trust across teams.&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 1,</span></pre></td>
 </tr>
 <tr data-line="19">
 <td class="line-count quiet"><a name='L19'></a><a href='#L19'>19</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    author: &quot;Johnathon Broekhuizen&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    quote: &quot;Jonathan built a clear, reliable and accessible campaign website that fit our needs perfectly. He explained every option and delivered thoughtful solutions on time.&quot;,</span></pre></td>
 </tr>
 <tr data-line="20">
 <td class="line-count quiet"><a name='L20'></a><a href='#L20'>20</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    role: &quot;Director of IT Services&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    author: &quot;Bil Legault&quot;,</span></pre></td>
 </tr>
 <tr data-line="21">
 <td class="line-count quiet"><a name='L21'></a><a href='#L21'>21</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/john_broekhuizen.png&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    role: &quot;Former Salem City Councilor At-Large&quot;,</span></pre></td>
 </tr>
 <tr data-line="22">
 <td class="line-count quiet"><a name='L22'></a><a href='#L22'>22</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    alt: &quot;Johnathon Broekhuizen&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/bil_legault.webp&quot;,</span></pre></td>
 </tr>
 <tr data-line="23">
 <td class="line-count quiet"><a name='L23'></a><a href='#L23'>23</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    alt: &quot;Bil Legault&quot;,</span></pre></td>
 </tr>
 <tr data-line="24">
 <td class="line-count quiet"><a name='L24'></a><a href='#L24'>24</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
 </tr>
 <tr data-line="25">
 <td class="line-count quiet"><a name='L25'></a><a href='#L25'>25</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 3,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
 </tr>
 <tr data-line="26">
 <td class="line-count quiet"><a name='L26'></a><a href='#L26'>26</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    quote: &quot;Johnny brings strong frontend instincts and communicates complex ideas clearly. I have seen his projects evolve with solid architecture and careful attention.&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 2,</span></pre></td>
 </tr>
 <tr data-line="27">
 <td class="line-count quiet"><a name='L27'></a><a href='#L27'>27</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    author: &quot;John Bauer&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    quote: &quot;Johnny showed consistent drive and curiosity while growing from IT intern into developer. He learned quickly, solved problems, and earned trust across teams.&quot;,</span></pre></td>
 </tr>
 <tr data-line="28">
 <td class="line-count quiet"><a name='L28'></a><a href='#L28'>28</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    role: &quot;Principal Software Engineer&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    author: &quot;Johnathon Broekhuizen&quot;,</span></pre></td>
 </tr>
 <tr data-line="29">
 <td class="line-count quiet"><a name='L29'></a><a href='#L29'>29</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/john_bauer.png&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    role: &quot;Director of IT Services&quot;,</span></pre></td>
 </tr>
 <tr data-line="30">
 <td class="line-count quiet"><a name='L30'></a><a href='#L30'>30</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    alt: &quot;John Bauer&quot;,</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/john_broekhuizen.png&quot;,</span></pre></td>
 </tr>
 <tr data-line="31">
 <td class="line-count quiet"><a name='L31'></a><a href='#L31'>31</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    alt: &quot;Johnathon Broekhuizen&quot;,</span></pre></td>
 </tr>
 <tr data-line="32">
 <td class="line-count quiet"><a name='L32'></a><a href='#L32'>32</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">];</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
 </tr>
 <tr data-line="33">
 <td class="line-count quiet"><a name='L33'></a><a href='#L33'>33</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  {</span></pre></td>
 </tr>
 <tr data-line="34">
 <td class="line-count quiet"><a name='L34'></a><a href='#L34'>34</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'CustomerSpotlight' has complexity 3">3</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">export function CustomerSpotlight() {</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    id: 3,</span></pre></td>
 </tr>
 <tr data-line="35">
 <td class="line-count quiet"><a name='L35'></a><a href='#L35'>35</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    quote: &quot;Johnny brings strong frontend instincts and communicates complex ideas clearly. I have seen his projects evolve with solid architecture and careful attention.&quot;,</span></pre></td>
 </tr>
 <tr data-line="36">
 <td class="line-count quiet"><a name='L36'></a><a href='#L36'>36</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const [selectedIndex, setSelectedIndex] = useState(0);</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    author: &quot;John Bauer&quot;,</span></pre></td>
 </tr>
 <tr data-line="37">
 <td class="line-count quiet"><a name='L37'></a><a href='#L37'>37</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    role: &quot;Principal Software Engineer&quot;,</span></pre></td>
 </tr>
 <tr data-line="38">
 <td class="line-count quiet"><a name='L38'></a><a href='#L38'>38</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'scrollPrev' has complexity 1">1</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const scrollPrev = () =&gt; {</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    image: &quot;/john_bauer.png&quot;,</span></pre></td>
 </tr>
-<tr class="decision-point" data-line="39">
+<tr data-line="39">
 <td class="line-count quiet"><a name='L39'></a><a href='#L39'>39</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'scrollPrev' has complexity 2">2</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    setSelectedIndex((prev) =&gt; (</span><span class="code-line decision-point-line">prev === 0 ? testimonials.length - 1 : prev - 1</span><span class="code-line">));</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    alt: &quot;John Bauer&quot;,</span></pre></td>
 </tr>
 <tr data-line="40">
 <td class="line-count quiet"><a name='L40'></a><a href='#L40'>40</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  };</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  },</span></pre></td>
 </tr>
 <tr data-line="41">
 <td class="line-count quiet"><a name='L41'></a><a href='#L41'>41</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">];</span></pre></td>
 </tr>
 <tr data-line="42">
 <td class="line-count quiet"><a name='L42'></a><a href='#L42'>42</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'scrollNext' has complexity 1">1</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const scrollNext = () =&gt; {</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
 </tr>
-<tr class="decision-point" data-line="43">
+<tr data-line="43">
 <td class="line-count quiet"><a name='L43'></a><a href='#L43'>43</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'scrollNext' has complexity 2">2</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    setSelectedIndex((prev) =&gt; (</span><span class="code-line decision-point-line">prev === testimonials.length - 1 ? 0 : prev + 1</span><span class="code-line">));</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">type CustomerSpotlightProps = { testimonials?: Testimonial[] };</span></pre></td>
 </tr>
 <tr data-line="44">
 <td class="line-count quiet"><a name='L44'></a><a href='#L44'>44</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  };</span></pre></td>
-</tr>
-<tr data-line="45">
-<td class="line-count quiet"><a name='L45'></a><a href='#L45'>45</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
 <td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
 </tr>
-<tr data-line="46">
+<tr class="decision-point" data-line="45">
+<td class="line-count quiet"><a name='L45'></a><a href='#L45'>45</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'CustomerSpotlight' has complexity 5">5</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">export function CustomerSpotlight(</span><span class="code-line decision-point-line">props: CustomerSpotlightProps = {}</span><span class="code-line">) {</span></pre></td>
+</tr>
+<tr class="decision-point" data-line="46">
 <td class="line-count quiet"><a name='L46'></a><a href='#L46'>46</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const currentTestimonial = testimonials[selectedIndex];</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const testimonials = props.testimonials</span><span class="code-line decision-point-line"> ?? </span><span class="code-line">defaultTestimonials;</span></pre></td>
 </tr>
 <tr data-line="47">
 <td class="line-count quiet"><a name='L47'></a><a href='#L47'>47</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const [selectedIndex, setSelectedIndex] = useState(0);</span></pre></td>
 </tr>
 <tr data-line="48">
 <td class="line-count quiet"><a name='L48'></a><a href='#L48'>48</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  return (</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
 </tr>
 <tr data-line="49">
 <td class="line-count quiet"><a name='L49'></a><a href='#L49'>49</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    &lt;Section variant=&quot;alt&quot;&gt;</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'scrollPrev' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const scrollPrev = () =&gt; {</span></pre></td>
 </tr>
-<tr data-line="50">
+<tr class="decision-point" data-line="50">
 <td class="line-count quiet"><a name='L50'></a><a href='#L50'>50</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      &lt;Container className={styles.referencesContainer}&gt;</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'scrollPrev' has complexity 2">2</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    setSelectedIndex((prev) =&gt; (</span><span class="code-line decision-point-line">prev === 0 ? testimonials.length - 1 : prev - 1</span><span class="code-line">));</span></pre></td>
 </tr>
 <tr data-line="51">
 <td class="line-count quiet"><a name='L51'></a><a href='#L51'>51</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;h2 className={styles.heading}&gt;References&lt;/h2&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  };</span></pre></td>
 </tr>
 <tr data-line="52">
 <td class="line-count quiet"><a name='L52'></a><a href='#L52'>52</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;div className={styles.wrapper}&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
 </tr>
 <tr data-line="53">
 <td class="line-count quiet"><a name='L53'></a><a href='#L53'>53</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;div className={styles.image}&gt;</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'scrollNext' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const scrollNext = () =&gt; {</span></pre></td>
 </tr>
-<tr data-line="54">
+<tr class="decision-point" data-line="54">
 <td class="line-count quiet"><a name='L54'></a><a href='#L54'>54</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.imageContainer}&gt;</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'scrollNext' has complexity 2">2</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    setSelectedIndex((prev) =&gt; (</span><span class="code-line decision-point-line">prev === testimonials.length - 1 ? 0 : prev + 1</span><span class="code-line">));</span></pre></td>
 </tr>
-<tr class="decision-point" data-line="55">
+<tr data-line="55">
 <td class="line-count quiet"><a name='L55'></a><a href='#L55'>55</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              {</span><span class="code-line decision-point-line">currentTestimonial.image ? (</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  };</span></pre></td>
 </tr>
 <tr data-line="56">
 <td class="line-count quiet"><a name='L56'></a><a href='#L56'>56</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;img</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
 </tr>
 <tr data-line="57">
 <td class="line-count quiet"><a name='L57'></a><a href='#L57'>57</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  src={currentTestimonial.image}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  const currentTestimonial = testimonials[selectedIndex];</span></pre></td>
 </tr>
-<tr class="decision-point" data-line="58">
+<tr data-line="58">
 <td class="line-count quiet"><a name='L58'></a><a href='#L58'>58</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  alt={currentTestimonial.alt</span><span class="code-line decision-point-line"> || </span><span class="code-line">currentTestimonial.author}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
 </tr>
 <tr data-line="59">
 <td class="line-count quiet"><a name='L59'></a><a href='#L59'>59</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  className={styles.imageContent}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  return (</span></pre></td>
 </tr>
 <tr data-line="60">
 <td class="line-count quiet"><a name='L60'></a><a href='#L60'>60</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                /&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    &lt;Section variant=&quot;alt&quot;&gt;</span></pre></td>
 </tr>
 <tr data-line="61">
 <td class="line-count quiet"><a name='L61'></a><a href='#L61'>61</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              ) : (</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      &lt;Container className={styles.referencesContainer}&gt;</span></pre></td>
 </tr>
 <tr data-line="62">
 <td class="line-count quiet"><a name='L62'></a><a href='#L62'>62</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;span className={styles.placeholderText}&gt;Image&lt;/span&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;h2 className={styles.heading}&gt;References&lt;/h2&gt;</span></pre></td>
 </tr>
 <tr data-line="63">
 <td class="line-count quiet"><a name='L63'></a><a href='#L63'>63</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              )}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;div className={styles.wrapper}&gt;</span></pre></td>
 </tr>
 <tr data-line="64">
 <td class="line-count quiet"><a name='L64'></a><a href='#L64'>64</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/div&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;div className={styles.image}&gt;</span></pre></td>
 </tr>
 <tr data-line="65">
 <td class="line-count quiet"><a name='L65'></a><a href='#L65'>65</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;/div&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.imageContainer}&gt;</span></pre></td>
 </tr>
-<tr data-line="66">
+<tr class="decision-point" data-line="66">
 <td class="line-count quiet"><a name='L66'></a><a href='#L66'>66</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;div className={styles.quote}&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              {</span><span class="code-line decision-point-line">currentTestimonial.image ? (</span></pre></td>
 </tr>
 <tr data-line="67">
 <td class="line-count quiet"><a name='L67'></a><a href='#L67'>67</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.quoteContent}&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;img</span></pre></td>
 </tr>
 <tr data-line="68">
 <td class="line-count quiet"><a name='L68'></a><a href='#L68'>68</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;blockquote className={styles.blockquote}&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  src={currentTestimonial.image}</span></pre></td>
 </tr>
-<tr data-line="69">
+<tr class="decision-point" data-line="69">
 <td class="line-count quiet"><a name='L69'></a><a href='#L69'>69</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &quot;{currentTestimonial.quote}&quot;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  alt={currentTestimonial.alt</span><span class="code-line decision-point-line"> || </span><span class="code-line">currentTestimonial.author}</span></pre></td>
 </tr>
 <tr data-line="70">
 <td class="line-count quiet"><a name='L70'></a><a href='#L70'>70</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/blockquote&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  className={styles.imageContent}</span></pre></td>
 </tr>
 <tr data-line="71">
 <td class="line-count quiet"><a name='L71'></a><a href='#L71'>71</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;div className={styles.quoteAuthor}&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                /&gt;</span></pre></td>
 </tr>
 <tr data-line="72">
 <td class="line-count quiet"><a name='L72'></a><a href='#L72'>72</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;div className={styles.authorName}&gt;{currentTestimonial.author}&lt;/div&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              ) : (</span></pre></td>
 </tr>
 <tr data-line="73">
 <td class="line-count quiet"><a name='L73'></a><a href='#L73'>73</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;div className={styles.authorRole}&gt;{currentTestimonial.role}&lt;/div&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;span className={styles.placeholderText}&gt;Image&lt;/span&gt;</span></pre></td>
 </tr>
 <tr data-line="74">
 <td class="line-count quiet"><a name='L74'></a><a href='#L74'>74</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/div&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              )}</span></pre></td>
 </tr>
 <tr data-line="75">
 <td class="line-count quiet"><a name='L75'></a><a href='#L75'>75</a></td>
@@ -491,180 +491,235 @@
 <tr data-line="76">
 <td class="line-count quiet"><a name='L76'></a><a href='#L76'>76</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.controls}&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;/div&gt;</span></pre></td>
 </tr>
 <tr data-line="77">
 <td class="line-count quiet"><a name='L77'></a><a href='#L77'>77</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;button</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;div className={styles.quote}&gt;</span></pre></td>
 </tr>
 <tr data-line="78">
 <td class="line-count quiet"><a name='L78'></a><a href='#L78'>78</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                className={styles.arrow}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.quoteContent}&gt;</span></pre></td>
 </tr>
 <tr data-line="79">
 <td class="line-count quiet"><a name='L79'></a><a href='#L79'>79</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                onClick={scrollPrev}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;blockquote className={styles.blockquote}&gt;</span></pre></td>
 </tr>
 <tr data-line="80">
 <td class="line-count quiet"><a name='L80'></a><a href='#L80'>80</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                aria-label=&quot;Previous testimonial&quot;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &quot;{currentTestimonial.quote}&quot;</span></pre></td>
 </tr>
 <tr data-line="81">
 <td class="line-count quiet"><a name='L81'></a><a href='#L81'>81</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/blockquote&gt;</span></pre></td>
 </tr>
 <tr data-line="82">
 <td class="line-count quiet"><a name='L82'></a><a href='#L82'>82</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;ChevronLeft size={24} /&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;div className={styles.quoteAuthor}&gt;</span></pre></td>
 </tr>
 <tr data-line="83">
 <td class="line-count quiet"><a name='L83'></a><a href='#L83'>83</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/button&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;div className={styles.authorName}&gt;{currentTestimonial.author}&lt;/div&gt;</span></pre></td>
 </tr>
 <tr data-line="84">
 <td class="line-count quiet"><a name='L84'></a><a href='#L84'>84</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;div className={styles.dots}&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;div className={styles.authorRole}&gt;{currentTestimonial.role}&lt;/div&gt;</span></pre></td>
 </tr>
 <tr data-line="85">
 <td class="line-count quiet"><a name='L85'></a><a href='#L85'>85</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'map' has complexity 2">2</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                {testimonials.map((_, index) =&gt; (</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/div&gt;</span></pre></td>
 </tr>
 <tr data-line="86">
 <td class="line-count quiet"><a name='L86'></a><a href='#L86'>86</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;button</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/div&gt;</span></pre></td>
 </tr>
 <tr data-line="87">
 <td class="line-count quiet"><a name='L87'></a><a href='#L87'>87</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    key={index}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;div className={styles.controls}&gt;</span></pre></td>
 </tr>
 <tr data-line="88">
 <td class="line-count quiet"><a name='L88'></a><a href='#L88'>88</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    className={`${styles.dot} ${</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;button</span></pre></td>
 </tr>
-<tr class="decision-point" data-line="89">
+<tr data-line="89">
 <td class="line-count quiet"><a name='L89'></a><a href='#L89'>89</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      </span><span class="code-line decision-point-line">index === selectedIndex ? styles.dotActive : &quot;&quot;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                className={styles.arrow}</span></pre></td>
 </tr>
 <tr data-line="90">
 <td class="line-count quiet"><a name='L90'></a><a href='#L90'>90</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    }`}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                onClick={scrollPrev}</span></pre></td>
 </tr>
 <tr data-line="91">
 <td class="line-count quiet"><a name='L91'></a><a href='#L91'>91</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'onClick handler' has complexity 1">1</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    onClick={() =&gt; setSelectedIndex(index)}</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                aria-label=&quot;Previous testimonial&quot;</span></pre></td>
 </tr>
 <tr data-line="92">
 <td class="line-count quiet"><a name='L92'></a><a href='#L92'>92</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    aria-label={`Go to testimonial ${index + 1}`}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &gt;</span></pre></td>
 </tr>
 <tr data-line="93">
 <td class="line-count quiet"><a name='L93'></a><a href='#L93'>93</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  /&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;ChevronLeft size={24} /&gt;</span></pre></td>
 </tr>
 <tr data-line="94">
 <td class="line-count quiet"><a name='L94'></a><a href='#L94'>94</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                ))}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/button&gt;</span></pre></td>
 </tr>
 <tr data-line="95">
 <td class="line-count quiet"><a name='L95'></a><a href='#L95'>95</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/div&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;div className={styles.dots}&gt;</span></pre></td>
 </tr>
 <tr data-line="96">
 <td class="line-count quiet"><a name='L96'></a><a href='#L96'>96</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;button</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'map' has complexity 2">2</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                {testimonials.map((_, index) =&gt; (</span></pre></td>
 </tr>
 <tr data-line="97">
 <td class="line-count quiet"><a name='L97'></a><a href='#L97'>97</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                className={styles.arrow}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  &lt;button</span></pre></td>
 </tr>
 <tr data-line="98">
 <td class="line-count quiet"><a name='L98'></a><a href='#L98'>98</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                onClick={scrollNext}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    key={index}</span></pre></td>
 </tr>
 <tr data-line="99">
 <td class="line-count quiet"><a name='L99'></a><a href='#L99'>99</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                aria-label=&quot;Next testimonial&quot;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    className={`${styles.dot} ${</span></pre></td>
 </tr>
-<tr data-line="100">
+<tr class="decision-point" data-line="100">
 <td class="line-count quiet"><a name='L100'></a><a href='#L100'>100</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                      </span><span class="code-line decision-point-line">index === selectedIndex ? styles.dotActive : &quot;&quot;</span></pre></td>
 </tr>
 <tr data-line="101">
 <td class="line-count quiet"><a name='L101'></a><a href='#L101'>101</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;ChevronRight size={24} /&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    }`}</span></pre></td>
 </tr>
 <tr data-line="102">
 <td class="line-count quiet"><a name='L102'></a><a href='#L102'>102</a></td>
-<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/button&gt;</span></pre></td>
+<td class="line-coverage quiet"><span class="cline-any cline-yes" title="Function 'onClick handler' has complexity 1">1</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    onClick={() =&gt; setSelectedIndex(index)}</span></pre></td>
 </tr>
 <tr data-line="103">
 <td class="line-count quiet"><a name='L103'></a><a href='#L103'>103</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/div&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                    aria-label={`Go to testimonial ${index + 1}`}</span></pre></td>
 </tr>
 <tr data-line="104">
 <td class="line-count quiet"><a name='L104'></a><a href='#L104'>104</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;/div&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                  /&gt;</span></pre></td>
 </tr>
 <tr data-line="105">
 <td class="line-count quiet"><a name='L105'></a><a href='#L105'>105</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;/div&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                ))}</span></pre></td>
 </tr>
 <tr data-line="106">
 <td class="line-count quiet"><a name='L106'></a><a href='#L106'>106</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      &lt;/Container&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/div&gt;</span></pre></td>
 </tr>
 <tr data-line="107">
 <td class="line-count quiet"><a name='L107'></a><a href='#L107'>107</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    &lt;/Section&gt;</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;button</span></pre></td>
 </tr>
 <tr data-line="108">
 <td class="line-count quiet"><a name='L108'></a><a href='#L108'>108</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  );</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                className={styles.arrow}</span></pre></td>
 </tr>
 <tr data-line="109">
 <td class="line-count quiet"><a name='L109'></a><a href='#L109'>109</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">}</span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                onClick={scrollNext}</span></pre></td>
 </tr>
 <tr data-line="110">
 <td class="line-count quiet"><a name='L110'></a><a href='#L110'>110</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
-<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                aria-label=&quot;Next testimonial&quot;</span></pre></td>
 </tr>
 <tr data-line="111">
 <td class="line-count quiet"><a name='L111'></a><a href='#L111'>111</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &gt;</span></pre></td>
+</tr>
+<tr data-line="112">
+<td class="line-count quiet"><a name='L112'></a><a href='#L112'>112</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">                &lt;ChevronRight size={24} /&gt;</span></pre></td>
+</tr>
+<tr data-line="113">
+<td class="line-count quiet"><a name='L113'></a><a href='#L113'>113</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">              &lt;/button&gt;</span></pre></td>
+</tr>
+<tr data-line="114">
+<td class="line-count quiet"><a name='L114'></a><a href='#L114'>114</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">            &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="115">
+<td class="line-count quiet"><a name='L115'></a><a href='#L115'>115</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">          &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="116">
+<td class="line-count quiet"><a name='L116'></a><a href='#L116'>116</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">        &lt;/div&gt;</span></pre></td>
+</tr>
+<tr data-line="117">
+<td class="line-count quiet"><a name='L117'></a><a href='#L117'>117</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">      &lt;/Container&gt;</span></pre></td>
+</tr>
+<tr data-line="118">
+<td class="line-count quiet"><a name='L118'></a><a href='#L118'>118</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">    &lt;/Section&gt;</span></pre></td>
+</tr>
+<tr data-line="119">
+<td class="line-count quiet"><a name='L119'></a><a href='#L119'>119</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">  );</span></pre></td>
+</tr>
+<tr data-line="120">
+<td class="line-count quiet"><a name='L120'></a><a href='#L120'>120</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line">}</span></pre></td>
+</tr>
+<tr data-line="121">
+<td class="line-count quiet"><a name='L121'></a><a href='#L121'>121</a></td>
+<td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
+<td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
+</tr>
+<tr data-line="122">
+<td class="line-count quiet"><a name='L122'></a><a href='#L122'>122</a></td>
 <td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span></td>
 <td class="text"><pre class="prettyprint lang-ts"><span class="code-line"></span></pre></td>
 </tr>
@@ -674,7 +729,7 @@
     <div class='push'></div>
 </div>
 <div class='footer quiet pad2 space-top1 center small'>
-    Complexity report generated by <a href="https://www.github.com/pythonidaer" target="_blank" rel="noopener noreferrer">pythonidaer</a> at 2026-02-08T20:57:51.089Z
+    Complexity report generated by <a href="https://www.github.com/pythonidaer" target="_blank" rel="noopener noreferrer">pythonidaer</a> at 2026-02-11T23:58:36.661Z
 </div>
 <button type="button" id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top" title="Scroll to top">↑</button>
 <script src="../../../prettify.js"></script>
@@ -683,8 +738,8 @@
   let showLines = true;
   let sortColumn = 'complexity';
   let sortDirection = 'desc';
-  const columnConfig = {"groups":[{"name":"Control Flow","columns":[{"key":"if","label":"if"},{"key":"else if","label":"else if"},{"key":"for","label":"for"},{"key":"for...of","label":"for...of"},{"key":"for...in","label":"for...in"},{"key":"while","label":"while"},{"key":"do...while","label":"do...while"},{"key":"case","label":"case"},{"key":"catch","label":"catch"}],"totalColumns":9},{"name":"Expressions","columns":[{"key":"ternary","label":"?:"},{"key":"&&","label":"&&"},{"key":"||","label":"||"},{"key":"??","label":"??"},{"key":"?.","label":"?."}],"totalColumns":5},{"name":"Function Parameters","columns":[{"key":"default parameter","label":"default parameter"}],"totalColumns":1}],"emptyColumns":["if","else if","for","for...of","for...in","while","do...while","case","catch","&&","??","?.","default parameter"],"baseColumn":{"key":"base","label":"base"}};
-  const COVERAGE_LINE_TO_SPAN = {"34":{"start":34,"end":109,"indent":0},"35":{"start":34,"end":109,"indent":0},"36":{"start":34,"end":109,"indent":0},"37":{"start":34,"end":109,"indent":0},"38":{"start":38,"end":40,"indent":2},"39":{"start":39,"end":39,"indent":4},"40":{"start":38,"end":40,"indent":2},"41":{"start":34,"end":109,"indent":0},"42":{"start":42,"end":44,"indent":2},"43":{"start":43,"end":43,"indent":4},"44":{"start":42,"end":44,"indent":2},"45":{"start":34,"end":109,"indent":0},"46":{"start":34,"end":109,"indent":0},"47":{"start":34,"end":109,"indent":0},"48":{"start":34,"end":109,"indent":0},"49":{"start":34,"end":109,"indent":0},"50":{"start":34,"end":109,"indent":0},"51":{"start":34,"end":109,"indent":0},"52":{"start":34,"end":109,"indent":0},"53":{"start":34,"end":109,"indent":0},"54":{"start":34,"end":109,"indent":0},"55":{"start":34,"end":109,"indent":0},"56":{"start":34,"end":109,"indent":0},"57":{"start":34,"end":109,"indent":0},"58":{"start":34,"end":109,"indent":0},"59":{"start":34,"end":109,"indent":0},"60":{"start":34,"end":109,"indent":0},"61":{"start":34,"end":109,"indent":0},"62":{"start":34,"end":109,"indent":0},"63":{"start":34,"end":109,"indent":0},"64":{"start":34,"end":109,"indent":0},"65":{"start":34,"end":109,"indent":0},"66":{"start":34,"end":109,"indent":0},"67":{"start":34,"end":109,"indent":0},"68":{"start":34,"end":109,"indent":0},"69":{"start":34,"end":109,"indent":0},"70":{"start":34,"end":109,"indent":0},"71":{"start":34,"end":109,"indent":0},"72":{"start":34,"end":109,"indent":0},"73":{"start":34,"end":109,"indent":0},"74":{"start":34,"end":109,"indent":0},"75":{"start":34,"end":109,"indent":0},"76":{"start":34,"end":109,"indent":0},"77":{"start":34,"end":109,"indent":0},"78":{"start":34,"end":109,"indent":0},"79":{"start":34,"end":109,"indent":0},"80":{"start":34,"end":109,"indent":0},"81":{"start":34,"end":109,"indent":0},"82":{"start":34,"end":109,"indent":0},"83":{"start":34,"end":109,"indent":0},"84":{"start":34,"end":109,"indent":0},"85":{"start":85,"end":94,"indent":16},"86":{"start":85,"end":94,"indent":16},"87":{"start":85,"end":94,"indent":16},"88":{"start":85,"end":94,"indent":16},"89":{"start":85,"end":94,"indent":16},"90":{"start":85,"end":94,"indent":16},"91":{"start":91,"end":91,"indent":20},"92":{"start":85,"end":94,"indent":16},"93":{"start":85,"end":94,"indent":16},"94":{"start":85,"end":94,"indent":16},"95":{"start":34,"end":109,"indent":0},"96":{"start":34,"end":109,"indent":0},"97":{"start":34,"end":109,"indent":0},"98":{"start":34,"end":109,"indent":0},"99":{"start":34,"end":109,"indent":0},"100":{"start":34,"end":109,"indent":0},"101":{"start":34,"end":109,"indent":0},"102":{"start":34,"end":109,"indent":0},"103":{"start":34,"end":109,"indent":0},"104":{"start":34,"end":109,"indent":0},"105":{"start":34,"end":109,"indent":0},"106":{"start":34,"end":109,"indent":0},"107":{"start":34,"end":109,"indent":0},"108":{"start":34,"end":109,"indent":0},"109":{"start":34,"end":109,"indent":0}};
+  const columnConfig = {"groups":[{"name":"Control Flow","columns":[{"key":"if","label":"if"},{"key":"else if","label":"else if"},{"key":"for","label":"for"},{"key":"for...of","label":"for...of"},{"key":"for...in","label":"for...in"},{"key":"while","label":"while"},{"key":"do...while","label":"do...while"},{"key":"case","label":"case"},{"key":"catch","label":"catch"}],"totalColumns":9},{"name":"Expressions","columns":[{"key":"ternary","label":"?:"},{"key":"&&","label":"&&"},{"key":"||","label":"||"},{"key":"??","label":"??"},{"key":"?.","label":"?."}],"totalColumns":5},{"name":"Function Parameters","columns":[{"key":"default parameter","label":"default parameter"}],"totalColumns":1}],"emptyColumns":["if","else if","for","for...of","for...in","while","do...while","case","catch","&&","?."],"baseColumn":{"key":"base","label":"base"}};
+  const COVERAGE_LINE_TO_SPAN = {"45":{"start":45,"end":120,"indent":0},"46":{"start":45,"end":120,"indent":0},"47":{"start":45,"end":120,"indent":0},"48":{"start":45,"end":120,"indent":0},"49":{"start":49,"end":51,"indent":2},"50":{"start":50,"end":50,"indent":4},"51":{"start":49,"end":51,"indent":2},"52":{"start":45,"end":120,"indent":0},"53":{"start":53,"end":55,"indent":2},"54":{"start":54,"end":54,"indent":4},"55":{"start":53,"end":55,"indent":2},"56":{"start":45,"end":120,"indent":0},"57":{"start":45,"end":120,"indent":0},"58":{"start":45,"end":120,"indent":0},"59":{"start":45,"end":120,"indent":0},"60":{"start":45,"end":120,"indent":0},"61":{"start":45,"end":120,"indent":0},"62":{"start":45,"end":120,"indent":0},"63":{"start":45,"end":120,"indent":0},"64":{"start":45,"end":120,"indent":0},"65":{"start":45,"end":120,"indent":0},"66":{"start":45,"end":120,"indent":0},"67":{"start":45,"end":120,"indent":0},"68":{"start":45,"end":120,"indent":0},"69":{"start":45,"end":120,"indent":0},"70":{"start":45,"end":120,"indent":0},"71":{"start":45,"end":120,"indent":0},"72":{"start":45,"end":120,"indent":0},"73":{"start":45,"end":120,"indent":0},"74":{"start":45,"end":120,"indent":0},"75":{"start":45,"end":120,"indent":0},"76":{"start":45,"end":120,"indent":0},"77":{"start":45,"end":120,"indent":0},"78":{"start":45,"end":120,"indent":0},"79":{"start":45,"end":120,"indent":0},"80":{"start":45,"end":120,"indent":0},"81":{"start":45,"end":120,"indent":0},"82":{"start":45,"end":120,"indent":0},"83":{"start":45,"end":120,"indent":0},"84":{"start":45,"end":120,"indent":0},"85":{"start":45,"end":120,"indent":0},"86":{"start":45,"end":120,"indent":0},"87":{"start":45,"end":120,"indent":0},"88":{"start":45,"end":120,"indent":0},"89":{"start":45,"end":120,"indent":0},"90":{"start":45,"end":120,"indent":0},"91":{"start":45,"end":120,"indent":0},"92":{"start":45,"end":120,"indent":0},"93":{"start":45,"end":120,"indent":0},"94":{"start":45,"end":120,"indent":0},"95":{"start":45,"end":120,"indent":0},"96":{"start":96,"end":105,"indent":16},"97":{"start":96,"end":105,"indent":16},"98":{"start":96,"end":105,"indent":16},"99":{"start":96,"end":105,"indent":16},"100":{"start":96,"end":105,"indent":16},"101":{"start":96,"end":105,"indent":16},"102":{"start":102,"end":102,"indent":20},"103":{"start":96,"end":105,"indent":16},"104":{"start":96,"end":105,"indent":16},"105":{"start":96,"end":105,"indent":16},"106":{"start":45,"end":120,"indent":0},"107":{"start":45,"end":120,"indent":0},"108":{"start":45,"end":120,"indent":0},"109":{"start":45,"end":120,"indent":0},"110":{"start":45,"end":120,"indent":0},"111":{"start":45,"end":120,"indent":0},"112":{"start":45,"end":120,"indent":0},"113":{"start":45,"end":120,"indent":0},"114":{"start":45,"end":120,"indent":0},"115":{"start":45,"end":120,"indent":0},"116":{"start":45,"end":120,"indent":0},"117":{"start":45,"end":120,"indent":0},"118":{"start":45,"end":120,"indent":0},"119":{"start":45,"end":120,"indent":0},"120":{"start":45,"end":120,"indent":0}};
 
   (function initHoverVerticalLine() {
     return;

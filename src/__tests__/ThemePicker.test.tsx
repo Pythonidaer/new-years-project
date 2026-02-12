@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { ThemePicker } from "@/components/ThemePicker/ThemePicker";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { useTheme } from "@/context/useTheme";
 import type { ContrastIssue } from "@/utils/contrast";
 
 // Mock checkContrastIssues
@@ -240,6 +241,58 @@ describe("ThemePicker Component", () => {
     const sageGreenCard = screen.getByRole("button", { name: /Select Sage Green theme/i });
     fireEvent.keyDown(sageGreenCard, { key: " ", preventDefault: () => {} });
     fireEvent.keyDown(sageGreenCard, { key: " " });
+  });
+
+  it("handles invalid color in theme (colorToHex catch fallback to #000000)", async () => {
+    function PickerWithInvalidTheme() {
+      const { updateTheme } = useTheme();
+      return (
+        <>
+          <button type="button" onClick={() => updateTheme({ text: "not-a-valid-color" })}>
+            Set invalid
+          </button>
+          <ThemePicker />
+        </>
+      );
+    }
+    render(
+      <ThemeProvider>
+        <PickerWithInvalidTheme />
+      </ThemeProvider>
+    );
+
+    fireEvent.click(screen.getByText("Set invalid"));
+    fireEvent.click(screen.getByRole("button", { name: /open theme picker/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Theme Colors")).toBeInTheDocument();
+    });
+  });
+
+  it("handles invalid hex in theme (colorToHex catch return hex as-is when color.startsWith('#'))", async () => {
+    function PickerWithInvalidHex() {
+      const { updateTheme } = useTheme();
+      return (
+        <>
+          <button type="button" onClick={() => updateTheme({ text: "#gggggg" })}>
+            Set invalid hex
+          </button>
+          <ThemePicker />
+        </>
+      );
+    }
+    render(
+      <ThemeProvider>
+        <PickerWithInvalidHex />
+      </ThemeProvider>
+    );
+
+    fireEvent.click(screen.getByText("Set invalid hex"));
+    fireEvent.click(screen.getByRole("button", { name: /open theme picker/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Theme Colors")).toBeInTheDocument();
+    });
   });
 
   it("shows delete button for custom presets only", async () => {

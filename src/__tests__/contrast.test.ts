@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
+import Color from "color";
 import {
   getContrastRatio,
   getContrastLevel,
@@ -132,6 +133,30 @@ describe("contrast utilities", () => {
       const theme = createTheme();
       const issues = checkContrastIssues(theme);
       expect(issues).toEqual([]);
+    });
+
+    describe("invalid color handling (null branches)", () => {
+      it("skips opacity contrast when base color is invalid (checkOpacityContrast early return)", () => {
+        const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+        const theme = createTheme({ text: "not-a-valid-color" });
+        const issues = checkContrastIssues(theme);
+        consoleSpy.mockRestore();
+        expect(Array.isArray(issues)).toBe(true);
+        const authorRoleIssue = issues.find(
+          (i) => i.pair === "Author Role Text (75% opacity) on Surface Background"
+        );
+        expect(authorRoleIssue).toBeUndefined();
+      });
+
+      it("skips gradient contrast when foreground color is invalid (checkGradientContrast early return)", () => {
+        const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+        const theme = createTheme({ textDark: "not-a-valid-color" });
+        const issues = checkContrastIssues(theme);
+        consoleSpy.mockRestore();
+        expect(Array.isArray(issues)).toBe(true);
+        const gradientIssue = issues.find((i) => i.pair === "Text Dark on Author Box Gradient");
+        expect(gradientIssue).toBeUndefined();
+      });
     });
 
     describe("text on background contrast", () => {
@@ -602,6 +627,47 @@ describe("contrast utilities", () => {
           }
         }
       });
+    });
+
+    it("getContrastRatioOptimized catch: returns 1 when contrast() throws", () => {
+      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const theme = createTheme();
+      const origContrast = Color.prototype.contrast;
+      let callCount = 0;
+      Color.prototype.contrast = function (this: InstanceType<typeof Color>) {
+        callCount += 1;
+        if (callCount === 2) {
+          Color.prototype.contrast = origContrast;
+          throw new Error("mock contrast throw");
+        }
+        return origContrast.apply(this, arguments as unknown as []);
+      };
+      const issues = checkContrastIssues(theme);
+      Color.prototype.contrast = origContrast;
+      consoleSpy.mockRestore();
+      expect(Array.isArray(issues)).toBe(true);
+    });
+
+    it("checkOpacityContrast catch: warns when alpha/rgb throws", () => {
+      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+      const theme = createTheme({ text: "#000000", surface: "#ffffff" });
+      const origAlpha = Color.prototype.alpha;
+      let callCount = 0;
+      Color.prototype.alpha = function (this: InstanceType<typeof Color>, a: number) {
+        callCount += 1;
+        if (callCount === 1) {
+          Color.prototype.alpha = origAlpha;
+          throw new Error("mock alpha throw");
+        }
+        return origAlpha.call(this, a);
+      };
+      checkContrastIssues(theme);
+      Color.prototype.alpha = origAlpha;
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining("Failed to check opacity contrast"),
+        expect.any(Error)
+      );
+      consoleSpy.mockRestore();
     });
   });
 });

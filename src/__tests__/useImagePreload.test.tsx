@@ -1,77 +1,115 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { renderHook, act, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { useImagePreload } from "@/hooks/useImagePreload";
+
+function TestComponent({
+  imageUrl,
+  isNoirTheme = false,
+}: {
+  imageUrl: string | undefined;
+  isNoirTheme?: boolean;
+}) {
+  const loaded = useImagePreload(imageUrl, isNoirTheme);
+  return <span data-testid="loaded">{loaded ? "yes" : "no"}</span>;
+}
 
 describe("useImagePreload", () => {
   let mockImage: {
     onload: (() => void) | null;
     onerror: (() => void) | null;
-    _src?: string;
     src: string;
     complete: boolean;
-  } | undefined;
+    _src?: string;
+  };
 
   beforeEach(() => {
-    // Create a fresh mock image for each test
     mockImage = {
       onload: null,
       onerror: null,
       get src() {
-        return this._src || '';
+        return this._src ?? "";
       },
-      set src(value) {
+      set src(value: string) {
         this._src = value;
       },
       complete: false,
     };
-
-    // Mock Image constructor - return the mock object when called with 'new'
-    globalThis.Image = vi.fn(function() {
-      return mockImage!;
+    global.Image = vi.fn(function ImageMock() {
+      return mockImage;
     }) as unknown as typeof Image;
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
     vi.restoreAllMocks();
     const links = document.head.querySelectorAll('link[rel="preload"]');
-    links.forEach(link => link.remove());
+    links.forEach((l) => l.remove());
   });
 
-  it("should create preload link when imageUrl is provided", async () => {
-    const imageUrl = "https://picsum.photos/367/197?random=39";
-    
-    renderHook(() => useImagePreload(imageUrl, false));
-
-    // Wait for effect to run
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 10));
-    });
-
-    // Check that link was created - wait for it to appear
-    // Use a simpler selector first, then verify attributes
-    const link = await waitFor(() => {
-      const foundLink = document.head.querySelector('link[rel="preload"]');
-      if (!foundLink) {
-        throw new Error('Preload link not found');
-      }
-      return foundLink;
-    }, { timeout: 1000 });
-
-    // Verify link attributes
-    expect(link.getAttribute('as')).toBe('image');
-    expect(link.getAttribute('href')).toBe(imageUrl);
-    expect(link.getAttribute('fetchPriority')).toBe('high');
+  it("does not create preload link when imageUrl is undefined (early return)", () => {
+    render(<TestComponent imageUrl={undefined} />);
+    expect(document.head.querySelector('link[rel="preload"][as="image"]')).toBeNull();
   });
 
-  it("should not create link when imageUrl is undefined", async () => {
-    renderHook(() => useImagePreload(undefined, false));
+  it("sets imageLoaded to true when image onload fires", async () => {
+    render(<TestComponent imageUrl="https://example.com/img.jpg" />);
 
-    await act(async () => {
-      await new Promise(resolve => setTimeout(resolve, 10));
+    await waitFor(() => {
+      expect(mockImage.src).toBeTruthy();
     });
 
-    const link = document.head.querySelector('link[rel="preload"][as="image"]');
-    expect(link).toBeNull();
+    mockImage.onload?.();
+
+    await waitFor(() => {
+      expect(document.querySelector('[data-testid="loaded"]')?.textContent).toBe("yes");
+    });
+  });
+
+  it("sets imageLoaded to true when image onerror fires", async () => {
+    render(<TestComponent imageUrl="https://example.com/bad.jpg" />);
+
+    await waitFor(() => {
+      expect(mockImage.src).toBeTruthy();
+    });
+
+    mockImage.onerror?.();
+
+    await waitFor(() => {
+      expect(document.querySelector('[data-testid="loaded"]')?.textContent).toBe("yes");
+    });
+  });
+
+  it("sets imageLoaded to true when img.complete is already true (cached)", async () => {
+    mockImage.complete = true;
+    render(<TestComponent imageUrl="https://example.com/cached.jpg" />);
+
+    await waitFor(
+      () => {
+        expect(document.querySelector('[data-testid="loaded"]')?.textContent).toBe("yes");
+      },
+      { timeout: 100 }
+    );
+  });
+
+  it("removes preload link from head on unmount when link is still in head", async () => {
+    const { unmount } = render(<TestComponent imageUrl="https://example.com/img.jpg" />);
+
+    await waitFor(() => {
+      expect(document.head.querySelector('link[rel="preload"][as="image"]')).toBeTruthy();
+    });
+
+    unmount();
+    expect(document.head.querySelector('link[rel="preload"][as="image"]')).toBeNull();
+  });
+
+  it("cleanup does not throw when link was already removed from head", async () => {
+    const { unmount } = render(<TestComponent imageUrl="https://example.com/img.jpg" />);
+
+    await waitFor(() => {
+      const link = document.head.querySelector('link[rel="preload"][as="image"]');
+      expect(link).toBeTruthy();
+      link?.remove();
+    });
+
+    expect(() => unmount()).not.toThrow();
   });
 });

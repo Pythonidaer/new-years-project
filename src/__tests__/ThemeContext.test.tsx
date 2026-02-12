@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
+import { useState } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { defaultTheme } from "@/context/themeData";
@@ -17,6 +18,28 @@ function TestComponent() {
       <button onClick={() => savePreset("Test Preset")}>Save Preset</button>
       <button onClick={() => loadPreset("default")}>Load Default</button>
       <button onClick={() => deletePreset("custom-123")}>Delete Preset</button>
+    </div>
+  );
+}
+
+function TestComponentWithImport() {
+  const { theme, importTheme } = useTheme();
+  return (
+    <div>
+      <div data-testid="theme-bg">{theme.bg}</div>
+      <button onClick={() => importTheme("not valid json")}>Import Invalid</button>
+    </div>
+  );
+}
+
+function TestComponentWithExport() {
+  const { theme, exportTheme } = useTheme();
+  const [exported, setExported] = useState<string>("");
+  return (
+    <div>
+      <div data-testid="theme-bg">{theme.bg}</div>
+      <button onClick={() => setExported(exportTheme())}>Export Theme</button>
+      <pre data-testid="exported">{exported}</pre>
     </div>
   );
 }
@@ -124,7 +147,27 @@ describe("ThemeContext", () => {
     const deleteButton = screen.getByText("Delete Preset");
     fireEvent.click(deleteButton);
 
-    // Count should remain the same (built-in presets can't be deleted)
+    const finalCount = parseInt(screen.getByTestId("presets-count").textContent || "0");
+    expect(finalCount).toBe(initialCount);
+  });
+
+  it("deletePreset returns early when preset is built-in (does not remove from list)", () => {
+    function DeleteDefaultComponent() {
+      const { presets, deletePreset } = useTheme();
+      return (
+        <div>
+          <div data-testid="presets-count">{presets.length}</div>
+          <button onClick={() => deletePreset("default")}>Delete Default</button>
+        </div>
+      );
+    }
+    render(
+      <ThemeProvider>
+        <DeleteDefaultComponent />
+      </ThemeProvider>
+    );
+    const initialCount = parseInt(screen.getByTestId("presets-count").textContent || "0");
+    fireEvent.click(screen.getByText("Delete Default"));
     const finalCount = parseInt(screen.getByTestId("presets-count").textContent || "0");
     expect(finalCount).toBe(initialCount);
   });
@@ -153,6 +196,62 @@ describe("ThemeContext", () => {
     expect(screen.getByTestId("theme-bg").textContent).toBe(defaultTheme.bg);
   });
 
+  it("falls back to built-in presets when theme-presets JSON is invalid (catch in presets initializer)", () => {
+    localStorage.setItem("theme-presets", "not valid json");
+
+    render(
+      <ThemeProvider>
+        <TestComponent />
+      </ThemeProvider>
+    );
+
+    const presetsCount = parseInt(screen.getByTestId("presets-count").textContent || "0");
+    expect(presetsCount).toBeGreaterThanOrEqual(30);
+  });
+
+  it("handles invalid theme-presets when resolving currentPresetId (catch in currentPresetId initializer)", () => {
+    localStorage.setItem("user-theme", JSON.stringify(defaultTheme));
+    localStorage.setItem("theme-presets", "invalid");
+
+    render(
+      <ThemeProvider>
+        <TestComponent />
+      </ThemeProvider>
+    );
+
+    expect(screen.getByTestId("theme-bg").textContent).toBe(defaultTheme.bg);
+  });
+
+  it("exportTheme returns JSON string of current theme", () => {
+    render(
+      <ThemeProvider>
+        <TestComponentWithExport />
+      </ThemeProvider>
+    );
+    fireEvent.click(screen.getByText("Export Theme"));
+    const exported = screen.getByTestId("exported").textContent ?? "";
+    expect(exported).toBeTruthy();
+    const parsed = JSON.parse(exported);
+    expect(parsed).toHaveProperty("bg", defaultTheme.bg);
+  });
+
+  it("importTheme catches invalid JSON and does not update theme", () => {
+    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    render(
+      <ThemeProvider>
+        <TestComponentWithImport />
+      </ThemeProvider>
+    );
+
+    expect(screen.getByTestId("theme-bg").textContent).toBe(defaultTheme.bg);
+    fireEvent.click(screen.getByText("Import Invalid"));
+    expect(screen.getByTestId("theme-bg").textContent).toBe(defaultTheme.bg);
+    expect(consoleSpy).toHaveBeenCalledWith("Failed to import theme:", expect.any(Error));
+
+    consoleSpy.mockRestore();
+  });
+
   it("applies theme to DOM on mount", () => {
     const root = document.createElement("div");
     root.id = "root";
@@ -169,6 +268,7 @@ describe("ThemeContext", () => {
     
     document.body.removeChild(root);
   });
+
 });
 
 describe("useTheme hook", () => {

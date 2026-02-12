@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { BlogGrid } from "@/sections/BlogGrid";
 import { ThemeProvider } from "@/context/ThemeContext";
@@ -125,8 +125,33 @@ describe("BlogGrid Component", () => {
       </BrowserRouter>
     );
 
-    // Should render 9 posts initially
     const postTitles = screen.getAllByText(/Post \d+/);
     expect(postTitles.length).toBe(9);
+  });
+
+  it("handleLoadMore increases visible posts when LOAD MORE is clicked", () => {
+    const manyPosts = Array.from({ length: 15 }, (_, i) => ({
+      id: i + 1,
+      title: `Post ${i + 1}`,
+      date: "January 1, 2024",
+      excerpt: "Test excerpt",
+      category: "Blog",
+      image: "/test.jpg",
+      link: `/resources/blog/post-${i + 1}`,
+    }));
+
+    render(
+      <BrowserRouter>
+        <ThemeProvider>
+          <BlogGrid posts={manyPosts} />
+        </ThemeProvider>
+      </BrowserRouter>
+    );
+
+    expect(screen.getAllByText(/Post \d+/).length).toBe(9);
+    const loadMoreButton = screen.getByRole("button", { name: /load more/i });
+    fireEvent.click(loadMoreButton);
+    expect(screen.getAllByText(/Post \d+/).length).toBe(15);
+    expect(screen.queryByRole("button", { name: /load more/i })).toBeNull();
   });
 });

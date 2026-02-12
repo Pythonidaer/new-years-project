@@ -4,6 +4,7 @@ import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { BlogPost } from "@/pages/BlogPost";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { getBlogPostBySlug } from "@/data/blog";
+import type { BlogPost as BlogPostType } from "@/data/blog";
 import { getGrayscaleImageUrl } from "@/utils/imageGrayscale";
 import * as blogData from "@/data/blog";
 import { builtInPresets } from "@/context/themeData";
@@ -550,6 +551,55 @@ describe("BlogPost", () => {
 
       // Component should render regardless of theme
       expect(screen.getByRole("main")).toBeInTheDocument();
+    });
+  });
+
+  describe("content, tags, and related posts branches", () => {
+    it("renders post content, tag links, and related section when post has content, tags, and related posts", async () => {
+      const slug = "test-post-branches";
+      const mockPost: BlogPostType = {
+        id: 999,
+        title: "Branch Coverage Post",
+        date: "January 1, 2026",
+        excerpt: "Excerpt for branch coverage.",
+        category: "Testing",
+        image: "https://picsum.photos/367/197?random=99",
+        link: "/resources/blog/branch-coverage",
+        slug,
+        author: "Test Author",
+        content: "<p>Paragraph for <strong>content</strong> branch.</p>",
+        tags: ["React", "Testing"],
+      };
+      const relatedPost: BlogPostType = {
+        ...mockPost,
+        id: 998,
+        title: "Related Post",
+        slug: "related-post",
+        link: "/resources/blog/related-post",
+      };
+
+      const loadSpy = vi.spyOn(blogData, "loadAllBlogPosts").mockResolvedValue(undefined);
+      const getBySlugSpy = vi.spyOn(blogData, "getBlogPostBySlug").mockReturnValue(mockPost);
+      const getRelatedSpy = vi.spyOn(blogData, "getRelatedPosts").mockReturnValue([relatedPost]);
+
+      renderBlogPost(slug);
+
+      await waitFor(
+        () => {
+          expect(screen.getByRole("heading", { level: 1 }).textContent).toContain("Branch Coverage Post");
+        },
+        { timeout: 2000 }
+      );
+
+      expect(screen.getByRole("main").textContent).toMatch(/content branch/);
+      expect(screen.getAllByRole("link", { name: "React" }).length).toBeGreaterThanOrEqual(1);
+      expect(screen.getAllByRole("link", { name: "Testing" }).length).toBeGreaterThanOrEqual(1);
+      expect(screen.getByRole("heading", { name: /Related Content/i })).toBeInTheDocument();
+      expect(screen.getByText("Related Post")).toBeInTheDocument();
+
+      loadSpy.mockRestore();
+      getBySlugSpy.mockRestore();
+      getRelatedSpy.mockRestore();
     });
   });
 });

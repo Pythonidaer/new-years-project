@@ -23,6 +23,9 @@ This directory contains all project documentation, organized by topic.
 ### 📋 Project Overview
 - **`PROJECT_SUMMARY.md`** - Main project overview, architecture, key features, and current state
 
+### 📊 Complexity Report (npm package)
+- **`COMPLEXITY_REPORT_TEST_PROJECTS.md`** - How to create minimal Angular, Ember, and Vue test projects that exercise all decision points for @pythonidaer/complexity-report
+
 ---
 
 ## Quick Links by Topic
@@ -40,6 +43,9 @@ This directory contains all project documentation, organized by topic.
 
 ### Project Overview
 - See `docs/PROJECT_SUMMARY.md`
+
+### Testing complexity-report in other frameworks
+- See `docs/COMPLEXITY_REPORT_TEST_PROJECTS.md` (Angular, Ember, Vue)
 
 ---
 

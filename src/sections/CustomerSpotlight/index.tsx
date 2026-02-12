@@ -4,7 +4,16 @@ import { Section } from "@/layout/Section";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "./CustomerSpotlight.module.css";
 
-const testimonials = [
+export type Testimonial = {
+  id: number;
+  quote: string;
+  author: string;
+  role: string;
+  image?: string;
+  alt?: string;
+};
+
+const defaultTestimonials: Testimonial[] = [
   {
     id: 1,
     quote: "Jonathan built a clear, reliable and accessible campaign website that fit our needs perfectly. He explained every option and delivered thoughtful solutions on time.",
@@ -31,8 +40,10 @@ const testimonials = [
   },
 ];
 
-export function CustomerSpotlight() {
+type CustomerSpotlightProps = { testimonials?: Testimonial[] };
 
+export function CustomerSpotlight(props: CustomerSpotlightProps = {}) {
+  const testimonials = props.testimonials ?? defaultTestimonials;
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollPrev = () => {
