@@ -201,6 +201,8 @@ function isBuiltInPreset(presetId: string): boolean {
     'hatsune',
     'trippie',
     'scotland',
+    'skolavor',
+    'iceland',
     'pbr',
     'reeses',
     'fallout',

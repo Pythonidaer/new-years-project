@@ -39,6 +39,8 @@ import { facecrusherTheme } from './facecrusher';
 import { planetTheme } from './planet';
 import { visserTheme } from './visser';
 import { yolandiTheme } from './yolandi';
+import { skolavorTheme } from './skolavor';
+import { icelandTheme } from './iceland';
 
 // Built-in preset themes
 export const builtInPresets: Preset[] = [
@@ -241,5 +243,15 @@ export const builtInPresets: Preset[] = [
     id: 'yolandi',
     name: 'Yolandi',
     theme: yolandiTheme,
+  },
+  {
+    id: 'skolavor',
+    name: 'Skolavor',
+    theme: skolavorTheme,
+  },
+  {
+    id: 'iceland',
+    name: 'Iceland',
+    theme: icelandTheme,
   },
 ];
