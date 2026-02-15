@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import parse from "html-react-parser";
+import { YouTubeEmbed } from "@/components/YouTubeEmbed/YouTubeEmbed";
 import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
@@ -113,7 +114,29 @@ export function BlogPost() {
               
               {hasContent(post) && post.content && (
                 <div className={styles.postContent}>
-                  {parse(post.content)}
+                  {parse(post.content, {
+                    replace: (domNode) => {
+                      if (domNode.type !== "tag" || !domNode.attribs) return;
+                      const { name, attribs } = domNode;
+                      if (name === "div" && attribs.class?.includes("youtube-embed")) {
+                        const videoId = attribs["data-video-id"];
+                        if (videoId) {
+                          return <YouTubeEmbed videoId={videoId} title={attribs["data-title"]} />;
+                        }
+                      }
+                      if (name === "iframe" && attribs.src) {
+                        const match = /youtube\.com\/embed\/([^/?]+)/.exec(attribs.src);
+                        if (match) {
+                          return (
+                            <YouTubeEmbed
+                              videoId={match[1]}
+                              title={attribs.title ?? "YouTube video"}
+                            />
+                          );
+                        }
+                      }
+                    },
+                  })}
                 </div>
               )}
             </div>

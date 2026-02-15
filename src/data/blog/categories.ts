@@ -9,6 +9,7 @@ export const ALL_CATEGORIES = [
   "Testing & Code Quality",
   "Performance & Optimization",
   "Accessibility",
+  "Video Interviews",
   // "APIs & Backend Integration", // Commented out - not yet applicable
   // "Tooling, CI/CD & Deployment", // Commented out - not yet applicable
   // "Security & Regulated Environments", // Commented out - not yet applicable
