@@ -602,4 +602,60 @@ describe("BlogPost", () => {
       getRelatedSpy.mockRestore();
     });
   });
+
+  describe("YouTube embed in content", () => {
+    it("renders YouTube embed when post content contains youtube-embed placeholder", async () => {
+      const slug = "johnny-hammonds-path-into-software-engineering-candidate-spotlight-13";
+      renderBlogPost(slug);
+
+      const iframe = await waitFor(
+        () => {
+          const iframes = document.querySelectorAll('iframe[src*="youtube.com/embed"]');
+          if (iframes.length === 0) throw new Error("YouTube iframe not found");
+          return iframes[0];
+        },
+        { timeout: 3000 }
+      );
+
+      expect(iframe).toBeInTheDocument();
+      expect(iframe.getAttribute("src")).toContain("youtube.com/embed/fLtCRU6Vzz4");
+    });
+
+    it("renders YouTube embed when post content contains raw youtube iframe HTML", async () => {
+      const slug = "youtube-iframe-post";
+      const mockPost: BlogPostType = {
+        id: 888,
+        title: "Post With Iframe",
+        date: "January 1, 2026",
+        excerpt: "Post that uses raw iframe.",
+        category: "Video Interviews",
+        image: "https://picsum.photos/367/197?random=88",
+        link: `/resources/blog/${slug}`,
+        slug,
+        author: "Test",
+        content: '<p>Intro</p><iframe src="https://www.youtube.com/embed/abc123" title="Embedded"></iframe><p>Outro</p>',
+        tags: ["Video Interviews"],
+      };
+
+      vi.spyOn(blogData, "loadAllBlogPosts").mockResolvedValue(undefined);
+      vi.spyOn(blogData, "getBlogPostBySlug").mockReturnValue(mockPost);
+      vi.spyOn(blogData, "getRelatedPosts").mockReturnValue([]);
+
+      renderBlogPost(slug);
+
+      const iframe = await waitFor(
+        () => {
+          const found = document.querySelector('iframe[src*="youtube.com/embed/abc123"]');
+          if (!found) throw new Error("YouTube iframe not found");
+          return found;
+        },
+        { timeout: 2000 }
+      );
+
+      expect(iframe).toBeInTheDocument();
+      expect(iframe.getAttribute("title")).toBe("Embedded");
+
+      vi.restoreAllMocks();
+    });
+  });
 });

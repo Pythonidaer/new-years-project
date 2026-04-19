@@ -18,6 +18,26 @@ import { BlogPostNotFound } from "./BlogPostNotFound";
 import { getAuthorName, getMetaDescription, hasTags, hasContent } from "./BlogPost.helpers";
 import styles from "./BlogPost.module.css";
 
+type DomNodeLike = { type?: string; name?: string; attribs?: Record<string, string> };
+
+function getYouTubeEmbedFromIframe(attribs: Record<string, string>): { videoId: string; title: string } | null {
+  if (!attribs.src) return null;
+  const match = /youtube\.com\/embed\/([^/?]+)/.exec(attribs.src);
+  if (!match) return null;
+  return { videoId: match[1], title: attribs.title ?? "YouTube video" };
+}
+
+function getYouTubeEmbedProps(domNode: DomNodeLike): { videoId: string; title?: string } | null {
+  if (domNode.type !== "tag" || !domNode.attribs) return null;
+  const { name, attribs } = domNode;
+  if (name === "div" && attribs.class?.includes("youtube-embed")) {
+    const videoId = attribs["data-video-id"];
+    if (videoId) return { videoId, title: attribs["data-title"] };
+  }
+  if (name === "iframe") return getYouTubeEmbedFromIframe(attribs);
+  return null;
+}
+
 export function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPost | null>(null);
@@ -116,25 +136,8 @@ export function BlogPost() {
                 <div className={styles.postContent}>
                   {parse(post.content, {
                     replace: (domNode) => {
-                      if (domNode.type !== "tag" || !domNode.attribs) return;
-                      const { name, attribs } = domNode;
-                      if (name === "div" && attribs.class?.includes("youtube-embed")) {
-                        const videoId = attribs["data-video-id"];
-                        if (videoId) {
-                          return <YouTubeEmbed videoId={videoId} title={attribs["data-title"]} />;
-                        }
-                      }
-                      if (name === "iframe" && attribs.src) {
-                        const match = /youtube\.com\/embed\/([^/?]+)/.exec(attribs.src);
-                        if (match) {
-                          return (
-                            <YouTubeEmbed
-                              videoId={match[1]}
-                              title={attribs.title ?? "YouTube video"}
-                            />
-                          );
-                        }
-                      }
+                      const props = getYouTubeEmbedProps(domNode as DomNodeLike);
+                      if (props) return <YouTubeEmbed {...props} />;
                     },
                   })}
                 </div>

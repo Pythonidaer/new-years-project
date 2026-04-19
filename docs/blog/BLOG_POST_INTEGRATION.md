@@ -6,6 +6,8 @@ This document outlines the process for integrating new blog post JSON files gene
 
 When a new blog post JSON file is added to `src/data/blog/`, several steps are required to make it visible in the blog listing and accessible via routing.
 
+**Content features**: The blog supports **YouTube video embeds** in post HTML. Use a `<div class="youtube-embed" data-video-id="VIDEO_ID">` placeholder or paste YouTube iframe markup; embeds are rendered responsively (16:9) and keep the same layout on mobile. See [Embedding YouTube Videos](#embedding-youtube-videos) for instructions.
+
 ## Prerequisites
 
 - New JSON file in `src/data/blog/` following the naming pattern: `interview_<topic-name>.json`
@@ -219,6 +221,40 @@ If content is provided in Markdown format, it must be converted to HTML:
 - This ensures code is readable both in the JSON file and in the rendered HTML
 
 **Note**: The `html-react-parser` package expects HTML strings, not Markdown.
+
+### Embedding YouTube Videos
+
+The blog system supports **responsive YouTube embeds** inside post content. Embeds are rendered with a 16:9 aspect ratio and match the post’s layout so they don’t break on mobile.
+
+**Option 1 – Placeholder (recommended)**  
+In your post `content` HTML, add a div with the class `youtube-embed` and the video ID in a data attribute:
+
+```html
+<div class="youtube-embed" data-video-id="VIDEO_ID" data-title="Optional iframe title"></div>
+```
+
+Example:
+
+```html
+<p>Watch the interview below.</p>
+<div class="youtube-embed" data-video-id="fLtCRU6Vzz4" data-title="Johnny Hammond - Candidate Spotlight #13"></div>
+<p>Thanks for watching.</p>
+```
+
+- **`data-video-id`** (required): The YouTube video ID (e.g. from `https://www.youtube.com/watch?v=fLtCRU6Vzz4` or the embed URL path).
+- **`data-title`** (optional): Accessible title for the iframe (defaults to `"YouTube video"`).
+
+**Option 2 – Paste iframe HTML**  
+You can paste standard YouTube embed iframe markup into the content. The parser will detect `youtube.com/embed/` URLs and replace them with the same responsive embed component, so layout stays consistent.
+
+```html
+<iframe width="750" height="422" src="https://www.youtube.com/embed/fLtCRU6Vzz4" title="My Video" ...></iframe>
+```
+
+**Tips**
+
+- Use the placeholder (Option 1) when editing JSON by hand; it’s shorter and avoids long URLs in the source.
+- Use descriptive link text (e.g. “contact me on LinkedIn”) instead of raw URLs in the same post so links don’t break layout on mobile.
 
 **Tag Format Requirements**:
 - Tags must be **uppercase** (Title Case) with **spaces instead of dashes**

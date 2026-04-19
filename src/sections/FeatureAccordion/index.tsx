@@ -10,10 +10,10 @@ import buttonStyles from "@/components/Button.module.css";
 import {
   FileText,
   Network,
-  Code,
   Film,
   Quote,
-  Timer,
+  NotebookPen,
+  LayoutDashboard,
 } from "lucide-react";
 
 type FeatureItem = {
@@ -30,6 +30,26 @@ type FeatureItem = {
 const items: FeatureItem[] = [
   {
     id: 1,
+    title: "Notes Nursery",
+    content: "User authenticated notes app allowing users upload audio files, transcribe, and check for parts of speech.",
+    ctaLabel: "VIEW PROJECT",
+    url: "https://notesnursery.vercel.app/",
+    icon: NotebookPen,
+    imageLabel: "Notes Nursery",
+    image: "/Notes_Nursery_3x4_600x800.webp",
+  },
+  {
+    id: 2,
+    title: "Economic Dashboard",
+    content: "Data-driven dashboard with charts, tables, and maps, sourced from government data websites",
+    ctaLabel: "VIEW PROJECT",
+    url: "https://experimental-economic-dashboard.vercel.app/",
+    icon: LayoutDashboard,
+    imageLabel: "Economic Dashboard",
+    image: "/Economic_Dashboard_3x4_600x800.webp",
+  },
+  {
+    id: 3,
     title: "Docs Summarizer",
     content: "Chrome extension using OpenAI API to summarize any webpage with interactive features and export options.",
     ctaLabel: "VIEW PROJECT",
@@ -39,7 +59,7 @@ const items: FeatureItem[] = [
     image: "/Docs_Summarizer_3x4_600x800.webp",
   },
   {
-    id: 2,
+    id: 4,
     title: "Mind Map Method",
     content: "Interactive D3.js mind maps for learning topics from AI to WordPress, backed by cognitive science principles.",
     ctaLabel: "VIEW PROJECT",
@@ -49,17 +69,7 @@ const items: FeatureItem[] = [
     image: "/Mind_Map_Method_3x4_600x800.png",
   },
   {
-    id: 3,
-    title: "Hammond Bytes",
-    content: "Personal blog built with Next.js, Strapi, and Railway, exploring new technologies and development.",
-    ctaLabel: "VIEW PROJECT",
-    url: "https://hammondbytes.netlify.app/",
-    icon: Code,
-    imageLabel: "Hammond Bytes",
-    image: "/Hammond_Bytes_3x4_600x800.webp",
-  },
-  {
-    id: 4,
+    id: 5,
     title: "Movie Watch List",
     content: "Password-protected Next.js app for friends to share and organize movie watchlists by genre.",
     ctaLabel: "VIEW PROJECT",
@@ -69,7 +79,7 @@ const items: FeatureItem[] = [
     image: "/Movie_Watch_List_3x4_600x800.webp",
   },
   {
-    id: 5,
+    id: 6,
     title: "Peak Scrivening",
     content: "PWA featuring Gary Gulman's 365 comedy quotes with random generation, search, and slideshow modes.",
     ctaLabel: "VIEW PROJECT",
@@ -77,16 +87,6 @@ const items: FeatureItem[] = [
     icon: Quote,
     imageLabel: "Peak Scrivening",
     image: "/Peak_Scrivening_3x4_600x800.png",
-  },
-  {
-    id: 6,
-    title: "PWA Timer",
-    content: "Picture-in-Picture timer being converted to Tauri desktop app, expanding beyond browser limitations.",
-    ctaLabel: "VIEW PROJECT",
-    url: "https://pythonidaer.github.io/vue-pwa-timer/site",
-    icon: Timer,
-    imageLabel: "PWA Timer",
-    image: "/PWA_Timer_3x4_600x800.webp",
   },
 ];
 
