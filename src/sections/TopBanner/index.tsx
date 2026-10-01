@@ -1,11 +1,22 @@
+import { useEffect } from "react";
+
+export function TopBanner() {
+  useEffect(() => {
+    document.documentElement.style.setProperty("--banner-height", "0px");
+  }, []);
+
+  return null;
+}
+
+/*
+Employment banner is paused. Restore by replacing TopBanner with this component:
+
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import styles from "./TopBanner.module.css";
 
 export function TopBanner() {
-  // user can close permanently
   const [isVisible, setIsVisible] = useState(true);
-  // scroll-controlled (slides away)
   const [isHidden, setIsHidden] = useState(false);
   const bannerRef = useRef<HTMLDivElement>(null);
 
@@ -13,7 +24,6 @@ export function TopBanner() {
     const root = document.documentElement;
 
     const updateVars = () => {
-      // If user closed it OR it's scrolled-hidden, treat banner height as 0
       const h =
         isVisible && !isHidden && bannerRef.current
           ? bannerRef.current.offsetHeight
@@ -36,19 +46,16 @@ export function TopBanner() {
 
       window.requestAnimationFrame(() => {
         const y = window.scrollY || document.documentElement.scrollTop;
-        // Tune this threshold to match main site (try 10, 20, 40)
         setIsHidden(y > 20);
         ticking = false;
       });
     };
 
-    // initialize
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // If user closed it, remove entirely (like now)
   if (!isVisible) return null;
 
   return (
@@ -72,4 +79,4 @@ export function TopBanner() {
     </div>
   );
 }
-
+*/

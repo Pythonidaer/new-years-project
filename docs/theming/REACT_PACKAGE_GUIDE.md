@@ -16,12 +16,13 @@
 4. [Token Creation & Theme Definition](#token-creation--theme-definition)
 5. [Adding Theme Presets](#adding-theme-presets)
 6. [Adding Accessibility Checks](#adding-accessibility-checks)
-7. [Creating Themes from Images](#creating-themes-from-images)
-8. [Customization Guide](#customization-guide)
-9. [Adapting to Existing Codebases](#adapting-to-existing-codebases)
-10. [Cursor Rules & AI Prompts](#cursor-rules--ai-prompts)
-11. [API Reference](#api-reference)
-12. [Troubleshooting](#troubleshooting)
+7. [Picker behavior on this site](#picker-behavior-on-this-site)
+8. [Creating Themes from Images](#creating-themes-from-images)
+9. [Customization Guide](#customization-guide)
+10. [Adapting to Existing Codebases](#adapting-to-existing-codebases)
+11. [Cursor Rules & AI Prompts](#cursor-rules--ai-prompts)
+12. [API Reference](#api-reference)
+13. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -563,6 +564,30 @@ if (startRatio < 4.5 || endRatio < 4.5) {
 
 ---
 
+## Picker behavior on this site
+
+This is how the picker in this repo behaves today. The photo never leaves the browser, and a theme is stored only after the user saves it.
+
+### Upload a photo in the picker
+
+**Create from image** uses a file input. The hint on the info icon says “Preview a theme from a photo. 20 MB max.” The button label is Upload. A non-image shows “Choose an image file.” A file over 20 MB shows “Image must be 20 MB or smaller.”
+
+The original file stays unchanged. The browser draws it to a canvas, keeps the aspect ratio, and limits the longest side to 256 pixels. Smaller images are not enlarged. Five dominant colors are read from those pixels. Fully transparent pixels are ignored. The palette is mapped onto a full theme and nudged until text pairs meet WCAG AA where the checker can still adjust them. While that runs, the section shows “Processing image...” One decode runs at a time, and a newer file replaces an older result.
+
+Swatches and a white save button (aria-label “Save image theme”) appear after a successful read. On a narrow screen the swatches wrap under the title. Saving opens Choose a theme and a full-width name field. The field uses a 16px font so iOS does not zoom the page on focus. An empty name disables save. Confirming writes the custom preset to `theme-presets` and the active theme to `user-theme` in this browser, then clears the swatches and the image save icon. Cancelling the name leaves the preview. The header Save changes button still commits `localChanges` and does not clear that preview. Choosing any other preset clears the preview, so the photo has to be uploaded again.
+
+### Where a saved theme lives
+
+A named preset survives refresh and a browser restart in the same profile on this device. It does not follow the user to another browser, device, or a private window after that window closes. `localhost` and `https://floatingpla.net` are different origins. Reset, or clearing site data, removes it. There is no account sync. Re-select a built-in preset to pick up contrast fixes if this browser still has an older copy in `user-theme`.
+
+### Review a contrast warning
+
+The warning title is “Contrast Warnings”. Each card has the pair name and a Review button. Review closes Choose a theme, including a typed name until that panel is opened again, then opens Customize colors. It scrolls to the first related color control and outlines every token in the pair. It also scrolls the page to a representative element, navigates when that element is on another route, and draws a red outline on that element (`[data-contrast-review='true']`). Both outlines stay only while that warning is still listed. `link` is not in the panel, so those warnings jump to the editable partner, usually background. `ScrollToTop` skips its route scroll while `sessionStorage` key `contrast-review-pair` is set. The page scroll offset for the fixed header is 110px.
+
+Built-in presets are checked for Accent on Hero Gradient and Text on Related Section Gradient. Hero accents and related-section stops were adjusted with hue locked where a pair failed. Those hex and alpha values should stay. `src/__tests__/builtInHeroContrast.test.ts` and `src/__tests__/builtInRelatedContrast.test.ts` cover both pairs.
+
+---
+
 ## Creating Themes from Images
 
 ### Step-by-Step Process
@@ -1005,7 +1030,7 @@ const {
 - `position?: string` - Picker button position
 - `customColorTokens?: ColorToken[]` - Override default tokens
 - `customCategoryLabels?: Record<string, string>` - Override category labels
-- `hideColorControlsUntilContrastIssue?: boolean` - When true (the default), the color controls stay hidden until a contrast issue is reported. They then appear together in one closed dropdown. Set false to always show that dropdown. Each contrast warning includes a Jump to color control that opens that dropdown and highlights the colors in the failing pair.
+- `hideColorControlsUntilContrastIssue?: boolean` - When true (the default), the color controls stay hidden until a contrast issue is reported. They then appear together in one closed dropdown. Set false to always show that dropdown. This site passes `false` from `App.tsx`, so Customize colors stays visible. Each warning has a Review control. Review closes Choose a theme, opens Customize colors, outlines the related tokens, and scrolls the page to a representative element.
 
 ### Contrast Utilities
 

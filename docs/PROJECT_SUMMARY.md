@@ -270,10 +270,13 @@ Full process documented in `docs/blog/BLOG_POST_INTEGRATION.md`.
 ### Stage 2: ✅ Completed
 - ThemePicker component with floating UI
 - Real-time contrast checking with WCAG warnings
-- 29 built-in preset themes (all meet WCAG AA requirements)
-- Custom preset saving/loading
-- Theme persistence with no-flicker loading
+- Built-in preset themes adjusted for hero and related-section contrast
+- Custom preset saving/loading, including a theme built from a photo in the browser
+- Theme persistence with no-flicker loading (`user-theme` and `theme-presets` in this browser only)
 - Export/import theme JSON
+- Contrast Review closes Choose a theme, then scrolls to the color control and the matching page element
+
+See `docs/theming/REACT_PACKAGE_GUIDE.md` section “Picker behavior on this site” for the upload, save, and review details.
 
 ### Stage 3: 🔄 Future Enhancements
 - Advanced color picker library integration (e.g., `react-colorful`)
