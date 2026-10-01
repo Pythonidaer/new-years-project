@@ -87,7 +87,8 @@ export function BlogPost() {
       <Header />
       
       {/* Hero Section */}
-      <section 
+      <section
+        data-contrast-example="blog-hero"
         className={styles.heroSection}
         style={{ 
           '--hero-bg-image': `url(${heroImageUrl})`,
@@ -133,7 +134,7 @@ export function BlogPost() {
               </div>
               
               {hasContent(post) && post.content && (
-                <div className={styles.postContent}>
+                <div className={styles.postContent} data-contrast-example="code">
                   {parse(post.content, {
                     replace: (domNode) => {
                       const props = getYouTubeEmbedProps(domNode as DomNodeLike);
@@ -147,7 +148,7 @@ export function BlogPost() {
             {/* Footer: Tags, Author, Back Button */}
             <div className={styles.postFooter}>
               {hasTags(post) && (
-                <div className={styles.postTerms}>
+                <div className={styles.postTerms} data-contrast-example="blog-link">
                   {post.tags!.map((tag: string, index: number) => (
                     <Link 
                       key={index}
@@ -197,7 +198,7 @@ export function BlogPost() {
 
       {/* Related Content Section */}
       {relatedPosts.length > 0 && (
-        <section className={styles.relatedSection}>
+        <section className={styles.relatedSection} data-contrast-example="related">
           <div className={styles.relatedContainer}>
             <div className={styles.relatedHeader}>
               <div className={styles.relatedHeaderLeft}>

@@ -20,7 +20,7 @@ export const guluTheme: Theme = {
   link: '#5A3518', // Dark brown links for better contrast on cream background (meets 4.5:1 WCAG AA)
   blogLink: '#3D2514', // Very dark brown for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#A67C52', // Light brown focus ring
-  accent: '#B8865B', // Tan accent (lighter brown patches)
+  accent: '#D5B89F', // Tan accent (lighter brown patches), lightened for 4.5:1 on the hero gradient
   accentAlt: '#D4A574', // Light tan accent (highlights)
   footerBg: '#3D2514', // Very dark brown (footer, like dark couch areas)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

@@ -20,7 +20,7 @@ export const sage_greenTheme: Theme = {
   link: '#1a4a1a', // Darker green for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#2d5a2d', // Darker green for better contrast on light author box
   focus: '#6ba06b',
-  accent: '#7ba07b',
+  accent: '#C4D4C4',
   accentAlt: '#8bb08b',
   footerBg: '#1a241a',
   footerTextMuted: 'rgba(255, 255, 255, 0.75)',

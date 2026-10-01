@@ -34,8 +34,8 @@ export const hokusaiTheme: Theme = {
   campaignEnd: '#8b4513', // Saddle brown (darker orange-brown)
   authorBoxStart: 'rgba(42, 58, 74, 0.9)', // Dark blue-teal
   authorBoxEnd: 'rgba(26, 40, 56, 0.9)', // Darker blue-teal
-  relatedSectionStart: 'rgba(26, 40, 56, 0.7)', // Dark section
-  relatedSectionEnd: 'rgba(42, 58, 74, 0.7)', // Lighter dark section
+  relatedSectionStart: 'rgba(24, 37, 52, 0.73)', // Darker blue so related text clears 4.5:1
+  relatedSectionEnd: 'rgba(31, 43, 55, 0.75)', // Darker blue so related text clears 4.5:1
   shadow: 'rgba(0, 0, 0, 0.5)', // Deep black shadows (woodblock style)
   shadowSubtle: 'rgba(0, 0, 0, 0.3)', // Subtle black shadows
 };

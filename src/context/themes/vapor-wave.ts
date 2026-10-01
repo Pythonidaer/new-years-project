@@ -34,8 +34,8 @@ export const vapor_waveTheme: Theme = {
   campaignEnd: '#00ffff',
   authorBoxStart: 'rgba(26, 26, 58, 0.9)',
   authorBoxEnd: 'rgba(20, 20, 45, 0.9)',
-  relatedSectionStart: 'rgba(20, 20, 45, 0.6)',
-  relatedSectionEnd: 'rgba(26, 26, 58, 0.6)',
+  relatedSectionStart: 'rgba(20, 20, 46, 0.65)', // Darker indigo so related text clears 4.5:1
+  relatedSectionEnd: 'rgba(25, 25, 56, 0.67)', // Darker indigo so related text clears 4.5:1
   shadow: 'rgba(255, 0, 255, 0.3)',
   shadowSubtle: 'rgba(255, 0, 255, 0.15)',
 };

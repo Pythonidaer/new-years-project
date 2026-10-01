@@ -34,8 +34,8 @@ export const dayglowTheme: Theme = {
   campaignEnd: '#000000', // Black
   authorBoxStart: 'rgba(26, 26, 26, 0.9)', // Dark gray author box
   authorBoxEnd: 'rgba(10, 10, 10, 0.9)', // Almost black
-  relatedSectionStart: 'rgba(26, 26, 26, 0.6)', // Dark gray section
-  relatedSectionEnd: 'rgba(0, 0, 0, 0.6)', // Black section
+  relatedSectionStart: 'rgba(26, 26, 26, 0.69)', // More opaque so related text clears 4.5:1
+  relatedSectionEnd: 'rgba(0, 0, 0, 0.62)', // More opaque so related text clears 4.5:1
   shadow: 'rgba(57, 255, 20, 0.2)', // Neon green shadows
   shadowSubtle: 'rgba(255, 69, 0, 0.1)', // Subtle orange-red shadows
 };

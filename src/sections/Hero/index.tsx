@@ -24,7 +24,7 @@ export function Hero() {
   };
 
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} data-contrast-example="hero">
       <Container>
         <h1 className={styles.title}>
           I create{" "}
@@ -35,7 +35,7 @@ export function Hero() {
           I specialize in React, TypeScript, and modern frontend architecture. I build applications that are fast, accessible, and maintainable.
         </p>
         <div className={styles.cta}>
-          <Link to="/#contact" className={buttonStyles.primary} onClick={handleContactClick}>
+          <Link to="/#contact" className={buttonStyles.primary} data-contrast-example="primary-button" onClick={handleContactClick}>
             Get In Touch
           </Link>
         </div>

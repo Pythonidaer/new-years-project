@@ -34,8 +34,8 @@ export const gothicTheme: Theme = {
   campaignEnd: '#6b146b',
   authorBoxStart: 'rgba(45, 45, 45, 0.9)',
   authorBoxEnd: 'rgba(26, 26, 26, 0.9)',
-  relatedSectionStart: 'rgba(26, 26, 26, 0.6)',
-  relatedSectionEnd: 'rgba(45, 45, 45, 0.6)',
+  relatedSectionStart: 'rgba(18, 18, 18, 0.64)', // Darker gray so related text clears 4.5:1
+  relatedSectionEnd: 'rgba(38, 38, 38, 0.7)', // Darker gray so related text clears 4.5:1
   shadow: 'rgba(0, 0, 0, 0.5)',
   shadowSubtle: 'rgba(0, 0, 0, 0.3)',
 };

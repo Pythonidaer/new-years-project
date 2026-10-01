@@ -81,7 +81,7 @@ export function CustomerSpotlight(props: CustomerSpotlightProps = {}) {
               </blockquote>
               <div className={styles.quoteAuthor}>
                 <div className={styles.authorName}>{currentTestimonial.author}</div>
-                <div className={styles.authorRole}>{currentTestimonial.role}</div>
+                <div className={styles.authorRole} data-contrast-example="spotlight">{currentTestimonial.role}</div>
               </div>
             </div>
             <div className={styles.controls}>

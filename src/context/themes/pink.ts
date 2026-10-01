@@ -20,7 +20,7 @@ export const pinkTheme: Theme = {
   link: '#A0205A', // Darker rose link (readable on light background, meets 4.5:1 WCAG AA)
   blogLink: '#B0306A', // Darker rose for blog links (better contrast on author box, meets 4.5:1 WCAG AA)
   focus: '#C41E5A', // Darker rose focus ring
-  accent: '#ff66a3', // Vibrant pink accent (petal highlights)
+  accent: '#8A0037', // Dark rose accent (petal highlights), darkened for 4.5:1 on the hero gradient
   accentAlt: '#FFD6E8', // Very light pink accent (softest petal tones)
   footerBg: '#5A2A3A', // Deep rose footer (darker rose tones)
   footerTextMuted: 'rgba(255, 255, 255, 0.95)', // White text at 95% opacity (meets 4.5:1 contrast on dark backgrounds - used for category links)

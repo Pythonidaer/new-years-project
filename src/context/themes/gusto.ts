@@ -20,7 +20,7 @@ export const gustoTheme: Theme = {
   link: '#FF8C00', // Bright orange links (background orange) for better contrast on dark background (meets 4.5:1 WCAG AA)
   blogLink: '#FFA500', // Lighter orange for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#FF8C00', // Bright orange focus ring
-  accent: '#32CD32', // Vibrant green accent (leaf shape) for better contrast on dark background (meets 4.5:1 WCAG AA)
+  accent: '#57D657', // Vibrant green accent (leaf shape), lightened for 4.5:1 on the hero gradient
   accentAlt: '#FFD700', // Bright yellow/orange accent (yellow streaks) for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#0A050A', // Deepest dark magenta-black footer
   footerTextMuted: 'rgba(255, 232, 240, 0.75)', // Muted light pink text

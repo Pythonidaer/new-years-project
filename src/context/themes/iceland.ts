@@ -18,7 +18,7 @@ export const icelandTheme: Theme = {
   border: 'rgba(102, 187, 106, 0.25)', // Subtle aurora green
   codeBg: '#1A2421',
   codeText: '#C8E6C9', // Light green tint
-  primary: '#43A047', // Emerald (aurora, WCAG AA with white)
+  primary: '#38853B', // Darker emerald so white button text clears 4.5:1
   primaryHover: '#66BB6A', // Brighter aurora green
   primaryContrast: '#FFFFFF',
   link: '#81C784', // Light aurora green (contrast on dark)
@@ -38,8 +38,8 @@ export const icelandTheme: Theme = {
   campaignEnd: '#FFC107', // Warm yellow (lights)
   authorBoxStart: 'rgba(26, 36, 33, 0.92)',
   authorBoxEnd: 'rgba(13, 18, 16, 0.92)',
-  relatedSectionStart: 'rgba(26, 36, 33, 0.6)',
-  relatedSectionEnd: 'rgba(13, 18, 16, 0.6)',
+  relatedSectionStart: 'rgba(19, 27, 24, 0.65)', // Darker green so related text clears 4.5:1
+  relatedSectionEnd: 'rgba(11, 15, 13, 0.62)', // Darker green so related text clears 4.5:1
   shadow: 'rgba(0, 0, 0, 0.5)',
   shadowSubtle: 'rgba(0, 0, 0, 0.25)',
 };

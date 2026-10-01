@@ -1,7 +1,13 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useTheme } from '@/context/useTheme';
+import type { Theme } from '@/context/themes/types';
 import { checkContrastIssues } from '@/utils/contrast';
-import type { ContrastIssue } from '@/utils/contrast';
+import { clearContrastReviewMark, colorControlElementId, highlightedKeysForOpenIssue, jumpTargetsForIssue, reviewContrastOnPage, scrollToColorControl } from '@/utils/contrastJump';
+import { applyThemePreview } from '@/utils/imageTheme';
+import { ImageThemeUpload } from '@/components/ThemePicker/ImageThemeUpload';
+import { PresetNameField } from '@/components/ThemePicker/PresetNameField';
+import { ColorCategoryGroup, ColorCategorySection } from '@/components/ThemePicker/ColorCategorySection';
+import { ContrastWarnings } from '@/components/ThemePicker/ContrastWarnings';
 import { RotateCcw, Save, X, Palette, Bookmark, Trash2, ChevronDown, ChevronUp, Music, Pin } from 'lucide-react';
 import Color from 'color';
 import styles from './ThemePicker.module.css';
@@ -45,14 +51,14 @@ const colorTokens: ColorToken[] = [
   { key: 'accentAlt', label: 'Accent Alt', cssVar: '--color-accent-alt', category: 'accent', usage: 'Footer headings, navigation underlines' },
   
   // Gradient colors - all gradients grouped together
-  { key: 'heroStart', label: 'Homepage Hero Gradient Start', cssVar: '--color-hero-start', category: 'gradient', isGradient: true, gradientPartner: 'heroEnd' },
-  { key: 'heroEnd', label: 'Homepage Hero Gradient End', cssVar: '--color-hero-end', category: 'gradient', isGradient: true, gradientPartner: 'heroStart' },
-  { key: 'campaignStart', label: 'Campaign Gradient Start', cssVar: '--color-campaign-start', category: 'gradient', isGradient: true, gradientPartner: 'campaignEnd' },
-  { key: 'campaignEnd', label: 'Campaign Gradient End', cssVar: '--color-campaign-end', category: 'gradient', isGradient: true, gradientPartner: 'campaignStart' },
-  { key: 'authorBoxStart', label: 'Author Box Gradient Start', cssVar: '--color-author-box-start', category: 'gradient', isGradient: true, gradientPartner: 'authorBoxEnd' },
-  { key: 'authorBoxEnd', label: 'Author Box Gradient End', cssVar: '--color-author-box-end', category: 'gradient', isGradient: true, gradientPartner: 'authorBoxStart' },
-  { key: 'relatedSectionStart', label: 'Related Section Gradient Start', cssVar: '--color-related-section-start', category: 'gradient', isGradient: true, gradientPartner: 'relatedSectionEnd' },
-  { key: 'relatedSectionEnd', label: 'Related Section Gradient End', cssVar: '--color-related-section-end', category: 'gradient', isGradient: true, gradientPartner: 'relatedSectionStart' },
+  { key: 'heroStart', label: 'Hero Gradient Start', cssVar: '--color-hero-start', category: 'gradient', usage: 'Homepage hero background', isGradient: true, gradientPartner: 'heroEnd' },
+  { key: 'heroEnd', label: 'Hero Gradient End', cssVar: '--color-hero-end', category: 'gradient', usage: 'Homepage hero background', isGradient: true, gradientPartner: 'heroStart' },
+  { key: 'campaignStart', label: 'Campaign Gradient Start', cssVar: '--color-campaign-start', category: 'gradient', usage: 'Campaign section background', isGradient: true, gradientPartner: 'campaignEnd' },
+  { key: 'campaignEnd', label: 'Campaign Gradient End', cssVar: '--color-campaign-end', category: 'gradient', usage: 'Campaign section background', isGradient: true, gradientPartner: 'campaignStart' },
+  { key: 'authorBoxStart', label: 'Author Gradient Start', cssVar: '--color-author-box-start', category: 'gradient', usage: 'Author box background', isGradient: true, gradientPartner: 'authorBoxEnd' },
+  { key: 'authorBoxEnd', label: 'Author Gradient End', cssVar: '--color-author-box-end', category: 'gradient', usage: 'Author box background', isGradient: true, gradientPartner: 'authorBoxStart' },
+  { key: 'relatedSectionStart', label: 'Related Gradient Start', cssVar: '--color-related-section-start', category: 'gradient', usage: 'Related posts background', isGradient: true, gradientPartner: 'relatedSectionEnd' },
+  { key: 'relatedSectionEnd', label: 'Related Gradient End', cssVar: '--color-related-section-end', category: 'gradient', usage: 'Related posts background', isGradient: true, gradientPartner: 'relatedSectionStart' },
   
   // Footer colors
   { key: 'footerBg', label: 'Footer Background', cssVar: '--color-footer-bg', category: 'footer', usage: 'Footer section background' },
@@ -67,15 +73,27 @@ const colorTokens: ColorToken[] = [
 ];
 
 const categoryLabels: Record<ColorToken['category'], string> = {
-  core: 'Core Colors (page backgrounds, body text)',
-  primary: 'Primary Colors (buttons, blog links, social icon hover)',
-  accent: 'Accent Colors',
+  core: 'Core',
+  primary: 'Primary',
+  accent: 'Accent',
   gradient: 'Gradients',
   footer: 'Footer',
   shadows: 'Shadows',
 };
 
-// Helper component for rendering a single color item
+const colorCategories = ['core', 'primary', 'accent', 'gradient', 'footer', 'shadows'] as const;
+
+const colorControlsLabel = 'Customize colors';
+
+const colorTokenKeys = new Set<string>(colorTokens.map((token) => token.key));
+
+function areColorControlsVisible(hideUntilContrastIssue: boolean, hasContrastIssue: boolean): boolean {
+  if (!hideUntilContrastIssue) {
+    return true;
+  }
+  return hasContrastIssue;
+}
+
 type ColorItemProps = {
   token: ColorToken;
   currentValue: string;
@@ -83,12 +101,31 @@ type ColorItemProps = {
   onColorChange: (_key: keyof ReturnType<typeof useTheme>['theme'], _value: string) => void;
   onCancel: (_key: keyof ReturnType<typeof useTheme>['theme']) => void;
   colorToHex: (_color: string) => string;
+  highlightedKeys: ReadonlySet<string>;
   styles: typeof styles;
 };
 
-function ColorItem({ token, currentValue, hasChange, onColorChange, onCancel, colorToHex, styles }: ColorItemProps) {
+function colorItemClassName(isJumpTarget: boolean): string {
+  if (isJumpTarget) {
+    return `${styles.colorItem} ${styles.colorItemJumpTarget}`;
+  }
+  return styles.colorItem;
+}
+
+function ColorItem({
+  token,
+  currentValue,
+  hasChange,
+  onColorChange,
+  onCancel,
+  colorToHex,
+  highlightedKeys,
+  styles,
+}: ColorItemProps) {
+  const isJumpTarget = highlightedKeys.has(token.key);
+
   return (
-    <div className={styles.colorItem}>
+    <div id={colorControlElementId(token.key)} className={colorItemClassName(isJumpTarget)}>
       <div
         className={styles.colorSwatch}
         style={{ backgroundColor: currentValue, borderRadius: '8px' }}
@@ -120,7 +157,6 @@ function ColorItem({ token, currentValue, hasChange, onColorChange, onCancel, co
   );
 }
 
-// Helper component for rendering a gradient group
 type GradientGroupProps = {
   gradientTokens: ColorToken[];
   gradientPreview: string;
@@ -129,16 +165,27 @@ type GradientGroupProps = {
   onColorChange: (_key: keyof ReturnType<typeof useTheme>['theme'], _value: string) => void;
   onCancel: (_key: keyof ReturnType<typeof useTheme>['theme']) => void;
   colorToHex: (_color: string) => string;
+  highlightedKeys: ReadonlySet<string>;
   styles: typeof styles;
 };
 
-function GradientGroup({ gradientTokens, gradientPreview, localChanges, theme, onColorChange, onCancel, colorToHex, styles }: GradientGroupProps) {
+function GradientGroup({
+  gradientTokens,
+  gradientPreview,
+  localChanges,
+  theme,
+  onColorChange,
+  onCancel,
+  colorToHex,
+  highlightedKeys,
+  styles,
+}: GradientGroupProps) {
   if (gradientTokens.length === 0) {
     return null;
   }
 
   return (
-    <>
+    <div className={styles.gradientGroup}>
       <div className={styles.gradientPreview} style={{ background: gradientPreview }} />
       <div className={styles.gradientControls}>
         {gradientTokens.map((token) => {
@@ -153,12 +200,13 @@ function GradientGroup({ gradientTokens, gradientPreview, localChanges, theme, o
               onColorChange={onColorChange}
               onCancel={onCancel}
               colorToHex={colorToHex}
+              highlightedKeys={highlightedKeys}
               styles={styles}
             />
           );
         })}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -223,47 +271,6 @@ function isBuiltInPreset(presetId: string): boolean {
   return builtInPrefixes.some(prefix => presetId.startsWith(prefix));
 }
 
-// Helper component for contrast warnings
-type ContrastWarningsProps = {
-  contrastIssues: ContrastIssue[];
-  styles: typeof styles;
-};
-
-function ContrastWarnings({ contrastIssues, styles }: ContrastWarningsProps) {
-  if (contrastIssues.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className={styles.warnings}>
-      <h4 className={styles.warningTitle}>Contrast Warnings</h4>
-      {contrastIssues.map((issue, idx) => (
-        <div key={idx} className={styles.warning}>
-          <div className={styles.warningHeader}>
-            <span className={styles.warningPair}>{issue.pair}</span>
-            <span className={styles.warningLevel} data-level={issue.level}>
-              {issue.level}
-            </span>
-          </div>
-          <div className={styles.warningDetails}>
-            <div className={styles.warningUsage}>
-              <strong>Used in:</strong> {issue.usage}
-            </div>
-            <div className={styles.warningExplanation}>
-              WCAG requires at least 4.5:1 for normal text (AA) or 7:1 for AAA. 
-              This combination fails accessibility standards.
-            </div>
-            <div className={styles.warningRatio}>
-              <strong>Contrast Ratio:</strong> {issue.ratio.toFixed(2)}:1 (needs ≥4.5:1)
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// Helper component for preset section
 type PresetSectionProps = {
   presets: Array<{ id: string; name: string }>;
   currentPresetId: string | null;
@@ -325,6 +332,15 @@ function PresetSection({
           {isPresetsExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
         </button>
       </div>
+      {showSavePreset && isPresetsExpanded ? (
+        <PresetNameField
+          presetName={presetName}
+          onPresetNameChange={onPresetNameChange}
+          onSavePresetKeyDown={onSavePresetKeyDown}
+          onSavePreset={onSavePreset}
+          onCancelSavePreset={onCancelSavePreset}
+        />
+      ) : null}
       <div className={`${styles.presetsGrid} ${!isPresetsExpanded ? styles.presetsGridCollapsed : ''}`}>
         {presets.map((preset) => {
           const isBuiltIn = isBuiltInPreset(preset.id);
@@ -376,52 +392,131 @@ function PresetSection({
             <Bookmark size={14} />
             <span>Save as Preset</span>
           </button>
-          {showSavePreset && (
-            <div className={styles.savePresetInputRow}>
-              <input
-                type="text"
-                placeholder="Preset name..."
-                value={presetName}
-                onChange={(e) => onPresetNameChange(e.target.value)}
-                onKeyDown={onSavePresetKeyDown}
-                className={styles.presetNameInput}
-                autoFocus
-              />
-              <button
-                onClick={onSavePreset}
-                className={styles.savePresetConfirm}
-                disabled={!presetName.trim()}
-              >
-                Save
-              </button>
-              <button
-                onClick={onCancelSavePreset}
-                className={styles.savePresetCancel}
-              >
-                Cancel
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>
   );
 }
 
-// Helper component for rendering color categories
-type ColorCategoriesProps = {
-  colorTokens: ColorToken[];
-  categoryLabels: Record<ColorToken['category'], string>;
+type SharedColorProps = {
   localChanges: Partial<ReturnType<typeof useTheme>['theme']>;
   theme: ReturnType<typeof useTheme>['theme'];
   onColorChange: (_key: keyof ReturnType<typeof useTheme>['theme'], _value: string) => void;
   onCancel: (_key: keyof ReturnType<typeof useTheme>['theme']) => void;
   colorToHex: (_color: string) => string;
+  highlightedKeys: ReadonlySet<string>;
+  styles: typeof styles;
+};
+
+function TokenColorList({
+  tokens,
+  localChanges,
+  theme,
+  onColorChange,
+  onCancel,
+  colorToHex,
+  highlightedKeys,
+  styles,
+}: SharedColorProps & { tokens: ColorToken[] }) {
+  return (
+    <div className={styles.colors}>
+      {tokens.map((token) => {
+        const currentValue = localChanges[token.key] ?? theme[token.key];
+        const hasChange = token.key in localChanges;
+        return (
+          <ColorItem
+            key={token.key}
+            token={token}
+            currentValue={currentValue}
+            hasChange={hasChange}
+            onColorChange={onColorChange}
+            onCancel={onCancel}
+            colorToHex={colorToHex}
+            highlightedKeys={highlightedKeys}
+            styles={styles}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function gradientPair(tokens: ColorToken[], partner: string, key: string): ColorToken[] {
+  return tokens.filter((token) => token.gradientPartner === partner || token.key === key);
+}
+
+type GradientCategoryBodyProps = SharedColorProps & {
+  tokens: ColorToken[];
+  previews: {
+    hero: string;
+    campaign: string;
+    authorBox: string;
+    related: string;
+  };
+};
+
+function GradientCategoryBody({
+  tokens,
+  previews,
+  localChanges,
+  theme,
+  onColorChange,
+  onCancel,
+  colorToHex,
+  highlightedKeys,
+  styles,
+}: GradientCategoryBodyProps) {
+  const groups = [
+    { id: 'hero', tokens: gradientPair(tokens, 'heroEnd', 'heroEnd'), preview: previews.hero },
+    { id: 'campaign', tokens: gradientPair(tokens, 'campaignEnd', 'campaignEnd'), preview: previews.campaign },
+    { id: 'author', tokens: gradientPair(tokens, 'authorBoxEnd', 'authorBoxEnd'), preview: previews.authorBox },
+    { id: 'related', tokens: gradientPair(tokens, 'relatedSectionEnd', 'relatedSectionEnd'), preview: previews.related },
+  ];
+
+  return (
+    <>
+      {groups.map((group) => (
+        <GradientGroup
+          key={group.id}
+          gradientTokens={group.tokens}
+          gradientPreview={group.preview}
+          localChanges={localChanges}
+          theme={theme}
+          onColorChange={onColorChange}
+          onCancel={onCancel}
+          colorToHex={colorToHex}
+          highlightedKeys={highlightedKeys}
+          styles={styles}
+        />
+      ))}
+    </>
+  );
+}
+
+function categoryContents(
+  category: ColorToken['category'],
+  tokens: ColorToken[],
+  previews: GradientCategoryBodyProps['previews'],
+  shared: SharedColorProps,
+) {
+  const categoryTokens = tokens.filter((token) => token.category === category);
+  if (category === 'gradient') {
+    return <GradientCategoryBody tokens={categoryTokens} previews={previews} {...shared} />;
+  }
+  return <TokenColorList tokens={categoryTokens} {...shared} />;
+}
+
+type ColorCategoriesProps = SharedColorProps & {
+  colorTokens: ColorToken[];
+  categoryLabels: Record<ColorToken['category'], string>;
   getGradientPreview: () => string;
   getCampaignGradientPreview: () => string;
   getAuthorBoxGradientPreview: () => string;
   getRelatedSectionGradientPreview: () => string;
-  styles: typeof styles;
+  hideColorControlsUntilContrastIssue: boolean;
+  hasContrastIssue: boolean;
+  areColorControlsExpanded: boolean;
+  onToggleColorControls: () => void;
 };
 
 function ColorCategories({
@@ -432,119 +527,81 @@ function ColorCategories({
   onColorChange,
   onCancel,
   colorToHex,
+  highlightedKeys,
   getGradientPreview,
   getCampaignGradientPreview,
   getAuthorBoxGradientPreview,
   getRelatedSectionGradientPreview,
+  hideColorControlsUntilContrastIssue,
+  hasContrastIssue,
+  areColorControlsExpanded,
+  onToggleColorControls,
   styles,
 }: ColorCategoriesProps) {
+  if (!areColorControlsVisible(hideColorControlsUntilContrastIssue, hasContrastIssue)) {
+    return null;
+  }
+
+  const shared = {
+    localChanges,
+    theme,
+    onColorChange,
+    onCancel,
+    colorToHex,
+    highlightedKeys,
+    styles,
+  };
+  const previews = {
+    hero: getGradientPreview(),
+    campaign: getCampaignGradientPreview(),
+    authorBox: getAuthorBoxGradientPreview(),
+    related: getRelatedSectionGradientPreview(),
+  };
+
   return (
     <div className={styles.colorsScrollArea}>
-      {(['core', 'primary', 'accent', 'gradient', 'footer', 'shadows'] as const).map((category) => {
-        const categoryTokens = colorTokens.filter((token) => token.category === category);
-        if (categoryTokens.length === 0) return null;
-
-        const gradientTokens = categoryTokens.filter((token) => token.isGradient);
-
-        if (category === 'gradient' && gradientTokens.length > 0) {
-          const heroGradient = gradientTokens.filter(t => t.gradientPartner === 'heroEnd' || t.key === 'heroEnd');
-          const campaignGradient = gradientTokens.filter(t => t.gradientPartner === 'campaignEnd' || t.key === 'campaignEnd');
-          const authorBoxGradient = gradientTokens.filter(t => t.gradientPartner === 'authorBoxEnd' || t.key === 'authorBoxEnd');
-          const relatedSectionGradient = gradientTokens.filter(t => t.gradientPartner === 'relatedSectionEnd' || t.key === 'relatedSectionEnd');
-
-          return (
-            <div key={category} className={styles.colorCategory}>
-              <h4 className={styles.sectionTitle}>{categoryLabels[category]}</h4>
-              <GradientGroup
-                gradientTokens={heroGradient}
-                gradientPreview={getGradientPreview()}
-                localChanges={localChanges}
-                theme={theme}
-                onColorChange={onColorChange}
-                onCancel={onCancel}
-                colorToHex={colorToHex}
-                styles={styles}
-              />
-              <GradientGroup
-                gradientTokens={campaignGradient}
-                gradientPreview={getCampaignGradientPreview()}
-                localChanges={localChanges}
-                theme={theme}
-                onColorChange={onColorChange}
-                onCancel={onCancel}
-                colorToHex={colorToHex}
-                styles={styles}
-              />
-              <GradientGroup
-                gradientTokens={authorBoxGradient}
-                gradientPreview={getAuthorBoxGradientPreview()}
-                localChanges={localChanges}
-                theme={theme}
-                onColorChange={onColorChange}
-                onCancel={onCancel}
-                colorToHex={colorToHex}
-                styles={styles}
-              />
-              <GradientGroup
-                gradientTokens={relatedSectionGradient}
-                gradientPreview={getRelatedSectionGradientPreview()}
-                localChanges={localChanges}
-                theme={theme}
-                onColorChange={onColorChange}
-                onCancel={onCancel}
-                colorToHex={colorToHex}
-                styles={styles}
-              />
-            </div>
-          );
-        }
-
-        return (
-          <div key={category} className={styles.colorCategory}>
-            <h4 className={styles.sectionTitle}>{categoryLabels[category]}</h4>
-            <div className={styles.colors}>
-              {categoryTokens.map((token) => {
-                const currentValue = localChanges[token.key] ?? theme[token.key];
-                const hasChange = token.key in localChanges;
-                return (
-                  <ColorItem
-                    key={token.key}
-                    token={token}
-                    currentValue={currentValue}
-                    hasChange={hasChange}
-                    onColorChange={onColorChange}
-                    onCancel={onCancel}
-                    colorToHex={colorToHex}
-                    styles={styles}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
+      <ColorCategorySection
+        label={colorControlsLabel}
+        expanded={areColorControlsExpanded}
+        onToggle={onToggleColorControls}
+      >
+        {colorCategories.map((category) => (
+          <ColorCategoryGroup key={category} label={categoryLabels[category]}>
+            {categoryContents(category, colorTokens, previews, shared)}
+          </ColorCategoryGroup>
+        ))}
+      </ColorCategorySection>
     </div>
   );
 }
 
-export function ThemePicker() {
+type ThemePickerProps = {
+  /** Hide color controls until a contrast issue exists. Default is true. */
+  hideColorControlsUntilContrastIssue?: boolean;
+};
+
+export function ThemePicker({
+  hideColorControlsUntilContrastIssue = true,
+}: ThemePickerProps = {}) {
   const { theme, updateTheme, resetTheme, presets, savePreset, loadPreset, deletePreset, currentPresetId } = useTheme();
   const [localChanges, setLocalChanges] = useState<Partial<typeof theme>>({});
   const [isOpen, setIsOpen] = useState(false);
   const [presetName, setPresetName] = useState('');
   const [showSavePreset, setShowSavePreset] = useState(false);
   const [isPresetsExpanded, setIsPresetsExpanded] = useState(false);
+  const [areColorControlsExpanded, setAreColorControlsExpanded] = useState(false);
+  const [highlightedKeys, setHighlightedKeys] = useState<string[]>([]);
+  const [reviewedPair, setReviewedPair] = useState<string | null>(null);
   const [isPresetsHeaderCollapsed, setIsPresetsHeaderCollapsed] = useState(false);
   const [isTriggerHidden, setIsTriggerHidden] = useState(false);
+  const [imagePreviewKey, setImagePreviewKey] = useState(0);
   const drawerRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // PERFORMANCE OPTIMIZATION: Only check contrast when drawer is open
-  // This prevents expensive contrast calculations when the picker is closed
-  // checkContrastIssues() creates many Color objects and performs ~20+ contrast checks
+  // Keep checking after Review so a fixed pair can drop its red marks with the drawer closed.
   const contrastIssues = useMemo(() => {
-    if (!isOpen) return [];
+    if (!isOpen && !reviewedPair) return [];
     
     const currentTheme = { ...theme, ...localChanges };
     return checkContrastIssues({
@@ -568,8 +625,16 @@ export function ThemePicker() {
       authorBoxEnd: currentTheme.authorBoxEnd,
       relatedSectionStart: currentTheme.relatedSectionStart,
       relatedSectionEnd: currentTheme.relatedSectionEnd,
+      accent: currentTheme.accent,
+      heroStart: currentTheme.heroStart,
+      heroEnd: currentTheme.heroEnd,
     });
-  }, [theme, localChanges, isOpen]);
+  }, [theme, localChanges, isOpen, reviewedPair]);
+
+  const highlightedKeySet = useMemo(() => {
+    const failingPairs = new Set(contrastIssues.map((issue) => issue.pair));
+    return new Set(highlightedKeysForOpenIssue(reviewedPair, highlightedKeys, failingPairs));
+  }, [contrastIssues, highlightedKeys, reviewedPair]);
 
   // Memoize event handlers to prevent unnecessary re-renders
   const handleColorChange = useCallback((key: keyof typeof theme, value: string) => {
@@ -613,6 +678,7 @@ export function ThemePicker() {
   const handleLoadPreset = useCallback((presetId: string) => {
     loadPreset(presetId);
     setLocalChanges({});
+    setImagePreviewKey((key) => key + 1);
   }, [loadPreset]);
 
   const handleSavePreset = useCallback(() => {
@@ -621,17 +687,17 @@ export function ThemePicker() {
       const themeToSave = { ...theme, ...localChanges };
       // Save the preset
       savePreset(presetName.trim(), themeToSave);
+      updateTheme(themeToSave);
+      setLocalChanges({});
       setPresetName('');
       setShowSavePreset(false);
-      // Note: We don't clear localChanges here - user might want to save then continue editing
+      setImagePreviewKey((key) => key + 1);
     }
-  }, [presetName, theme, localChanges, savePreset]);
+  }, [presetName, theme, localChanges, savePreset, updateTheme]);
 
   const handleDeletePreset = useCallback((presetId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (confirm('Delete this preset?')) {
-      deletePreset(presetId);
-    }
+    deletePreset(presetId);
   }, [deletePreset]);
 
   const handleToggleOpen = useCallback(() => {
@@ -646,7 +712,39 @@ export function ThemePicker() {
     setIsPresetsExpanded((prev) => !prev);
   }, []);
 
+  const handleToggleColorControls = useCallback(() => {
+    setAreColorControlsExpanded((current) => !current);
+  }, []);
+
+  const handleJumpToIssue = useCallback((pair: string) => {
+    const targets = jumpTargetsForIssue(pair, colorTokenKeys);
+    if (targets.length === 0) {
+      return;
+    }
+    setIsPresetsExpanded(false);
+    setAreColorControlsExpanded(true);
+    setReviewedPair(pair);
+    setHighlightedKeys(targets);
+    reviewContrastOnPage(pair);
+  }, []);
+
+  useEffect(() => {
+    scrollToColorControl(highlightedKeys[0], areColorControlsExpanded);
+  }, [areColorControlsExpanded, highlightedKeys]);
+
+  useEffect(() => {
+    if (!reviewedPair) {
+      return;
+    }
+    const stillFailing = contrastIssues.some((issue) => issue.pair === reviewedPair);
+    if (stillFailing) {
+      return;
+    }
+    clearContrastReviewMark();
+  }, [contrastIssues, reviewedPair]);
+
   const handleShowSavePreset = useCallback(() => {
+    setIsPresetsExpanded(true);
     setShowSavePreset(true);
   }, []);
 
@@ -657,6 +755,15 @@ export function ThemePicker() {
   const handleCancelSavePreset = useCallback(() => {
     setShowSavePreset(false);
     setPresetName('');
+  }, []);
+  const handleApplyImageTheme = useCallback((nextTheme: Theme) => {
+    setLocalChanges(nextTheme);
+    applyThemePreview(nextTheme);
+  }, []);
+
+  const handleRequestImageSave = useCallback(() => {
+    setIsPresetsExpanded(true);
+    setShowSavePreset(true);
   }, []);
 
   // Close on backdrop click (but not when clicking the trigger button or drawer)
@@ -833,8 +940,18 @@ export function ThemePicker() {
           </div>
 
           <div className={styles.contentArea}>
-            <ContrastWarnings contrastIssues={contrastIssues} styles={styles} />
-            
+            <ContrastWarnings
+              contrastIssues={contrastIssues}
+              availableKeys={colorTokenKeys}
+              onJumpToIssue={handleJumpToIssue}
+            />
+
+            <ImageThemeUpload
+              onApply={handleApplyImageTheme}
+              onSave={handleRequestImageSave}
+              previewResetKey={imagePreviewKey}
+            />
+
             {/* Presets Section */}
             <PresetSection
               presets={presets}
@@ -863,10 +980,15 @@ export function ThemePicker() {
               onColorChange={handleColorChange}
               onCancel={handleCancel}
               colorToHex={colorToHex}
+              highlightedKeys={highlightedKeySet}
               getGradientPreview={getGradientPreview}
               getCampaignGradientPreview={getCampaignGradientPreview}
               getAuthorBoxGradientPreview={getAuthorBoxGradientPreview}
               getRelatedSectionGradientPreview={getRelatedSectionGradientPreview}
+              hideColorControlsUntilContrastIssue={hideColorControlsUntilContrastIssue}
+              hasContrastIssue={contrastIssues.length > 0}
+              areColorControlsExpanded={areColorControlsExpanded}
+              onToggleColorControls={handleToggleColorControls}
               styles={styles}
             />
           </div>

@@ -20,7 +20,7 @@ export const kingTheme: Theme = {
   link: '#D4A574', // Light tan links (skin highlights) for better contrast on dark background (meets 4.5:1 WCAG AA)
   blogLink: '#E8C4A0', // Lighter tan for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#946B4C', // Warm golden-brown focus ring
-  accent: '#506E46', // Muted green accent (background grass, natural element)
+  accent: '#8EB082', // Muted green accent (background grass), lightened for 4.5:1 on the hero gradient
   accentAlt: '#6B8E5A', // Lighter muted green accent for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#181410', // Deepest dark brown-black footer (almost black hair/mustache)
   footerTextMuted: 'rgba(245, 230, 211, 0.75)', // Muted warm cream text
@@ -34,8 +34,8 @@ export const kingTheme: Theme = {
   campaignEnd: '#5F7D55', // Muted green (background grass)
   authorBoxStart: 'rgba(70, 58, 50, 0.9)', // Dark muted brown
   authorBoxEnd: 'rgba(48, 40, 32, 0.9)', // Darker brown-black
-  relatedSectionStart: 'rgba(48, 40, 32, 0.7)', // Dark brown-black section
-  relatedSectionEnd: 'rgba(70, 58, 50, 0.7)', // Lighter muted brown section
+  relatedSectionStart: 'rgba(46, 38, 31, 0.7)', // Darker brown so related text clears 4.5:1
+  relatedSectionEnd: 'rgba(65, 54, 47, 0.76)', // Darker brown so related text clears 4.5:1
   shadow: 'rgba(30, 25, 20, 0.4)', // Dark brown-black shadows (hair/mustache)
   shadowSubtle: 'rgba(148, 107, 76, 0.2)', // Subtle golden-brown shadows (skin highlights)
 };

@@ -48,7 +48,7 @@ export function PlatformIntro() {
           <h2 className={styles.heading}>
             My Experience
           </h2>
-          <div className={styles.content}>
+          <div className={styles.content} data-contrast-example="body">
             <p className={styles.text}>
               I've had the opportunity to work across diverse industries—from financial services to healthcare—building user interfaces that solve real-world problems. Each role has shaped my approach to frontend development, emphasizing clean code, user-centric design, and scalable architecture.
             </p>
@@ -57,7 +57,7 @@ export function PlatformIntro() {
             </p>
           </div>
         </div>
-        <div className={styles.cardsWrapper}>
+        <div className={styles.cardsWrapper} data-contrast-example="surface">
           <div className={cardStyles.grid}>
             {cards.map((card) => (
               <div key={card.id} className={cardStyles.card}>

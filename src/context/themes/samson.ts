@@ -34,8 +34,8 @@ export const samsonTheme: Theme = {
   campaignEnd: '#8B4513', // Saddle brown (earth, skulls)
   authorBoxStart: 'rgba(61, 40, 21, 0.9)', // Dark brown-orange
   authorBoxEnd: 'rgba(42, 26, 10, 0.9)', // Darker brown-orange
-  relatedSectionStart: 'rgba(42, 26, 10, 0.7)', // Dark brown-orange section
-  relatedSectionEnd: 'rgba(61, 40, 21, 0.7)', // Lighter brown-orange section
+  relatedSectionStart: 'rgba(41, 26, 10, 0.71)', // Darker brown so related text clears 4.5:1
+  relatedSectionEnd: 'rgba(49, 32, 17, 0.73)', // Darker brown so related text clears 4.5:1
   shadow: 'rgba(184, 92, 42, 0.4)', // Dark orange shadows (fire glow)
   shadowSubtle: 'rgba(184, 92, 42, 0.2)', // Subtle orange shadows
 };

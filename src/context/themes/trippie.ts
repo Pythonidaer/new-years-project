@@ -20,7 +20,7 @@ export const trippieTheme: Theme = {
   link: '#1A4A1A', // Very dark green links for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#0A3A0A', // Darkest green for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#3D7A3D', // Green focus ring (leaves)
-  accent: '#4A8A4A', // Medium green accent (leaves)
+  accent: '#4E924E', // Medium green accent (leaves), lightened for 4.5:1 on the hero gradient
   accentAlt: '#5AAA5A', // Brighter green accent for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#000000', // Pure black (frame and dress)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

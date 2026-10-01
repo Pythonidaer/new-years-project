@@ -27,7 +27,7 @@ export const yukoTheme: Theme = {
   footerTextSubtle: 'rgba(255, 208, 240, 0.65)', // Subtle pink text
   footerSocialBg: 'rgba(255, 20, 147, 0.15)', // Hot pink social bg
   footerBorder: 'rgba(255, 20, 147, 0.2)', // Hot pink borders
-  heroStart: '#ff1493', // Hot pink start (background color)
+  heroStart: '#B70063', // Darker hot pink so the yellow accent clears 4.5:1
   heroEnd: '#8b008b', // Deep magenta end
   heroRadial: 'rgba(255, 215, 0, 0.2)', // Neon yellow glow
   campaignStart: '#dc143c', // Crimson red
@@ -35,7 +35,7 @@ export const yukoTheme: Theme = {
   authorBoxStart: 'rgba(45, 26, 45, 0.9)', // Dark purple-pink
   authorBoxEnd: 'rgba(26, 10, 26, 0.9)', // Darker purple-pink
   relatedSectionStart: 'rgba(26, 10, 26, 0.7)', // Dark section
-  relatedSectionEnd: 'rgba(45, 26, 45, 0.7)', // Lighter dark section
+  relatedSectionEnd: 'rgba(42, 24, 42, 0.7)', // Darker purple so related text clears 4.5:1
   shadow: 'rgba(255, 20, 147, 0.4)', // Hot pink shadows
   shadowSubtle: 'rgba(255, 20, 147, 0.2)', // Subtle pink shadows
 };

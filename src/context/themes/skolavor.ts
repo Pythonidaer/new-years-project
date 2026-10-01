@@ -24,7 +24,7 @@ export const skolavorTheme: Theme = {
   link: '#8B5A3C', // Warm brown (wood, earth)
   blogLink: '#6B4423', // Dark brown for contrast on author box
   focus: '#E8A030', // Lamp yellow-orange
-  accent: '#3D8B5C', // Green building
+  accent: '#6ABE8B', // Green building, lightened for 4.5:1 on the hero gradient
   accentAlt: '#E8A030', // Lamp glow (footer/accents)
   footerBg: '#1A1D21', // Dark base (building base, street)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)',

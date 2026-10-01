@@ -20,7 +20,7 @@ export const maxineTheme: Theme = {
   link: '#8B2D8B', // Deep purple links for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#6B1A6B', // Darker purple for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#FF6B9D', // Bright pink focus ring
-  accent: '#FF8C42', // Vibrant orange (balloons)
+  accent: '#FFE0CC', // Pale orange (balloons), lightened for 4.5:1 on the hero gradient
   accentAlt: '#FFD700', // Bright yellow (balloons, platinum highlights)
   footerBg: '#2D1A3A', // Dark purple (dramatic footer)
   footerTextMuted: 'rgba(255, 255, 255, 0.85)', // Muted white text

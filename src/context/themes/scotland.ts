@@ -20,7 +20,7 @@ export const scotlandTheme: Theme = {
   link: '#6B4423', // Dark brown links for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#4A2E1A', // Very dark brown for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#8B5A3C', // Golden brown focus ring
-  accent: '#5A7C4A', // Muted green (grass patches)
+  accent: '#B9CFAF', // Pale green (grass patches), lightened for 4.5:1 on the hero gradient
   accentAlt: '#D4A574', // Lighter golden tan (heather tones) for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#2D3748', // Dark blue-grey footer (mountains/river)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

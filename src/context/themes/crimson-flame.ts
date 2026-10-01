@@ -20,7 +20,7 @@ export const crimson_flameTheme: Theme = {
   link: '#8b1a1a', // Dark red for contrast on light background
   blogLink: '#8b1a1a',
   focus: '#d34120',
-  accent: '#ff4d4d',
+  accent: '#FF9999',
   accentAlt: '#ff6b6b',
   footerBg: '#1a0f0f',
   footerTextMuted: 'rgba(255, 255, 255, 0.75)',

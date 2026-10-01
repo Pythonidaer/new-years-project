@@ -20,7 +20,7 @@ export const pastelTheme: Theme = {
   link: '#6b4a4a', // Darker pastel for contrast on light background
   blogLink: '#6b4a4a', // Darker for better contrast on light author box
   focus: '#c49595',
-  accent: '#e8b8b8',
+  accent: '#F6E4E4',
   accentAlt: '#f0c8c8',
   footerBg: '#2d1a1a',
   footerTextMuted: 'rgba(255, 255, 255, 0.85)',

@@ -148,6 +148,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const updated = [...builtInPresets, ...customPresets, newPreset];
     setPresets(updated);
     localStorage.setItem(PRESETS_STORAGE_KEY, JSON.stringify(customPresets.concat(newPreset)));
+    setTheme(themeForPreset);
+    setCurrentPresetId(newPreset.id);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(themeForPreset));
+    applyThemeToDom(themeForPreset);
   }, [theme, presets]);
 
   const loadPreset = useCallback((presetId: string) => {
@@ -169,7 +173,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const updated = [...builtInPresets, ...customPresets];
     setPresets(updated);
     localStorage.setItem(PRESETS_STORAGE_KEY, JSON.stringify(customPresets));
-  }, [presets]);
+    if (presetId === currentPresetId) {
+      resetTheme();
+    }
+  }, [presets, currentPresetId, resetTheme]);
 
   // PERFORMANCE OPTIMIZATION: Memoize context value to prevent unnecessary re-renders
   // Only create new value object when dependencies actually change

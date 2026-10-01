@@ -1,5 +1,6 @@
-import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { registerContrastNavigator, resumeContrastReview } from "@/utils/contrastJump";
 import { Home } from "./pages/Home";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { BlogSkeleton } from "./components/BlogSkeleton";
@@ -14,10 +15,26 @@ const Blog = lazy(() => import("./pages/Blog").then(module => ({ default: module
 const BlogPost = lazy(() => import("./pages/BlogPost").then(module => ({ default: module.BlogPost })));
 const Tag = lazy(() => import("./pages/Tag").then(module => ({ default: module.Tag })));
 
+function ContrastReviewHost() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    registerContrastNavigator(navigate);
+  }, [navigate]);
+
+  useEffect(() => {
+    resumeContrastReview();
+  }, [pathname]);
+
+  return null;
+}
+
 function AppContent() {
   return (
     <>
       <ScrollToTop />
+      <ContrastReviewHost />
       <Suspense fallback={<BlogSkeleton />}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -26,7 +43,7 @@ function AppContent() {
           <Route path="/resources/tag/:categoryName" element={<Tag />} />
         </Routes>
       </Suspense>
-      <ThemePicker />
+      <ThemePicker hideColorControlsUntilContrastIssue={false} />
       <AudioControl />
     </>
   );

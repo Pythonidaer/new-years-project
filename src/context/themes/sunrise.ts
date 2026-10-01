@@ -20,7 +20,7 @@ export const sunriseTheme: Theme = {
   link: '#A84F1F', // Dark orange links for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#8B4513', // Very dark orange for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#B85C2A', // Orange focus ring
-  accent: '#7FB8D4', // Teal accent (ocean teal, similar to accentAlt)
+  accent: '#010304', // Near-black teal, darkened for 4.5:1 on both hero ends
   accentAlt: '#8FC8E4', // Lighter teal accent (ocean teal) for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#1A4A5C', // Dark teal footer (deep ocean)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

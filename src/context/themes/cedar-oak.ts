@@ -20,7 +20,7 @@ export const cedar_oakTheme: Theme = {
   link: '#1a3a1a', // Darker green for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#2d4a2d', // Darker green for better contrast on light author box (meets 4.5:1 WCAG AA)
   focus: '#a6896b',
-  accent: '#b89d7a',
+  accent: '#C6B195',
   accentAlt: '#c4a882',
   footerBg: '#1a2418',
   footerTextMuted: 'rgba(255, 255, 255, 0.75)',

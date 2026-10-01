@@ -20,7 +20,7 @@ export const companionTheme: Theme = {
   link: '#5A3A2A', // Dark brown links for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#4A2A1A', // Very dark brown for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#8B5A3C', // Warm brown focus ring
-  accent: '#87CEEB', // Sky blue accent (highway sky)
+  accent: '#ACDDF1', // Sky blue accent (highway sky), lightened for 4.5:1 on the hero gradient
   accentAlt: '#FF8C42', // Bright orange accent (sunset, desert sun) for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#3A2A1A', // Dark brown footer (road shadows)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

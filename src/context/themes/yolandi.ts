@@ -35,7 +35,7 @@ export const yolandiTheme: Theme = {
   authorBoxStart: 'rgba(107, 42, 53, 0.9)', // Dark burgundy
   authorBoxEnd: 'rgba(92, 29, 38, 0.9)', // Deeper burgundy
   relatedSectionStart: 'rgba(92, 29, 38, 0.7)', // Deep burgundy section
-  relatedSectionEnd: 'rgba(107, 42, 53, 0.7)', // Lighter burgundy section
+  relatedSectionEnd: 'rgba(95, 37, 47, 0.71)', // Darker burgundy so related text clears 4.5:1
   shadow: 'rgba(10, 10, 10, 0.4)', // Near black shadows (dark clothing, depth)
   shadowSubtle: 'rgba(10, 10, 10, 0.2)', // Subtle black shadows
 };

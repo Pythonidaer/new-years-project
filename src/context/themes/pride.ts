@@ -20,7 +20,7 @@ export const prideTheme: Theme = {
   link: '#750787', // Purple (rainbow) for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#006400', // Darker green (rainbow) for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#FFED00', // Yellow (rainbow) focus
-  accent: '#FF8C00', // Orange (rainbow)
+  accent: '#FFEFDB', // Pale orange, lightened for 4.5:1 on the hero gradient
   accentAlt: '#FFAFC8', // Pink (chevron/trans flag) for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#750787', // Purple (rainbow)
   footerTextMuted: 'rgba(255, 255, 255, 0.85)', // Bright white text

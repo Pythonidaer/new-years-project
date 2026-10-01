@@ -125,6 +125,9 @@ describe("contrast utilities", () => {
         authorBoxEnd: "#f0f0f0",
         relatedSectionStart: "#ffffff",
         relatedSectionEnd: "#f5f5f5",
+        accent: "#111111",
+        heroStart: "#ffffff",
+        heroEnd: "#f7f7f7",
         ...overrides,
       };
     };
@@ -436,6 +439,32 @@ describe("contrast utilities", () => {
         const issue = issues.find((issue) => issue.pair === "Text on Related Section Gradient");
         expect(issue).toBeDefined();
         expect(issue?.ratio).toBeLessThan(4.5);
+      });
+    });
+
+    describe("hero accent contrast", () => {
+      it("should detect low contrast for the accent on the hero gradient", () => {
+        const theme = createTheme({
+          accent: "#8a6aaa",
+          heroStart: "#7b5c96",
+          heroEnd: "#6d5088",
+        });
+        const issues = checkContrastIssues(theme);
+        const issue = issues.find((entry) => entry.pair === "Accent on Hero Gradient");
+        expect(issue).toBeDefined();
+        expect(issue?.ratio).toBeLessThan(4.5);
+        expect(issue?.level).toBe("Fail");
+        expect(issue?.usage).toBe('Hero title accent, such as "beautiful interfaces"');
+      });
+
+      it("should not report the hero accent when it contrasts with both gradient ends", () => {
+        const theme = createTheme({
+          accent: "#111111",
+          heroStart: "#ffffff",
+          heroEnd: "#f7f7f7",
+        });
+        const issues = checkContrastIssues(theme);
+        expect(issues.find((entry) => entry.pair === "Accent on Hero Gradient")).toBeUndefined();
       });
     });
 

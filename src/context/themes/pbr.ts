@@ -20,7 +20,7 @@ export const pbrTheme: Theme = {
   link: '#003DA5', // PBR blue links for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#002D7A', // Darker blue for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#003DA5', // PBR blue focus ring
-  accent: '#C41E1E', // Red (diagonal stripes on label)
+  accent: '#E44E4E', // Red (diagonal stripes on label), lightened for 4.5:1 on the hero gradient
   accentAlt: '#FF4D4D', // Brighter red accent for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#0A1525', // Dark blue background (dark blue instead of black)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

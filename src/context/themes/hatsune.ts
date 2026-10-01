@@ -20,7 +20,7 @@ export const hatsuneTheme: Theme = {
   link: '#1A5F5A', // Dark teal links for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#0A2A27', // Very dark teal for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#1A7A73', // Darker teal focus ring
-  accent: '#FF69B4', // Bright pink (hair ties)
+  accent: '#470024', // Dark pink (hair ties), darkened for 4.5:1 on the hero gradient
   accentAlt: '#9B7BB8', // Soft purple (background gradient bottom)
   footerBg: '#1A1A1A', // Black footer (outfit accents)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

@@ -32,7 +32,7 @@ export function BlogGrid({ posts }: Props) {
 
   return (
     <>
-      <div className={styles.grid}>
+      <div className={styles.grid} data-contrast-example="blog-grid">
         {visiblePosts.map((post) => (
           <article key={getBlogPostSlug(post)} className={styles.card}>
             <div className={styles.imageContainer}>

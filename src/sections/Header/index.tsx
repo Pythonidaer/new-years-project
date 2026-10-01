@@ -180,12 +180,12 @@ export function Header() {
 
   return (
     <>
-      <header className={`${styles.header} ${isScrolled || isMenuOpen ? styles.scrolled : ""} ${isBlogListingPage ? styles.dark : ""} ${isBlogPostPage || isTagPage ? styles.light : ""} ${isMenuOpen ? styles.menuOpen : ""}`}>
+      <header data-contrast-example="header" className={`${styles.header} ${isScrolled || isMenuOpen ? styles.scrolled : ""} ${isBlogListingPage ? styles.dark : ""} ${isBlogPostPage || isTagPage ? styles.light : ""} ${isMenuOpen ? styles.menuOpen : ""}`}>
         <div className={styles.inner}>
           <Link to="/" className={styles.brand} onClick={closeMenu}>Johnny H.</Link>
 
           <nav className={styles.nav}>
-            <Link to="/#experience" className={styles.navLink} onClick={handleHashClick}>
+            <Link to="/#experience" className={styles.navLink} data-contrast-example="page-link" onClick={handleHashClick}>
               Experience
               <ChevronRight className={styles.chevron} />
             </Link>

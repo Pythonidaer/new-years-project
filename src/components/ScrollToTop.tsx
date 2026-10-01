@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { CONTRAST_REVIEW_STORAGE_KEY } from "@/utils/contrastJump";
 
 /**
  * ScrollToTop component that scrolls to the top of the page
@@ -25,8 +26,7 @@ export function ScrollToTop() {
           });
         }
       }, 100);
-    } else {
-      // No hash, scroll to top
+    } else if (!sessionStorage.getItem(CONTRAST_REVIEW_STORAGE_KEY)) {
       window.scrollTo(0, 0);
     }
   }, [pathname, hash]);

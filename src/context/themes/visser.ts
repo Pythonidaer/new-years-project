@@ -20,7 +20,7 @@ export const visserTheme: Theme = {
   link: '#1A1A1A', // Very dark charcoal links for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#000000', // Pure black for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#000000', // Pure black focus ring (maximum emphasis)
-  accent: '#FFFFFF', // Pure white accent (striking white spiky eyelashes, ultimate contrast)
+  accent: '#636363', // Gray accent, darkened for 4.5:1 on the light hero gradient
   accentAlt: '#CCCCCC', // Light grey accent (secondary text color) for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#1A1A1A', // Very dark charcoal footer (black eyes, black patch)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

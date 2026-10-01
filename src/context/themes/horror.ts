@@ -34,8 +34,8 @@ export const horrorTheme: Theme = {
   campaignEnd: '#6b1414',
   authorBoxStart: 'rgba(26, 26, 26, 0.9)',
   authorBoxEnd: 'rgba(15, 15, 15, 0.9)',
-  relatedSectionStart: 'rgba(15, 15, 15, 0.6)',
-  relatedSectionEnd: 'rgba(26, 26, 26, 0.6)',
+  relatedSectionStart: 'rgba(10, 10, 10, 0.6)', // Darker black so related text clears 4.5:1
+  relatedSectionEnd: 'rgba(26, 26, 26, 0.64)', // More opaque so related text clears 4.5:1
   shadow: 'rgba(139, 26, 26, 0.4)',
   shadowSubtle: 'rgba(139, 26, 26, 0.2)',
 };

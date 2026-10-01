@@ -133,10 +133,105 @@ describe("ThemePicker Component", () => {
     fireEvent.click(trigger);
 
     await waitFor(() => {
-      // Should have color category sections
-      const coreColors = screen.queryByText(/Core Colors/i);
-      expect(coreColors).toBeTruthy();
+      expect(screen.queryByRole("heading", { name: /^Core$/i })).toBeNull();
+      expect(screen.queryByRole("heading", { name: /^Primary$/i })).toBeNull();
+      expect(screen.queryByRole("heading", { name: /^Accent$/i })).toBeNull();
+      expect(screen.queryByRole("heading", { name: /^Gradients$/i })).toBeNull();
+      expect(screen.queryByRole("heading", { name: /^Footer$/i })).toBeNull();
+      expect(screen.queryByRole("heading", { name: /^Shadows$/i })).toBeNull();
     });
+  });
+
+  it("shows every color section inside one closed dropdown when a contrast issue exists", async () => {
+    mockCheckContrastIssues.mockReturnValue([
+      {
+        pair: "Text on Background",
+        foreground: "#eeeeee",
+        background: "#ffffff",
+        level: "Fail" as const,
+        usage: "Body text",
+        ratio: 1.2,
+      },
+    ]);
+
+    render(
+      <ThemeProvider>
+        <ThemePicker />
+      </ThemeProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /open theme picker/i }));
+
+    const matches = await screen.findAllByRole("button", { name: /expand customize colors/i });
+    const toggle = matches.find((button) => button.className.includes("categoryToggle"));
+    expect(toggle).toBeTruthy();
+    expect(toggle?.getAttribute("aria-expanded")).toBe("false");
+    expect(screen.queryByRole("button", { name: /expand core$/i })).toBeNull();
+
+    fireEvent.click(toggle as HTMLElement);
+
+    await waitFor(() => {
+      expect(toggle?.getAttribute("aria-expanded")).toBe("true");
+      expect(screen.getByRole("heading", { name: /^Core$/i })).toBeTruthy();
+      expect(screen.getByRole("heading", { name: /^Primary$/i })).toBeTruthy();
+      expect(screen.getByRole("heading", { name: /^Accent$/i })).toBeTruthy();
+      expect(screen.getByRole("heading", { name: /^Gradients$/i })).toBeTruthy();
+      expect(screen.getByRole("heading", { name: /^Footer$/i })).toBeTruthy();
+      expect(screen.getByRole("heading", { name: /^Shadows$/i })).toBeTruthy();
+      expect(screen.getByText(/Page background, section backgrounds/i)).toBeTruthy();
+    });
+
+    mockCheckContrastIssues.mockImplementation(() => []);
+  });
+
+  it("always shows the color dropdown when hideColorControlsUntilContrastIssue is false", async () => {
+    render(
+      <ThemeProvider>
+        <ThemePicker hideColorControlsUntilContrastIssue={false} />
+      </ThemeProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /open theme picker/i }));
+
+    const matches = await screen.findAllByRole("button", { name: /expand customize colors/i });
+    const toggle = matches.find((button) => button.className.includes("categoryToggle"));
+    expect(toggle?.getAttribute("aria-expanded")).toBe("false");
+
+    fireEvent.click(toggle as HTMLElement);
+
+    await waitFor(() => {
+      expect(screen.getByRole("heading", { name: /^Primary$/i })).toBeTruthy();
+      expect(screen.getByRole("heading", { name: /^Shadows$/i })).toBeTruthy();
+    });
+  });
+
+  it("hides the preset name field when Choose a theme is collapsed", async () => {
+    render(
+      <ThemeProvider>
+        <ThemePicker />
+      </ThemeProvider>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /open theme picker/i }));
+    fireEvent.click(screen.getByText("Save as Preset"));
+
+    expect(await screen.findByPlaceholderText("Preset name...")).toBeTruthy();
+    expect(screen.getByRole("button", { name: /save preset/i })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /cancel preset/i })).toBeTruthy();
+
+    const toggleButtons = screen.getAllByRole("button", { name: /collapse presets/i });
+    const toggleButton = toggleButtons.find((button) => button.className.includes("presetsToggle"));
+    fireEvent.click(toggleButton as HTMLElement);
+
+    await waitFor(() => {
+      expect(screen.queryByPlaceholderText("Preset name...")).toBeNull();
+      expect(screen.queryByRole("button", { name: /save preset/i })).toBeNull();
+      expect(screen.queryByRole("button", { name: /cancel preset/i })).toBeNull();
+    });
+
+    fireEvent.click(toggleButton as HTMLElement);
+
+    expect(await screen.findByPlaceholderText("Preset name...")).toBeTruthy();
   });
 
   it("allows saving current theme as preset", async () => {
@@ -166,7 +261,7 @@ describe("ThemePicker Component", () => {
     const input = screen.getByPlaceholderText("Preset name...");
     fireEvent.change(input, { target: { value: "My Custom Theme" } });
     
-    const saveButton = screen.getByText("Save");
+    const saveButton = screen.getByRole("button", { name: /save preset/i });
     fireEvent.click(saveButton);
 
     // Preset should be saved
@@ -322,7 +417,7 @@ describe("ThemePicker Component", () => {
     const input = screen.getByPlaceholderText("Preset name...");
     fireEvent.change(input, { target: { value: "Test Custom" } });
     
-    const saveButton = screen.getByText("Save");
+    const saveButton = screen.getByRole("button", { name: /save preset/i });
     fireEvent.click(saveButton);
 
     await waitFor(() => {
@@ -596,9 +691,8 @@ describe("ThemePicker Component", () => {
   });
 
   describe("handleDeletePreset", () => {
-    it("shows confirmation dialog and calls deletePreset when confirmed", async () => {
-      // Mock window.confirm
-      const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(true);
+    it("deletes the saved preset immediately and restores the default theme", async () => {
+      const confirmSpy = vi.spyOn(window, "confirm");
 
       render(
         <ThemeProvider>
@@ -606,118 +700,24 @@ describe("ThemePicker Component", () => {
         </ThemeProvider>
       );
 
-      const trigger = screen.getByRole("button", { name: /open theme picker/i });
-      fireEvent.click(trigger);
+      fireEvent.click(screen.getByRole("button", { name: /open theme picker/i }));
+      fireEvent.click(screen.getByText("Save as Preset"));
+      fireEvent.change(await screen.findByPlaceholderText("Preset name..."), {
+        target: { value: "Test Delete" },
+      });
+      fireEvent.click(screen.getByRole("button", { name: /save preset/i }));
+
+      expect(await screen.findByText("Test Delete")).toBeTruthy();
+      expect(localStorage.getItem("user-theme")).toBeTruthy();
+
+      fireEvent.click(screen.getByRole("button", { name: /delete test delete preset/i }));
 
       await waitFor(() => {
-        expect(screen.getByText("Theme Colors")).toBeTruthy();
+        expect(screen.queryByText("Test Delete")).toBeNull();
       });
-
-      // Create a custom preset first
-      const savePresetButton = screen.getByText("Save as Preset");
-      fireEvent.click(savePresetButton);
-
-      await waitFor(() => {
-        const input = screen.getByPlaceholderText("Preset name...");
-        expect(input).toBeTruthy();
-      });
-
-      const input = screen.getByPlaceholderText("Preset name...");
-      fireEvent.change(input, { target: { value: "Test Delete" } });
-      
-      const saveButton = screen.getByText("Save");
-      fireEvent.click(saveButton);
-
-      await waitFor(() => {
-        const customPreset = screen.queryByText("Test Delete");
-        expect(customPreset).toBeTruthy();
-      });
-
-      // Find delete button for custom preset
-      const customPresetCard = screen.getByText("Test Delete").closest("button");
-      if (customPresetCard) {
-        const deleteButton = customPresetCard.querySelector('button[aria-label*="Delete"]');
-        expect(deleteButton).toBeTruthy();
-
-        if (deleteButton) {
-          // Create a mock event with stopPropagation
-          const mockEvent = {
-            stopPropagation: vi.fn(),
-          } as unknown as React.MouseEvent;
-
-          fireEvent.click(deleteButton, mockEvent);
-
-          // Confirm dialog should be called
-          expect(confirmSpy).toHaveBeenCalledWith("Delete this preset?");
-
-          // Preset should be deleted
-          await waitFor(() => {
-            const deletedPreset = screen.queryByText("Test Delete");
-            expect(deletedPreset).toBeNull();
-          });
-        }
-      }
-
-      confirmSpy.mockRestore();
-    });
-
-    it("does not delete preset when confirmation is cancelled", async () => {
-      // Mock window.confirm to return false
-      const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(false);
-
-      render(
-        <ThemeProvider>
-          <ThemePicker />
-        </ThemeProvider>
-      );
-
-      const trigger = screen.getByRole("button", { name: /open theme picker/i });
-      fireEvent.click(trigger);
-
-      await waitFor(() => {
-        expect(screen.getByText("Theme Colors")).toBeTruthy();
-      });
-
-      // Create a custom preset first
-      const savePresetButton = screen.getByText("Save as Preset");
-      fireEvent.click(savePresetButton);
-
-      await waitFor(() => {
-        const input = screen.getByPlaceholderText("Preset name...");
-        expect(input).toBeTruthy();
-      });
-
-      const input = screen.getByPlaceholderText("Preset name...");
-      fireEvent.change(input, { target: { value: "Test Keep" } });
-      
-      const saveButton = screen.getByText("Save");
-      fireEvent.click(saveButton);
-
-      await waitFor(() => {
-        const customPreset = screen.queryByText("Test Keep");
-        expect(customPreset).toBeTruthy();
-      });
-
-      // Find delete button for custom preset
-      const customPresetCard = screen.getByText("Test Keep").closest("button");
-      if (customPresetCard) {
-        const deleteButton = customPresetCard.querySelector('button[aria-label*="Delete"]');
-        expect(deleteButton).toBeTruthy();
-
-        if (deleteButton) {
-          fireEvent.click(deleteButton);
-
-          // Confirm dialog should be called
-          expect(confirmSpy).toHaveBeenCalledWith("Delete this preset?");
-
-          // Preset should still exist
-          await waitFor(() => {
-            const keptPreset = screen.queryByText("Test Keep");
-            expect(keptPreset).toBeTruthy();
-          });
-        }
-      }
-
+      expect(confirmSpy).not.toHaveBeenCalled();
+      expect(localStorage.getItem("user-theme")).toBeNull();
+      expect(localStorage.getItem("theme-presets")).not.toContain("Test Delete");
       confirmSpy.mockRestore();
     });
   });
@@ -791,7 +791,7 @@ describe("ThemePicker Component", () => {
     it("handles invalid color strings with fallback", async () => {
       render(
         <ThemeProvider>
-          <ThemePicker />
+          <ThemePicker hideColorControlsUntilContrastIssue={false} />
         </ThemeProvider>
       );
 
@@ -850,6 +850,9 @@ describe("ThemePicker Component", () => {
       await waitFor(() => {
         const warningTitle = screen.queryByText("Contrast Warnings");
         expect(warningTitle).toBeTruthy();
+        expect(screen.queryByText("Fail")).toBeNull();
+        expect(screen.queryByText("AA")).toBeNull();
+        expect(screen.getByRole("button", { name: /too similar, so some people cannot read the text/i })).toBeTruthy();
       });
 
       // Should show warning details
@@ -861,6 +864,221 @@ describe("ThemePicker Component", () => {
 
       const warningRatio = screen.queryByText(/Contrast Ratio:/);
       expect(warningRatio).toBeTruthy();
+    });
+
+    it("jumps from a contrast warning to the related color controls", async () => {
+      mockCheckContrastIssues.mockReturnValue([
+        {
+          pair: "Text on Background",
+          foreground: "#eeeeee",
+          background: "#ffffff",
+          level: "Fail" as const,
+          usage: "Body text",
+          ratio: 1.2,
+        },
+      ]);
+      const scrollIntoView = vi.fn();
+      const originalScroll = HTMLElement.prototype.scrollIntoView;
+      HTMLElement.prototype.scrollIntoView = scrollIntoView;
+      const pageExample = document.createElement("section");
+      pageExample.setAttribute("data-contrast-example", "body");
+      document.body.appendChild(pageExample);
+      const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+
+      render(
+        <ThemeProvider>
+          <ThemePicker />
+        </ThemeProvider>
+      );
+
+      fireEvent.click(screen.getByRole("button", { name: /open theme picker/i }));
+      fireEvent.click(await screen.findByRole("button", { name: /jump to text on background/i }));
+
+      await waitFor(() => {
+        const textItem = document.getElementById("color-item-text");
+        const backgroundItem = document.getElementById("color-item-bg");
+        expect(textItem?.className).toContain("colorItemJumpTarget");
+        expect(backgroundItem?.className).toContain("colorItemJumpTarget");
+        expect(scrollIntoView).toHaveBeenCalled();
+        expect(scrollTo).toHaveBeenCalled();
+      });
+
+      pageExample.remove();
+      scrollTo.mockRestore();
+      HTMLElement.prototype.scrollIntoView = originalScroll;
+      mockCheckContrastIssues.mockImplementation(() => []);
+    });
+
+    it("closes Choose a theme before scrolling a contrast review", async () => {
+      mockCheckContrastIssues.mockReturnValue([
+        {
+          pair: "Text on Background",
+          foreground: "#eeeeee",
+          background: "#ffffff",
+          level: "Fail" as const,
+          usage: "Body text",
+          ratio: 1.2,
+        },
+      ]);
+      const scrollIntoView = vi.fn();
+      const originalScroll = HTMLElement.prototype.scrollIntoView;
+      HTMLElement.prototype.scrollIntoView = scrollIntoView;
+      const pageExample = document.createElement("section");
+      pageExample.setAttribute("data-contrast-example", "body");
+      document.body.appendChild(pageExample);
+      const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+
+      render(
+        <ThemeProvider>
+          <ThemePicker />
+        </ThemeProvider>
+      );
+
+      fireEvent.click(screen.getByRole("button", { name: /open theme picker/i }));
+      const presetsHeader = screen.getAllByRole("button").find((button) => (
+        button.textContent?.includes("Choose a theme")
+      ));
+      fireEvent.click(presetsHeader as HTMLElement);
+      fireEvent.click(screen.getByRole("button", { name: /save as preset/i }));
+      fireEvent.change(await screen.findByPlaceholderText("Preset name..."), {
+        target: { value: "Draft theme" },
+      });
+
+      fireEvent.click(await screen.findByRole("button", { name: /jump to text on background/i }));
+
+      await waitFor(() => {
+        expect(presetsHeader).toHaveAttribute("aria-expanded", "false");
+        expect(screen.queryByPlaceholderText("Preset name...")).toBeNull();
+        expect(screen.getAllByRole("button").find((button) => (
+          button.textContent?.includes("Customize colors")
+        ))).toHaveAttribute("aria-expanded", "true");
+        expect(document.getElementById("color-item-text")?.className).toContain("colorItemJumpTarget");
+        expect(pageExample.getAttribute("data-contrast-review")).toBe("true");
+        expect(scrollIntoView).toHaveBeenCalled();
+        expect(scrollTo).toHaveBeenCalled();
+      });
+
+      fireEvent.click(presetsHeader as HTMLElement);
+      expect(screen.getByPlaceholderText("Preset name...")).toHaveValue("Draft theme");
+
+      pageExample.remove();
+      scrollTo.mockRestore();
+      HTMLElement.prototype.scrollIntoView = originalScroll;
+      mockCheckContrastIssues.mockImplementation(() => []);
+    });
+
+    it("clears red review marks when that contrast issue is fixed", async () => {
+      mockCheckContrastIssues.mockReturnValue([
+        {
+          pair: "Text on Background",
+          foreground: "#eeeeee",
+          background: "#ffffff",
+          level: "Fail" as const,
+          usage: "Body text",
+          ratio: 1.2,
+        },
+      ]);
+      const pageExample = document.createElement("section");
+      pageExample.setAttribute("data-contrast-example", "body");
+      document.body.appendChild(pageExample);
+      const scrollTo = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+      const originalScroll = HTMLElement.prototype.scrollIntoView;
+      HTMLElement.prototype.scrollIntoView = vi.fn();
+
+      render(
+        <ThemeProvider>
+          <ThemePicker hideColorControlsUntilContrastIssue={false} />
+        </ThemeProvider>
+      );
+
+      fireEvent.click(screen.getByRole("button", { name: /open theme picker/i }));
+      fireEvent.click(await screen.findByRole("button", { name: /jump to text on background/i }));
+
+      await waitFor(() => {
+        expect(document.getElementById("color-item-text")?.className).toContain("colorItemJumpTarget");
+        expect(pageExample.getAttribute("data-contrast-review")).toBe("true");
+      });
+
+      mockCheckContrastIssues.mockReturnValue([
+        {
+          pair: "Primary Contrast on Primary",
+          foreground: "#ffffff",
+          background: "#cccccc",
+          level: "Fail" as const,
+          usage: "Button label",
+          ratio: 1.4,
+        },
+      ]);
+      fireEvent.change(document.getElementById("color-input-text") as HTMLInputElement, {
+        target: { value: "#111111" },
+      });
+
+      await waitFor(() => {
+        expect(document.getElementById("color-item-text")?.className).not.toContain("colorItemJumpTarget");
+        expect(document.getElementById("color-item-primary")?.className).not.toContain("colorItemJumpTarget");
+        expect(pageExample.hasAttribute("data-contrast-review")).toBe(false);
+        expect(screen.getByText("Primary Contrast on Primary")).toBeTruthy();
+      });
+
+      pageExample.remove();
+      scrollTo.mockRestore();
+      HTMLElement.prototype.scrollIntoView = originalScroll;
+      mockCheckContrastIssues.mockImplementation(() => []);
+    });
+
+    it("renders gradient stops with the same label markup as accent colors", async () => {
+      render(
+        <ThemeProvider>
+          <ThemePicker hideColorControlsUntilContrastIssue={false} />
+        </ThemeProvider>
+      );
+
+      fireEvent.click(screen.getByRole("button", { name: /open theme picker/i }));
+      const matches = await screen.findAllByRole("button", { name: /expand customize colors/i });
+      const toggle = matches.find((button) => button.className.includes("categoryToggle"));
+      fireEvent.click(toggle as HTMLElement);
+
+      const accentLabel = await waitFor(() => {
+        const label = document.querySelector("label[for='color-input-accent']");
+        expect(label).toBeTruthy();
+        return label as HTMLLabelElement;
+      });
+      const heroLabel = document.querySelector("label[for='color-input-heroStart']");
+      const heroEndLabel = document.querySelector("label[for='color-input-heroEnd']");
+      const campaignLabel = document.querySelector("label[for='color-input-campaignStart']");
+      expect(heroLabel?.textContent).toBe("Hero Gradient Start");
+      expect(heroEndLabel?.textContent).toBe("Hero Gradient End");
+      expect(campaignLabel?.textContent).toBe("Campaign Gradient Start");
+      expect(heroLabel?.className).toBe(accentLabel.className);
+      expect(heroLabel?.nextElementSibling?.className).toBe(accentLabel.nextElementSibling?.className);
+      expect(heroLabel?.parentElement?.className).toBe(accentLabel.parentElement?.className);
+    });
+
+    it("omits the jump button when a warning has no matching color control", async () => {
+      mockCheckContrastIssues.mockReturnValue([
+        {
+          pair: "text on bg",
+          foreground: "#000000",
+          background: "#ffffff",
+          level: "AA" as const,
+          usage: "Body text",
+          ratio: 3.2,
+        },
+      ]);
+
+      render(
+        <ThemeProvider>
+          <ThemePicker />
+        </ThemeProvider>
+      );
+
+      fireEvent.click(screen.getByRole("button", { name: /open theme picker/i }));
+
+      await waitFor(() => {
+        expect(screen.getByText("text on bg")).toBeTruthy();
+      });
+      expect(screen.queryByRole("button", { name: /jump to/i })).toBeNull();
+      mockCheckContrastIssues.mockImplementation(() => []);
     });
 
     it("does not display contrast warnings when no issues exist", async () => {
@@ -983,7 +1201,7 @@ describe("ThemePicker Component", () => {
       const input = screen.getByPlaceholderText("Preset name...");
       fireEvent.change(input, { target: { value: "Test StopProp" } });
       
-      const saveButton = screen.getByText("Save");
+      const saveButton = screen.getByRole("button", { name: /save preset/i });
       fireEvent.click(saveButton);
 
       await waitFor(() => {
@@ -1001,13 +1219,8 @@ describe("ThemePicker Component", () => {
         stopPropagation: stopPropagationSpy,
       } as unknown as React.MouseEvent;
 
-      // The handleDeletePreset function calls e.stopPropagation() before confirm
-      // We can verify this by checking that the function handles the event correctly
       fireEvent.click(deleteButton, mockEvent);
 
-      // stopPropagation should be called (even if confirm is cancelled)
-      // Note: In the actual implementation, stopPropagation is called before confirm
-      // We verify the button click works correctly
       expect(deleteButton).toBeTruthy();
     });
   });
@@ -1114,14 +1327,7 @@ describe("ThemePicker Component", () => {
         expect(input).toBeTruthy();
       });
 
-      // Find cancel button (there should be one in the save preset row)
-      // The cancel button in save preset row is the one that closes the input
-      const cancelButtons = screen.getAllByText("Cancel");
-      // The last cancel button should be the save preset cancel button
-      const savePresetCancelButton = cancelButtons[cancelButtons.length - 1];
-
-      expect(savePresetCancelButton).toBeTruthy();
-      fireEvent.click(savePresetCancelButton);
+      fireEvent.click(screen.getByRole("button", { name: /cancel preset/i }));
 
       // Input should be closed
       await waitFor(() => {
@@ -1139,7 +1345,7 @@ describe("ThemePicker Component", () => {
     it("displays color usage when token.usage exists", async () => {
       render(
         <ThemeProvider>
-          <ThemePicker />
+          <ThemePicker hideColorControlsUntilContrastIssue={false} />
         </ThemeProvider>
       );
 
@@ -1149,6 +1355,10 @@ describe("ThemePicker Component", () => {
       await waitFor(() => {
         expect(screen.getByText("Theme Colors")).toBeTruthy();
       });
+
+      const expandColors = (await screen.findAllByRole("button", { name: /expand customize colors/i }))
+        .find((button) => button.className.includes("categoryToggle"));
+      fireEvent.click(expandColors as HTMLElement);
 
       // Find color items with usage (e.g., Background has "Page background, section backgrounds")
       // Wait for color items to render - check for any usage text that contains "background" or "text" or "button"
@@ -1164,7 +1374,7 @@ describe("ThemePicker Component", () => {
     it("appears when hasChange is true for a color token", async () => {
       render(
         <ThemeProvider>
-          <ThemePicker />
+          <ThemePicker hideColorControlsUntilContrastIssue={false} />
         </ThemeProvider>
       );
 
@@ -1174,6 +1384,10 @@ describe("ThemePicker Component", () => {
       await waitFor(() => {
         expect(screen.getByText("Theme Colors")).toBeTruthy();
       });
+
+      const expandColors = (await screen.findAllByRole("button", { name: /expand customize colors/i }))
+        .find((button) => button.className.includes("categoryToggle"));
+      fireEvent.click(expandColors as HTMLElement);
 
       // Initially, no cancel buttons should be visible (except maybe in save preset if open)
       // Wait for color inputs to be available

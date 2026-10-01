@@ -34,8 +34,8 @@ export const sadikovicTheme: Theme = {
   campaignEnd: '#8A2BE2', // Purple
   authorBoxStart: 'rgba(26, 26, 46, 0.9)', // Dark blue-gray
   authorBoxEnd: 'rgba(10, 10, 26, 0.9)', // Darker blue-black
-  relatedSectionStart: 'rgba(10, 10, 26, 0.7)', // Dark section
-  relatedSectionEnd: 'rgba(26, 26, 46, 0.7)', // Lighter dark section
+  relatedSectionStart: 'rgba(10, 10, 26, 0.77)', // More opaque so related text clears 4.5:1
+  relatedSectionEnd: 'rgba(26, 26, 46, 0.82)', // More opaque so related text clears 4.5:1
   shadow: 'rgba(0, 191, 255, 0.4)', // Electric blue shadows
   shadowSubtle: 'rgba(0, 191, 255, 0.2)', // Subtle electric blue shadows
 };

@@ -91,6 +91,9 @@ export function checkContrastIssues(theme: {
   authorBoxEnd: string;
   relatedSectionStart: string;
   relatedSectionEnd: string;
+  accent: string;
+  heroStart: string;
+  heroEnd: string;
 }): ContrastIssue[] {
   const issues: ContrastIssue[] = [];
 
@@ -118,6 +121,7 @@ export function checkContrastIssues(theme: {
   const codeBgColor = safeColor(theme.codeBg);
   const codeTextColor = safeColor(theme.codeText);
   const blogLinkColor = safeColor(theme.blogLink);
+  const accentColor = safeColor(theme.accent);
 
   // Helper function that uses pre-created Color objects (handles nullable colors)
   const getContrastRatioOptimized = (
@@ -268,6 +272,7 @@ export function checkContrastIssues(theme: {
   checkGradientContrast('Text on Author Box Gradient', textColor, theme.text, theme.authorBoxStart, theme.authorBoxEnd, 'Author box body text');
   checkGradientContrast('Blog Link on Author Box Gradient', blogLinkColor, theme.blogLink, theme.authorBoxStart, theme.authorBoxEnd, 'Author box link');
   checkGradientContrast('Text on Related Section Gradient', textColor, theme.text, theme.relatedSectionStart, theme.relatedSectionEnd, 'Related content section text');
+  checkGradientContrast('Accent on Hero Gradient', accentColor, theme.accent, theme.heroStart, theme.heroEnd, 'Hero title accent, such as "beautiful interfaces"');
 
   return issues;
 }

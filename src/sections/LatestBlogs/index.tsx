@@ -34,7 +34,7 @@ export function LatestBlogs() {
     <Section>
       <Container className={styles.latestBlogsContainer}>
         <h2 className={styles.heading}>Latest Blogs</h2>
-        <div className={styles.grid}>
+        <div className={styles.grid} data-contrast-example="latest-blogs">
           {recentPosts.map((post) => (
             <article key={post.id} className={styles.card}>
               <div className={styles.cardImage}>

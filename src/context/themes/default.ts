@@ -32,8 +32,8 @@ export const defaultTheme: Theme = {
   campaignEnd: '#2d5aa0',
   authorBoxStart: 'rgba(20, 27, 45, 0.9)',
   authorBoxEnd: 'rgba(26, 35, 50, 0.9)',
-  relatedSectionStart: 'rgba(26, 35, 50, 0.6)',
-  relatedSectionEnd: 'rgba(20, 27, 45, 0.6)',
+  relatedSectionStart: 'rgba(24, 33, 47, 0.67)', // Darker navy so related text clears 4.5:1
+  relatedSectionEnd: 'rgba(19, 25, 42, 0.65)', // Darker navy so related text clears 4.5:1
   shadow: 'rgba(0, 0, 0, 0.4)',
   shadowSubtle: 'rgba(0, 0, 0, 0.2)',
 };

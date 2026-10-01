@@ -20,7 +20,7 @@ export const noirTheme: Theme = {
   link: '#2D2D2D', // Dark gray links for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#1A1A1A', // Very dark gray for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#4A4A4A', // Dark gray focus ring
-  accent: '#6B6B6B', // Medium gray accent
+  accent: '#BABABA', // Light gray accent, lightened for 4.5:1 on the hero gradient
   accentAlt: '#8B8B8B', // Light gray accent for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#1A1A1A', // Dark gray footer (deep shadows)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

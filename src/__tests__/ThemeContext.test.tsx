@@ -151,6 +151,72 @@ describe("ThemeContext", () => {
     expect(finalCount).toBe(initialCount);
   });
 
+  it("removes an active custom preset from this browser and restores the default theme", () => {
+    function DeleteActivePreset() {
+      const { theme, presets, savePreset, deletePreset, currentPresetId } = useTheme();
+      const customPreset = presets.find((preset) => preset.name === "Whale Tale");
+      return (
+        <div>
+          <div data-testid="current-preset">{currentPresetId || "none"}</div>
+          <div data-testid="theme-bg">{theme.bg}</div>
+          <button onClick={() => savePreset("Whale Tale", { ...theme, bg: "#112233" })}>Save Custom</button>
+          <button onClick={() => customPreset && deletePreset(customPreset.id)}>Delete Custom</button>
+        </div>
+      );
+    }
+
+    render(
+      <ThemeProvider>
+        <DeleteActivePreset />
+      </ThemeProvider>
+    );
+
+    fireEvent.click(screen.getByText("Save Custom"));
+    expect(screen.getByTestId("theme-bg").textContent).toBe("#112233");
+    expect(localStorage.getItem("user-theme")).toContain("#112233");
+
+    fireEvent.click(screen.getByText("Delete Custom"));
+
+    expect(screen.getByTestId("theme-bg").textContent).toBe(defaultTheme.bg);
+    expect(screen.getByTestId("current-preset").textContent).toBe("default");
+    expect(localStorage.getItem("user-theme")).toBeNull();
+    const savedPresets = JSON.parse(localStorage.getItem("theme-presets") || "[]") as Array<{ name: string }>;
+    expect(savedPresets.some((preset) => preset.name === "Whale Tale")).toBe(false);
+  });
+
+  it("keeps the current built-in theme when a different custom preset is deleted", () => {
+    function DeleteInactivePreset() {
+      const { theme, presets, savePreset, loadPreset, deletePreset, currentPresetId } = useTheme();
+      const customPreset = presets.find((preset) => preset.name === "Whale Tale");
+      return (
+        <div>
+          <div data-testid="current-preset">{currentPresetId || "none"}</div>
+          <div data-testid="theme-bg">{theme.bg}</div>
+          <button onClick={() => savePreset("Whale Tale", { ...theme, bg: "#112233" })}>Save Custom</button>
+          <button onClick={() => loadPreset("noir")}>Load Noir</button>
+          <button onClick={() => customPreset && deletePreset(customPreset.id)}>Delete Custom</button>
+        </div>
+      );
+    }
+
+    render(
+      <ThemeProvider>
+        <DeleteInactivePreset />
+      </ThemeProvider>
+    );
+
+    fireEvent.click(screen.getByText("Save Custom"));
+    fireEvent.click(screen.getByText("Load Noir"));
+    const noirBackground = screen.getByTestId("theme-bg").textContent;
+    fireEvent.click(screen.getByText("Delete Custom"));
+
+    expect(screen.getByTestId("current-preset").textContent).toBe("noir");
+    expect(screen.getByTestId("theme-bg").textContent).toBe(noirBackground);
+    expect(localStorage.getItem("user-theme")).toContain(noirBackground);
+    const savedPresets = JSON.parse(localStorage.getItem("theme-presets") || "[]") as Array<{ name: string }>;
+    expect(savedPresets.some((preset) => preset.name === "Whale Tale")).toBe(false);
+  });
+
   it("deletePreset returns early when preset is built-in (does not remove from list)", () => {
     function DeleteDefaultComponent() {
       const { presets, deletePreset } = useTheme();

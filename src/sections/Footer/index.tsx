@@ -40,7 +40,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} data-contrast-example="footer">
       <Container className={styles.footerContainer}>
         <div className={styles.top}>
           <div className={styles.brand}>
@@ -48,7 +48,7 @@ export function Footer() {
             <p className={styles.brandText}>
               I am frequently checking my LinkedIn and email. Feel free to visit my profile or code repositories below.
             </p>
-            <div className={styles.social}>
+            <div className={styles.social} data-contrast-example="footer-social">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -67,7 +67,7 @@ export function Footer() {
           </div>
           <div className={styles.links}>
             <div className={styles.linkColumn}>
-              <h3 className={styles.linkHeading}>About Me</h3>
+              <h3 className={styles.linkHeading} data-contrast-example="footer-heading">About Me</h3>
               <ul className={styles.linkList}>
                 {aboutMeLinks.map((link) => (
                   <li key={link.label}>

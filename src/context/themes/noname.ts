@@ -20,7 +20,7 @@ export const nonameTheme: Theme = {
   link: '#1B5E20', // Darker green for better contrast on light purple background (meets 4.5:1 WCAG AA)
   blogLink: '#1B5E20', // Darker green for better contrast on author box gradient
   focus: '#8BC34A', // Bright green focus (eye color)
-  accent: '#FFD700', // Bright yellow (floral accents)
+  accent: '#5C4D00', // Dark gold, darkened for 4.5:1 on the hero gradient
   accentAlt: '#F44336', // Brighter red for better contrast on dark footer
   footerBg: '#1A1A1A', // Dark black (hair color)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

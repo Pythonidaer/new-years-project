@@ -9,6 +9,7 @@ describe("ScrollToTop Component", () => {
   let getBoundingClientRectSpy: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
+    sessionStorage.removeItem("contrast-review-pair");
     // Mock window.scrollTo
     scrollToSpy = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
 
@@ -48,6 +49,19 @@ describe("ScrollToTop Component", () => {
     vi.useRealTimers();
     scrollToSpy.mockRestore();
     querySelectorSpy.mockRestore();
+  });
+
+  it("leaves the scroll position alone while a contrast review is pending", () => {
+    sessionStorage.setItem("contrast-review-pair", "Accent on Hero Gradient");
+
+    render(
+      <MemoryRouter initialEntries={["/resources/blog"]}>
+        <ScrollToTop />
+      </MemoryRouter>
+    );
+
+    expect(scrollToSpy).not.toHaveBeenCalled();
+    sessionStorage.removeItem("contrast-review-pair");
   });
 
   it("scrolls to top when there is no hash", () => {

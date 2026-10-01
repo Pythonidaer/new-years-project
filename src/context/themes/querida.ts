@@ -20,7 +20,7 @@ export const queridaTheme: Theme = {
   link: '#0D4A10', // Very dark green links for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#1B5E20', // Very dark green for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#4CAF50', // Lime green focus (door color)
-  accent: '#4CAF50', // Lime green accent (door color)
+  accent: '#86CA89', // Lime green accent (door color), lightened for 4.5:1 on the hero gradient
   accentAlt: '#81C784', // Bright lime green accent for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#2D2D2D', // Dark gray footer (patio color)
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

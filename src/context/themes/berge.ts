@@ -20,7 +20,7 @@ export const bergeTheme: Theme = {
   link: '#1A7A1A', // Darker green links for better contrast on light background (meets 4.5:1 WCAG AA)
   blogLink: '#0A5A0A', // Very dark green for blog links to meet contrast on author box gradient (meets 4.5:1 WCAG AA)
   focus: '#1F7A1F', // Darker forest green focus ring
-  accent: '#FF1493', // Hot pink (accent color - top/dress)
+  accent: '#FF2E9F', // Hot pink (accent color - top/dress), lightened for 4.5:1 on the hero gradient
   accentAlt: '#FF6B9D', // Lighter pink accent for better contrast on dark footer (meets 4.5:1 WCAG AA)
   footerBg: '#0A2A0A', // Dark green footer
   footerTextMuted: 'rgba(255, 255, 255, 0.75)', // Muted white text

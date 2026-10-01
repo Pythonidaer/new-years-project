@@ -997,6 +997,7 @@ const {
   position?: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right'
   customColorTokens?: ColorToken[]
   customCategoryLabels?: Record<string, string>
+  hideColorControlsUntilContrastIssue?: boolean
 />
 ```
 
@@ -1004,6 +1005,7 @@ const {
 - `position?: string` - Picker button position
 - `customColorTokens?: ColorToken[]` - Override default tokens
 - `customCategoryLabels?: Record<string, string>` - Override category labels
+- `hideColorControlsUntilContrastIssue?: boolean` - When true (the default), the color controls stay hidden until a contrast issue is reported. They then appear together in one closed dropdown. Set false to always show that dropdown. Each contrast warning includes a Jump to color control that opens that dropdown and highlights the colors in the failing pair.
 
 ### Contrast Utilities
 
