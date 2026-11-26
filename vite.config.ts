@@ -1,10 +1,24 @@
+import fs from "node:fs";
+import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { visualizer } from 'rollup-plugin-visualizer';
-import path from "path";
+
+// Preview serves the same headers Vercel will send, so CSP can be checked locally.
+function previewHeaders(): Record<string, string> {
+  const configPath = path.resolve(__dirname, "vercel.json");
+  const config = JSON.parse(fs.readFileSync(configPath, "utf8")) as {
+    headers?: { headers?: { key: string; value: string }[] }[];
+  };
+  const headers = config.headers?.[0]?.headers ?? [];
+  return Object.fromEntries(headers.map((header) => [header.key, header.value]));
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  preview: {
+    headers: previewHeaders(),
+  },
   plugins: [
     react(),
     // Removed asyncCss() - CSS now loads synchronously to prevent flash/FOUC

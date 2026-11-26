@@ -290,7 +290,7 @@ describe("AudioControl", () => {
     const themes = [
       { id: "samson", file: "/samson.mp3" },
       { id: "noname", file: "/noname.mp3" },
-      { id: "vapor-wave", file: "http://radio.plaza.one/mp3" },
+      { id: "vapor-wave", file: "https://radio.plaza.one/mp3" },
       { id: "king", file: "/i_have_a_dream_speech.mp3" },
       { id: "planet", file: "/earth_song.mp3" },
     ];

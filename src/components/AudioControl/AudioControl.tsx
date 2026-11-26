@@ -27,7 +27,7 @@ export function AudioControl() {
     } else if (currentPresetId === 'noname') {
       audioFile = '/noname.mp3';
     } else if (currentPresetId === 'vapor-wave') {
-      audioFile = 'http://radio.plaza.one/mp3';
+      audioFile = 'https://radio.plaza.one/mp3';
     } else if (currentPresetId === 'king') {
       audioFile = '/i_have_a_dream_speech.mp3';
     } else if (currentPresetId === 'planet') {
