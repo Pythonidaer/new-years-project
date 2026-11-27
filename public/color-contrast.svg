@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 418" role="img">
+  <title>Two text samples, one faint and one high contrast</title>
+  <rect width="800" height="418" fill="#f4f1ea"/>
+  <rect x="40" y="49" width="340" height="320" rx="12" fill="#e7e1d6"/>
+  <text x="210" y="240" text-anchor="middle" font-size="128" font-family="Georgia, serif" fill="#ddd4c6">Aa</text>
+  <rect x="420" y="49" width="340" height="320" rx="12" fill="#ffffff" stroke="#24364e" stroke-width="4"/>
+  <text x="590" y="240" text-anchor="middle" font-size="128" font-family="Georgia, serif" fill="#111111">Aa</text>
+</svg>

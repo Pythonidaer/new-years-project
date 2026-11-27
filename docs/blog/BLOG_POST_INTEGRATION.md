@@ -4,9 +4,12 @@ This document outlines the process for integrating new blog post JSON files gene
 
 ## Overview
 
-When a new blog post JSON file is added to `src/data/blog/`, several steps are required to make it visible in the blog listing and accessible via routing.
+Adding a JSON file to `src/data/blog/` is enough to publish a post. `src/data/blog/index.ts` discovers every `*.json` file with `import.meta.glob` and loads it on demand. Do not add a manual import, a `blogPostsByTopic` registration, or a topic entry. There is no `src/content/topics.ts` registry.
 
-**Content features**: The blog supports **YouTube video embeds** in post HTML. Use a `<div class="youtube-embed" data-video-id="VIDEO_ID">` placeholder or paste YouTube iframe markup; embeds are rendered responsively (16:9) and keep the same layout on mobile. See [Embedding YouTube Videos](#embedding-youtube-videos) for instructions.
+**Content features**:
+
+- **YouTube videos.** Use a `<div class="youtube-embed" data-video-id="VIDEO_ID">` placeholder or paste a YouTube iframe. See [Embedding YouTube Videos](#embedding-youtube-videos).
+- **Interactive examples.** Article HTML may include the placeholders below. `src/pages/blogContent.tsx` maps those known values to React components. It does not evaluate JavaScript or load a component name from the article. A new tool needs a new explicit mapping. See [Interactive blog tools](#interactive-blog-tools).
 
 ## Prerequisites
 
@@ -45,9 +48,7 @@ interface BlogPost {
    - ❌ `"date": "2026-01-10"` (ISO format)
    - ✅ `"date": "January 10, 2026"`
 
-3. **Image URL**: Use placeholder format
-   - ❌ `"image": "/images/blog/interview/post.png"` (relative path)
-   - ✅ `"image": "https://picsum.photos/367/197?random=37"` (use next available random number)
+3. **Image**: Use a local file in `public/` (for example `"/color-contrast.svg"`) or another asset the site already serves. External random-image URLs are not required. Older posts may still use them.
 
 4. **Content Format**: Must be HTML, not Markdown
    - ❌ Markdown with `##`, `**`, `---`
@@ -75,85 +76,24 @@ interface BlogPost {
      <pre><code>&lt;EditableCard variant="billing" mode="inline" showFooter onSave={...} /&gt;</code></pre>
      ```
 
-### Step 2: Add Category to Filter List (If New)
+### Step 2: Add a new category only when it is new
 
-If the blog post uses a category that doesn't exist in the filter dropdown:
+Blog filters are built from the categories and tags on the loaded posts (`getAllUniqueTags()`). They are not a separate hardcoded list in `BlogFilters`.
 
-**File**: `src/sections/BlogFilters/index.tsx`
+If the category is not already in `ALL_CATEGORIES` in `src/data/blog/categories.ts`, add it there. Tag pages use that list when they resolve a category name.
 
-**Action**: Add the new category to the `ALL_CATEGORIES` array:
-
-```typescript
-const ALL_CATEGORIES = [
-  "Frontend Frameworks",
-  "Frontend Architecture",  // ← Add new category here
-  "JavaScript & TypeScript",
-  // ... existing categories
-];
-```
-
-**Note**: Categories should be added in a logical order (grouped by topic area).
-
-### Step 3: Register Topic in Topics Registry
-
-**File**: `src/content/topics.ts`
-
-**Action**: Add a new topic entry to the `topics` array:
-
-```typescript
-export const topics: TopicMetadata[] = [
-  // ... existing topics
-  {
-    id: "interview_reusable_vs_feature_specific_components_a_practical_decision_framework",
-    label: "Reusable vs Feature-Specific Components: A Practical Decision Framework",
-    description: "A practical framework for deciding when to make components reusable vs feature-specific",
-  },
-];
-```
-
-**Important**: 
-- The `id` must match the filename (without `.json` extension)
-- Use the exact filename as the topic ID
-- `label` should be a human-readable display name
-- `description` is optional but recommended
-
-### Step 4: Import and Register Blog Data
-
-**File**: `src/data/blog/index.ts`
-
-**Action 1**: Add import statement at the top:
-
-```typescript
-import interviewReusableVsFeatureSpecificComponentsPosts from "./interview_reusable_vs_feature_specific_components_a_practical_decision_framework.json";
-```
-
-**Action 2**: Add entry to `blogPostsByTopic` object:
-
-```typescript
-export const blogPostsByTopic: Record<TopicId, BlogPosts> = {
-  default: defaultPosts as BlogPosts,
-  // ... existing topics
-  interview_reusable_vs_feature_specific_components_a_practical_decision_framework: interviewReusableVsFeatureSpecificComponentsPosts as BlogPosts,
-};
-```
-
-**Important**: 
-- The key must match the topic ID from Step 3
-- Variable name should follow camelCase convention
-- Use `as BlogPosts` type assertion
-
-### Step 5: Verify Integration
+### Step 3: Verify Integration
 
 After completing all steps, verify:
 
 1. **Build succeeds**: `npm run build`
 2. **Tests pass**: `npm test -- --run`
 3. **No linting errors**: Check for TypeScript/ESLint errors
-4. **Blog listing page**: Navigate to `/blog` and verify:
+4. **Blog listing page**: Navigate to `/resources/blog` and verify:
    - Post appears in the grid
-   - Category filter includes the new category (if added)
+   - Category or tag filter includes the post
    - Search works for the post
-5. **Blog post page**: Navigate to `/blog/<slug>` and verify:
+5. **Blog post page**: Navigate to `/resources/blog/<slug>` and verify:
    - Post renders correctly
    - All sections display (hero, content, tags, author, related posts)
 
@@ -161,27 +101,13 @@ After completing all steps, verify:
 
 ### ID Uniqueness
 
-**Critical**: Blog posts can have duplicate IDs across different topics (e.g., multiple posts with `id: 1`). The system handles this by:
+Slugs identify posts. Related posts, the blog grid, and `getBlogPostBySlug()` use the slug (or a slug generated from the title). IDs may repeat across files, but prefer a unique numeric `id` because `LatestBlogs` still uses `post.id` as a React key.
 
-- Using **slugs** (not IDs) for:
-  - React keys in BlogGrid
-  - Filtering featured post from grid
-  - Finding posts by slug
-  - Related posts logic
+Set `slug` explicitly when the URL must not change if the title changes. The article route is `/resources/blog/<slug>`.
 
-**Do not** rely on IDs being unique across topics. Always use slugs for uniqueness.
+### Images
 
-### Image Random Numbers
-
-When assigning random image numbers:
-1. Check existing files for highest random number used
-2. Use next available number (e.g., if highest is 36, use 37)
-3. Keep track to avoid collisions
-
-**Command to find highest random number**:
-```bash
-grep -h "random=" src/data/blog/*.json | grep -o "random=[0-9]*" | sort -t= -k2 -n | tail -1
-```
+Put a new illustration in `public/` and reference it as a root path, such as `"/color-contrast.svg"`. Reusing an existing public asset is also fine. Do not add a new external random-image dependency for a new post.
 
 ### Date Format Conversion
 
@@ -256,6 +182,26 @@ You can paste standard YouTube embed iframe markup into the content. The parser 
 - Use the placeholder (Option 1) when editing JSON by hand; it’s shorter and avoids long URLs in the source.
 - Use descriptive link text (e.g. “contact me on LinkedIn”) instead of raw URLs in the same post so links don’t break layout on mobile.
 
+### Interactive blog tools
+
+`parse()` in `BlogPost` calls `replaceBlogContent()` from `src/pages/blogContent.tsx`. That function replaces a placeholder only when `data-blog-tool` is one of these exact values:
+
+```html
+<div data-blog-tool="contrast-comparison"></div>
+<div data-blog-tool="contrast-generator"></div>
+<div data-blog-tool="color-pairing"></div>
+```
+
+- `contrast-comparison` renders the low-contrast / high-contrast example.
+- `contrast-generator` renders the random pair generator (7:1 or higher).
+- `color-pairing` renders the base-color pairing tool.
+
+Unknown values are left as ordinary HTML. The article cannot name an arbitrary component, and these tools are not iframed copies of the old standalone pages. Each instance keeps its own state.
+
+Adding another interactive tool means writing the React component and adding that one value to the mapping in `blogContent.tsx`. Dropping a new attribute value into JSON does not load new code. The tool components are lazy-loaded from the blog post route, so they are not part of the initial homepage bundle.
+
+YouTube replacement is unchanged and runs before the tool mapping.
+
 **Tag Format Requirements**:
 - Tags must be **uppercase** (Title Case) with **spaces instead of dashes**
 - Examples:
@@ -263,28 +209,15 @@ You can paste standard YouTube embed iframe markup into the content. The parser 
   - ❌ `"react"`, `"component-design"`, `"frontend-architecture"`
 - Exception: Keep dashes only if grammatically necessary (rare)
 
-## Automation Opportunities
-
-Future improvements could automate:
-
-1. **ID assignment**: Auto-increment based on existing posts
-2. **Date format conversion**: Auto-convert ISO to human-readable
-3. **Image placeholder assignment**: Auto-assign next available random number
-4. **Category validation**: Check if category exists, auto-add if not
-5. **Topic registration**: Auto-generate topic entry from filename
-6. **Import generation**: Auto-generate import and registration code
-
 ## Troubleshooting
 
 ### Post doesn't appear in blog grid
 
 **Check**:
-1. Is the topic registered in `topics.ts`?
-2. Is the import statement correct in `index.ts`?
-3. Is the entry added to `blogPostsByTopic`?
-4. Does the category match `ALL_CATEGORIES`?
-5. Is the JSON file valid (no syntax errors)?
-6. Are IDs numbers (not strings)?
+1. Is the file directly under `src/data/blog/` and named `*.json`? The glob loader picks up that folder only.
+2. Is the JSON valid, and is the value an array of post objects?
+3. Is `id` a number?
+4. Does `category` match a name in `src/data/blog/categories.ts` when the post should appear as a known category?
 
 ### Duplicate key warnings in console
 
@@ -302,82 +235,62 @@ Future improvements could automate:
 
 ### Category filter doesn't show new category
 
-**Fix**: Add category to `ALL_CATEGORIES` array in `BlogFilters/index.tsx`
+**Fix**: Add the category to `ALL_CATEGORIES` in `src/data/blog/categories.ts`. The blog filter list is derived from categories and tags on the posts, so the post's `category` or `tags` must include the label you expect to see.
+
+### An interactive placeholder renders as an empty div
+
+**Fix**: The `data-blog-tool` value has to be one of the three mapped names. Add a new explicit entry in `src/pages/blogContent.tsx` if you are introducing a new tool. Do not put a component path or script in the JSON.
 
 ## Example: Complete Integration
 
-Here's a complete example for a file named `interview_state_management.json`:
+Save this as `src/data/blog/interview_state_management.json`. No import or topic registration is required.
 
-### 1. JSON File Structure
 ```json
 [
   {
-    "id": 1,
+    "id": 24,
     "title": "State Management Patterns in React",
     "date": "January 15, 2026",
     "excerpt": "Exploring different state management approaches...",
     "category": "State Management & Data Flow",
-    "image": "https://picsum.photos/367/197?random=38",
-    "link": "/blog/state-management-patterns-react",
+    "image": "/color-contrast.svg",
+    "link": "/resources/blog/state-management-patterns-react",
+    "slug": "state-management-patterns-react",
     "author": "LLM Writer",
-    "tags": ["react", "state-management", "redux", "zustand"],
+    "tags": ["React", "State Management", "Redux", "Zustand"],
     "content": "<p>Content in HTML format...</p>"
   }
 ]
 ```
 
-### 2. Add to topics.ts
-```typescript
-{
-  id: "interview_state_management",
-  label: "State Management Patterns in React",
-  description: "Exploring different state management approaches in React applications",
-},
-```
-
-### 3. Add to index.ts
-```typescript
-import interviewStateManagementPosts from "./interview_state_management.json";
-
-export const blogPostsByTopic: Record<TopicId, BlogPosts> = {
-  // ... existing
-  interview_state_management: interviewStateManagementPosts as BlogPosts,
-};
-```
-
-### 4. Category Check
-- "State Management & Data Flow" already exists in `ALL_CATEGORIES` ✓
-- No action needed
+"State Management & Data Flow" is already in `ALL_CATEGORIES`. The post is then available at `/resources/blog/state-management-patterns-react`.
 
 ## Summary Checklist
 
 When integrating a new blog post JSON file:
 
-- [ ] Fix JSON structure (ID as number, date format, image URL, content as HTML)
-- [ ] Format tags: uppercase with spaces (not dashes)
-- [ ] Format code blocks with proper line breaks for readability
-- [ ] Add category to `ALL_CATEGORIES` if new
-- [ ] Register topic in `topics.ts`
-- [ ] Import JSON file in `index.ts`
-- [ ] Add to `blogPostsByTopic` object
-- [ ] Verify build succeeds
-- [ ] Verify tests pass
-- [ ] Test blog listing page
-- [ ] Test individual blog post page (verify code blocks render correctly)
-- [ ] Test category filtering
-- [ ] Test search functionality
-- [ ] Verify code blocks are readable and mobile-responsive
+- [ ] JSON file is in `src/data/blog/` and is an array of `BlogPost` objects
+- [ ] `id` is a number, `date` is human-readable, and `content` is HTML
+- [ ] Tags are Title Case with spaces
+- [ ] Code blocks use `<pre><code>` with line breaks
+- [ ] `slug` is set when the URL should stay stable
+- [ ] Image is a local or existing asset
+- [ ] New category, if any, is added to `src/data/blog/categories.ts`
+- [ ] Interactive placeholders use a mapped `data-blog-tool` value
+- [ ] New tools, if any, are added explicitly in `src/pages/blogContent.tsx`
+- [ ] Build and tests succeed
+- [ ] Listing, category filter, search, and `/resources/blog/<slug>` all show the post
 
 ---
 
-**Last Updated**: Based on integration of `interview_reusable_vs_feature_specific_components_a_practical_decision_framework.json`
+**Last Updated**: Color-contrast article and the `import.meta.glob` loader.
 
 **Key Learnings**:
-- Blog listing shows posts from ALL topics (not just current topic)
-- Use slugs, not IDs, for uniqueness across topics
-- Featured post filtering must use slugs to avoid excluding posts with duplicate IDs
-- Tags must be uppercase with spaces (not dashes) for consistency
-- Code blocks should be formatted with line breaks for readability (like in a text editor)
-- Code blocks use horizontal scroll on mobile for long lines (`overflow-x: auto`)
-- Code block styling ensures readability with monospace font, proper padding, and subtle background
+- Blog JSON is discovered by `import.meta.glob` in `src/data/blog/index.ts`
+- Do not register posts with manual imports or a topics file
+- Use slugs for post identity. Prefer unique ids because some homepage cards still key on `post.id`
+- Tags must be Title Case with spaces
+- Code blocks should be formatted with line breaks and scroll horizontally on narrow screens
+- YouTube placeholders and the three color-contrast tool placeholders are the supported HTML replacements
+- A new interactive tool requires an explicit React mapping; article HTML cannot choose a component by name
 

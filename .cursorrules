@@ -201,37 +201,10 @@ When the user says "Please add/integrate/incorporate the <filename>.json file" o
 
 **Quick Integration Steps**:
 
-1. **Update JSON file format** (if needed):
-   - Ensure `id` is a **number** (must be unique across ALL posts - check existing IDs)
-   - Convert `date` to human-readable format: "January 11, 2026" (not ISO format like "2026-01-11")
-   - Update `image` to: `https://picsum.photos/367/197?random=N` (find next available number)
-   - Add `slug` field if missing (generate from title if needed)
-   - Format `tags` as Title Case with spaces (e.g., "React", "Component Design", "State Management & Data Flow")
-   - Ensure `category` matches existing category from `src/data/blog/categories.ts`
-   - Verify `content` is HTML (not Markdown) - all code must be in `<pre><code>...</code></pre>` blocks
-   - Format code blocks with proper line breaks for readability
-
-2. **Find next unique ID**:
-   - Check all existing blog post IDs: `grep '"id":' src/data/blog/*.json`
-   - Assign next sequential number (e.g., if highest is 7, use 8)
-   - **Critical**: IDs must be unique across ALL posts (not just within topics) because `getRelatedPosts()` uses IDs
-
-3. **Find next available image random number**:
-   - Check existing random numbers: `grep -h "random=" src/data/blog/*.json | grep -o "random=[0-9]*" | sort -t= -k2 -n | tail -1`
-   - Use next number (e.g., if highest is 44, use 45)
-
-4. **Register in blog system**:
-   - **File**: `src/data/blog/index.ts`
-     - Add import statement at top: `import <camelCaseName>Posts from "./<filename>.json";`
-     - Add entry to `blogPostsByTopic` object: `<topic_id>: <camelCaseName>Posts as BlogPosts,`
-   - **File**: `src/content/topics.ts`
-     - Add topic entry to `topics` array with `id` (filename without .json), `label` (human-readable title), and `description`
-
-5. **Verify**:
-   - Run `npm test -- --run`
-   - Check for linting errors: `read_lints` on modified files
-   - Verify unique ID assignment
-   - Ensure all tests pass
+1. **Add a JSON file** to `src/data/blog/`. `src/data/blog/index.ts` loads every `*.json` file with `import.meta.glob`. Do not add a manual import, a `blogPostsByTopic` entry, or a topic registration.
+2. **Match the `BlogPost` shape**: numeric `id`, human-readable `date`, HTML `content`, a `category` from `src/data/blog/categories.ts`, Title Case `tags`, and an explicit `slug` when the URL must stay stable. Use a local or existing image path. Prefer a unique `id` because some lists still use it as a React key. Related posts match on slug, not id.
+3. **Interactive tools** are not loaded from article HTML. The only supported placeholders are `data-blog-tool="contrast-comparison"`, `contrast-generator`, and `color-pairing`. A new tool needs an explicit React mapping in `src/pages/blogContent.tsx`.
+4. **Verify** with `npm test -- --run` and the blog route `/resources/blog/<slug>`.
 
 **Command Examples** (all trigger the same process):
 - "Please add the interview_example.json file"

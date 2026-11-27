@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import parse from "html-react-parser";
-import { YouTubeEmbed } from "@/components/YouTubeEmbed/YouTubeEmbed";
 import { FaCaretRight, FaCaretLeft } from "react-icons/fa";
 import { Header } from "@/sections/Header";
 import { Footer } from "@/sections/Footer";
@@ -16,27 +15,8 @@ import { slugify } from "@/utils/slug";
 import { useImagePreload } from "@/hooks/useImagePreload";
 import { BlogPostNotFound } from "./BlogPostNotFound";
 import { getAuthorName, getMetaDescription, hasTags, hasContent } from "./BlogPost.helpers";
+import { replaceBlogContent } from "./blogContent";
 import styles from "./BlogPost.module.css";
-
-type DomNodeLike = { type?: string; name?: string; attribs?: Record<string, string> };
-
-function getYouTubeEmbedFromIframe(attribs: Record<string, string>): { videoId: string; title: string } | null {
-  if (!attribs.src) return null;
-  const match = /youtube\.com\/embed\/([^/?]+)/.exec(attribs.src);
-  if (!match) return null;
-  return { videoId: match[1], title: attribs.title ?? "YouTube video" };
-}
-
-function getYouTubeEmbedProps(domNode: DomNodeLike): { videoId: string; title?: string } | null {
-  if (domNode.type !== "tag" || !domNode.attribs) return null;
-  const { name, attribs } = domNode;
-  if (name === "div" && attribs.class?.includes("youtube-embed")) {
-    const videoId = attribs["data-video-id"];
-    if (videoId) return { videoId, title: attribs["data-title"] };
-  }
-  if (name === "iframe") return getYouTubeEmbedFromIframe(attribs);
-  return null;
-}
 
 export function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -136,10 +116,7 @@ export function BlogPost() {
               {hasContent(post) && post.content && (
                 <div className={styles.postContent} data-contrast-example="code">
                   {parse(post.content, {
-                    replace: (domNode) => {
-                      const props = getYouTubeEmbedProps(domNode as DomNodeLike);
-                      if (props) return <YouTubeEmbed {...props} />;
-                    },
+                    replace: (domNode) => replaceBlogContent(domNode),
                   })}
                 </div>
               )}

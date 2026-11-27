@@ -657,5 +657,50 @@ describe("BlogPost", () => {
 
       vi.restoreAllMocks();
     });
+
+    it("renders each blog tool placeholder and still embeds YouTube", async () => {
+      const slug = "tool-placeholders";
+      const mockPost: BlogPostType = {
+        id: 777,
+        title: "Tools Post",
+        date: "November 26, 2026",
+        excerpt: "Tools and a video.",
+        category: "Accessibility",
+        image: "/color-contrast.svg",
+        link: `/resources/blog/${slug}`,
+        slug,
+        author: "Johnny Hammond",
+        content: [
+          "<p>Before the tools.</p>",
+          '<div data-blog-tool="contrast-comparison"></div>',
+          '<div data-blog-tool="contrast-generator"></div>',
+          '<div data-blog-tool="color-pairing"></div>',
+          '<div data-blog-tool="not-a-real-tool"></div>',
+          '<div class="youtube-embed" data-video-id="fLtCRU6Vzz4" data-title="Still embedded"></div>',
+        ].join(""),
+        tags: ["Accessibility"],
+      };
+
+      vi.spyOn(blogData, "loadAllBlogPosts").mockResolvedValue(undefined);
+      vi.spyOn(blogData, "getBlogPostBySlug").mockReturnValue(mockPost);
+      vi.spyOn(blogData, "getRelatedPosts").mockReturnValue([]);
+
+      renderBlogPost(slug);
+
+      expect(await screen.findByRole("region", { name: "Contrast comparison" })).toBeInTheDocument();
+      expect(screen.getByRole("region", { name: "High-contrast pair generator" })).toBeInTheDocument();
+      expect(screen.getByRole("region", { name: "Color pairing" })).toBeInTheDocument();
+      expect(screen.getByRole("radio", { name: "Low contrast" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Generate pair" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Generate matching color" })).toBeInTheDocument();
+      expect(document.querySelector("[data-blog-tool='not-a-real-tool']")).toBeInTheDocument();
+      expect(document.querySelectorAll("[data-blog-tool-root]")).toHaveLength(3);
+
+      const iframe = document.querySelector('iframe[src*="youtube.com/embed/fLtCRU6Vzz4"]');
+      expect(iframe).toBeInTheDocument();
+      expect(iframe?.getAttribute("title")).toBe("Still embedded");
+
+      vi.restoreAllMocks();
+    });
   });
 });

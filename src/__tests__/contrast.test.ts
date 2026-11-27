@@ -3,6 +3,7 @@ import Color from "color";
 import {
   getContrastRatio,
   getContrastLevel,
+  getTextContrastLevel,
   checkContrastIssues,
 } from "@/utils/contrast";
 
@@ -98,6 +99,30 @@ describe("contrast utilities", () => {
       expect(getContrastLevel(6.99)).toBe("AA");
       expect(getContrastLevel(4.5)).toBe("AA");
       expect(getContrastLevel(4.49)).toBe("Fail");
+    });
+  });
+
+  describe("getTextContrastLevel", () => {
+    it("uses normal-text thresholds of 4.5:1 and 7:1", () => {
+      expect(getTextContrastLevel(7, "normal")).toBe("AAA");
+      expect(getTextContrastLevel(6.999, "normal")).toBe("AA");
+      expect(getTextContrastLevel(4.5, "normal")).toBe("AA");
+      expect(getTextContrastLevel(4.499, "normal")).toBe("Fail");
+      expect(getTextContrastLevel(3, "normal")).toBe("Fail");
+    });
+
+    it("uses large-text thresholds of 3:1 and 4.5:1", () => {
+      expect(getTextContrastLevel(4.5, "large")).toBe("AAA");
+      expect(getTextContrastLevel(4.499, "large")).toBe("AA");
+      expect(getTextContrastLevel(3, "large")).toBe("AA");
+      expect(getTextContrastLevel(2.999, "large")).toBe("Fail");
+    });
+  });
+
+  describe("known contrast anchors", () => {
+    it("reports black on white at 21:1 and identical colors at 1:1", () => {
+      expect(getContrastRatio("#000000", "#ffffff")).toBeCloseTo(21, 5);
+      expect(getContrastRatio("#112233", "#112233")).toBeCloseTo(1, 5);
     });
   });
 

@@ -463,6 +463,12 @@
   border: 0;
 }
 
+.postContent :global([data-blog-tool-root]) {
+  max-width: 100%;
+  margin: 30px 0;
+  min-width: 0;
+}
+
 /* Code block responsiveness */
 @media (max-width: 990px) {
   .postContent pre {

@@ -29,10 +29,13 @@ function blendColor(foreground: string, background: string): string {
 }
 
 /**
- * Calculate WCAG contrast ratio between two colors
- * Returns a number between 1 (same color) and 21 (maximum contrast)
- * AA standard: 4.5:1 for normal text, 7:1 for large text
- * AAA standard: 7:1 for normal text
+ * Calculate the WCAG contrast ratio between two colors.
+ * Returns a number from 1 (identical colors) to 21 (black and white).
+ * Normal text: AA 4.5:1, AAA 7:1.
+ * Large text: AA 3:1, AAA 4.5:1.
+ * Large text is at least 18pt regular (24 CSS pixels) or 14pt bold
+ * (about 18.67 CSS pixels). A passing text pair does not mean the
+ * whole interface meets WCAG. Invalid colors return 1.
  */
 export function getContrastRatio(color1: string, color2: string): number {
   try {
@@ -46,14 +49,35 @@ export function getContrastRatio(color1: string, color2: string): number {
   }
 }
 
+export const TEXT_CONTRAST_THRESHOLDS = {
+  normal: { aa: 4.5, aaa: 7 },
+  large: { aa: 3, aaa: 4.5 },
+} as const;
+
+export type ContrastTextSize = keyof typeof TEXT_CONTRAST_THRESHOLDS;
+
 /**
- * Get WCAG contrast level
- * Returns 'AAA', 'AA', or 'Fail'
+ * Classify a contrast ratio for normal or large text.
+ * Large text is at least 18pt regular (24 CSS pixels) or 14pt bold
+ * (about 18.67 CSS pixels). These labels are text thresholds only.
+ */
+export function getTextContrastLevel(
+  ratio: number,
+  textSize: ContrastTextSize,
+): 'AAA' | 'AA' | 'Fail' {
+  const thresholds = TEXT_CONTRAST_THRESHOLDS[textSize];
+  if (ratio >= thresholds.aaa) return 'AAA';
+  if (ratio >= thresholds.aa) return 'AA';
+  return 'Fail';
+}
+
+/**
+ * Classify a contrast ratio with normal-text thresholds.
+ * AAA means at least 7:1. AA means at least 4.5:1 and below 7:1.
+ * This is not a large-text classification. Use getTextContrastLevel for that.
  */
 export function getContrastLevel(ratio: number): 'AAA' | 'AA' | 'Fail' {
-  if (ratio >= 7) return 'AAA';
-  if (ratio >= 4.5) return 'AA';
-  return 'Fail';
+  return getTextContrastLevel(ratio, 'normal');
 }
 
 /**
